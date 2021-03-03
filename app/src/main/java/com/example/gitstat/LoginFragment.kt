@@ -45,7 +45,8 @@ class LoginFragment : Fragment(), View.OnClickListener {
         when (v.id) {
             R.id.signInBtn -> {
                 Log.d(LOG_TAG, "login btn clicked")
-                Toast.makeText(activity,  "AAA", Toast.LENGTH_LONG).show()
+
+                navController.navigate(R.id.actionLoginToMain)
             }
         }
     }
