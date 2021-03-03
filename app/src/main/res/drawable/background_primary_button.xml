@@ -5,12 +5,12 @@
 
         <shape android:shape="rectangle">
             <corners android:radius="10dp"/>
-            <solid android:color="@color/black"/>
+            <solid android:color="@color/gray_400"/>
             <padding
-                android:bottom="5dp"
+                android:bottom="10dp"
                 android:left="10dp"
                 android:right="10dp"
-                android:top="5dp"/>
+                android:top="10dp"/>
         </shape>
     </item>
 
@@ -19,7 +19,7 @@
 
         <shape android:shape="rectangle">
             <corners android:radius="10dp"/>
-            <solid android:color="@color/black"/>
+            <solid android:color="@color/gray_500"/>
             <padding
                 android:bottom="5dp"
                 android:left="10dp"
@@ -33,7 +33,7 @@
 
         <shape android:shape="rectangle">
             <corners android:radius="10dp"/>
-            <solid android:color="@color/black"/>
+            <solid android:color="@color/gray_500"/>
             <padding
                 android:bottom="5dp"
                 android:left="10dp"
