@@ -44,6 +44,7 @@
             app:hintTextColor="@color/gray_500">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/loginEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -60,6 +61,7 @@
             app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tokenEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textWebPassword" />
