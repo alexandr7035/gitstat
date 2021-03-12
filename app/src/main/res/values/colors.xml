@@ -10,4 +10,6 @@
 
     <color name="gray_500">#343434</color>
     <color name="gray_400">#444444</color>
+    <color name="gray_300">#595959</color>
+    <color name="gray_200">#898989</color>
 </resources>
