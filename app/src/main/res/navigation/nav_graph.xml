@@ -11,11 +11,18 @@
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/actionLoginToMain"
-            app:destination="@id/mainFragment" />
+            app:destination="@id/profileFragment" />
     </fragment>
+
     <fragment
-        android:id="@+id/mainFragment"
+        android:id="@+id/profileFragment"
         android:name="com.example.gitstat.ProfileFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/reposFragment"
+        android:name="com.example.gitstat.ReposFragment"
+        android:label="fragment_repos"
+        tools:layout="@layout/fragment_repos" />
 </navigation>

@@ -5,10 +5,15 @@
     <string name="password">Password</string>
     <string name="token">Token</string>
     <string name="sign_in">Sign in</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="profile">Profile</string>
+    <string name="repos">Repos</string>
+    <string name="other">Other</string>
 
     <string name="shared_pref_login">SHARED_PREF_LOGIN</string>
     <string name="shared_pref_token">SHARED_PREF_TOKEN</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
 </resources>

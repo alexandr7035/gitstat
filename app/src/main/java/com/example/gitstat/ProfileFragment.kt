@@ -47,7 +47,7 @@ class ProfileFragment : Fragment() {
 
         val user = sharedPreferences.getString(getString(R.string.shared_pref_login), "NONE")
         val token = sharedPreferences.getString(getString(R.string.shared_pref_token), "NONE")
-        Toast.makeText(requireActivity(), "Auth '$user' with token '$token'", Toast.LENGTH_LONG).show()
+        //Toast.makeText(requireActivity(), "Auth '$user' with token '$token'", Toast.LENGTH_LONG).show()
 
 
         val retrofit = Retrofit.Builder()
