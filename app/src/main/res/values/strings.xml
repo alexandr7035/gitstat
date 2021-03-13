@@ -7,7 +7,7 @@
     <string name="sign_in">Sign in</string>
 
     <string name="profile">Profile</string>
-    <string name="repos">Repos</string>
+    <string name="repos">Repositories</string>
     <string name="other">Other</string>
 
     <string name="shared_pref_login">SHARED_PREF_LOGIN</string>

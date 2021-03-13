@@ -82,7 +82,7 @@ class ReposFragment : Fragment() {
                     }
 
                     binding.forksCountView.text = forksCount.toString()
-                    
+
                     Log.d(LOG_TAG, "REPOS LIST $reposList")
                 }
                 else {
