@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.gitstat.api.GitHubApi
 import com.example.gitstat.databinding.FragmentProfileBinding
+import com.example.gitstat.model.RepositoryModel
 import com.example.gitstat.model.UserModel
 import com.squareup.picasso.Picasso
 import okhttp3.Credentials
@@ -19,6 +20,10 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import org.json.JSONObject
+
+
+
 
 
 class ProfileFragment : Fragment() {
@@ -60,6 +65,7 @@ class ProfileFragment : Fragment() {
             .build()
 
         val gitHubApi: GitHubApi = retrofit.create(GitHubApi::class.java)
+
         val call: Call<UserModel> = gitHubApi.getUser(authCredentials, "$user")
 
         call.enqueue(object : Callback<UserModel> {
@@ -95,6 +101,10 @@ class ProfileFragment : Fragment() {
 
 
         })
+
+
+
+
     }
 
 }
