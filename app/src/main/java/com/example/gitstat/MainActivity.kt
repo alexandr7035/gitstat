@@ -3,6 +3,7 @@ package com.example.gitstat
 import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -23,8 +24,16 @@ class MainActivity : AppCompatActivity() {
         navController = hf.navController
 
         // Setting Navigation Controller with the BottomNavigationView
-        val bottomNavView: BottomNavigationView = findViewById(R.id.BottomNavigationView)
-        bottomNavView.setupWithNavController(navController)
+        val bottomNavigationView: BottomNavigationView = findViewById(R.id.BottomNavigationView)
+        bottomNavigationView.setupWithNavController(navController)
 
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id == R.id.loginFragment) {
+                bottomNavigationView.visibility = View.GONE
+            } else {
+                bottomNavigationView.visibility = View.VISIBLE
+            }
+        }
     }
 }

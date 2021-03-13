@@ -45,10 +45,13 @@ class ProfileFragment : Fragment() {
         // Shared pref
         sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
 
-        val user = sharedPreferences.getString(getString(R.string.shared_pref_login), "NONE")
-        val token = sharedPreferences.getString(getString(R.string.shared_pref_token), "NONE")
+        //val user = sharedPreferences.getString(getString(R.string.shared_pref_login), "NONE")
+        //val token = sharedPreferences.getString(getString(R.string.shared_pref_token), "NONE")
         //Toast.makeText(requireActivity(), "Auth '$user' with token '$token'", Toast.LENGTH_LONG).show()
 
+        // Fixme
+        // Debug
+        val user = "alexandr7035"
 
         val retrofit = Retrofit.Builder()
             .baseUrl("https://api.github.com/")
@@ -56,25 +59,35 @@ class ProfileFragment : Fragment() {
             .build()
 
         val gitHubApi: GitHubApi = retrofit.create(GitHubApi::class.java)
-        val call: Call<UserModel> = gitHubApi.getUser("$user")
+        val call: Call<UserModel> = gitHubApi.getUser(user)
 
         call.enqueue(object : Callback<UserModel> {
 
             override fun onResponse(call: Call<UserModel>, response: Response<UserModel>) {
-                Log.d(LOG_TAG, "SUCCESS RESPONSE")
+
                 Log.d(LOG_TAG, response.body().toString())
 
-                // FixMe
-                val userModel: UserModel = response.body()!!
+                if (response.isSuccessful) {
+                    //Log.d(LOG_TAG, "SUCCESS RESPONSE")
 
-                binding.userIdView.text = "@${userModel.login}"
-                binding.nameView.text = userModel.name
 
-                Picasso.get().load(userModel.avatar_url).into(binding.profileImageView)
 
-                // Fixme
-                // Count also private
-                binding.reposCountView.text = userModel.public_repos.toString()
+                    // FixMe
+                    val userModel: UserModel = response.body()!!
+
+                    binding.userIdView.text = "@${userModel.login}"
+                    binding.nameView.text = userModel.name
+
+                    Picasso.get().load(userModel.avatar_url).into(binding.profileImageView)
+
+                    // Fixme
+                    // Count also private
+                    binding.reposCountView.text = userModel.public_repos.toString()
+
+                }
+                else {
+                    Log.d(LOG_TAG, "NOT SUCCESSFULL")
+                }
             }
 
             override fun onFailure(call: Call<UserModel>, t: Throwable) {
