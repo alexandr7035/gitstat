@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.example.gitstat.MainFragment"
+        android:name="com.example.gitstat.ProfileFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_main" />
+        tools:layout="@layout/fragment_profile" />
 </navigation>

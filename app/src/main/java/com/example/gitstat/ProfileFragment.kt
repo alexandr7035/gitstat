@@ -4,36 +4,35 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.example.gitstat.api.GitHubApi
-import com.example.gitstat.databinding.FragmentLoginBinding
-import com.example.gitstat.databinding.FragmentMainBinding
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import com.example.gitstat.databinding.FragmentProfileBinding
 import com.example.gitstat.model.UserModel
 import com.squareup.picasso.Picasso
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 
-class MainFragment : Fragment() {
+class ProfileFragment : Fragment() {
 
     private val LOG_TAG = "DEBUG_TAG"
 
     private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var binding: FragmentMainBinding
+    private lateinit var binding: FragmentProfileBinding
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
         // Inflate the layout for this fragment
-        binding = FragmentMainBinding.inflate(inflater, container, false)
+        binding = FragmentProfileBinding.inflate(inflater, container, false)
         val view = binding.root
 
         return view
