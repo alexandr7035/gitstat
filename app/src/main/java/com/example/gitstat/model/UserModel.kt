@@ -9,5 +9,8 @@ data class UserModel(
     val name: String,
     val location: String,
     val public_repos: Long,
-    val total_private_repos: Long
+    val total_private_repos: Long,
+
+    val followers: Long,
+    val following: Long
 )

@@ -79,11 +79,10 @@ class ProfileFragment : Fragment() {
 
                     Picasso.get().load(userModel.avatar_url).into(binding.profileImageView)
 
-                    // Fixme
-                    // Count also private
                     val reposCountTotal = userModel.total_private_repos + userModel.public_repos
                     binding.reposCountView.text = reposCountTotal.toString()
 
+                    binding.followersCount.text = userModel.followers.toString()
                 }
                 else {
                     Log.d(LOG_TAG, "NOT SUCCESSFULL")
