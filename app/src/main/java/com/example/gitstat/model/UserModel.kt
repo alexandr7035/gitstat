@@ -7,5 +7,6 @@ data class UserModel(
     val login: String,
     val avatar_url: String,
     val name: String,
-    val location: String
+    val location: String,
+    val public_repos: Long
 )

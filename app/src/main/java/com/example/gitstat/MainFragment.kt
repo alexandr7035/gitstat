@@ -72,6 +72,10 @@ class MainFragment : Fragment() {
                 binding.nameView.text = userModel.name
 
                 Picasso.get().load(userModel.avatar_url).into(binding.profileImageView)
+
+                // Fixme
+                // Count also private
+                binding.reposCountView.text = userModel.public_repos.toString()
             }
 
             override fun onFailure(call: Call<UserModel>, t: Throwable) {
