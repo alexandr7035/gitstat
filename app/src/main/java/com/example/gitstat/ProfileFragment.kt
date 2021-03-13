@@ -13,6 +13,7 @@ import com.example.gitstat.api.GitHubApi
 import com.example.gitstat.databinding.FragmentProfileBinding
 import com.example.gitstat.model.UserModel
 import com.squareup.picasso.Picasso
+import okhttp3.Credentials
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -45,13 +46,13 @@ class ProfileFragment : Fragment() {
         // Shared pref
         sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
 
-        //val user = sharedPreferences.getString(getString(R.string.shared_pref_login), "NONE")
-        //val token = sharedPreferences.getString(getString(R.string.shared_pref_token), "NONE")
+        val user = sharedPreferences.getString(getString(R.string.shared_pref_login), "NONE")
+        val token = sharedPreferences.getString(getString(R.string.shared_pref_token), "NONE")
         //Toast.makeText(requireActivity(), "Auth '$user' with token '$token'", Toast.LENGTH_LONG).show()
+        Log.d(LOG_TAG, "Auth '$user' with token '$token'")
 
-        // Fixme
-        // Debug
-        val user = "alexandr7035"
+        var authCredentials = Credentials.basic(user, token)
+
 
         val retrofit = Retrofit.Builder()
             .baseUrl("https://api.github.com/")
@@ -59,7 +60,7 @@ class ProfileFragment : Fragment() {
             .build()
 
         val gitHubApi: GitHubApi = retrofit.create(GitHubApi::class.java)
-        val call: Call<UserModel> = gitHubApi.getUser(user)
+        val call: Call<UserModel> = gitHubApi.getUser(authCredentials, "$user")
 
         call.enqueue(object : Callback<UserModel> {
 
@@ -69,8 +70,6 @@ class ProfileFragment : Fragment() {
 
                 if (response.isSuccessful) {
                     //Log.d(LOG_TAG, "SUCCESS RESPONSE")
-
-
 
                     // FixMe
                     val userModel: UserModel = response.body()!!
@@ -82,7 +81,8 @@ class ProfileFragment : Fragment() {
 
                     // Fixme
                     // Count also private
-                    binding.reposCountView.text = userModel.public_repos.toString()
+                    val reposCountTotal = userModel.total_private_repos + userModel.public_repos
+                    binding.reposCountView.text = reposCountTotal.toString()
 
                 }
                 else {
