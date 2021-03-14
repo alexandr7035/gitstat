@@ -11,6 +11,15 @@ import android.view.ViewGroup
 import com.example.gitstat.databinding.FragmentReposBinding
 import com.example.gitstat.model.RepositoryModel
 import com.example.gitstat.model.UserModel
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.utils.ColorTemplate
+import android.graphics.Color
+
+
+
 
 
 class ReposFragment : Fragment() {
@@ -78,7 +87,36 @@ class ReposFragment : Fragment() {
         viewModel.updateUserData()
         viewModel.updateRepositoriesData()
 
-
+        testChart()
     }
 
+
+    fun testChart() {
+
+        val entries = ArrayList<PieEntry>()
+
+        entries.add(PieEntry(100f, "Java"))
+        entries.add(PieEntry(200f, "Python"))
+        entries.add(PieEntry(200f, "C"))
+        entries.add(PieEntry(100f, "Other"))
+
+        val dataSet = PieDataSet(entries, "")
+
+        val color: MutableList<Int> = ArrayList<Int>()
+        color.add(Color.YELLOW)
+        color.add(Color.BLUE)
+        color.add(Color.BLACK)
+        color.add(Color.GRAY)
+
+        dataSet.colors = color
+
+        val data: PieData = PieData(dataSet)
+        
+
+        binding.languagesChart.data = data
+
+        binding.languagesChart.setEntryLabelTextSize(16f)
+        binding.languagesChart.setUsePercentValues(true)
+
+    }
 }
