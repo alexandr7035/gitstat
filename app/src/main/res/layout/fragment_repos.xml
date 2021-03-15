@@ -5,7 +5,8 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ReposFragment" >
+    android:layout_marginBottom="20dp"
+    tools:context=".ReposFragment">
 
     <TextView
         android:id="@+id/fragmentTitle"
@@ -112,8 +113,11 @@
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="400dp"
-        android:layout_margin="20dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="100dp"
         android:background="@drawable/background_card"
         android:orientation="vertical"
         android:padding="10dp"
@@ -135,7 +139,8 @@
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/languagesChart"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:minHeight="400dp">
 
         </com.github.mikephil.charting.charts.PieChart>
 

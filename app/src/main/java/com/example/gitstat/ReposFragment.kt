@@ -11,12 +11,15 @@ import android.view.ViewGroup
 import com.example.gitstat.databinding.FragmentReposBinding
 import com.example.gitstat.model.RepositoryModel
 import com.example.gitstat.model.UserModel
-import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
-import com.github.mikephil.charting.utils.ColorTemplate
 import android.graphics.Color
+import android.graphics.Typeface
+import com.github.mikephil.charting.components.Legend
+
+
+
 
 
 
@@ -98,17 +101,25 @@ class ReposFragment : Fragment() {
         entries.add(PieEntry(100f, "Java"))
         entries.add(PieEntry(200f, "Python"))
         entries.add(PieEntry(200f, "C"))
-        entries.add(PieEntry(100f, "Other"))
+        entries.add(PieEntry(100f, "Kotlin"))
+        entries.add(PieEntry(100f, "Unknown"))
 
-        val dataSet = PieDataSet(entries, "")
 
-        val color: MutableList<Int> = ArrayList<Int>()
-        color.add(Color.YELLOW)
-        color.add(Color.BLUE)
-        color.add(Color.BLACK)
-        color.add(Color.GRAY)
+        val dataSet = PieDataSet(entries,   "")
 
-        dataSet.colors = color
+        // Values
+        dataSet.valueTextSize = 20f
+        dataSet.valueTextColor = Color.WHITE
+        dataSet.valueTypeface = Typeface.defaultFromStyle(Typeface.BOLD);
+
+        val colors: MutableList<Int> = ArrayList<Int>()
+        colors.add(Color.parseColor("#b07219"))
+        colors.add(Color.parseColor("#3572A5"))
+        colors.add(Color.parseColor("#555555"))
+        colors.add(Color.parseColor("#F18E33"))
+        colors.add(Color.parseColor("#C3C3C3"))
+        dataSet.colors = colors
+
 
         val data: PieData = PieData(dataSet)
         
@@ -116,7 +127,29 @@ class ReposFragment : Fragment() {
         binding.languagesChart.data = data
 
         binding.languagesChart.setEntryLabelTextSize(16f)
-        binding.languagesChart.setUsePercentValues(true)
+        //binding.languagesChart.setUsePercentValues(true)
+
+        binding.languagesChart.setDrawSliceText(false)
+
+        val l: Legend = binding.languagesChart.getLegend() // get legend of pie
+
+        l.verticalAlignment =
+            Legend.LegendVerticalAlignment.BOTTOM// set vertical alignment for legend
+
+        l.horizontalAlignment =
+            Legend.LegendHorizontalAlignment.LEFT // set horizontal alignment for legend
+
+        l.orientation = Legend.LegendOrientation.HORIZONTAL// set orientation for legend
+
+        l.setDrawInside(false) // set if legend should be drawn inside or not
+        l.setWordWrapEnabled(true);
+        l.textSize = 20f
+        l.xEntrySpace = 20f
+
+        binding.languagesChart.description.isEnabled = false;
+
+
+
 
     }
 }
