@@ -5,7 +5,7 @@ data class RepositoryModel(
     val name: String,
     val private: Boolean,
     val fork: Boolean,
-    val language: String,
+    var language: String,
     val open_issues: Long,
     val created_at: String
 )
