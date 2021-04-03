@@ -5,8 +5,10 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.example.gitstat.api.GitHubApi
+import com.example.gitstat.model.ReposSearchModel
 import com.example.gitstat.model.RepositoryModel
 import com.example.gitstat.model.UserModel
 import okhttp3.Credentials
@@ -48,7 +50,7 @@ class MainRepository(application: Application, user: String, token: String) {
             }
 
             override fun onFailure(call: Call<UserModel>, t: Throwable) {
-                //
+
             }
 
         })
@@ -56,13 +58,19 @@ class MainRepository(application: Application, user: String, token: String) {
 
 
     fun updateRepositoriesLiveData(liveData: MutableLiveData<List<RepositoryModel>>) {
-        gitHubApi.getRepositories(authCredentials, user).enqueue(object : Callback<List<RepositoryModel>> {
-            override fun onResponse(call: Call<List<RepositoryModel>>, response: Response<List<RepositoryModel>>) {
-                liveData.value = response.body()
+        gitHubApi.getRepositories(authCredentials, "user:$user", 1, 100, true).enqueue(object : Callback<ReposSearchModel> {
+            override fun onResponse(call: Call<ReposSearchModel>, response: Response<ReposSearchModel>) {
+
+                val searchResults = response.body()
+                Log.d(LOG_TAG, "url ${call.request().url()}")
+                liveData.value = searchResults?.items
+
+                Log.d(LOG_TAG, "REPOS LIST ${response.body()?.items?.size}")
             }
 
-            override fun onFailure(call: Call<List<RepositoryModel>>, t: Throwable) {
-                //
+            override fun onFailure(call: Call<ReposSearchModel>, t: Throwable) {
+                val message: String? = t.message
+                Log.d(LOG_TAG,  "FAILURE $message")
             }
 
         })
