@@ -58,7 +58,8 @@ class MainRepository(application: Application, user: String, token: String) {
 
 
     fun updateRepositoriesLiveData(liveData: MutableLiveData<List<RepositoryModel>>) {
-        gitHubApi.getRepositories(authCredentials, "user:$user", 1, 100, true).enqueue(object : Callback<ReposSearchModel> {
+        // FIXME fix if user has more than 100 repos
+        gitHubApi.getRepositories(authCredentials, userParam="user:$user", page=1, perPage=100).enqueue(object : Callback<ReposSearchModel> {
             override fun onResponse(call: Call<ReposSearchModel>, response: Response<ReposSearchModel>) {
 
                 val searchResults = response.body()

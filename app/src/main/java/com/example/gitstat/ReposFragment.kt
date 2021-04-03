@@ -55,28 +55,26 @@ class ReposFragment : Fragment() {
 
         val viewModel = MainViewModel(requireActivity().application, "$user", "$token")
 
-        viewModel.userLiveData.observe(viewLifecycleOwner, {
-            if (it != null) {
-
-                binding.publicReposCountView.text = it.public_repos.toString()
-                binding.privateReposCountView.text = it.total_private_repos.toString()
-
-            }
-        })
-
 
         viewModel.reposLiveData.observe(viewLifecycleOwner, {
 
             if (it != null) {
-                var forksCount = 0
 
-                it.forEachIndexed { i, repo ->
-                    if (repo.fork) {
-                        forksCount += 1
+                var totalReposCount = it.size
+                var privateReposCount = 0
+                var publicReposCount = 0
+
+                it.forEach {
+                    if (it.private){
+                        privateReposCount += 1
                     }
                 }
 
-                binding.forksCountView.text = forksCount.toString()
+                publicReposCount = totalReposCount - privateReposCount
+
+                binding.totalReposCountView.text = totalReposCount.toString()
+                binding.publicReposCountView.text = publicReposCount.toString()
+                binding.privateReposCountView.text = privateReposCount.toString()
 
                 drawLanguagesStatDiagram(it)
             }
