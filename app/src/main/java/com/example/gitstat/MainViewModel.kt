@@ -11,6 +11,7 @@ import okhttp3.Credentials
 class MainViewModel(application: Application, user: String, token: String) : AndroidViewModel(application) {
     val userLiveData = MutableLiveData<UserModel>()
     val reposLiveData = MutableLiveData<List<RepositoryModel>>()
+    val emailLiveData = MutableLiveData<String>()
 
     val repository = MainRepository(application, user, token)
 
@@ -20,5 +21,9 @@ class MainViewModel(application: Application, user: String, token: String) : And
 
     fun updateRepositoriesData() {
         repository.updateRepositoriesLiveData(reposLiveData)
+    }
+
+    fun updateEmailData() {
+        repository.updateEmailLiveData(emailLiveData)
     }
 }

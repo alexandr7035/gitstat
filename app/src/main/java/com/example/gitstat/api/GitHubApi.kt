@@ -1,8 +1,6 @@
 package com.example.gitstat.api
 
-import com.example.gitstat.model.ReposSearchModel
-import com.example.gitstat.model.RepositoryModel
-import com.example.gitstat.model.UserModel
+import com.example.gitstat.model.*
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -27,6 +25,13 @@ interface GitHubApi {
         @Query("q") userParam: String,
         @Query("page") page: Int,
         @Query("per_page") perPage: Int): Call<ReposSearchModel>
+
+
+    // Returns full list of user's emails
+    @GET("/user/emails")
+    fun getUserEmails(
+        @Header("Authorization") auth: String): Call<List<EmailModel>>
+
 }
 
 

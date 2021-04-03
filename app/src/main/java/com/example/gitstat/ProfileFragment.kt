@@ -58,8 +58,13 @@ class ProfileFragment : Fragment() {
             }
         })
 
-        viewModel.updateUserData()
 
+        viewModel.emailLiveData.observe(viewLifecycleOwner, {
+            binding.emailView.text = it
+        })
+
+        viewModel.updateUserData()
+        viewModel.updateEmailData()
 
     }
 

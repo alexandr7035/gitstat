@@ -8,9 +8,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.example.gitstat.api.GitHubApi
-import com.example.gitstat.model.ReposSearchModel
-import com.example.gitstat.model.RepositoryModel
-import com.example.gitstat.model.UserModel
+import com.example.gitstat.model.*
 import okhttp3.Credentials
 import retrofit2.Call
 import retrofit2.Callback
@@ -74,6 +72,31 @@ class MainRepository(application: Application, user: String, token: String) {
                 Log.d(LOG_TAG,  "FAILURE $message")
             }
 
+        })
+    }
+
+
+    fun updateEmailLiveData(liveData: MutableLiveData<String>) {
+        gitHubApi.getUserEmails(authCredentials).enqueue(object: Callback<List<EmailModel>> {
+            override fun onResponse(
+                call: Call<List<EmailModel>>,
+                response: Response<List<EmailModel>>) {
+
+                if (response.body() != null) {
+                    response.body()!!.forEach {
+                        if (it.primary) {
+                            // Post email string
+                            liveData.postValue(it.email)
+                        }
+                    }
+                }
+
+            }
+
+            override fun onFailure(call: Call<List<EmailModel>>, t: Throwable) {
+                val message: String? = t.message
+                Log.d(LOG_TAG,  "FAILURE $message")
+            }
         })
     }
 }
