@@ -1,5 +1,6 @@
 package com.example.gitstat
 
+import android.R.attr
 import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.Color
@@ -18,11 +19,16 @@ import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.formatter.ValueFormatter
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import java.io.InputStreamReader
 import java.util.*
 import kotlin.collections.ArrayList
+import android.R.attr.value
+
+
+
 
 
 class ReposFragment : Fragment() {
@@ -152,8 +158,10 @@ class ReposFragment : Fragment() {
         dataSet.valueTextSize = 20f
         dataSet.valueTextColor = Color.WHITE
         dataSet.valueTypeface = Typeface.defaultFromStyle(Typeface.BOLD);
-        val data = PieData(dataSet)
 
+        val data = PieData(dataSet)
+        // Remove decimal part from value
+        data.setValueFormatter(CustomValueFormatter())
 
         binding.languagesChart.setEntryLabelTextSize(16f)
         //binding.languagesChart.setUsePercentValues(true)
@@ -173,5 +181,14 @@ class ReposFragment : Fragment() {
 
         // Should be in the end to display legend correctly
         binding.languagesChart.data = data
+
+        binding.languagesChart.centerText = reposList.size.toString()
+        binding.languagesChart.setCenterTextSize(30f)
+    }
+}
+
+class CustomValueFormatter(): ValueFormatter() {
+    override fun getFormattedValue(value: Float): String {
+        return "" + value.toInt()
     }
 }
