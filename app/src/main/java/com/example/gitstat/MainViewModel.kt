@@ -13,7 +13,9 @@ class MainViewModel(application: Application, user: String, token: String) : And
     val reposLiveData = MutableLiveData<List<RepositoryModel>>()
     val emailLiveData = MutableLiveData<String>()
 
-    val repository = MainRepository(application, user, token)
+    private val repository = MainRepository(application, user, token)
+
+    var msgLiveData = repository.getMessageLiveData()
 
     fun updateUserData() {
         repository.getUserData(userLiveData)
@@ -26,4 +28,5 @@ class MainViewModel(application: Application, user: String, token: String) : And
     fun updateEmailData() {
         repository.updateEmailLiveData(emailLiveData)
     }
+
 }

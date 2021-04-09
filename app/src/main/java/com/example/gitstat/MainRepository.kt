@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import android.util.Log
 import android.widget.Toast
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.gitstat.api.GitHubApi
 import com.example.gitstat.model.*
@@ -25,6 +26,8 @@ class MainRepository(application: Application, user: String, token: String) {
     private lateinit var token: String
     private lateinit var authCredentials: String
 
+    private lateinit var messageLiveData: MutableLiveData<String>
+
     init {
 
         val retrofit = Retrofit.Builder()
@@ -38,6 +41,9 @@ class MainRepository(application: Application, user: String, token: String) {
         this.user = user
         this.token = token
         authCredentials = Credentials.basic(this.user, this.token)
+
+
+        messageLiveData = MutableLiveData<String>()
     }
 
     fun getUserData(liveData: MutableLiveData<UserModel>) {
@@ -70,6 +76,7 @@ class MainRepository(application: Application, user: String, token: String) {
             override fun onFailure(call: Call<ReposSearchModel>, t: Throwable) {
                 val message: String? = t.message
                 Log.d(LOG_TAG,  "FAILURE $message")
+                messageLiveData.postValue("$message")
             }
 
         })
@@ -96,7 +103,12 @@ class MainRepository(application: Application, user: String, token: String) {
             override fun onFailure(call: Call<List<EmailModel>>, t: Throwable) {
                 val message: String? = t.message
                 Log.d(LOG_TAG,  "FAILURE $message")
+                messageLiveData.postValue("$message")
             }
         })
+    }
+
+    fun getMessageLiveData(): MutableLiveData<String> {
+        return messageLiveData
     }
 }
