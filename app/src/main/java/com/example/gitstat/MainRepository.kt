@@ -54,7 +54,9 @@ class MainRepository(application: Application, user: String, token: String) {
             }
 
             override fun onFailure(call: Call<UserModel>, t: Throwable) {
-
+                val message: String? = t.message
+                Log.d(LOG_TAG,  "FAILURE $message")
+                messageLiveData.postValue("$message")
             }
 
         })
