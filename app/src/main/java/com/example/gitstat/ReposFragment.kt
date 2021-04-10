@@ -26,9 +26,7 @@ import java.io.InputStreamReader
 import java.util.*
 import kotlin.collections.ArrayList
 import android.R.attr.value
-
-
-
+import android.widget.Toast
 
 
 class ReposFragment : Fragment() {
@@ -90,6 +88,11 @@ class ReposFragment : Fragment() {
 
         viewModel.updateUserData()
         viewModel.updateRepositoriesData()
+
+        // Show API errors
+        viewModel.msgLiveData.observe(viewLifecycleOwner, {
+            Toast.makeText(activity, it, Toast.LENGTH_LONG).show()
+        })
 
     }
 

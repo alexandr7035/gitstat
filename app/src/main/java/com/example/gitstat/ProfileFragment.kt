@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import com.example.gitstat.databinding.FragmentProfileBinding
 import com.squareup.picasso.Picasso
 
@@ -40,20 +42,29 @@ class ProfileFragment : Fragment() {
         val token = sharedPreferences.getString(getString(R.string.shared_pref_token), "NONE")
         Log.d(LOG_TAG, "Auth '$user' with token '$token'")
 
+        // Nav controller
+        // NavController
+        val hf: NavHostFragment = activity?.supportFragmentManager?.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = hf.navController
+
 
         val viewModel = MainViewModel(requireActivity().application, "$user", "$token")
 
         viewModel.userLiveData.observe(viewLifecycleOwner, {
             if (it != null) {
+
+                // Header
                 binding.nameView.text = it.name
                 binding.userIdView.text = it.login
-
                 Picasso.get().load(it.avatar_url).into(binding.profileImageView)
 
-                val reposCount = it.public_repos + it.total_private_repos
-                binding.reposCountView.text = reposCount.toString()
-
-                binding.followersCount.text = it.followers.toString()
+                // Summary card
+                binding.idView.text = it.id.toString()
+                // FIXME change format
+                binding.createdView.text = it.created_at
+                binding.updatedView.text = it.updated_at
+                binding.followersView.text = it.followers.toString()
+                binding.locationView.text = it.location
 
             }
         })
@@ -63,8 +74,42 @@ class ProfileFragment : Fragment() {
             binding.emailView.text = it
         })
 
+
+        viewModel.reposLiveData.observe(viewLifecycleOwner, {
+
+            if (it != null) {
+
+                var totalReposCount = it.size
+                var privateReposCount = 0
+                var publicReposCount = 0
+
+                it.forEach {
+                    if (it.private){
+                        privateReposCount += 1
+                    }
+                }
+
+                publicReposCount = totalReposCount - privateReposCount
+
+                binding.totalReposView.text = totalReposCount.toString()
+                binding.publicReposView.text = publicReposCount.toString()
+                binding.privateReposViev.text = privateReposCount.toString()
+
+            }
+
+        })
+
+
         viewModel.updateUserData()
         viewModel.updateEmailData()
+
+        viewModel.updateRepositoriesData()
+
+
+        binding.reposStatDetailedBtn.setOnClickListener {
+            Log.d(LOG_TAG, "clicked SHOW MORE")
+            navController.navigate(R.id.reposFragment)
+        }
 
     }
 

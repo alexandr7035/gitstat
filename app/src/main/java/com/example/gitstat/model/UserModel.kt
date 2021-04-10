@@ -12,5 +12,8 @@ data class UserModel(
     val total_private_repos: Long,
 
     val followers: Long,
-    val following: Long
+    val following: Long,
+
+    val created_at: String,
+    val updated_at: String
 )
