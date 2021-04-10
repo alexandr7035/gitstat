@@ -1,4 +1,4 @@
-package com.example.gitstat
+package com.example.gitstat.fragments
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -8,10 +8,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
+import com.example.gitstat.AuthState
+import com.example.gitstat.R
 import com.example.gitstat.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment(), View.OnClickListener {

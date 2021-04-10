@@ -1,6 +1,5 @@
 package com.example.gitstat
 
-import android.R.attr
 import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.Color
@@ -10,11 +9,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
 import com.example.gitstat.databinding.FragmentReposBinding
 import com.example.gitstat.model.RepositoryModel
-import com.example.gitstat.model.UserModel
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
@@ -25,8 +23,6 @@ import com.google.gson.reflect.TypeToken
 import java.io.InputStreamReader
 import java.util.*
 import kotlin.collections.ArrayList
-import android.R.attr.value
-import android.widget.Toast
 
 
 class ReposFragment : Fragment() {
