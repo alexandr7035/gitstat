@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import com.example.gitstat.MainViewModel
@@ -103,7 +104,6 @@ class ProfileFragment : Fragment() {
 
         viewModel.updateUserData()
         viewModel.updateEmailData()
-
         viewModel.updateRepositoriesData()
 
 
@@ -111,6 +111,24 @@ class ProfileFragment : Fragment() {
             Log.d(LOG_TAG, "clicked SHOW MORE")
             navController.navigate(R.id.reposFragment)
         }
+
+
+        binding.refreshDataBtn.setOnClickListener {
+
+            // DEBUG
+            binding.nameView.text = ""
+            binding.userIdView.text = ""
+
+            viewModel.updateUserData()
+            viewModel.updateEmailData()
+            viewModel.updateRepositoriesData()
+        }
+
+
+        // Show API errors
+        viewModel.msgLiveData.observe(viewLifecycleOwner, {
+            Toast.makeText(activity, it, Toast.LENGTH_SHORT).show()
+        })
 
     }
 

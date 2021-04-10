@@ -16,6 +16,9 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import okhttp3.OkHttpClient
+import java.util.concurrent.TimeUnit
+
 
 class MainRepository(application: Application, user: String, token: String) {
 
@@ -29,10 +32,17 @@ class MainRepository(application: Application, user: String, token: String) {
     private lateinit var messageLiveData: MutableLiveData<String>
 
     init {
+        val okHttpClient = OkHttpClient.Builder()
+            .connectTimeout(5, TimeUnit.SECONDS)
+            .readTimeout(5, TimeUnit.SECONDS)
+            .writeTimeout(5, TimeUnit.SECONDS)
+            .retryOnConnectionFailure(false)
+            .build()
 
         val retrofit = Retrofit.Builder()
                 // Fixme - move to strings
             .baseUrl("https://api.github.com/")
+            .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 

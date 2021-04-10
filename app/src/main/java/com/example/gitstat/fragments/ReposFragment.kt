@@ -87,7 +87,7 @@ class ReposFragment : Fragment() {
 
         // Show API errors
         viewModel.msgLiveData.observe(viewLifecycleOwner, {
-            Toast.makeText(activity, it, Toast.LENGTH_LONG).show()
+            Toast.makeText(activity, it, Toast.LENGTH_SHORT).show()
         })
 
     }
