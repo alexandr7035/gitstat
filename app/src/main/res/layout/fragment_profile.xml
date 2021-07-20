@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
-        android:text="Profile"
+        android:text="@string/profile"
         android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -58,7 +58,7 @@
                 android:gravity="right"
                 android:includeFontPadding="false"
                 android:maxLines="1"
-                android:text="Show more"
+                android:text="@string/show_more"
                 android:textAlignment="viewEnd"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -83,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:maxLines="1"
-                android:text="Total repos"
+                android:text="@string/total_repos"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -93,7 +93,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:maxLines="1"
-                android:text="25"
+                tools:text="25"
                 android:textSize="18sp" />
 
         </LinearLayout>
@@ -117,7 +117,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:maxLines="1"
-                android:text="Public repos"
+                android:text="@string/public_repos"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -127,7 +127,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:maxLines="1"
-                android:text="10"
+                tools:text="10"
                 android:textSize="18sp" />
 
         </LinearLayout>
@@ -150,7 +150,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:maxLines="1"
-                android:text="Private repos"
+                android:text="@string/private_repos"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -160,7 +160,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:maxLines="1"
-                android:text="15"
+                tools:text="15"
                 android:textSize="18sp" />
 
         </LinearLayout>
@@ -208,7 +208,7 @@
                     android:id="@+id/nameView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Name Name"
+                    tools:text="Name Name"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -217,7 +217,7 @@
                     android:id="@+id/userIdView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="\@userId"
+                    tools:text="\@userId"
                     android:textColor="@color/gray_200"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -268,7 +268,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:maxLines="1"
-                android:text="ID"
+                android:text="@string/id"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -278,7 +278,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:maxLines="1"
-                android:text="100023434"
+                tools:text="100"
                 android:textSize="18sp" />
 
         </LinearLayout>
@@ -303,7 +303,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:maxLines="1"
-                android:text="Created"
+                android:text="@string/created"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -313,7 +313,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:maxLines="1"
-                android:text="2016-03-07 12:11"
+                tools:text="2016-03-07 12:11"
                 android:textSize="18sp" />
 
         </LinearLayout>
@@ -337,7 +337,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:maxLines="1"
-                android:text="Updated"
+                android:text="@string/updated"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -347,7 +347,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:maxLines="1"
-                android:text="2020-05-09 12:11"
+                tools:text="2020-05-09 12:11"
                 android:textSize="18sp" />
 
         </LinearLayout>
@@ -371,7 +371,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:maxLines="1"
-                android:text="Followers"
+                android:text="@string/followers"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -381,7 +381,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:maxLines="1"
-                android:text="10"
+                tools:text="10"
                 android:textSize="18sp" />
 
         </LinearLayout>
@@ -404,7 +404,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:maxLines="1"
-                android:text="Location"
+                android:text="@string/location"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -414,7 +414,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:maxLines="1"
-                android:text="Belarus"
+                tools:text="Belarus"
                 android:textSize="18sp" />
 
         </LinearLayout>
