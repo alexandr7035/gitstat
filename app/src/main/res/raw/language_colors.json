@@ -31,6 +31,10 @@
         "color": "#B9D9FF",
         "url": "https://github.com/trending?l=AGS-Script"
     },
+    "AIDL": {
+        "color": "#34EB6B",
+        "url": "https://github.com/trending?l=AIDL"
+    },
     "AL": {
         "color": "#3AA2B5",
         "url": "https://github.com/trending?l=AL"
@@ -116,12 +120,16 @@
         "url": "https://github.com/trending?l=AutoIt"
     },
     "Awk": {
-        "color": null,
+        "color": "#c30e9b",
         "url": "https://github.com/trending?l=Awk"
     },
     "Ballerina": {
         "color": "#FF5000",
         "url": "https://github.com/trending?l=Ballerina"
+    },
+    "BASIC": {
+        "color": "#ff0000",
+        "url": "https://github.com/trending?l=BASIC"
     },
     "Batchfile": {
         "color": "#C1F12E",
@@ -134,6 +142,10 @@
     "Befunge": {
         "color": null,
         "url": "https://github.com/trending?l=Befunge"
+    },
+    "Bicep": {
+        "color": "#519aba",
+        "url": "https://github.com/trending?l=Bicep"
     },
     "Bison": {
         "color": "#6A463F",
@@ -323,6 +335,10 @@
         "color": "#3A4E3A",
         "url": "https://github.com/trending?l=Cuda"
     },
+    "CUE": {
+        "color": "#5886E1",
+        "url": "https://github.com/trending?l=CUE"
+    },
     "CWeb": {
         "color": null,
         "url": "https://github.com/trending?l=CWeb"
@@ -463,6 +479,10 @@
         "color": null,
         "url": "https://github.com/trending?l=fish"
     },
+    "Fluent": {
+        "color": "#ffcc33",
+        "url": "https://github.com/trending?l=Fluent"
+    },
     "FLUX": {
         "color": "#88ccff",
         "url": "https://github.com/trending?l=FLUX"
@@ -478,6 +498,10 @@
     "Fortran Free Form": {
         "color": null,
         "url": "https://github.com/trending?l=Fortran-Free-Form"
+    },
+    "FreeBasic": {
+        "color": "#867db1",
+        "url": "https://github.com/trending?l=FreeBasic"
     },
     "FreeMarker": {
         "color": "#0050b2",
@@ -711,6 +735,10 @@
         "color": "#DBCA00",
         "url": "https://github.com/trending?l=JFlex"
     },
+    "Jinja": {
+        "color": "#a52a22",
+        "url": "https://github.com/trending?l=Jinja"
+    },
     "Jison": {
         "color": null,
         "url": "https://github.com/trending?l=Jison"
@@ -748,7 +776,7 @@
         "url": "https://github.com/trending?l=Kaitai-Struct"
     },
     "Kotlin": {
-        "color": "#F18E33",
+        "color": "#A97BFF",
         "url": "https://github.com/trending?l=Kotlin"
     },
     "KRL": {
@@ -788,7 +816,7 @@
         "url": "https://github.com/trending?l=LFE"
     },
     "LilyPond": {
-        "color": null,
+        "color": "#9ccc7c",
         "url": "https://github.com/trending?l=LilyPond"
     },
     "Limbo": {
@@ -1175,6 +1203,10 @@
         "color": "#dbb284",
         "url": "https://github.com/trending?l=Pawn"
     },
+    "PEG.js": {
+        "color": "#234d6b",
+        "url": "https://github.com/trending?l=PEG.js"
+    },
     "Pep8": {
         "color": "#C76F5B",
         "url": "https://github.com/trending?l=Pep8"
@@ -1343,6 +1375,10 @@
         "color": null,
         "url": "https://github.com/trending?l=Redcode"
     },
+    "Regular Expression": {
+        "color": "#009a00",
+        "url": "https://github.com/trending?l=Regular-Expression"
+    },
     "Ren'Py": {
         "color": "#ff7f7f",
         "url": "https://github.com/trending?l=Ren'Py"
@@ -1459,6 +1495,10 @@
         "color": null,
         "url": "https://github.com/trending?l=Sieve"
     },
+    "Singularity": {
+        "color": "#64E6AD",
+        "url": "https://github.com/trending?l=Singularity"
+    },
     "Slash": {
         "color": "#007eff",
         "url": "https://github.com/trending?l=Slash"
@@ -1531,6 +1571,10 @@
         "color": null,
         "url": "https://github.com/trending?l=Stata"
     },
+    "StringTemplate": {
+        "color": "#3fb34f",
+        "url": "https://github.com/trending?l=StringTemplate"
+    },
     "Stylus": {
         "color": "#ff6347",
         "url": "https://github.com/trending?l=Stylus"
@@ -1574,6 +1618,10 @@
     "TeX": {
         "color": "#3D6117",
         "url": "https://github.com/trending?l=TeX"
+    },
+    "TextMate Properties": {
+        "color": "#df66e4",
+        "url": "https://github.com/trending?l=TextMate-Properties"
     },
     "Thrift": {
         "color": null,
@@ -1639,6 +1687,10 @@
         "color": "#fbe5cd",
         "url": "https://github.com/trending?l=Vala"
     },
+    "Valve Data Format": {
+        "color": "#f26025",
+        "url": "https://github.com/trending?l=Valve-Data-Format"
+    },
     "VBA": {
         "color": "#867db1",
         "url": "https://github.com/trending?l=VBA"
@@ -1672,7 +1724,7 @@
         "url": "https://github.com/trending?l=Volt"
     },
     "Vue": {
-        "color": "#2c3e50",
+        "color": "#41b883",
         "url": "https://github.com/trending?l=Vue"
     },
     "wdl": {
@@ -1710,6 +1762,10 @@
     "Xojo": {
         "color": null,
         "url": "https://github.com/trending?l=Xojo"
+    },
+    "Xonsh": {
+        "color": "#285EEF",
+        "url": "https://github.com/trending?l=Xonsh"
     },
     "XProc": {
         "color": null,
