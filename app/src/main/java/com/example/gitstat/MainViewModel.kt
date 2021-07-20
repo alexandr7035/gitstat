@@ -23,8 +23,4 @@ class MainViewModel(application: Application, user: String, token: String) : And
         repository.updateRepositoriesLiveData(reposLiveData)
     }
 
-    fun updateEmailData() {
-        repository.updateEmailLiveData(emailLiveData)
-    }
-
 }

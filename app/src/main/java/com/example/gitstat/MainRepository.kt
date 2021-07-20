@@ -94,32 +94,6 @@ class MainRepository(application: Application, user: String, token: String) {
         })
     }
 
-
-    fun updateEmailLiveData(liveData: MutableLiveData<String>) {
-        gitHubApi.getUserEmails(authCredentials).enqueue(object: Callback<List<EmailModel>> {
-            override fun onResponse(
-                call: Call<List<EmailModel>>,
-                response: Response<List<EmailModel>>) {
-
-                if (response.body() != null) {
-                    response.body()!!.forEach {
-                        if (it.primary) {
-                            // Post email string
-                            liveData.postValue(it.email)
-                        }
-                    }
-                }
-
-            }
-
-            override fun onFailure(call: Call<List<EmailModel>>, t: Throwable) {
-                val message: String? = t.message
-                Log.d(LOG_TAG,  "FAILURE $message")
-                messageLiveData.postValue("$message")
-            }
-        })
-    }
-
     fun getMessageLiveData(): MutableLiveData<String> {
         return messageLiveData
     }

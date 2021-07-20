@@ -71,12 +71,6 @@ class ProfileFragment : Fragment() {
             }
         })
 
-
-        viewModel.emailLiveData.observe(viewLifecycleOwner, {
-            binding.emailView.text = it
-        })
-
-
         viewModel.reposLiveData.observe(viewLifecycleOwner, {
 
             if (it != null) {
@@ -103,7 +97,6 @@ class ProfileFragment : Fragment() {
 
 
         viewModel.updateUserData()
-        viewModel.updateEmailData()
         viewModel.updateRepositoriesData()
 
 
@@ -120,7 +113,6 @@ class ProfileFragment : Fragment() {
             binding.userIdView.text = ""
 
             viewModel.updateUserData()
-            viewModel.updateEmailData()
             viewModel.updateRepositoriesData()
         }
 
