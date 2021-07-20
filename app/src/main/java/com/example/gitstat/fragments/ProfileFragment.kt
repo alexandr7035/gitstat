@@ -105,18 +105,6 @@ class ProfileFragment : Fragment() {
             navController.navigate(R.id.reposFragment)
         }
 
-
-        binding.refreshDataBtn.setOnClickListener {
-
-            // DEBUG
-            binding.nameView.text = ""
-            binding.userIdView.text = ""
-
-            viewModel.updateUserData()
-            viewModel.updateRepositoriesData()
-        }
-
-
         // Show API errors
         viewModel.msgLiveData.observe(viewLifecycleOwner, {
             Toast.makeText(activity, it, Toast.LENGTH_SHORT).show()
