@@ -12,7 +12,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.gitstat.databinding.FragmentReposBinding
-import com.example.gitstat.model.RepositoryModel
+import com.example.gitstat.data.RepositoryModel
+import com.example.gitstat.presentation.MainViewModel
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
@@ -22,7 +23,6 @@ import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import java.io.InputStreamReader
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class ReposFragment : Fragment() {
@@ -152,7 +152,7 @@ class ReposFragment : Fragment() {
         }
 
 
-        val dataSet = PieDataSet(entries,   "")
+        val dataSet = PieDataSet(entries, "")
         dataSet.colors = colors
         dataSet.valueTextSize = 20f
         dataSet.valueTextColor = Color.WHITE

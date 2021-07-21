@@ -1,4 +1,4 @@
-package com.example.gitstat
+package com.example.gitstat.data
 
 class AuthState {
 

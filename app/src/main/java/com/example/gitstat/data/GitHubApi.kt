@@ -1,4 +1,4 @@
-package com.example.gitstat.api
+package com.example.gitstat.data
 
 import com.example.gitstat.model.*
 import retrofit2.Call

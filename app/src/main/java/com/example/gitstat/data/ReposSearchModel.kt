@@ -1,4 +1,4 @@
-package com.example.gitstat.model
+package com.example.gitstat.data
 
 data class ReposSearchModel(
     val total_count: Long,

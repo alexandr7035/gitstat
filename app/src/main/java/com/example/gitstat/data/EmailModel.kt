@@ -1,4 +1,4 @@
-package com.example.gitstat.model
+package com.example.gitstat.data
 
 data class EmailModel(
     val email: String,

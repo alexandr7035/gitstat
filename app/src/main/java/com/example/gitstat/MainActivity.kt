@@ -12,8 +12,8 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.example.gitstat.api.GitHubApi
-import com.example.gitstat.model.UserModel
+import com.example.gitstat.data.GitHubApi
+import com.example.gitstat.data.UserModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import okhttp3.Credentials
 import retrofit2.Call

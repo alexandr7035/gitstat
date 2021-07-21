@@ -1,10 +1,11 @@
-package com.example.gitstat
+package com.example.gitstat.presentation
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.example.gitstat.model.RepositoryModel
-import com.example.gitstat.model.UserModel
+import com.example.gitstat.data.MainRepository
+import com.example.gitstat.data.RepositoryModel
+import com.example.gitstat.data.UserModel
 
 class MainViewModel(application: Application, user: String, token: String) : AndroidViewModel(application) {
     val userLiveData = MutableLiveData<UserModel>()

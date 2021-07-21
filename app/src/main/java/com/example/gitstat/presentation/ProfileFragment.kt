@@ -1,4 +1,4 @@
-package com.example.gitstat.fragments
+package com.example.gitstat.presentation
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
-import com.example.gitstat.MainViewModel
+import com.example.gitstat.presentation.MainViewModel
 import com.example.gitstat.R
 import com.example.gitstat.databinding.FragmentProfileBinding
 import com.squareup.picasso.Picasso

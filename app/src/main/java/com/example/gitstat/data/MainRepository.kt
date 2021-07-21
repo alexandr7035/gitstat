@@ -1,14 +1,8 @@
-package com.example.gitstat
+package com.example.gitstat.data
 
 import android.app.Application
-import android.content.Context
-import android.content.SharedPreferences
-import android.preference.PreferenceManager
 import android.util.Log
-import android.widget.Toast
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.gitstat.api.GitHubApi
 import com.example.gitstat.model.*
 import okhttp3.Credentials
 import retrofit2.Call
