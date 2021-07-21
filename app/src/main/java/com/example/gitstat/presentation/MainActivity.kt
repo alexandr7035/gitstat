@@ -1,4 +1,4 @@
-package com.example.gitstat
+package com.example.gitstat.presentation
 
 import android.app.Activity
 import android.content.Context
@@ -19,6 +19,7 @@ import okhttp3.Credentials
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import com.example.gitstat.R
 
 class MainActivity : AppCompatActivity() {
 

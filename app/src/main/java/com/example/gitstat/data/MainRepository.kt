@@ -3,7 +3,6 @@ package com.example.gitstat.data
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.example.gitstat.model.*
 import okhttp3.Credentials
 import retrofit2.Call
 import retrofit2.Callback
