@@ -24,13 +24,7 @@ interface GitHubApi {
         @Query("q") userParam: String,
         @Query("page") page: Int,
         @Query("per_page") perPage: Int): Call<ReposSearchModel>
-
-
-    // Returns full list of user's emails
-    @GET("/user/emails")
-    fun getUserEmails(
-        @Header("Authorization") auth: String): Call<List<EmailModel>>
-
+    
 }
 
 
