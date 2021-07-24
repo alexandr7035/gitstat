@@ -1,5 +1,7 @@
 package com.example.gitstat.data
 
+import com.example.gitstat.data.model.ReposSearchModel
+import com.example.gitstat.data.model.UserModel
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -24,7 +26,7 @@ interface GitHubApi {
         @Query("q") userParam: String,
         @Query("page") page: Int,
         @Query("per_page") perPage: Int): Call<ReposSearchModel>
-    
+
 }
 
 

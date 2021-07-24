@@ -1,4 +1,4 @@
-package com.example.gitstat.data
+package com.example.gitstat.data.model
 
 import android.telephony.cdma.CdmaCellLocation
 

@@ -1,4 +1,4 @@
-package com.example.gitstat.data
+package com.example.gitstat.data.model
 
 data class RepositoryModel(
     val id: Long,
