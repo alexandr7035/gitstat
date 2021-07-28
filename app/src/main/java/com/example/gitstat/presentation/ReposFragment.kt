@@ -12,7 +12,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.gitstat.databinding.FragmentReposBinding
-import com.example.gitstat.data.model.RepositoryModel
+import com.example.gitstat.data.remote.RepositoryModel
 import com.example.gitstat.presentation.MainViewModel
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
@@ -55,7 +55,7 @@ class ReposFragment : Fragment() {
 
         val viewModel = MainViewModel(requireActivity().application, "$user", "$token")
 
-
+        """
         viewModel.reposLiveData.observe(viewLifecycleOwner, {
 
             if (it != null) {
@@ -89,6 +89,7 @@ class ReposFragment : Fragment() {
         viewModel.msgLiveData.observe(viewLifecycleOwner, {
             Toast.makeText(activity, it, Toast.LENGTH_SHORT).show()
         })
+        """
 
     }
 

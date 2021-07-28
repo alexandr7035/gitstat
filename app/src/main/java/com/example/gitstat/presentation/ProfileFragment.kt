@@ -52,6 +52,7 @@ class ProfileFragment : Fragment() {
 
         val viewModel = MainViewModel(requireActivity().application, "$user", "$token")
 
+        """
         viewModel.userLiveData.observe(viewLifecycleOwner, {
             if (it != null) {
 
@@ -70,7 +71,8 @@ class ProfileFragment : Fragment() {
 
             }
         })
-
+        
+        
         viewModel.reposLiveData.observe(viewLifecycleOwner, {
 
             if (it != null) {
@@ -94,10 +96,11 @@ class ProfileFragment : Fragment() {
             }
 
         })
+        """
 
 
-        viewModel.updateUserData()
-        viewModel.updateRepositoriesData()
+        //viewModel.updateUserData()
+        //viewModel.updateRepositoriesData()
 
 
         binding.reposStatDetailedBtn.setOnClickListener {
@@ -105,10 +108,12 @@ class ProfileFragment : Fragment() {
             navController.navigate(R.id.reposFragment)
         }
 
+        """
         // Show API errors
         viewModel.msgLiveData.observe(viewLifecycleOwner, {
             Toast.makeText(activity, it, Toast.LENGTH_SHORT).show()
         })
+        """
 
     }
 
