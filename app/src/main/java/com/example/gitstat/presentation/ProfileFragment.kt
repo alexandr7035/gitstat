@@ -52,6 +52,27 @@ class ProfileFragment : Fragment() {
 
         val viewModel = MainViewModel(requireActivity().application, "$user", "$token")
 
+        viewModel.userLiveData.observe(viewLifecycleOwner, {
+
+            Picasso.get().load(it.avatar_url).into(binding.profileImageView)
+
+
+            binding.nameView.text = it.name
+            binding.loginView.text = it.login
+
+            binding.idView.text = it.id.toString()
+            binding.createdView.text = it.created_at
+            binding.updatedView.text = it.updated_at
+
+            binding.followersView.text = it.followers.toString()
+            binding.locationView.text = it.location
+
+            binding.totalReposView.text = (it.total_private_repos + it.public_repos).toString()
+            binding.privateReposViev.text = it.total_private_repos.toString()
+            binding.publicReposView.text = it.public_repos.toString()
+
+        })
+
         """
         viewModel.userLiveData.observe(viewLifecycleOwner, {
             if (it != null) {

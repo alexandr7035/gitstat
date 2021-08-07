@@ -1,7 +1,7 @@
 package com.example.gitstat.data
 
-import com.example.gitstat.data.model.ReposSearchModel
-import com.example.gitstat.data.model.UserModel
+import com.example.gitstat.data.remote.ReposSearchModel
+import com.example.gitstat.data.remote.UserModel
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Header

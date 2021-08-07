@@ -1,11 +1,9 @@
-package com.example.gitstat.data
+package com.example.gitstat.data.remote
 
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.example.gitstat.data.model.ReposSearchModel
-import com.example.gitstat.data.model.RepositoryModel
-import com.example.gitstat.data.model.UserModel
+import com.example.gitstat.data.GitHubApi
 import okhttp3.Credentials
 import retrofit2.Call
 import retrofit2.Callback
@@ -16,7 +14,7 @@ import okhttp3.OkHttpClient
 import java.util.concurrent.TimeUnit
 
 
-class MainRepository(application: Application, user: String, token: String) {
+class NetworkModule(application: Application, user: String, token: String) {
 
     private val LOG_TAG = "DEBUG_TAG"
 

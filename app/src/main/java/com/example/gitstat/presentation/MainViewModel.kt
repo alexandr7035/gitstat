@@ -3,25 +3,20 @@ package com.example.gitstat.presentation
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.example.gitstat.data.MainRepository
-import com.example.gitstat.data.model.RepositoryModel
-import com.example.gitstat.data.model.UserModel
+import com.example.gitstat.data.Repository
+import com.example.gitstat.data.remote.NetworkModule
+import com.example.gitstat.data.remote.RepositoryModel
+import com.example.gitstat.data.remote.UserModel
 
 class MainViewModel(application: Application, user: String, token: String) : AndroidViewModel(application) {
-    val userLiveData = MutableLiveData<UserModel>()
-    val reposLiveData = MutableLiveData<List<RepositoryModel>>()
-    val emailLiveData = MutableLiveData<String>()
+    //val userLiveData = MutableLiveData<UserModel>()
+    //val reposLiveData = MutableLiveData<List<RepositoryModel>>()
 
-    private val repository = MainRepository(application, user, token)
+    //private val repository = NetworkModule(application, user, token)
+    private val repository = Repository(application)
+    // Fixme ID
+    val userLiveData = repository.getUserLiveDataFromCache(user_id = 22574399)
 
-    var msgLiveData = repository.getMessageLiveData()
-
-    fun updateUserData() {
-        repository.getUserData(userLiveData)
-    }
-
-    fun updateRepositoriesData() {
-        repository.updateRepositoriesLiveData(reposLiveData)
-    }
+    //var msgLiveData = repository.getMessageLiveData()
 
 }
