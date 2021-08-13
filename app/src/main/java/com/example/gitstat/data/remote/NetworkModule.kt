@@ -3,7 +3,11 @@ package com.example.gitstat.data.remote
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.example.gitstat.data.GitHubApi
+import com.example.gitstat.data.remote.GitHubApi
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okhttp3.Credentials
 import retrofit2.Call
 import retrofit2.Callback
@@ -50,20 +54,9 @@ class NetworkModule(application: Application, user: String, token: String) {
         messageLiveData = MutableLiveData<String>()
     }
 
-    fun getUserData(liveData: MutableLiveData<UserModel>) {
-        //liveData.postValue()
-        gitHubApi.getUser(authCredentials, user).enqueue(object : Callback<UserModel> {
-            override fun onResponse(call: Call<UserModel>, response: Response<UserModel>) {
-                liveData.value = response.body()
-            }
 
-            override fun onFailure(call: Call<UserModel>, t: Throwable) {
-                val message: String? = t.message
-                Log.d(LOG_TAG,  "FAILURE $message")
-                messageLiveData.postValue("$message")
-            }
-
-        })
+    suspend fun getUserData(): Response<UserModel> {
+        return gitHubApi.getUser(authCredentials, user)
     }
 
 

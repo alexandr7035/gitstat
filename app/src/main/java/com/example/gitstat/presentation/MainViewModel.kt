@@ -13,7 +13,7 @@ class MainViewModel(application: Application, user: String, token: String) : And
     //val reposLiveData = MutableLiveData<List<RepositoryModel>>()
 
     //private val repository = NetworkModule(application, user, token)
-    private val repository = Repository(application)
+    private val repository = Repository(application, user, token)
     // Fixme ID
     val userLiveData = repository.getUserLiveDataFromCache(user_id = 22574399)
 
