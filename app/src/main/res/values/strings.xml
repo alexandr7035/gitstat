@@ -27,4 +27,8 @@
     <string name="public_">public</string>
     <string name="private_">private</string>
 
+    <string name="loading">Loading…</string>
+    <string name="synced">Synced</string>
+    <string name="failed">Failed</string>
+
 </resources>

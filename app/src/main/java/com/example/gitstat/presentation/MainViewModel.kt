@@ -17,6 +17,8 @@ class MainViewModel(application: Application, user: String, token: String) : And
     // Fixme ID
     val userLiveData = repository.getUserLiveDataFromCache(user_id = 22574399)
 
+    val syncStatusLiveData = repository.getSyncStatusLiveData()
+
     //var msgLiveData = repository.getMessageLiveData()
 
 }

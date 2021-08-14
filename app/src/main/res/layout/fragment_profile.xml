@@ -9,19 +9,6 @@
     android:paddingBottom="20dp"
     tools:context=".presentation.ProfileFragment">
 
-    <TextView
-        android:id="@+id/fragmentTitle2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/profile"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <LinearLayout
         android:id="@+id/reposSummary"
         android:layout_width="0dp"
@@ -29,13 +16,11 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="40dp"
         android:background="@drawable/background_card"
         android:elevation="5dp"
         android:orientation="vertical"
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/card1">
 
@@ -93,8 +78,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:maxLines="1"
-                tools:text="25"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                tools:text="25" />
 
         </LinearLayout>
 
@@ -127,8 +112,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:maxLines="1"
-                tools:text="10"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                tools:text="10" />
 
         </LinearLayout>
 
@@ -160,8 +145,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:maxLines="1"
-                tools:text="15"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                tools:text="15" />
 
         </LinearLayout>
 
@@ -180,8 +165,9 @@
         android:orientation="vertical"
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.842"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragmentTitle2">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -208,23 +194,23 @@
                     android:id="@+id/nameView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="Name Name"
                     android:textColor="@color/black"
                     android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    tools:text="Name Name" />
 
                 <TextView
                     android:id="@+id/loginView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="\@userId"
                     android:textColor="@color/gray_200"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.582"
                     app:layout_constraintStart_toStartOf="parent"
-                    tools:layout_editor_absoluteY="71dp" />
+                    tools:layout_editor_absoluteY="71dp"
+                    tools:text="\@userId" />
 
             </LinearLayout>
 
@@ -244,7 +230,6 @@
         android:orientation="vertical"
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/headerCard">
 
@@ -278,8 +263,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:maxLines="1"
-                tools:text="100"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                tools:text="100" />
 
         </LinearLayout>
 
@@ -312,8 +297,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:maxLines="1"
-                tools:text="2016-03-07 12:11"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                tools:text="2016-03-07 12:11" />
 
         </LinearLayout>
 
@@ -346,8 +331,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:maxLines="1"
-                tools:text="2020-05-09 12:11"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                tools:text="2020-05-09 12:11" />
 
         </LinearLayout>
 
@@ -380,8 +365,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:maxLines="1"
-                tools:text="10"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                tools:text="10" />
 
         </LinearLayout>
 
@@ -413,11 +398,54 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:maxLines="1"
-                tools:text="Belarus"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                tools:text="Belarus" />
 
         </LinearLayout>
 
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/fragmentTitle2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/profile"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/syncStatusBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/background_sync_button_synced"
+            android:clickable="true"
+            android:text="Synced"
+            android:textColor="#575757"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </LinearLayout>
 

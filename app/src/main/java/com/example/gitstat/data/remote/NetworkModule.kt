@@ -3,11 +3,6 @@ package com.example.gitstat.data.remote
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.example.gitstat.data.remote.GitHubApi
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import okhttp3.Credentials
 import retrofit2.Call
 import retrofit2.Callback
@@ -27,7 +22,6 @@ class NetworkModule(application: Application, user: String, token: String) {
     private lateinit var token: String
     private lateinit var authCredentials: String
 
-    private lateinit var messageLiveData: MutableLiveData<String>
 
     init {
         val okHttpClient = OkHttpClient.Builder()
@@ -50,8 +44,6 @@ class NetworkModule(application: Application, user: String, token: String) {
         this.token = token
         authCredentials = Credentials.basic(this.user, this.token)
 
-
-        messageLiveData = MutableLiveData<String>()
     }
 
 
@@ -75,13 +67,10 @@ class NetworkModule(application: Application, user: String, token: String) {
             override fun onFailure(call: Call<ReposSearchModel>, t: Throwable) {
                 val message: String? = t.message
                 Log.d(LOG_TAG,  "FAILURE $message")
-                messageLiveData.postValue("$message")
+                //syncStateLiveData.postValue("$message")
             }
 
         })
     }
 
-    fun getMessageLiveData(): MutableLiveData<String> {
-        return messageLiveData
-    }
 }

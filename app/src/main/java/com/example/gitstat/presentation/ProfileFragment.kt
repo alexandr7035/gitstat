@@ -8,10 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import com.example.gitstat.presentation.MainViewModel
 import com.example.gitstat.R
+import com.example.gitstat.common.SyncStatus
 import com.example.gitstat.databinding.FragmentProfileBinding
 import com.squareup.picasso.Picasso
 
@@ -70,6 +72,30 @@ class ProfileFragment : Fragment() {
             binding.totalReposView.text = (it.total_private_repos + it.public_repos).toString()
             binding.privateReposViev.text = it.total_private_repos.toString()
             binding.publicReposView.text = it.public_repos.toString()
+
+        })
+
+        viewModel.syncStatusLiveData.observe(viewLifecycleOwner, {
+            Log.d(LOG_TAG, it)
+
+            if (it == SyncStatus.PENDING) {
+                binding.syncStatusBtn.isClickable = false
+                binding.syncStatusBtn.text = getString(R.string.loading)
+                binding.syncStatusBtn.setBackgroundResource(R.drawable.background_sync_button_pending)
+            }
+
+            else if (it == SyncStatus.SUCCESS) {
+                binding.syncStatusBtn.isClickable = true
+                binding.syncStatusBtn.text = getString(R.string.synced)
+                binding.syncStatusBtn.setBackgroundResource(R.drawable.background_sync_button_synced)
+            }
+
+            else if (it == SyncStatus.FAILED) {
+                // FIXME currently disabled. Fix when implement refresh
+                binding.syncStatusBtn.isClickable = false
+                binding.syncStatusBtn.text = getString(R.string.failed)
+                binding.syncStatusBtn.setBackgroundResource(R.drawable.background_sync_button_synced)
+            }
 
         })
 

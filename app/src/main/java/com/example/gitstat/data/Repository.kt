@@ -2,8 +2,11 @@ package com.example.gitstat.data
 
 import android.app.Application
 import android.content.Context
+import android.content.SyncStats
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import com.example.gitstat.common.SyncStatus
 import com.example.gitstat.data.local.CacheDB
 import com.example.gitstat.data.local.UserEntity
 import com.example.gitstat.data.remote.NetworkModule
@@ -18,29 +21,30 @@ class Repository(
     private val token: String
 ) {
 
-    private val db: CacheDB = CacheDB.getInstance(context = application)
-    private val dao = db.getDao()
+    private val dao = CacheDB.getInstance(context = application).getDao()
     private val LOG_TAG = "DEBUG_TAG"
     private val api = NetworkModule(application, user, token)
 
-    init {
-
-
-
-    }
-
+    private val syncStateLiveData = MutableLiveData<String>()
 
     fun getUserLiveDataFromCache(user_id: Long): LiveData<UserEntity> {
 
         //testInsertToCache()
 
         CoroutineScope(Dispatchers.IO).launch {
+
+            // For loading animations, etc
+            syncStateLiveData.postValue(SyncStatus.PENDING)
+
             val res = api.getUserData()
 
             Log.d(LOG_TAG, "cache updated ${res.body()}")
             Log.d(LOG_TAG, "" + System.currentTimeMillis())
 
             if (res.isSuccessful) {
+
+                syncStateLiveData.postValue(SyncStatus.SUCCESS)
+
                 val cachedUser = UserEntity(
                     id = res.body()!!.id,
                     name = res.body()!!.name,
@@ -60,6 +64,9 @@ class Repository(
                 dao.updateUserCache(cachedUser)
 
             }
+            else {
+                syncStateLiveData.postValue(SyncStatus.FAILED)
+            }
 
         }
 
@@ -68,6 +75,10 @@ class Repository(
 
     fun updateUserLiveData(user_id: Long) {
 
+    }
+
+    fun getSyncStatusLiveData(): MutableLiveData<String> {
+        return syncStateLiveData
     }
 
     private fun testInsertToCache() {
