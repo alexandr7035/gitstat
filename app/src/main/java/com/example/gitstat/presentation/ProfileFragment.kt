@@ -51,13 +51,13 @@ class ProfileFragment : Fragment() {
         val hf: NavHostFragment = activity?.supportFragmentManager?.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = hf.navController
 
-
         val viewModel = MainViewModel(requireActivity().application, "$user", "$token")
 
+
+        // Update profile data
         viewModel.userLiveData.observe(viewLifecycleOwner, {
 
             Picasso.get().load(it.avatar_url).into(binding.profileImageView)
-
 
             binding.nameView.text = it.name
             binding.loginView.text = it.login
@@ -75,6 +75,8 @@ class ProfileFragment : Fragment() {
 
         })
 
+
+        // Update synchronization status view
         viewModel.syncStatusLiveData.observe(viewLifecycleOwner, {
             Log.d(LOG_TAG, it)
 
@@ -99,68 +101,11 @@ class ProfileFragment : Fragment() {
 
         })
 
-        """
-        viewModel.userLiveData.observe(viewLifecycleOwner, {
-            if (it != null) {
-
-                // Header
-                binding.nameView.text = it.name
-                binding.userIdView.text = it.login
-                Picasso.get().load(it.avatar_url).into(binding.profileImageView)
-
-                // Summary card
-                binding.idView.text = it.id.toString()
-                // FIXME change format
-                binding.createdView.text = it.created_at
-                binding.updatedView.text = it.updated_at
-                binding.followersView.text = it.followers.toString()
-                binding.locationView.text = it.location
-
-            }
-        })
-        
-        
-        viewModel.reposLiveData.observe(viewLifecycleOwner, {
-
-            if (it != null) {
-
-                var totalReposCount = it.size
-                var privateReposCount = 0
-                var publicReposCount = 0
-
-                it.forEach {
-                    if (it.private){
-                        privateReposCount += 1
-                    }
-                }
-
-                publicReposCount = totalReposCount - privateReposCount
-
-                binding.totalReposView.text = totalReposCount.toString()
-                binding.publicReposView.text = publicReposCount.toString()
-                binding.privateReposViev.text = privateReposCount.toString()
-
-            }
-
-        })
-        """
-
-
-        //viewModel.updateUserData()
-        //viewModel.updateRepositoriesData()
-
 
         binding.reposStatDetailedBtn.setOnClickListener {
             Log.d(LOG_TAG, "clicked SHOW MORE")
             navController.navigate(R.id.reposFragment)
         }
-
-        """
-        // Show API errors
-        viewModel.msgLiveData.observe(viewLifecycleOwner, {
-            Toast.makeText(activity, it, Toast.LENGTH_SHORT).show()
-        })
-        """
 
     }
 

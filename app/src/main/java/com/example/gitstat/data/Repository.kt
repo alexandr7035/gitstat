@@ -20,9 +20,8 @@ class Repository(
     private val user: String,
     private val token: String
 ) {
-
-    private val dao = CacheDB.getInstance(context = application).getDao()
     private val LOG_TAG = "DEBUG_TAG"
+    private val dao = CacheDB.getInstance(context = application).getDao()
     private val api = NetworkModule(application, user, token)
 
     private val syncStateLiveData = MutableLiveData<String>()
@@ -73,9 +72,6 @@ class Repository(
         return dao.getUserCache(user_id)
     }
 
-    fun updateUserLiveData(user_id: Long) {
-
-    }
 
     fun getSyncStatusLiveData(): MutableLiveData<String> {
         return syncStateLiveData
