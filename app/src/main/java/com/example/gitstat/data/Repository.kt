@@ -1,8 +1,7 @@
 package com.example.gitstat.data
 
 import android.app.Application
-import android.content.Context
-import android.content.SyncStats
+import android.text.format.DateFormat
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -14,6 +13,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 
 class Repository(
     private val application: Application,
@@ -44,6 +45,15 @@ class Repository(
 
                 syncStateLiveData.postValue(SyncStatus.SUCCESS)
 
+                // Convert string dates to timestamp
+                val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US)
+                format.timeZone = TimeZone.getTimeZone("GMT")
+                val created_date = format.parse(res.body()!!.created_at).time
+                val updated_date = format.parse(res.body()!!.updated_at).time
+
+                Log.d(LOG_TAG, DateFormat.format("dd.MM.yyyy HH:mm", created_date).toString())
+                Log.d(LOG_TAG, DateFormat.format("dd.MM.yyyy HH:mm", updated_date).toString())
+
                 val cachedUser = UserEntity(
                     id = res.body()!!.id,
                     name = res.body()!!.name,
@@ -54,13 +64,13 @@ class Repository(
                     total_private_repos = res.body()!!.total_private_repos,
                     followers = res.body()!!.followers,
                     following = res.body()!!.following,
-                    created_at = res.body()!!.created_at,
-                    updated_at = res.body()!!.updated_at,
+                    created_at = created_date,
+                    updated_at = updated_date,
 
                     cache_updated_at = System.currentTimeMillis()
                 )
 
-                dao.updateUserCache(cachedUser)
+                dao.insertUserCache(cachedUser)
 
             }
             else {
@@ -92,8 +102,8 @@ class Repository(
             followers = 10,
             following = 10,
 
-            created_at = "06.01.2017",
-            updated_at = "06.01.2017",
+            created_at = 123,
+            updated_at = 12345,
 
             cache_updated_at = 0
         )

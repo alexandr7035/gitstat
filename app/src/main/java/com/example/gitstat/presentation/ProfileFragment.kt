@@ -3,15 +3,13 @@ package com.example.gitstat.presentation
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.text.format.DateFormat
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
-import com.example.gitstat.presentation.MainViewModel
 import com.example.gitstat.R
 import com.example.gitstat.common.SyncStatus
 import com.example.gitstat.databinding.FragmentProfileBinding
@@ -63,8 +61,9 @@ class ProfileFragment : Fragment() {
             binding.loginView.text = it.login
 
             binding.idView.text = it.id.toString()
-            binding.createdView.text = it.created_at
-            binding.updatedView.text = it.updated_at
+
+            binding.createdView.text = DateFormat.format("dd.MM.yyyy HH:mm", it.created_at)
+            binding.updatedView.text = DateFormat.format("dd.MM.yyyy HH:mm", it.updated_at)
 
             binding.followersView.text = it.followers.toString()
             binding.locationView.text = it.location

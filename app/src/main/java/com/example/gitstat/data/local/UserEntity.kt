@@ -18,8 +18,8 @@ class UserEntity(
     var followers: Long,
     var following: Long,
 
-    var created_at: String,
-    var updated_at: String,
+    var created_at: Long,
+    var updated_at: Long,
 
     var cache_updated_at: Long
 )
