@@ -57,23 +57,25 @@ class ProfileFragment : Fragment() {
         // Update profile data
         viewModel.getUserLData().observe(viewLifecycleOwner, {
 
-            Picasso.get().load(it.avatar_url).into(binding.profileImageView)
+            if (it != null) {
 
-            binding.nameView.text = it.name
-            binding.loginView.text = it.login
+                Picasso.get().load(it.avatar_url).into(binding.profileImageView)
 
-            binding.idView.text = it.id.toString()
+                binding.nameView.text = it.name
+                binding.loginView.text = it.login
 
-            binding.createdView.text = DateFormat.format("dd.MM.yyyy HH:mm", it.created_at)
-            binding.updatedView.text = DateFormat.format("dd.MM.yyyy HH:mm", it.updated_at)
+                binding.idView.text = it.id.toString()
 
-            binding.followersView.text = it.followers.toString()
-            binding.locationView.text = it.location
+                binding.createdView.text = DateFormat.format("dd.MM.yyyy HH:mm", it.created_at)
+                binding.updatedView.text = DateFormat.format("dd.MM.yyyy HH:mm", it.updated_at)
 
-            binding.totalReposView.text = (it.total_private_repos + it.public_repos).toString()
-            binding.privateReposViev.text = it.total_private_repos.toString()
-            binding.publicReposView.text = it.public_repos.toString()
+                binding.followersView.text = it.followers.toString()
+                binding.locationView.text = it.location
 
+                binding.totalReposView.text = (it.total_private_repos + it.public_repos).toString()
+                binding.privateReposViev.text = it.total_private_repos.toString()
+                binding.publicReposView.text = it.public_repos.toString()
+            }
         })
 
 

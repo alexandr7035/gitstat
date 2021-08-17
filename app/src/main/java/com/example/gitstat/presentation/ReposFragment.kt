@@ -58,79 +58,78 @@ class ReposFragment : Fragment() {
 
         viewModel.getLanguagesLData().observe(viewLifecycleOwner, {
 
-            binding.languagesChart.invalidate()
+            if (it != null) {
 
-            // Read colors jsom from resources
-            val inputStream = resources.openRawResource(R.raw.language_colors)
-            val reader = InputStreamReader(inputStream)
+                binding.languagesChart.invalidate()
 
-            // Convert to map
-            val builder = GsonBuilder()
-            val itemsMapType = object : TypeToken<Map<String, Map<String, String>>>() {}.type
-            val languagesColorsList: Map<String, Map<String, String>> = builder.create().fromJson(reader, itemsMapType)
+                // Read colors jsom from resources
+                val inputStream = resources.openRawResource(R.raw.language_colors)
+                val reader = InputStreamReader(inputStream)
+
+                // Convert to map
+                val builder = GsonBuilder()
+                val itemsMapType = object : TypeToken<Map<String, Map<String, String>>>() {}.type
+                val languagesColorsList: Map<String, Map<String, String>> = builder.create().fromJson(reader, itemsMapType)
 
 
-            // Diagram data
-            val entries = ArrayList<PieEntry>()
-            val colors: MutableList<Int> = ArrayList()
+                // Diagram data
+                val entries = ArrayList<PieEntry>()
+                val colors: MutableList<Int> = ArrayList()
 
-            it.forEach() {
-                // Add entry
-                entries.add(PieEntry(it.reposCount.toFloat(), it.name))
+                it.forEach() {
+                    // Add entry
+                    entries.add(PieEntry(it.reposCount.toFloat(), it.name))
 
-                // Add corresponding color from json
-                if (it.name == "Unknown") {
-                    colors.add(Color.parseColor("#C3C3C3"))
-                }
-                else {
-                    val color = languagesColorsList[it.name]!!["color"]
-                    if (color != null) {
-                        colors.add(Color.parseColor(color))
+                    // Add corresponding color from json
+                    if (it.name == "Unknown") {
+                        colors.add(Color.parseColor("#C3C3C3"))
+                    } else {
+                        val color = languagesColorsList[it.name]!!["color"]
+                        if (color != null) {
+                            colors.add(Color.parseColor(color))
+                        } else {
+                            // FIXME
+                        }
                     }
-                    else {
-                        // FIXME
-                    }
+
                 }
+
+
+                val dataSet = PieDataSet(entries, "")
+                dataSet.colors = colors
+                dataSet.valueTextSize = 20f
+                dataSet.valueTextColor = Color.WHITE
+                dataSet.valueTypeface = Typeface.defaultFromStyle(Typeface.BOLD);
+
+                val data = PieData(dataSet)
+                // Remove decimal part from value
+                data.setValueFormatter(CustomValueFormatter())
+
+                binding.languagesChart.setEntryLabelTextSize(16f)
+                //binding.languagesChart.setUsePercentValues(true)
+                binding.languagesChart.setDrawSliceText(false)
+                binding.languagesChart.description.isEnabled = false;
+
+                // Legend settings
+                val l: Legend = binding.languagesChart.getLegend() // get legend of pie
+                l.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM// set vertical alignment for legend
+                l.horizontalAlignment = Legend.LegendHorizontalAlignment.LEFT // set horizontal alignment for legend
+                l.orientation = Legend.LegendOrientation.HORIZONTAL// set orientation for legend
+                l.setDrawInside(false)
+                l.isWordWrapEnabled = true;
+                l.textSize = 20f
+                l.xEntrySpace = 20f
+
+
+                // Should be in the end to display legend correctly
+                binding.languagesChart.data = data
+
+                binding.languagesChart.centerText = it.size.toString()
+                binding.languagesChart.setCenterTextSize(30f)
 
             }
-
-
-            val dataSet = PieDataSet(entries, "")
-            dataSet.colors = colors
-            dataSet.valueTextSize = 20f
-            dataSet.valueTextColor = Color.WHITE
-            dataSet.valueTypeface = Typeface.defaultFromStyle(Typeface.BOLD);
-
-            val data = PieData(dataSet)
-            // Remove decimal part from value
-            data.setValueFormatter(CustomValueFormatter())
-
-            binding.languagesChart.setEntryLabelTextSize(16f)
-            //binding.languagesChart.setUsePercentValues(true)
-            binding.languagesChart.setDrawSliceText(false)
-            binding.languagesChart.description.isEnabled = false;
-
-            // Legend settings
-            val l: Legend = binding.languagesChart.getLegend() // get legend of pie
-            l.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM// set vertical alignment for legend
-            l.horizontalAlignment = Legend.LegendHorizontalAlignment.LEFT // set horizontal alignment for legend
-            l.orientation = Legend.LegendOrientation.HORIZONTAL// set orientation for legend
-            l.setDrawInside(false)
-            l.isWordWrapEnabled = true;
-            l.textSize = 20f
-            l.xEntrySpace = 20f
-
-
-            // Should be in the end to display legend correctly
-            binding.languagesChart.data = data
-
-            binding.languagesChart.centerText = it.size.toString()
-            binding.languagesChart.setCenterTextSize(30f)
-
         })
-
     }
-
 }
 
 
