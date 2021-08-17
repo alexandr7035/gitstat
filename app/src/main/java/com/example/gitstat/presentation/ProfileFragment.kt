@@ -77,7 +77,6 @@ class ProfileFragment : Fragment() {
 
         // Update synchronization status view
         viewModel.syncStatusLiveData.observe(viewLifecycleOwner, {
-            Log.d(LOG_TAG, it)
 
             if (it == SyncStatus.PENDING) {
                 binding.syncStatusBtn.isClickable = false

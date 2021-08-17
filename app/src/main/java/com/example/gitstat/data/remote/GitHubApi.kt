@@ -22,11 +22,11 @@ interface GitHubApi {
     // It won't show up even when you use fork:true.
     // So fork:true is not used here deliberately
     @GET("/search/repositories")
-    fun getRepositories(
+    suspend fun getRepositories(
         @Header("Authorization") auth: String,
         @Query("q") userParam: String,
         @Query("page") page: Int,
-        @Query("per_page") perPage: Int): Call<ReposSearchModel>
+        @Query("per_page") perPage: Int): Response<ReposSearchModel>
 
 }
 

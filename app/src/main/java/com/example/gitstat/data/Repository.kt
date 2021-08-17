@@ -1,17 +1,17 @@
 package com.example.gitstat.data
 
 import android.app.Application
-import android.text.format.DateFormat
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.gitstat.common.SyncStatus
 import com.example.gitstat.data.local.CacheDB
+import com.example.gitstat.data.local.LanguageEntity
 import com.example.gitstat.data.local.UserEntity
 import com.example.gitstat.data.remote.NetworkModule
+import com.example.gitstat.data.remote.RepositoryModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
@@ -27,9 +27,9 @@ class Repository(
 
     private val syncStateLiveData = MutableLiveData<String>()
 
-    fun getUserLiveDataFromCache(user_id: Long): LiveData<UserEntity> {
+    private lateinit var languagesList: TreeMap<String, Int>
 
-        //testInsertToCache()
+    fun getUserLiveDataFromCache(user_id: Long): LiveData<UserEntity> {
 
         CoroutineScope(Dispatchers.IO).launch {
 
@@ -37,9 +37,7 @@ class Repository(
             syncStateLiveData.postValue(SyncStatus.PENDING)
 
             val res = api.getUserData()
-
-            Log.d(LOG_TAG, "cache updated ${res.body()}")
-            Log.d(LOG_TAG, "" + System.currentTimeMillis())
+            Log.d(LOG_TAG, "USER cache request")
 
             if (res.isSuccessful) {
 
@@ -50,9 +48,6 @@ class Repository(
                 format.timeZone = TimeZone.getTimeZone("GMT")
                 val created_date = format.parse(res.body()!!.created_at).time
                 val updated_date = format.parse(res.body()!!.updated_at).time
-
-                Log.d(LOG_TAG, DateFormat.format("dd.MM.yyyy HH:mm", created_date).toString())
-                Log.d(LOG_TAG, DateFormat.format("dd.MM.yyyy HH:mm", updated_date).toString())
 
                 val cachedUser = UserEntity(
                     id = res.body()!!.id,
@@ -83,34 +78,60 @@ class Repository(
     }
 
 
+    fun getLanguagesLiveDataFromCache(): LiveData<List<LanguageEntity>> {
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val res = api.getRepositoriesData()
+            Log.d(LOG_TAG, "LANGUAGES cache request")
+
+            if (res.isSuccessful) {
+                val searchResults = res.body()
+                Log.d(LOG_TAG, searchResults!!.items.toString())
+                val reposList: List<RepositoryModel> = searchResults!!.items
+
+                // Replace null language with "Unknown" in order to prevent errors in maps
+                reposList.forEachIndexed { i, repo ->
+                    if (repo.language == null) {
+                        repo.language = "Unknown"
+                    }
+                }
+
+                // Init languages map
+                languagesList = TreeMap()
+                reposList.forEachIndexed { i, repo ->
+                    languagesList[repo.language] = 0
+                }
+
+                // Populate languages map
+                reposList.forEachIndexed { i, repo ->
+                    languagesList[repo.language] = languagesList[repo.language]!! + 1
+                }
+
+                // Convert map to languages list
+                val languagesCache = ArrayList<LanguageEntity>()
+                for ((language, count) in languagesList) {
+                    val lang = LanguageEntity()
+                    lang.apply {
+                        name = language
+                        reposCount = count
+                    }
+
+                    languagesCache.add(lang)
+                }
+
+                // Clear previous cache and write new
+                dao.clearLanguagesCache()
+                dao.insertLanguagesCache(languagesCache)
+
+            }
+        }
+
+        return dao.getLanguagesCache()
+    }
+
+
     fun getSyncStatusLiveData(): MutableLiveData<String> {
         return syncStateLiveData
     }
 
-    private fun testInsertToCache() {
-        Log.d(LOG_TAG, "our DB test")
-
-        val testUser = UserEntity(
-            id = 22574399,
-            login = "alexandr7035",
-            avatar_url = "https://avatars.githubusercontent.com/u/22574399?v=4",
-            name = "Alexandr Alexeenko",
-            location = "Belarus",
-            public_repos = 30,
-            total_private_repos = 10,
-
-            followers = 10,
-            following = 10,
-
-            created_at = 123,
-            updated_at = 12345,
-
-            cache_updated_at = 0
-        )
-
-        // FIXME this is a test
-        GlobalScope.launch {
-            dao.insertUserCache(testUser)
-        }
-    }
 }

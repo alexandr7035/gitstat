@@ -9,10 +9,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.gitstat.databinding.FragmentReposBinding
-import com.example.gitstat.data.remote.RepositoryModel
 import com.example.gitstat.presentation.MainViewModel
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
@@ -55,137 +53,89 @@ class ReposFragment : Fragment() {
 
         val viewModel = MainViewModel(requireActivity().application, "$user", "$token")
 
-        """
-        viewModel.reposLiveData.observe(viewLifecycleOwner, {
 
-            if (it != null) {
+        viewModel.languagesLiveData.observe(viewLifecycleOwner, {
+            Log.d(LOG_TAG, "LANGUAGES $it")
 
-                var totalReposCount = it.size
-                var privateReposCount = 0
-                var publicReposCount = 0
+            for (languageEntity in it) {
+                Log.d(LOG_TAG, languageEntity.name + " " + languageEntity.reposCount)
+            }
 
-                it.forEach {
-                    if (it.private){
-                        privateReposCount += 1
+            binding.languagesChart.invalidate()
+
+            // Read colors jsom from resources
+            val inputStream = resources.openRawResource(R.raw.language_colors)
+            val reader = InputStreamReader(inputStream)
+
+            // Convert to map
+            val builder = GsonBuilder()
+            val itemsMapType = object : TypeToken<Map<String, Map<String, String>>>() {}.type
+            val languagesColorsList: Map<String, Map<String, String>> = builder.create().fromJson(reader, itemsMapType)
+
+
+            // Diagram data
+            val entries = ArrayList<PieEntry>()
+            val colors: MutableList<Int> = ArrayList()
+
+            it.forEach() {
+                // Add entry
+                entries.add(PieEntry(it.reposCount.toFloat(), it.name))
+
+                // Add corresponding color from json
+                if (it.name == "Unknown") {
+                    colors.add(Color.parseColor("#C3C3C3"))
+                }
+                else {
+                    val color = languagesColorsList[it.name]!!["color"]
+                    if (color != null) {
+                        colors.add(Color.parseColor(color))
+                    }
+                    else {
+                        // FIXME
                     }
                 }
 
-                publicReposCount = totalReposCount - privateReposCount
-
-                binding.totalReposCountView.text = totalReposCount.toString()
-                binding.publicReposCountView.text = publicReposCount.toString()
-                binding.privateReposCountView.text = privateReposCount.toString()
-
-                drawLanguagesStatDiagram(it)
             }
+
+
+            val dataSet = PieDataSet(entries, "")
+            dataSet.colors = colors
+            dataSet.valueTextSize = 20f
+            dataSet.valueTextColor = Color.WHITE
+            dataSet.valueTypeface = Typeface.defaultFromStyle(Typeface.BOLD);
+
+            val data = PieData(dataSet)
+            // Remove decimal part from value
+            data.setValueFormatter(CustomValueFormatter())
+
+            binding.languagesChart.setEntryLabelTextSize(16f)
+            //binding.languagesChart.setUsePercentValues(true)
+            binding.languagesChart.setDrawSliceText(false)
+            binding.languagesChart.description.isEnabled = false;
+
+            // Legend settings
+            val l: Legend = binding.languagesChart.getLegend() // get legend of pie
+            l.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM// set vertical alignment for legend
+            l.horizontalAlignment = Legend.LegendHorizontalAlignment.LEFT // set horizontal alignment for legend
+            l.orientation = Legend.LegendOrientation.HORIZONTAL// set orientation for legend
+            l.setDrawInside(false)
+            l.isWordWrapEnabled = true;
+            l.textSize = 20f
+            l.xEntrySpace = 20f
+
+
+            // Should be in the end to display legend correctly
+            binding.languagesChart.data = data
+
+            binding.languagesChart.centerText = it.size.toString()
+            binding.languagesChart.setCenterTextSize(30f)
 
         })
 
-
-        viewModel.updateUserData()
-        viewModel.updateRepositoriesData()
-
-        // Show API errors
-        viewModel.msgLiveData.observe(viewLifecycleOwner, {
-            Toast.makeText(activity, it, Toast.LENGTH_SHORT).show()
-        })
-        """
-
     }
 
-
-    private fun drawLanguagesStatDiagram(reposList: List<RepositoryModel>) {
-
-        binding.languagesChart.invalidate()
-
-        // Read colors jsom from resources
-        val inputStream = resources.openRawResource(R.raw.language_colors)
-        val reader = InputStreamReader(inputStream)
-
-        // Convert to map
-        val builder = GsonBuilder()
-        val itemsMapType = object : TypeToken<Map<String, Map<String, String>>>() {}.type
-        val languagesColorsList: Map<String, Map<String, String>> = builder.create().fromJson(reader, itemsMapType)
-
-
-        // Replace null language with "Unknown" in order to prevent errors in maps
-        reposList.forEachIndexed { i, repo ->
-            if (repo.language == null) {
-                repo.language = "Unknown"
-            }
-        }
-
-        // Init languages list
-        languagesList = TreeMap()
-        reposList.forEachIndexed { i, repo ->
-            Log.d(LOG_TAG, "{$repo}")
-            this.languagesList[repo.language] = 0
-       }
-
-        reposList.forEachIndexed { i, repo ->
-            languagesList[repo.language] = languagesList[repo.language]!! + 1
-        }
-
-        Log.d(LOG_TAG, "LANGUAGES LIST {$languagesList}")
-
-        // Diagram data
-        val entries = ArrayList<PieEntry>()
-        val colors: MutableList<Int> = ArrayList()
-
-        for ((language, count) in languagesList) {
-            // Add entry
-            entries.add(PieEntry(count.toFloat(), language))
-
-            // Add corresponding color from json
-            if (language == "Unknown") {
-                colors.add(Color.parseColor("#C3C3C3"))
-            }
-            else {
-                val color = languagesColorsList[language]!!["color"]
-                if (color != null) {
-                    colors.add(Color.parseColor(color))
-                }
-                else {
-                    // FIXME
-                }
-            }
-
-        }
-
-
-        val dataSet = PieDataSet(entries, "")
-        dataSet.colors = colors
-        dataSet.valueTextSize = 20f
-        dataSet.valueTextColor = Color.WHITE
-        dataSet.valueTypeface = Typeface.defaultFromStyle(Typeface.BOLD);
-
-        val data = PieData(dataSet)
-        // Remove decimal part from value
-        data.setValueFormatter(CustomValueFormatter())
-
-        binding.languagesChart.setEntryLabelTextSize(16f)
-        //binding.languagesChart.setUsePercentValues(true)
-        binding.languagesChart.setDrawSliceText(false)
-        binding.languagesChart.description.isEnabled = false;
-
-        // Legend settings
-        val l: Legend = binding.languagesChart.getLegend() // get legend of pie
-        l.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM// set vertical alignment for legend
-        l.horizontalAlignment = Legend.LegendHorizontalAlignment.LEFT // set horizontal alignment for legend
-        l.orientation = Legend.LegendOrientation.HORIZONTAL// set orientation for legend
-        l.setDrawInside(false)
-        l.isWordWrapEnabled = true;
-        l.textSize = 20f
-        l.xEntrySpace = 20f
-
-
-        // Should be in the end to display legend correctly
-        binding.languagesChart.data = data
-
-        binding.languagesChart.centerText = reposList.size.toString()
-        binding.languagesChart.setCenterTextSize(30f)
-    }
 }
+
 
 class CustomValueFormatter(): ValueFormatter() {
     override fun getFormattedValue(value: Float): String {
