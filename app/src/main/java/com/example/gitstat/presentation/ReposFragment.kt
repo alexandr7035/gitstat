@@ -44,6 +44,8 @@ class ReposFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        Log.d(LOG_TAG, "repos fragment onviewcreated")
+
         // Shared pref
         sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
 
@@ -55,11 +57,6 @@ class ReposFragment : Fragment() {
 
 
         viewModel.languagesLiveData.observe(viewLifecycleOwner, {
-            Log.d(LOG_TAG, "LANGUAGES $it")
-
-            for (languageEntity in it) {
-                Log.d(LOG_TAG, languageEntity.name + " " + languageEntity.reposCount)
-            }
 
             binding.languagesChart.invalidate()
 
