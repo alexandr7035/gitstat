@@ -38,6 +38,8 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        Log.d(LOG_TAG, "profile fragment onviewcreated")
+
         // Shared pref
         sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
         val user = sharedPreferences.getString(getString(R.string.shared_pref_login), "NONE")
@@ -53,7 +55,7 @@ class ProfileFragment : Fragment() {
 
 
         // Update profile data
-        viewModel.userLiveData.observe(viewLifecycleOwner, {
+        viewModel.getUserLData().observe(viewLifecycleOwner, {
 
             Picasso.get().load(it.avatar_url).into(binding.profileImageView)
 
@@ -76,7 +78,7 @@ class ProfileFragment : Fragment() {
 
 
         // Update synchronization status view
-        viewModel.syncStatusLiveData.observe(viewLifecycleOwner, {
+        viewModel.getSyncStatusLData().observe(viewLifecycleOwner, {
 
             if (it == SyncStatus.PENDING) {
                 binding.syncStatusBtn.isClickable = false

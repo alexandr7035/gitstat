@@ -56,7 +56,7 @@ class ReposFragment : Fragment() {
         val viewModel = MainViewModel(requireActivity().application, "$user", "$token")
 
 
-        viewModel.languagesLiveData.observe(viewLifecycleOwner, {
+        viewModel.getLanguagesLData().observe(viewLifecycleOwner, {
 
             binding.languagesChart.invalidate()
 
