@@ -3,10 +3,10 @@
 
     <item android:id="@+id/profileFragment"
         android:title="@string/profile"
-        android:icon="@drawable/ic_profile" />
+        android:icon="@drawable/ic_profile_filled" />
 
     <item android:id="@+id/reposFragment"
         android:title="@string/repos"
-        android:icon="@drawable/ic_repo" />
+        android:icon="@drawable/ic_repo_filled" />
 
 </menu>
