@@ -94,6 +94,11 @@ class ReposFragment : Fragment() {
 
                 }
 
+                var totalReposCount = 0
+                for (lang in it) {
+                    totalReposCount += lang.reposCount
+                }
+
 
                 val dataSet = PieDataSet(entries, "")
                 dataSet.colors = colors
@@ -124,7 +129,7 @@ class ReposFragment : Fragment() {
                 // Should be in the end to display legend correctly
                 binding.languagesChart.data = data
 
-                binding.languagesChart.centerText = it.size.toString()
+                binding.languagesChart.centerText = totalReposCount.toString()
                 binding.languagesChart.setCenterTextSize(30f)
 
             }
