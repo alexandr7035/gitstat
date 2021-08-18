@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import okhttp3.Cache
 
-@Database(entities = [UserEntity::class, LanguageEntity::class, RepositoryEntity::class], version = 1)
+@Database(entities = [UserEntity::class, RepositoryEntity::class], version = 1)
 abstract class CacheDB : RoomDatabase() {
 
     abstract fun getDao(): CacheDao

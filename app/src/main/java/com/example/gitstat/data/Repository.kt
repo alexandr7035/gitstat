@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.gitstat.common.SyncStatus
 import com.example.gitstat.data.local.CacheDB
-import com.example.gitstat.data.local.LanguageEntity
 import com.example.gitstat.data.local.RepositoryEntity
 import com.example.gitstat.data.local.UserEntity
 import com.example.gitstat.data.remote.NetworkModule
@@ -79,27 +78,6 @@ class Repository(
         return dao.getUserCache(user_id)
     }
 
-
-    fun getLanguagesLiveDataFromCache(): LiveData<List<LanguageEntity>> {
-
-        CoroutineScope(Dispatchers.IO).launch {
-            val res = api.getRepositoriesData()
-            Log.d(LOG_TAG, "LANGUAGES cache request")
-
-            if (res.isSuccessful) {
-                val searchResults = res.body()
-                Log.d(LOG_TAG, searchResults!!.items.toString())
-                val reposList: List<RepositoryModel> = searchResults!!.items
-
-                saveLanguagesToCache(reposList)
-
-            }
-        }
-
-        return dao.getLanguagesCache()
-    }
-
-
     fun getSyncStatusLiveData(): MutableLiveData<String> {
         return syncStateLiveData
     }
@@ -141,46 +119,5 @@ class Repository(
         return dao.getRepositoriesCache()
 
     }
-
-
-    private suspend fun saveLanguagesToCache(reposList: List<RepositoryModel>) {
-        // Replace null language with "Unknown" in order to prevent errors in maps
-        reposList.forEachIndexed { i, repo ->
-            if (repo.language == null) {
-                repo.language = "Unknown"
-            }
-        }
-
-        // Init languages map
-        languagesList = TreeMap()
-        reposList.forEachIndexed { i, repo ->
-            languagesList[repo.language] = 0
-        }
-
-        // Populate languages map
-        reposList.forEachIndexed { i, repo ->
-            languagesList[repo.language] = languagesList[repo.language]!! + 1
-        }
-
-        // Convert map to languages list
-        val languagesCache = ArrayList<LanguageEntity>()
-        for ((language, count) in languagesList) {
-            val lang = LanguageEntity()
-            lang.apply {
-                name = language
-                reposCount = count
-            }
-
-            languagesCache.add(lang)
-        }
-
-        // Clear previous cache and write new
-        dao.clearLanguagesCache()
-        dao.insertLanguagesCache(languagesCache)
-
-    }
-
-
-
 
 }
