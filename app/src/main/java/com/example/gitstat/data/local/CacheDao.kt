@@ -28,4 +28,10 @@ interface CacheDao {
     @Query("DELETE FROM languages")
     suspend fun clearLanguagesCache()
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertRepositoriesCache(repos: List<RepositoryEntity>)
+
+    @Query("select * from repositories")
+    fun getRepositoriesCache(): LiveData<List<RepositoryEntity>>
+
 }

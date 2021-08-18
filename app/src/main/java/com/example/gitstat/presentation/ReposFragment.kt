@@ -56,35 +56,61 @@ class ReposFragment : Fragment() {
         val viewModel = MainViewModel(requireActivity().application, "$user", "$token")
 
 
-        viewModel.getLanguagesLData().observe(viewLifecycleOwner, {
+        viewModel.getRepositoriesData().observe(viewLifecycleOwner, {
 
             if (it != null) {
 
+                val reposList = it
+
+                // Repos count views
+                var totalReposCount = it.size
+                var privateReposCount = 0
+                var publicReposCount = 0
+                it.forEach {
+                    if (it.isPrivate){
+                        privateReposCount += 1
+                    }
+                }
+                publicReposCount = totalReposCount - privateReposCount
+
+                binding.totalReposCountView.text = totalReposCount.toString()
+                binding.privateReposCountView.text = privateReposCount.toString()
+                binding.publicReposCountView.text = publicReposCount.toString()
+
+                // Chart
                 binding.languagesChart.invalidate()
 
                 // Read colors jsom from resources
                 val inputStream = resources.openRawResource(R.raw.language_colors)
                 val reader = InputStreamReader(inputStream)
-
-                // Convert to map
                 val builder = GsonBuilder()
                 val itemsMapType = object : TypeToken<Map<String, Map<String, String>>>() {}.type
                 val languagesColorsList: Map<String, Map<String, String>> = builder.create().fromJson(reader, itemsMapType)
-
 
                 // Diagram data
                 val entries = ArrayList<PieEntry>()
                 val diagramColors: MutableList<Int> = ArrayList()
 
-                it.forEach() {
+                // Init languages map
+                languagesList = TreeMap()
+                reposList.forEachIndexed { i, repo ->
+                    languagesList[repo.language] = 0
+                }
+
+                // Populate languages map
+                reposList.forEachIndexed { i, repo ->
+                    languagesList[repo.language] = languagesList[repo.language]!! + 1
+                }
+
+                for ((lang, count) in languagesList) {
                     // Add entry
-                    entries.add(PieEntry(it.reposCount.toFloat(), it.name))
+                    entries.add(PieEntry(count.toFloat(), lang))
 
                     // Add corresponding color from json
-                    if (it.name == "Unknown") {
+                    if (lang == "Unknown") {
                         diagramColors.add(Color.parseColor("#C3C3C3"))
                     } else {
-                        val color = languagesColorsList[it.name]!!["color"]
+                        val color = languagesColorsList[lang]!!["color"]
                         if (color != null) {
                             diagramColors.add(Color.parseColor(color))
                         } else {
@@ -92,11 +118,6 @@ class ReposFragment : Fragment() {
                         }
                     }
 
-                }
-
-                var totalReposCount = 0
-                for (lang in it) {
-                    totalReposCount += lang.reposCount
                 }
 
 
