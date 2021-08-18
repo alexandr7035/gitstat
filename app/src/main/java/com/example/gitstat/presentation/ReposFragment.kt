@@ -74,7 +74,7 @@ class ReposFragment : Fragment() {
 
                 // Diagram data
                 val entries = ArrayList<PieEntry>()
-                val colors: MutableList<Int> = ArrayList()
+                val diagramColors: MutableList<Int> = ArrayList()
 
                 it.forEach() {
                     // Add entry
@@ -82,11 +82,11 @@ class ReposFragment : Fragment() {
 
                     // Add corresponding color from json
                     if (it.name == "Unknown") {
-                        colors.add(Color.parseColor("#C3C3C3"))
+                        diagramColors.add(Color.parseColor("#C3C3C3"))
                     } else {
                         val color = languagesColorsList[it.name]!!["color"]
                         if (color != null) {
-                            colors.add(Color.parseColor(color))
+                            diagramColors.add(Color.parseColor(color))
                         } else {
                             // FIXME
                         }
@@ -101,36 +101,43 @@ class ReposFragment : Fragment() {
 
 
                 val dataSet = PieDataSet(entries, "")
-                dataSet.colors = colors
-                dataSet.valueTextSize = 20f
-                dataSet.valueTextColor = Color.WHITE
-                dataSet.valueTypeface = Typeface.defaultFromStyle(Typeface.BOLD);
+                dataSet.apply {
+                    colors = diagramColors
+                    valueTextSize = 20f
+                    valueTextColor = Color.WHITE
+                    valueTypeface = Typeface.defaultFromStyle(Typeface.BOLD)
+                }
 
-                val data = PieData(dataSet)
+
+                val pieData = PieData(dataSet)
                 // Remove decimal part from value
-                data.setValueFormatter(CustomValueFormatter())
+                pieData.setValueFormatter(CustomValueFormatter())
 
-                binding.languagesChart.setEntryLabelTextSize(16f)
-                //binding.languagesChart.setUsePercentValues(true)
-                binding.languagesChart.setDrawSliceText(false)
-                binding.languagesChart.description.isEnabled = false;
-
+                
                 // Legend settings
-                val l: Legend = binding.languagesChart.getLegend() // get legend of pie
-                l.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM// set vertical alignment for legend
-                l.horizontalAlignment = Legend.LegendHorizontalAlignment.LEFT // set horizontal alignment for legend
-                l.orientation = Legend.LegendOrientation.HORIZONTAL// set orientation for legend
-                l.setDrawInside(false)
-                l.isWordWrapEnabled = true;
-                l.textSize = 20f
-                l.xEntrySpace = 20f
+                val legend: Legend = binding.languagesChart.getLegend()
+                legend.apply {
+                    verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
+                    horizontalAlignment = Legend.LegendHorizontalAlignment.LEFT
+                    orientation = Legend.LegendOrientation.HORIZONTAL
+                    setDrawInside(false)
+                    isWordWrapEnabled = true
+                    textSize = 20f
+                    xEntrySpace = 20f
+                }
 
 
-                // Should be in the end to display legend correctly
-                binding.languagesChart.data = data
+                // General chart settings
+                binding.languagesChart.apply {
+                    setEntryLabelTextSize(16f)
+                    setDrawSliceText(false)
+                    description.isEnabled = false
+                    setCenterTextSize(30f)
 
-                binding.languagesChart.centerText = totalReposCount.toString()
-                binding.languagesChart.setCenterTextSize(30f)
+                    centerText = totalReposCount.toString()
+                    // Should be in the end to display legend correctly
+                    data = pieData
+                }
 
             }
         })
