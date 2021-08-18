@@ -32,6 +32,8 @@ class ReposFragment : Fragment() {
 
     private lateinit var languagesList: TreeMap<String, Int>
 
+    private lateinit var viewModel: MainViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View {
@@ -54,8 +56,13 @@ class ReposFragment : Fragment() {
         val token = sharedPreferences.getString(getString(R.string.shared_pref_token), "NONE")
         Log.d(LOG_TAG, "Auth '$user' with token '$token'")
 
-        val viewModel = MainViewModel(requireActivity().application, "$user", "$token")
+        viewModel = MainViewModel(requireActivity().application, "$user", "$token")
 
+    }
+
+
+    override fun onResume() {
+        super.onResume()
 
         viewModel.getRepositoriesData().observe(viewLifecycleOwner, {
 
@@ -135,7 +142,7 @@ class ReposFragment : Fragment() {
                 // Remove decimal part from value
                 pieData.setValueFormatter(CustomValueFormatter())
 
-                
+
                 // Legend settings
                 val legend: Legend = binding.languagesChart.getLegend()
                 legend.apply {

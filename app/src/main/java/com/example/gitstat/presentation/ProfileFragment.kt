@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.gitstat.R
 import com.example.gitstat.common.SyncStatus
@@ -22,6 +23,8 @@ class ProfileFragment : Fragment() {
 
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var binding: FragmentProfileBinding
+    private lateinit var viewModel: MainViewModel
+    private lateinit var navController: NavController
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
@@ -49,10 +52,14 @@ class ProfileFragment : Fragment() {
         // Nav controller
         // NavController
         val hf: NavHostFragment = activity?.supportFragmentManager?.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navController = hf.navController
+        navController = hf.navController
 
-        val viewModel = MainViewModel(requireActivity().application, "$user", "$token")
+        viewModel = MainViewModel(requireActivity().application, "$user", "$token")
 
+    }
+
+    override fun onResume() {
+        super.onResume()
 
         // Update profile data
         viewModel.getUserLData().observe(viewLifecycleOwner, {
@@ -105,10 +112,8 @@ class ProfileFragment : Fragment() {
 
 
         binding.reposStatDetailedBtn.setOnClickListener {
-            Log.d(LOG_TAG, "clicked SHOW MORE")
             navController.navigate(R.id.reposFragment)
         }
-
     }
 
 }
