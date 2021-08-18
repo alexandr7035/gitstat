@@ -117,6 +117,7 @@ class Repository(
                     cachedReposList.add(cachedRepo)
                 }
 
+                dao.clearRepositoriesCache()
                 dao.insertRepositoriesCache(cachedReposList)
             }
             else {

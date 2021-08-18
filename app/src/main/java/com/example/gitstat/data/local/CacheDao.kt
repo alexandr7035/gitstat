@@ -24,4 +24,6 @@ interface CacheDao {
     @Query("select * from repositories")
     fun getRepositoriesCache(): LiveData<List<RepositoryEntity>>
 
+    @Query("DELETE FROM repositories")
+    suspend fun clearRepositoriesCache()
 }
