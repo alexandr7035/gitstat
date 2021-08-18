@@ -87,9 +87,14 @@ class Repository(
         Log.d(LOG_TAG, "REPOS CACHE 2")
 
         CoroutineScope(Dispatchers.IO).launch {
+
+            syncStateLiveData.postValue(SyncStatus.PENDING)
+
             val res = api.getRepositoriesData()
 
             if (res.isSuccessful) {
+
+                syncStateLiveData.postValue(SyncStatus.SUCCESS)
 
                 val searchResults = res.body()
                 val reposList: List<RepositoryModel> = searchResults!!.items
@@ -113,6 +118,9 @@ class Repository(
                 }
 
                 dao.insertRepositoriesCache(cachedReposList)
+            }
+            else {
+                syncStateLiveData.postValue(SyncStatus.FAILED)
             }
         }
 
