@@ -13,6 +13,7 @@ import com.example.gitstat.data.remote.RepositoryModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.net.SocketException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -37,42 +38,46 @@ class Repository(
             // For loading animations, etc
             syncStateLiveData.postValue(SyncStatus.PENDING)
 
-            val res = api.getUserData()
-            Log.d(LOG_TAG, "USER cache request")
+            try {
+                val res = api.getUserData()
+                Log.d(LOG_TAG, "USER cache request")
 
-            if (res.isSuccessful) {
+                if (res.isSuccessful) {
 
-                syncStateLiveData.postValue(SyncStatus.SUCCESS)
+                    syncStateLiveData.postValue(SyncStatus.SUCCESS)
 
-                // Convert string dates to timestamp
-                val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US)
-                format.timeZone = TimeZone.getTimeZone("GMT")
-                val created_date = format.parse(res.body()!!.created_at).time
-                val updated_date = format.parse(res.body()!!.updated_at).time
+                    // Convert string dates to timestamp
+                    val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US)
+                    format.timeZone = TimeZone.getTimeZone("GMT")
+                    val created_date = format.parse(res.body()!!.created_at).time
+                    val updated_date = format.parse(res.body()!!.updated_at).time
 
-                val cachedUser = UserEntity(
-                    id = res.body()!!.id,
-                    name = res.body()!!.name,
-                    location = res.body()!!.location,
-                    login = res.body()!!.login,
-                    avatar_url = res.body()!!.avatar_url,
-                    public_repos = res.body()!!.public_repos,
-                    total_private_repos = res.body()!!.total_private_repos,
-                    followers = res.body()!!.followers,
-                    following = res.body()!!.following,
-                    created_at = created_date,
-                    updated_at = updated_date,
+                    val cachedUser = UserEntity(
+                        id = res.body()!!.id,
+                        name = res.body()!!.name,
+                        location = res.body()!!.location,
+                        login = res.body()!!.login,
+                        avatar_url = res.body()!!.avatar_url,
+                        public_repos = res.body()!!.public_repos,
+                        total_private_repos = res.body()!!.total_private_repos,
+                        followers = res.body()!!.followers,
+                        following = res.body()!!.following,
+                        created_at = created_date,
+                        updated_at = updated_date,
 
-                    cache_updated_at = System.currentTimeMillis()
-                )
+                        cache_updated_at = System.currentTimeMillis()
+                    )
 
-                dao.insertUserCache(cachedUser)
+                    dao.insertUserCache(cachedUser)
+
+                } else {
+                    syncStateLiveData.postValue(SyncStatus.FAILED)
+                }
 
             }
-            else {
+            catch (e: Exception) {
                 syncStateLiveData.postValue(SyncStatus.FAILED)
             }
-
         }
 
         return dao.getUserCache(user_id)
@@ -90,37 +95,44 @@ class Repository(
 
             syncStateLiveData.postValue(SyncStatus.PENDING)
 
-            val res = api.getRepositoriesData()
+            try {
+                val res = api.getRepositoriesData()
 
-            if (res.isSuccessful) {
+                if (res.isSuccessful) {
 
-                syncStateLiveData.postValue(SyncStatus.SUCCESS)
+                    syncStateLiveData.postValue(SyncStatus.SUCCESS)
 
-                val searchResults = res.body()
-                val reposList: List<RepositoryModel> = searchResults!!.items
+                    val searchResults = res.body()
+                    val reposList: List<RepositoryModel> = searchResults!!.items
 
-                Log.d(LOG_TAG, "REPOOOOOOOS $reposList")
+                    Log.d(LOG_TAG, "REPOOOOOOOS $reposList")
 
-                var cachedReposList = ArrayList<RepositoryEntity>()
-                for (repo in reposList) {
+                    var cachedReposList = ArrayList<RepositoryEntity>()
+                    for (repo in reposList) {
 
-                    if (repo.language == null) {
-                        repo.language = "Unknown"
+                        if (repo.language == null) {
+                            repo.language = "Unknown"
+                        }
+
+                        val cachedRepo = RepositoryEntity(
+                            id = repo.id,
+                            name = repo.name,
+                            language = repo.language,
+                            isPrivate = repo.private
+                        )
+
+                        cachedReposList.add(cachedRepo)
                     }
 
-                    val cachedRepo = RepositoryEntity(
-                        id = repo.id,
-                        name = repo.name,
-                        language = repo.language,
-                        isPrivate = repo.private)
-
-                    cachedReposList.add(cachedRepo)
+                    dao.clearRepositoriesCache()
+                    dao.insertRepositoriesCache(cachedReposList)
+                } else {
+                    syncStateLiveData.postValue(SyncStatus.FAILED)
                 }
 
-                dao.clearRepositoriesCache()
-                dao.insertRepositoriesCache(cachedReposList)
             }
-            else {
+            catch (e: Exception) {
+                Log.d(LOG_TAG, "exception")
                 syncStateLiveData.postValue(SyncStatus.FAILED)
             }
         }

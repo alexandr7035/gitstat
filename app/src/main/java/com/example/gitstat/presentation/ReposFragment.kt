@@ -189,9 +189,9 @@ class ReposFragment : Fragment() {
 
             else if (it == SyncStatus.FAILED) {
                 // FIXME currently disabled. Fix when implement refresh
-                binding.syncStatusBtn.isClickable = false
+                binding.syncStatusBtn.isClickable = true
                 binding.syncStatusBtn.text = getString(R.string.failed)
-                binding.syncStatusBtn.setBackgroundResource(R.drawable.background_sync_button_synced)
+                binding.syncStatusBtn.setBackgroundResource(R.drawable.background_sync_button_failed)
             }
 
         })
