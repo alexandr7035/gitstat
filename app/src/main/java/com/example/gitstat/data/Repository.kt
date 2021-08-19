@@ -76,6 +76,7 @@ class Repository(
 
             }
             catch (e: Exception) {
+                Log.d(LOG_TAG, "exception $e")
                 syncStateLiveData.postValue(SyncStatus.FAILED)
             }
         }
@@ -132,7 +133,7 @@ class Repository(
 
             }
             catch (e: Exception) {
-                Log.d(LOG_TAG, "exception")
+                Log.d(LOG_TAG, "exception ${e}")
                 syncStateLiveData.postValue(SyncStatus.FAILED)
             }
         }

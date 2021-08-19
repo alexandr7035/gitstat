@@ -38,7 +38,7 @@ class NetworkModule(application: Application, user: String, token: String) {
 
         this.user = user
         this.token = token
-        authCredentials = Credentials.basic(this.user, this.token)
+        authCredentials = "token ${this.token}"
 
     }
 
