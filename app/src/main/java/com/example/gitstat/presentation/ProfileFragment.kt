@@ -66,6 +66,9 @@ class ProfileFragment : Fragment() {
 
             if (it != null) {
 
+                // Show if were hidden previously
+                showProfileViews()
+
                 Picasso.get().load(it.avatar_url).into(binding.profileImageView)
 
                 binding.nameView.text = it.name
@@ -83,6 +86,12 @@ class ProfileFragment : Fragment() {
                 binding.privateReposViev.text = it.total_private_repos.toString()
                 binding.publicReposView.text = it.public_repos.toString()
             }
+
+            // Cache db is empty
+            else {
+                hideProfileViews()
+            }
+
         })
 
 
@@ -114,6 +123,19 @@ class ProfileFragment : Fragment() {
         binding.reposStatDetailedBtn.setOnClickListener {
             navController.navigate(R.id.reposFragment)
         }
+    }
+
+
+    private fun hideProfileViews() {
+        binding.headerCard.visibility = View.GONE
+        binding.profileSummaryCard.visibility = View.GONE
+        binding.reposSummaryCard.visibility = View.GONE
+    }
+
+    private fun showProfileViews() {
+        binding.headerCard.visibility = View.VISIBLE
+        binding.profileSummaryCard.visibility = View.VISIBLE
+        binding.reposSummaryCard.visibility = View.VISIBLE
     }
 
 }

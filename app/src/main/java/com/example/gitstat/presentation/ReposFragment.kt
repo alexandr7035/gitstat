@@ -66,7 +66,9 @@ class ReposFragment : Fragment() {
 
         viewModel.getRepositoriesData().observe(viewLifecycleOwner, {
 
-            if (it != null) {
+            if (it != null && it.isNotEmpty()) {
+                
+                showRepositoriesViews()
 
                 val reposList = it
 
@@ -169,6 +171,11 @@ class ReposFragment : Fragment() {
                 }
 
             }
+
+            // If empty cache
+            else {
+                hideRepositoriesViews()
+            }
         })
 
 
@@ -195,6 +202,17 @@ class ReposFragment : Fragment() {
             }
 
         })
+    }
+
+
+    private fun hideRepositoriesViews() {
+        binding.reposCountCard.visibility = View.GONE
+        binding.languagesCard.visibility = View.GONE
+    }
+
+    private fun showRepositoriesViews() {
+        binding.reposCountCard.visibility = View.VISIBLE
+        binding.languagesCard.visibility = View.VISIBLE
     }
 }
 

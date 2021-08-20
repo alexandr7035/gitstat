@@ -10,7 +10,7 @@
     tools:context=".presentation.ProfileFragment">
 
     <LinearLayout
-        android:id="@+id/reposSummary"
+        android:id="@+id/reposSummaryCard"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -22,7 +22,7 @@
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/card1">
+        app:layout_constraintTop_toBottomOf="@+id/profileSummaryCard">
 
 
         <LinearLayout
@@ -219,7 +219,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/card1"
+        android:id="@+id/profileSummaryCard"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
