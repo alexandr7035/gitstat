@@ -138,7 +138,9 @@ class LoginFragment : Fragment() {
                     navController.navigate(R.id.actionLoginToMain)
                 }
 
-                401 -> {
+                // 404 may also be caused by wrong login data
+                // when token is correct but provided user name doesn't exist on github
+                401, 404 -> {
                     binding.tokenField.error = getString(R.string.error_wrong_data_field)
                     binding.loginField.error = getString(R.string.error_wrong_data_field)
                 }
