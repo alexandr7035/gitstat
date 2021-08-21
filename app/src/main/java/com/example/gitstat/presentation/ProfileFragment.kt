@@ -128,6 +128,7 @@ class ProfileFragment : Fragment() {
 
             Log.d(LOG_TAG, "log out")
 
+            // Reset shared prefs
             val editor = sharedPreferences.edit()
             editor.putString(
                 getString(R.string.shared_pref_login),
@@ -140,6 +141,9 @@ class ProfileFragment : Fragment() {
             )
 
             editor.commit()
+
+            // Clear room cache
+            viewModel.clearCache()
 
             navController.navigate(R.id.loginFragment)
         }

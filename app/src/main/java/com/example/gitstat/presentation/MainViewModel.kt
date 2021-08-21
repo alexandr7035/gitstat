@@ -38,4 +38,8 @@ class MainViewModel(application: Application, user: String, token: String) : And
         return loginResponseCodeLiveData
     }
 
+    fun clearCache() {
+        repository.clearAllCache()
+    }
+
 }

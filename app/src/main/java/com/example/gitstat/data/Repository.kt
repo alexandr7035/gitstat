@@ -169,4 +169,12 @@ class Repository(
 
     }
 
+
+    fun clearAllCache() {
+        CoroutineScope(Dispatchers.IO).launch {
+            dao.clearRepositoriesCache()
+            dao.clearUserCache()
+        }
+    }
+
 }
