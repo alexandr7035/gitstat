@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.gitstat.data.AuthState
@@ -26,12 +28,23 @@ class LoginFragment : Fragment() {
 
     private lateinit var sharedPreferences: SharedPreferences
 
+    private lateinit var viewModel: MainViewModel
+    private val loginResponseLiveData = MutableLiveData<Int>()
+
+    private lateinit var token: String
+    private lateinit var login: String
+
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
         // Shared pref
         sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
+        val user = sharedPreferences.getString(getString(R.string.shared_pref_login), "NONE")
+        val token = sharedPreferences.getString(getString(R.string.shared_pref_token), "NONE")
+
+        // ViewModel
+        viewModel = MainViewModel(requireActivity().application, "$user", "$token")
 
         // NavController
         val hf: NavHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
@@ -93,15 +106,51 @@ class LoginFragment : Fragment() {
             override fun onClick(v: View) {
                 Log.d(LOG_TAG, "Login btn pressed")
 
-                if (checkLoginFormIfValid()) {
+                if (! checkLoginFormIfValid()) {
+                    Log.d(LOG_TAG, "form no valid")
                     return
                 }
                 else {
-                    // FIXME - DO LOGIN REQUEST
+                    Log.d(LOG_TAG, "do login request")
+                    login = binding.loginEditText.text.toString()
+                    token = binding.tokenEditText.text.toString()
+                    viewModel.doLoginRequest(login, token)
                 }
 
             }
         })
+
+
+        // Login results handling
+        viewModel.getLoginResponseCodeLiveData().observe(viewLifecycleOwner, {
+            Log.d(LOG_TAG, "LOGIN RESULTS CODE: $it")
+
+            when (it) {
+                200 -> {
+                    val prefEditor = sharedPreferences.edit()
+                    prefEditor.putString(
+                        getString(R.string.shared_pref_token), token)
+
+                    prefEditor.putString(
+                        getString(R.string.shared_pref_login), login)
+
+                    prefEditor.commit()
+
+                    navController.navigate(R.id.actionLoginToMain)
+                }
+
+                401 -> {
+                    binding.tokenField.error = getString(R.string.error_wrong_data_field)
+                    binding.loginField.error = getString(R.string.error_wrong_data_field)
+                }
+
+                else -> {
+                    Toast.makeText(requireActivity(), getString(R.string.error_cant_get_data_remote), Toast.LENGTH_LONG).show()
+                }
+            }
+
+        })
+
 
     }
 

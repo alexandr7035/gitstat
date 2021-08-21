@@ -51,4 +51,11 @@ class NetworkModule(application: Application, user: String, token: String) {
         return gitHubApi.getRepositories(authCredentials, userParam = "user:$user", page = 1, perPage = 100)
     }
 
+
+    // FIXME temp
+    suspend fun loginRequest(user: String, token: String): Response<UserModel> {
+        val creds = "token $token"
+        return gitHubApi.getUser(creds, user)
+    }
+
 }

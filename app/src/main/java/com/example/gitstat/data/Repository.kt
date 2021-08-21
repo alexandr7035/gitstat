@@ -10,9 +10,12 @@ import com.example.gitstat.data.local.RepositoryEntity
 import com.example.gitstat.data.local.UserEntity
 import com.example.gitstat.data.remote.NetworkModule
 import com.example.gitstat.data.remote.RepositoryModel
+import com.example.gitstat.data.remote.UserModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import retrofit2.Response
 import java.net.SocketException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -139,6 +142,30 @@ class Repository(
         }
 
         return dao.getRepositoriesCache()
+
+    }
+
+
+    fun doLoginRequest(loginLiveData: MutableLiveData<Int>, user: String, token: String) {
+
+        Log.d(LOG_TAG, "repo DO LOGIN REQ")
+
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val res = api.loginRequest(user, token)
+
+                withContext(Dispatchers.Main) {
+                    Log.d(LOG_TAG, "code ${res.code()}")
+                    loginLiveData.value = res.code()
+                }
+            }
+            catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    Log.d(LOG_TAG, "code ")
+                    loginLiveData.value = 0
+                }
+            }
+        }
 
     }
 
