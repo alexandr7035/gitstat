@@ -16,7 +16,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/view"
+        app:layout_constraintVertical_bias="0.3">
 
         <TextView
             android:id="@+id/loginTitle"
@@ -31,7 +32,8 @@
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
-            android:layout_height="150dp"
+            android:layout_height="120dp"
+            android:layout_marginBottom="10dp"
             app:srcCompat="@drawable/github_logo" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -41,7 +43,11 @@
             android:layout_height="wrap_content"
             android:hint="@string/login"
             app:boxStrokeColor="@color/gray_500"
-            app:hintTextColor="@color/gray_500">
+            app:hintTextColor="@color/gray_500"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusTopStart="20dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/loginEditText"
@@ -58,7 +64,11 @@
             android:hint="@string/token"
             app:boxStrokeColor="@color/gray_500"
             app:hintTextColor="@color/gray_500"
-            app:passwordToggleEnabled="true">
+            app:passwordToggleEnabled="true"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusTopStart="20dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/tokenEditText"
