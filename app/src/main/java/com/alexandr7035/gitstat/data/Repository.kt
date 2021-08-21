@@ -19,17 +19,15 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class Repository(
-    private val application: Application,
-    private val user: String,
-    private val token: String
+    application: Application,
+    user: String,
+    token: String
 ) {
     private val LOG_TAG = "DEBUG_TAG"
     private val dao = CacheDB.getInstance(context = application).getDao()
     private val api = NetworkModule(application, user, token)
 
     private val syncStateLiveData = MutableLiveData<String>()
-
-    private lateinit var languagesList: TreeMap<String, Int>
 
     fun getUserLiveDataFromCache(user: String): LiveData<UserEntity> {
 

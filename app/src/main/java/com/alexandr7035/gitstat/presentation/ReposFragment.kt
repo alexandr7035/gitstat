@@ -190,23 +190,23 @@ class ReposFragment : Fragment() {
         // Update synchronization status view
         viewModel.getSyncStatusLData().observe(viewLifecycleOwner, {
 
-            if (it == SyncStatus.PENDING) {
-                binding.syncStatusBtn.isClickable = false
-                binding.syncStatusBtn.text = getString(R.string.loading)
-                binding.syncStatusBtn.setBackgroundResource(R.drawable.background_sync_button_pending)
-            }
-
-            else if (it == SyncStatus.SUCCESS) {
-                binding.syncStatusBtn.isClickable = true
-                binding.syncStatusBtn.text = getString(R.string.synced)
-                binding.syncStatusBtn.setBackgroundResource(R.drawable.background_sync_button_synced)
-            }
-
-            else if (it == SyncStatus.FAILED) {
-                // FIXME currently disabled. Fix when implement refresh
-                binding.syncStatusBtn.isClickable = true
-                binding.syncStatusBtn.text = getString(R.string.failed)
-                binding.syncStatusBtn.setBackgroundResource(R.drawable.background_sync_button_failed)
+            when (it) {
+                SyncStatus.PENDING -> {
+                    binding.syncStatusBtn.isClickable = false
+                    binding.syncStatusBtn.text = getString(R.string.loading)
+                    binding.syncStatusBtn.setBackgroundResource(R.drawable.background_sync_button_pending)
+                }
+                SyncStatus.SUCCESS -> {
+                    binding.syncStatusBtn.isClickable = true
+                    binding.syncStatusBtn.text = getString(R.string.synced)
+                    binding.syncStatusBtn.setBackgroundResource(R.drawable.background_sync_button_synced)
+                }
+                SyncStatus.FAILED -> {
+                    // FIXME currently disabled. Fix when implement refresh
+                    binding.syncStatusBtn.isClickable = true
+                    binding.syncStatusBtn.text = getString(R.string.failed)
+                    binding.syncStatusBtn.setBackgroundResource(R.drawable.background_sync_button_failed)
+                }
             }
 
         })

@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.format.DateFormat
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,15 +27,16 @@ class ProfileFragment : Fragment() {
 
     private lateinit var user: String
 
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
         // Inflate the layout for this fragment
         binding = FragmentProfileBinding.inflate(inflater, container, false)
-        val view = binding.root
 
-        return view
+        return binding.root
     }
 
 
@@ -84,7 +84,7 @@ class ProfileFragment : Fragment() {
                 binding.locationView.text = it.location
 
                 binding.totalReposView.text = (it.total_private_repos + it.public_repos).toString()
-                binding.privateReposViev.text = it.total_private_repos.toString()
+                binding.privateReposView.text = it.total_private_repos.toString()
                 binding.publicReposView.text = it.public_repos.toString()
             }
 
@@ -99,23 +99,23 @@ class ProfileFragment : Fragment() {
         // Update synchronization status view
         viewModel.getSyncStatusLData().observe(viewLifecycleOwner, {
 
-            if (it == SyncStatus.PENDING) {
-                binding.syncStatusBtn.isClickable = false
-                binding.syncStatusBtn.text = getString(R.string.loading)
-                binding.syncStatusBtn.setBackgroundResource(R.drawable.background_sync_button_pending)
-            }
-
-            else if (it == SyncStatus.SUCCESS) {
-                binding.syncStatusBtn.isClickable = true
-                binding.syncStatusBtn.text = getString(R.string.synced)
-                binding.syncStatusBtn.setBackgroundResource(R.drawable.background_sync_button_synced)
-            }
-
-            else if (it == SyncStatus.FAILED) {
-                // FIXME currently disabled. Fix when implement refresh
-                binding.syncStatusBtn.isClickable = true
-                binding.syncStatusBtn.text = getString(R.string.failed)
-                binding.syncStatusBtn.setBackgroundResource(R.drawable.background_sync_button_failed)
+            when (it) {
+                SyncStatus.PENDING -> {
+                    binding.syncStatusBtn.isClickable = false
+                    binding.syncStatusBtn.text = getString(R.string.loading)
+                    binding.syncStatusBtn.setBackgroundResource(R.drawable.background_sync_button_pending)
+                }
+                SyncStatus.SUCCESS -> {
+                    binding.syncStatusBtn.isClickable = true
+                    binding.syncStatusBtn.text = getString(R.string.synced)
+                    binding.syncStatusBtn.setBackgroundResource(R.drawable.background_sync_button_synced)
+                }
+                SyncStatus.FAILED -> {
+                    // FIXME currently disabled. Fix when implement refresh
+                    binding.syncStatusBtn.isClickable = true
+                    binding.syncStatusBtn.text = getString(R.string.failed)
+                    binding.syncStatusBtn.setBackgroundResource(R.drawable.background_sync_button_failed)
+                }
             }
 
         })
