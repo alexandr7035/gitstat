@@ -43,13 +43,13 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.d(LOG_TAG, "profile fragment onviewcreated")
+        //Log.d(LOG_TAG, "profile fragment onviewcreated")
 
         // Shared pref
         sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
         user = sharedPreferences.getString(getString(R.string.shared_pref_login), "NONE")!!
         val token = sharedPreferences.getString(getString(R.string.shared_pref_token), "NONE")
-        Log.d(LOG_TAG, "Auth '$user' with token '$token'")
+        //Log.d(LOG_TAG, "Auth '$user' with token '$token'")
 
         // Navigation controller
         val hf: NavHostFragment = activity?.supportFragmentManager?.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
@@ -133,7 +133,7 @@ class ProfileFragment : Fragment() {
 
         binding.logOutBtn.setOnClickListener {
 
-            Log.d(LOG_TAG, "log out")
+            //Log.d(LOG_TAG, "log out")
 
             // Reset shared prefs
             val editor = sharedPreferences.edit()

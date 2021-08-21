@@ -51,14 +51,14 @@ class ReposFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.d(LOG_TAG, "repos fragment onviewcreated")
+        //Log.d(LOG_TAG, "repos fragment onviewcreated")
 
         // Shared pref
         sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
 
         val user = sharedPreferences.getString(getString(R.string.shared_pref_login), "NONE")
         val token = sharedPreferences.getString(getString(R.string.shared_pref_token), "NONE")
-        Log.d(LOG_TAG, "Auth '$user' with token '$token'")
+        //Log.d(LOG_TAG, "Auth '$user' with token '$token'")
 
         viewModel = MainViewModel(requireActivity().application, "$user", "$token")
 

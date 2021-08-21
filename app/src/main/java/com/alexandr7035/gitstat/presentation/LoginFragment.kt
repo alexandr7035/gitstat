@@ -103,14 +103,14 @@ class LoginFragment : Fragment() {
 
         binding.signInBtn.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View) {
-                Log.d(LOG_TAG, "Login btn pressed")
+                //Log.d(LOG_TAG, "Login btn pressed")
 
                 if (! checkLoginFormIfValid()) {
-                    Log.d(LOG_TAG, "form no valid")
+                    //Log.d(LOG_TAG, "form no valid")
                     return
                 }
                 else {
-                    Log.d(LOG_TAG, "do login request")
+                    //Log.d(LOG_TAG, "do login request")
                     login = binding.loginEditText.text.toString()
                     token = binding.tokenEditText.text.toString()
                     viewModel.doLoginRequest(login, token)
@@ -122,7 +122,7 @@ class LoginFragment : Fragment() {
 
         // Login results handling
         viewModel.getLoginResponseCodeLiveData().observe(viewLifecycleOwner, {
-            Log.d(LOG_TAG, "LOGIN RESULTS CODE: $it")
+            //Log.d(LOG_TAG, "LOGIN RESULTS CODE: $it")
 
             when (it) {
                 200 -> {
