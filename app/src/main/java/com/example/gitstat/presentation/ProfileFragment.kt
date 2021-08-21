@@ -123,6 +123,26 @@ class ProfileFragment : Fragment() {
         binding.reposStatDetailedBtn.setOnClickListener {
             navController.navigate(R.id.reposFragment)
         }
+
+        binding.logOutBtn.setOnClickListener {
+
+            Log.d(LOG_TAG, "log out")
+
+            val editor = sharedPreferences.edit()
+            editor.putString(
+                getString(R.string.shared_pref_login),
+                getString(R.string.shared_pref_default_string_value)
+            )
+
+            editor.putString(
+                getString(R.string.shared_pref_token),
+                getString(R.string.shared_pref_default_string_value)
+            )
+
+            editor.commit()
+
+            navController.navigate(R.id.loginFragment)
+        }
     }
 
 
