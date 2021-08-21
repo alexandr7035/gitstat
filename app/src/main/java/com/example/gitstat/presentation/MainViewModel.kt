@@ -17,8 +17,8 @@ class MainViewModel(application: Application, user: String, token: String) : And
     private val repository = Repository(application, user, token)
 
     // Fixme ID
-    fun getUserLData(): LiveData<UserEntity> {
-        return repository.getUserLiveDataFromCache(user_id = 22574399)
+    fun getUserLData(user: String): LiveData<UserEntity> {
+        return repository.getUserLiveDataFromCache(user)
     }
 
     fun getSyncStatusLData(): LiveData<String> {

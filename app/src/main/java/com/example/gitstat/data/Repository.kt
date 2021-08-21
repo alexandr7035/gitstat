@@ -34,7 +34,7 @@ class Repository(
 
     private lateinit var languagesList: TreeMap<String, Int>
 
-    fun getUserLiveDataFromCache(user_id: Long): LiveData<UserEntity> {
+    fun getUserLiveDataFromCache(user: String): LiveData<UserEntity> {
 
         CoroutineScope(Dispatchers.IO).launch {
 
@@ -84,7 +84,7 @@ class Repository(
             }
         }
 
-        return dao.getUserCache(user_id)
+        return dao.getUserCache(user)
     }
 
     fun getSyncStatusLiveData(): MutableLiveData<String> {

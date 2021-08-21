@@ -26,6 +26,8 @@ class ProfileFragment : Fragment() {
     private lateinit var viewModel: MainViewModel
     private lateinit var navController: NavController
 
+    private lateinit var user: String
+
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -45,7 +47,7 @@ class ProfileFragment : Fragment() {
 
         // Shared pref
         sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
-        val user = sharedPreferences.getString(getString(R.string.shared_pref_login), "NONE")
+        user = sharedPreferences.getString(getString(R.string.shared_pref_login), "NONE")!!
         val token = sharedPreferences.getString(getString(R.string.shared_pref_token), "NONE")
         Log.d(LOG_TAG, "Auth '$user' with token '$token'")
 
@@ -62,7 +64,7 @@ class ProfileFragment : Fragment() {
         super.onResume()
 
         // Update profile data
-        viewModel.getUserLData().observe(viewLifecycleOwner, {
+        viewModel.getUserLData(user).observe(viewLifecycleOwner, {
 
             if (it != null) {
 

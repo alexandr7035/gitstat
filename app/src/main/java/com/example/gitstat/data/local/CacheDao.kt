@@ -9,8 +9,8 @@ interface CacheDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUserCache(user: UserEntity)
 
-    @Query("select * from user where id = (:id)")
-    fun getUserCache(id: Long): LiveData<UserEntity>
+    @Query("select * from user where login = (:user)")
+    fun getUserCache(user: String): LiveData<UserEntity>
 
     @Query("DELETE FROM user")
     suspend fun clearUserCache()
