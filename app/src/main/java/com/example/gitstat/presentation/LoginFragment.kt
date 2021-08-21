@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
+import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -51,8 +52,34 @@ class LoginFragment : Fragment() {
 
             }
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                if (s.isNotEmpty()) {
+                    if (!TextUtils.isEmpty(binding.loginField.error)) {
+                        binding.loginField.error = null
+                        binding.loginField.isErrorEnabled = false
+                    }
+                }
+            }
 
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+
+        })
+
+
+        binding.tokenEditText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                if (s.isNotEmpty()) {
+                    if (!TextUtils.isEmpty(binding.tokenField.error)) {
+                        binding.tokenField.error = null
+                        binding.tokenField.isErrorEnabled = false
+                    }
+                }
             }
 
             override fun afterTextChanged(s: Editable?) {
