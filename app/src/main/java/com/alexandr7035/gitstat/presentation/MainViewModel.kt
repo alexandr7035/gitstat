@@ -7,8 +7,6 @@ import androidx.lifecycle.MutableLiveData
 import com.alexandr7035.gitstat.data.Repository
 import com.alexandr7035.gitstat.data.local.RepositoryEntity
 import com.alexandr7035.gitstat.data.local.UserEntity
-import com.alexandr7035.gitstat.data.remote.UserModel
-import retrofit2.Response
 
 class MainViewModel(application: Application, user: String, token: String) : AndroidViewModel(application) {
 

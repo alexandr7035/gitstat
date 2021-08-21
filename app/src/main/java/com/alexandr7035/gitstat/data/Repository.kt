@@ -10,13 +10,10 @@ import com.alexandr7035.gitstat.data.local.RepositoryEntity
 import com.alexandr7035.gitstat.data.local.UserEntity
 import com.alexandr7035.gitstat.data.remote.NetworkModule
 import com.alexandr7035.gitstat.data.remote.RepositoryModel
-import com.alexandr7035.gitstat.data.remote.UserModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import retrofit2.Response
-import java.net.SocketException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList

@@ -1,7 +1,5 @@
 package com.alexandr7035.gitstat.data.remote
 
-import android.telephony.cdma.CdmaCellLocation
-
 data class UserModel(
     val id: Long,
     val login: String,
