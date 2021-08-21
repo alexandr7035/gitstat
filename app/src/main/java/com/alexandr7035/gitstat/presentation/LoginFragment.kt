@@ -1,4 +1,4 @@
-package com.example.gitstat.presentation
+package com.alexandr7035.gitstat.presentation
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -15,8 +15,8 @@ import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import com.example.gitstat.R
-import com.example.gitstat.databinding.FragmentLoginBinding
+import com.alexandr7035.gitstat.R
+import com.alexandr7035.gitstat.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
 

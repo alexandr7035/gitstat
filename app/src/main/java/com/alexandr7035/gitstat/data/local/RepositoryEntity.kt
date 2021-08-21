@@ -1,4 +1,4 @@
-package com.example.gitstat.data.local
+package com.alexandr7035.gitstat.data.local
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

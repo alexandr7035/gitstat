@@ -1,4 +1,4 @@
-package com.example.gitstat.common
+package com.alexandr7035.gitstat.common
 
 object SyncStatus {
 

@@ -1,13 +1,13 @@
-package com.example.gitstat.presentation
+package com.alexandr7035.gitstat.presentation
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.gitstat.data.Repository
-import com.example.gitstat.data.local.RepositoryEntity
-import com.example.gitstat.data.local.UserEntity
-import com.example.gitstat.data.remote.UserModel
+import com.alexandr7035.gitstat.data.Repository
+import com.alexandr7035.gitstat.data.local.RepositoryEntity
+import com.alexandr7035.gitstat.data.local.UserEntity
+import com.alexandr7035.gitstat.data.remote.UserModel
 import retrofit2.Response
 
 class MainViewModel(application: Application, user: String, token: String) : AndroidViewModel(application) {

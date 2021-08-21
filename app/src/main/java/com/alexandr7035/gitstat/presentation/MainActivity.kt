@@ -1,4 +1,4 @@
-package com.example.gitstat.presentation
+package com.alexandr7035.gitstat.presentation
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -10,7 +10,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.example.gitstat.R
+import com.alexandr7035.gitstat.R
 
 class MainActivity : AppCompatActivity() {
 

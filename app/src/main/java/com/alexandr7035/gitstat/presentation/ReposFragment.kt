@@ -1,4 +1,4 @@
-package com.example.gitstat
+package com.alexandr7035.gitstat
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -12,9 +12,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import com.example.gitstat.common.SyncStatus
-import com.example.gitstat.databinding.FragmentReposBinding
-import com.example.gitstat.presentation.MainViewModel
+import com.alexandr7035.gitstat.common.SyncStatus
+import com.alexandr7035.gitstat.databinding.FragmentReposBinding
+import com.alexandr7035.gitstat.presentation.MainViewModel
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet

@@ -1,16 +1,16 @@
-package com.example.gitstat.data
+package com.alexandr7035.gitstat.data
 
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.gitstat.common.SyncStatus
-import com.example.gitstat.data.local.CacheDB
-import com.example.gitstat.data.local.RepositoryEntity
-import com.example.gitstat.data.local.UserEntity
-import com.example.gitstat.data.remote.NetworkModule
-import com.example.gitstat.data.remote.RepositoryModel
-import com.example.gitstat.data.remote.UserModel
+import com.alexandr7035.gitstat.common.SyncStatus
+import com.alexandr7035.gitstat.data.local.CacheDB
+import com.alexandr7035.gitstat.data.local.RepositoryEntity
+import com.alexandr7035.gitstat.data.local.UserEntity
+import com.alexandr7035.gitstat.data.remote.NetworkModule
+import com.alexandr7035.gitstat.data.remote.RepositoryModel
+import com.alexandr7035.gitstat.data.remote.UserModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

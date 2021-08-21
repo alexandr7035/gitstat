@@ -1,4 +1,4 @@
-package com.example.gitstat.data.local
+package com.alexandr7035.gitstat.data.local
 
 import android.content.Context
 import androidx.room.Database

@@ -1,4 +1,4 @@
-package com.example.gitstat
+package com.alexandr7035.gitstat
 
 import org.junit.Test
 

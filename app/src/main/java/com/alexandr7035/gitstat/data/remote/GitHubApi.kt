@@ -1,7 +1,7 @@
-package com.example.gitstat.data.remote
+package com.alexandr7035.gitstat.data.remote
 
-import com.example.gitstat.data.remote.ReposSearchModel
-import com.example.gitstat.data.remote.UserModel
+import com.alexandr7035.gitstat.data.remote.ReposSearchModel
+import com.alexandr7035.gitstat.data.remote.UserModel
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.GET
