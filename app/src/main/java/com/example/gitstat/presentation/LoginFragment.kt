@@ -15,7 +15,6 @@ import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import com.example.gitstat.data.AuthState
 import com.example.gitstat.R
 import com.example.gitstat.databinding.FragmentLoginBinding
 
