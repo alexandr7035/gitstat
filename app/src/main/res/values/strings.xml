@@ -1,3 +1,43 @@
 <resources>
     <string name="app_name">GitStat</string>
+
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="token">Token</string>
+    <string name="sign_in">Sign in</string>
+
+    <string name="repos">Repositories</string>
+    <string name="other">Other</string>
+
+    <string name="profile">Profile</string>
+    <string name="show_more">Show more</string>
+    <string name="total_repos">Total repos</string>
+    <string name="public_repos">Public repos</string>
+    <string name="private_repos">Private repos</string>
+
+    <string name="shared_pref_login">SHARED_PREF_LOGIN</string>
+    <string name="shared_pref_token">SHARED_PREF_TOKEN</string>
+    <string name="shared_pref_name">SHARED_PREF</string>
+    <string name="shared_pref_default_string_value">NONE</string>
+
+    <string name="id">ID</string>
+    <string name="created">Created</string>
+    <string name="updated">Updated</string>
+    <string name="followers">Followers</string>
+    <string name="location">Location</string>
+    <string name="total">total</string>
+    <string name="public_">public</string>
+    <string name="private_">private</string>
+
+    <string name="loading">Loading…</string>
+    <string name="synced">Synced</string>
+    <string name="failed">Failed</string>
+
+    <string name="logout">Log out</string>
+    
+    <string name="error_empty_field">This field cannot be empty</string>
+    <string name="error_wrong_data_field">Invalid authorization data. Check login and token</string>
+    <string name="error_cant_get_data_remote">Failed to get data from GitHub. Check your internet connection and try again</string>
+    <string name="repositories_by_language">Repositories by language</string>
+
 </resources>

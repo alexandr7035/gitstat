@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/profileFragment"
+        android:title="@string/profile"
+        android:icon="@drawable/ic_profile_filled" />
+
+    <item android:id="@+id/reposFragment"
+        android:title="@string/repos"
+        android:icon="@drawable/ic_repo_filled" />
+
+</menu>
