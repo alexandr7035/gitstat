@@ -3,6 +3,8 @@ package com.example.gitstat.presentation
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,7 +16,7 @@ import com.example.gitstat.data.AuthState
 import com.example.gitstat.R
 import com.example.gitstat.databinding.FragmentLoginBinding
 
-class LoginFragment : Fragment(), View.OnClickListener {
+class LoginFragment : Fragment() {
 
     private val LOG_TAG = "DEBUG_TAG"
     private lateinit var navController: NavController
@@ -34,57 +36,64 @@ class LoginFragment : Fragment(), View.OnClickListener {
         val hf: NavHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = hf.navController
 
-        if (authenticateByToken() == AuthState.AUTH_SUCCESS) {
-            // Go to main screen
-            navController.navigate(R.id.actionLoginToMain)
-        }
-
         // Inflate the layout for this fragment
         binding = FragmentLoginBinding.inflate(inflater, container, false)
-        val view = binding.root
-
-        // Views
-        binding.signInBtn.setOnClickListener(this)
-
-        return view
+        return binding.root
     }
 
 
-
-    // Common click listener for all buttons
-    override fun onClick(v: View) {
-        when (v.id) {
-            R.id.signInBtn -> {
-                Log.d(LOG_TAG, "login btn clicked")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
 
-                val prefEditor = sharedPreferences.edit()
+        binding.loginEditText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
-                prefEditor.putString(getString(R.string.shared_pref_login), binding.loginEditText.text.toString())
-                prefEditor.putString(getString(R.string.shared_pref_token), binding.tokenEditText.text.toString())
-                prefEditor.apply()
-
-                //Toast.makeText(requireActivity(), sharedPreferences.getString(getString(R.string.shared_pref_token), "NONE"), Toast.LENGTH_SHORT).show()
-
-                // Go to main screen
-                navController.navigate(R.id.actionLoginToMain)
             }
-        }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+
+        })
+
+
+        binding.signInBtn.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View) {
+                Log.d(LOG_TAG, "Login btn pressed")
+
+                if (checkLoginFormIfValid()) {
+                    return
+                }
+                else {
+                    // FIXME - DO LOGIN REQUEST
+                }
+
+            }
+        })
+
     }
 
 
-    // FIXME
-    // This is a test variant than doesn't check token
-    private fun authenticateByToken(): Int {
+    private fun checkLoginFormIfValid(): Boolean {
 
-        val token = sharedPreferences.getString(getString(R.string.shared_pref_token), "NONE")
+        var isValid = true
 
-        if (token != "NONE") {
-            Log.d(LOG_TAG, "log with token $token")
-            return AuthState.AUTH_SUCCESS
+        if (binding.loginEditText.text.isNullOrBlank()) {
+            binding.loginField.error = getString(R.string.error_empty_field)
+            isValid = false
         }
 
-        return AuthState.AUTH_FAILED
+        if (binding.tokenEditText.text.isNullOrBlank()) {
+            binding.tokenField.error = getString(R.string.error_empty_field)
+            isValid = false
+        }
+
+        return isValid
     }
 
 }

@@ -30,5 +30,8 @@
     <string name="loading">Loading…</string>
     <string name="synced">Synced</string>
     <string name="failed">Failed</string>
+    
+    <string name="error_empty_field">This field cannot be empty</string>
+    <string name="error_wrong_data_field">Invalid authorization data</string>
 
 </resources>
