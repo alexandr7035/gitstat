@@ -51,8 +51,7 @@ class ProfileFragment : Fragment() {
         val token = sharedPreferences.getString(getString(R.string.shared_pref_token), "NONE")
         Log.d(LOG_TAG, "Auth '$user' with token '$token'")
 
-        // Nav controller
-        // NavController
+        // Navigation controller
         val hf: NavHostFragment = activity?.supportFragmentManager?.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = hf.navController
 
@@ -122,6 +121,12 @@ class ProfileFragment : Fragment() {
         })
 
 
+        // Refresh the data on status btn click
+        binding.syncStatusBtn.setOnClickListener {
+            // Just renavigate to this fragment
+            navController.navigate(R.id.profileFragment)
+        }
+
         binding.reposStatDetailedBtn.setOnClickListener {
             navController.navigate(R.id.reposFragment)
         }
@@ -149,6 +154,8 @@ class ProfileFragment : Fragment() {
 
             navController.navigate(R.id.loginFragment)
         }
+
+
     }
 
 

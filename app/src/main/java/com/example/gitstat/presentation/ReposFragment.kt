@@ -10,6 +10,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import com.example.gitstat.common.SyncStatus
 import com.example.gitstat.databinding.FragmentReposBinding
 import com.example.gitstat.presentation.MainViewModel
@@ -29,6 +31,8 @@ class ReposFragment : Fragment() {
     private val LOG_TAG = "DEBUG_TAG"
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var binding: FragmentReposBinding
+
+    private lateinit var navController: NavController
 
     private lateinit var languagesList: TreeMap<String, Int>
 
@@ -57,6 +61,10 @@ class ReposFragment : Fragment() {
         Log.d(LOG_TAG, "Auth '$user' with token '$token'")
 
         viewModel = MainViewModel(requireActivity().application, "$user", "$token")
+
+        // NavController
+        val hf: NavHostFragment = activity?.supportFragmentManager?.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navController = hf.navController
 
     }
 
@@ -202,6 +210,13 @@ class ReposFragment : Fragment() {
             }
 
         })
+
+
+        // Refresh the data on status btn click
+        binding.syncStatusBtn.setOnClickListener {
+            // Just renavigate to this fragment
+            navController.navigate(R.id.reposFragment)
+        }
     }
 
 
