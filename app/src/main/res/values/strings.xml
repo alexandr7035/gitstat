@@ -18,6 +18,8 @@
     <string name="shared_pref_login">SHARED_PREF_LOGIN</string>
     <string name="shared_pref_token">SHARED_PREF_TOKEN</string>
     <string name="shared_pref_name">SHARED_PREF</string>
+    <string name="shared_pref_default_string_value">NONE</string>
+
     <string name="id">ID</string>
     <string name="created">Created</string>
     <string name="updated">Updated</string>
