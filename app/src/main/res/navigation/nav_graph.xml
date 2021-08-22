@@ -22,7 +22,7 @@
 
     <fragment
         android:id="@+id/reposFragment"
-        android:name="com.alexandr7035.gitstat.ReposFragment"
+        android:name="com.alexandr7035.gitstat.presentation.ReposFragment"
         android:label="fragment_repos"
         tools:layout="@layout/fragment_repos" />
 </navigation>
