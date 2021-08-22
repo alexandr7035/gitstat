@@ -10,6 +10,9 @@ import com.alexandr7035.gitstat.data.local.RepositoryEntity
 import com.alexandr7035.gitstat.data.local.UserEntity
 import com.alexandr7035.gitstat.data.remote.NetworkModule
 import com.alexandr7035.gitstat.data.remote.RepositoryModel
+import com.alexandr7035.gitstat.data.remote.UserModel
+import com.alexandr7035.gitstat.data.remote.mappers.RepositoryRemoteToCacheMapper
+import com.alexandr7035.gitstat.data.remote.mappers.UserRemoteToCacheMapper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -29,6 +32,9 @@ class Repository(
 
     private val syncStateLiveData = MutableLiveData<String>()
 
+    private val userMapper = UserRemoteToCacheMapper()
+    private val repoMapper = RepositoryRemoteToCacheMapper()
+
     fun getUserLiveDataFromCache(user: String): LiveData<UserEntity> {
 
         CoroutineScope(Dispatchers.IO).launch {
@@ -44,28 +50,8 @@ class Repository(
 
                     syncStateLiveData.postValue(SyncStatus.SUCCESS)
 
-                    // Convert string dates to timestamp
-                    val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US)
-                    format.timeZone = TimeZone.getTimeZone("GMT")
-                    val created_date = format.parse(res.body()!!.created_at).time
-                    val updated_date = format.parse(res.body()!!.updated_at).time
-
-                    val cachedUser = UserEntity(
-                        id = res.body()!!.id,
-                        name = res.body()!!.name,
-                        location = res.body()!!.location,
-                        login = res.body()!!.login,
-                        avatar_url = res.body()!!.avatar_url,
-                        public_repos = res.body()!!.public_repos,
-                        total_private_repos = res.body()!!.total_private_repos,
-                        followers = res.body()!!.followers,
-                        following = res.body()!!.following,
-                        created_at = created_date,
-                        updated_at = updated_date,
-
-                        cache_updated_at = System.currentTimeMillis()
-                    )
-
+                    // Map remote model to room
+                    val cachedUser = userMapper.transform(res.body()!!)
                     dao.insertUserCache(cachedUser)
 
                 } else {
@@ -104,28 +90,17 @@ class Repository(
                     val searchResults = res.body()
                     val reposList: List<RepositoryModel> = searchResults!!.items
 
-                    //Log.d(LOG_TAG, "REPOOOOOOOS $reposList")
 
-                    var cachedReposList = ArrayList<RepositoryEntity>()
+                    val cachedReposList = ArrayList<RepositoryEntity>()
                     for (repo in reposList) {
-
-                        if (repo.language == null) {
-                            repo.language = "Unknown"
-                        }
-
-                        val cachedRepo = RepositoryEntity(
-                            id = repo.id,
-                            name = repo.name,
-                            language = repo.language,
-                            isPrivate = repo.private
-                        )
-
-                        cachedReposList.add(cachedRepo)
+                        cachedReposList.add(repoMapper.transform(repo))
                     }
 
                     dao.clearRepositoriesCache()
                     dao.insertRepositoriesCache(cachedReposList)
-                } else {
+                }
+
+                else {
                     syncStateLiveData.postValue(SyncStatus.FAILED)
                 }
 
