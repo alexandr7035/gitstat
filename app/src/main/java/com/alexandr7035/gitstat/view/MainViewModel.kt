@@ -1,4 +1,4 @@
-package com.alexandr7035.gitstat.presentation
+package com.alexandr7035.gitstat.view
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -6,8 +6,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.alexandr7035.gitstat.core.SyncStatus
 import com.alexandr7035.gitstat.data.Repository
-import com.alexandr7035.gitstat.data.local.RepositoryEntity
-import com.alexandr7035.gitstat.data.local.UserEntity
+import com.alexandr7035.gitstat.data.local.model.RepositoryEntity
+import com.alexandr7035.gitstat.data.local.model.UserEntity
 
 class MainViewModel(application: Application, user: String, token: String) : AndroidViewModel(application) {
 

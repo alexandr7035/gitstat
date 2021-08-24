@@ -1,4 +1,4 @@
-package com.alexandr7035.gitstat.data.remote
+package com.alexandr7035.gitstat.data.remote.model
 
 data class ReposSearchModel(
     val total_count: Long,

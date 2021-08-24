@@ -1,8 +1,8 @@
 package com.alexandr7035.gitstat.data.remote.mappers
 
 import com.alexandr7035.gitstat.core.Mapper
-import com.alexandr7035.gitstat.data.local.UserEntity
-import com.alexandr7035.gitstat.data.remote.UserModel
+import com.alexandr7035.gitstat.data.local.model.UserEntity
+import com.alexandr7035.gitstat.data.remote.model.UserModel
 import java.text.SimpleDateFormat
 import java.util.*
 

@@ -1,6 +1,8 @@
 package com.alexandr7035.gitstat.data.remote
 
 import android.app.Application
+import com.alexandr7035.gitstat.data.remote.model.ReposSearchModel
+import com.alexandr7035.gitstat.data.remote.model.UserModel
 import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.Retrofit

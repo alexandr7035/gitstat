@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:clipToPadding="false"
     android:paddingBottom="20dp"
-    tools:context="com.alexandr7035.gitstat.presentation.ProfileFragment">
+    tools:context="com.alexandr7035.gitstat.view.ProfileFragment">
 
     <LinearLayout
         android:id="@+id/reposSummaryCard"

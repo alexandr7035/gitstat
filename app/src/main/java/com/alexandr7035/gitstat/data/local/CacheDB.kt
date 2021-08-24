@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.alexandr7035.gitstat.data.local.model.RepositoryEntity
+import com.alexandr7035.gitstat.data.local.model.UserEntity
 
 @Database(entities = [UserEntity::class, RepositoryEntity::class], version = 1)
 abstract class CacheDB : RoomDatabase() {

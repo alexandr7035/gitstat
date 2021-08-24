@@ -1,5 +1,7 @@
 package com.alexandr7035.gitstat.data.remote
 
+import com.alexandr7035.gitstat.data.remote.model.ReposSearchModel
+import com.alexandr7035.gitstat.data.remote.model.UserModel
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header

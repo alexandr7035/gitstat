@@ -1,4 +1,4 @@
-package com.alexandr7035.gitstat.presentation
+package com.alexandr7035.gitstat.view
 
 import android.content.Context
 import android.content.SharedPreferences

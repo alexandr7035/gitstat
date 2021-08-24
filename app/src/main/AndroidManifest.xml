@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GitStat">
         <activity
-            android:name="com.alexandr7035.gitstat.presentation.MainActivity"
+            android:name="com.alexandr7035.gitstat.view.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

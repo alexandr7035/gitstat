@@ -2,6 +2,8 @@ package com.alexandr7035.gitstat.data.local
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.alexandr7035.gitstat.data.local.model.RepositoryEntity
+import com.alexandr7035.gitstat.data.local.model.UserEntity
 
 @Dao
 interface CacheDao {

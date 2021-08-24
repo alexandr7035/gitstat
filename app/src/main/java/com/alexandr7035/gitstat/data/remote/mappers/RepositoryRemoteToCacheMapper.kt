@@ -1,8 +1,8 @@
 package com.alexandr7035.gitstat.data.remote.mappers
 
 import com.alexandr7035.gitstat.core.Mapper
-import com.alexandr7035.gitstat.data.local.RepositoryEntity
-import com.alexandr7035.gitstat.data.remote.RepositoryModel
+import com.alexandr7035.gitstat.data.local.model.RepositoryEntity
+import com.alexandr7035.gitstat.data.remote.model.RepositoryModel
 
 class RepositoryRemoteToCacheMapper: Mapper<RepositoryModel, RepositoryEntity> {
     override fun transform(data: RepositoryModel): RepositoryEntity {
