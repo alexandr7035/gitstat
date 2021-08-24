@@ -1,4 +1,4 @@
-package com.alexandr7035.gitstat.common
+package com.alexandr7035.gitstat.core
 
 enum class SyncStatus {
     SUCCESS,

@@ -1,7 +1,6 @@
 package com.alexandr7035.gitstat.data.remote.mappers
 
-import com.alexandr7035.gitstat.common.Mapper
-import com.alexandr7035.gitstat.data.Repository
+import com.alexandr7035.gitstat.core.Mapper
 import com.alexandr7035.gitstat.data.local.RepositoryEntity
 import com.alexandr7035.gitstat.data.remote.RepositoryModel
 

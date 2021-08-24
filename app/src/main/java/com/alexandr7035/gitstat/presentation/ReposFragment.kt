@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.alexandr7035.gitstat.R
-import com.alexandr7035.gitstat.common.SyncStatus
+import com.alexandr7035.gitstat.core.SyncStatus
 import com.alexandr7035.gitstat.databinding.FragmentReposBinding
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
