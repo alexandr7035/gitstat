@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.alexandr7035.gitstat.common.SyncStatus
 import com.alexandr7035.gitstat.data.Repository
 import com.alexandr7035.gitstat.data.local.RepositoryEntity
 import com.alexandr7035.gitstat.data.local.UserEntity
@@ -19,7 +20,7 @@ class MainViewModel(application: Application, user: String, token: String) : And
         return repository.getUserLiveDataFromCache(user)
     }
 
-    fun getSyncStatusLData(): LiveData<String> {
+    fun getSyncStatusLData(): LiveData<SyncStatus> {
         return repository.getSyncStatusLiveData()
     }
 

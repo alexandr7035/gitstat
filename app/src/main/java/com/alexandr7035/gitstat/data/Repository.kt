@@ -30,7 +30,7 @@ class Repository(
     private val dao = CacheDB.getInstance(context = application).getDao()
     private val api = NetworkModule(application, user, token)
 
-    private val syncStateLiveData = MutableLiveData<String>()
+    private val syncStateLiveData = MutableLiveData<SyncStatus>()
 
     private val userMapper = UserRemoteToCacheMapper()
     private val repoMapper = RepositoryRemoteToCacheMapper()
@@ -68,7 +68,7 @@ class Repository(
         return dao.getUserCache(user)
     }
 
-    fun getSyncStatusLiveData(): MutableLiveData<String> {
+    fun getSyncStatusLiveData(): MutableLiveData<SyncStatus> {
         return syncStateLiveData
     }
 
