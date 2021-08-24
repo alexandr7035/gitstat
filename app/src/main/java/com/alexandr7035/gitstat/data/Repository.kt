@@ -15,7 +15,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlin.collections.ArrayList
 
 class Repository(
     application: Application,
@@ -83,13 +82,10 @@ class Repository(
 
                     syncStateLiveData.postValue(SyncStatus.SUCCESS)
 
-                    val searchResults = res.body()
-                    val reposList: List<RepositoryModel> = searchResults!!.items
+                    val reposList: List<RepositoryModel> = res.body()!!.items
 
-
-                    val cachedReposList = ArrayList<RepositoryEntity>()
-                    for (repo in reposList) {
-                        cachedReposList.add(repoMapper.transform(repo))
+                    val cachedReposList = reposList.map { repositoryModel ->
+                        repoMapper.transform(repositoryModel)
                     }
 
                     dao.clearRepositoriesCache()
