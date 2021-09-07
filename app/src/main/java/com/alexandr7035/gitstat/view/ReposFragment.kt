@@ -174,31 +174,17 @@ class ReposFragment : Fragment() {
 
             when (it) {
                 SyncStatus.PENDING -> {
-                    binding.syncStatusBtn.isClickable = false
-                    binding.syncStatusBtn.text = getString(R.string.loading)
-                    binding.syncStatusBtn.setBackgroundResource(R.drawable.background_sync_button_pending)
+                    binding.syncStatusView.setBackgroundResource(R.drawable.background_sync_button_pending)
                 }
                 SyncStatus.SUCCESS -> {
-                    binding.syncStatusBtn.isClickable = true
-                    binding.syncStatusBtn.text = getString(R.string.synced)
-                    binding.syncStatusBtn.setBackgroundResource(R.drawable.background_sync_button_synced)
+                    binding.syncStatusView.setBackgroundResource(R.drawable.background_sync_button_synced)
                 }
                 SyncStatus.FAILED -> {
-                    // FIXME currently disabled. Fix when implement refresh
-                    binding.syncStatusBtn.isClickable = true
-                    binding.syncStatusBtn.text = getString(R.string.failed)
-                    binding.syncStatusBtn.setBackgroundResource(R.drawable.background_sync_button_failed)
+                    binding.syncStatusView.setBackgroundResource(R.drawable.background_sync_button_failed)
                 }
             }
-
         })
 
-
-        // Refresh the data on status btn click
-        binding.syncStatusBtn.setOnClickListener {
-            // Just renavigate to this fragment
-            navController.navigate(R.id.reposFragment)
-        }
     }
 
 

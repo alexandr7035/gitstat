@@ -9,19 +9,15 @@
     android:paddingBottom="20dp"
     tools:context=".view.ReposFragment">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="16dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <View
+        android:id="@+id/syncStatusView"
+        android:layout_width="match_parent"
+        android:layout_height="7dp"
+        android:background="@color/gray_200"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
 
         <TextView
             android:id="@+id/fragmentTitle"
@@ -30,33 +26,18 @@
             android:text="@string/repos"
             android:textColor="@color/black"
             android:textSize="24sp"
-            android:textStyle="bold" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-
-        <TextView
-            android:id="@+id/syncStatusBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@drawable/background_sync_button_synced"
-            android:clickable="true"
-            tools:text="Synced"
-            android:textColor="#575757"
-            android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </LinearLayout>
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/syncStatusView"/>
 
     <LinearLayout
         android:id="@+id/reposCountCard"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/background_card"
         android:elevation="5dp"
@@ -64,7 +45,7 @@
         android:padding="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        app:layout_constraintTop_toBottomOf="@+id/fragmentTitle">
 
         <LinearLayout
             android:layout_width="match_parent"
