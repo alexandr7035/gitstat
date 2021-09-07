@@ -29,6 +29,7 @@ class Repository(
 
     suspend fun getUserLiveDataFromCache(livedata: MutableLiveData<UserEntity>, user: String) {
 
+        livedata.postValue(dao.getUserCache(user))
 
         // For loading animations, etc
         syncStateLiveData.postValue(SyncStatus.PENDING)
@@ -60,6 +61,8 @@ class Repository(
 
 
     suspend fun getRepositoriesLiveDataFromCache(livedata: MutableLiveData<List<RepositoryEntity>>) {
+
+        livedata.postValue(dao.getRepositoriesCache())
 
         syncStateLiveData.postValue(SyncStatus.PENDING)
 
