@@ -11,10 +11,7 @@ import com.alexandr7035.gitstat.data.remote.NetworkModule
 import com.alexandr7035.gitstat.data.remote.model.RepositoryModel
 import com.alexandr7035.gitstat.data.remote.mappers.RepositoryRemoteToCacheMapper
 import com.alexandr7035.gitstat.data.remote.mappers.UserRemoteToCacheMapper
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 class Repository(
     application: Application,
@@ -30,81 +27,74 @@ class Repository(
     private val userMapper = UserRemoteToCacheMapper()
     private val repoMapper = RepositoryRemoteToCacheMapper()
 
-    fun getUserLiveDataFromCache(user: String): LiveData<UserEntity> {
+    suspend fun getUserLiveDataFromCache(livedata: MutableLiveData<UserEntity>, user: String) {
 
-        CoroutineScope(Dispatchers.IO).launch {
 
-            // For loading animations, etc
-            syncStateLiveData.postValue(SyncStatus.PENDING)
+        // For loading animations, etc
+        syncStateLiveData.postValue(SyncStatus.PENDING)
 
-            try {
-                val res = api.getUserData()
-                //Log.d(LOG_TAG, "USER cache request")
+        try {
+            val res = api.getUserData()
+            //Log.d(LOG_TAG, "USER cache request")
 
-                if (res.isSuccessful) {
+            if (res.isSuccessful) {
 
-                    syncStateLiveData.postValue(SyncStatus.SUCCESS)
+                syncStateLiveData.postValue(SyncStatus.SUCCESS)
 
-                    // Map remote model to room
-                    val cachedUser = userMapper.transform(res.body()!!)
-                    dao.insertUserCache(cachedUser)
+                // Map remote model to room
+                val cachedUser = userMapper.transform(res.body()!!)
+                dao.insertUserCache(cachedUser)
 
-                } else {
-                    syncStateLiveData.postValue(SyncStatus.FAILED)
+            } else {
+                syncStateLiveData.postValue(SyncStatus.FAILED)
+            }
+
+        }
+        catch (e: Exception) {
+                //Log.d(LOG_TAG, "exception $e")
+                syncStateLiveData.postValue(SyncStatus.FAILED)
+        }
+
+        livedata.postValue(dao.getUserCache(user))
+    }
+
+
+    suspend fun getRepositoriesLiveDataFromCache(livedata: MutableLiveData<List<RepositoryEntity>>) {
+
+        syncStateLiveData.postValue(SyncStatus.PENDING)
+
+        try {
+            val res = api.getRepositoriesData()
+
+            if (res.isSuccessful) {
+
+                syncStateLiveData.postValue(SyncStatus.SUCCESS)
+
+                val reposList: List<RepositoryModel> = res.body()!!.items
+
+                val cachedReposList = reposList.map { repositoryModel ->
+                    repoMapper.transform(repositoryModel)
                 }
 
-            }
-            catch (e: Exception) {
-                //Log.d(LOG_TAG, "exception $e")
+                dao.clearRepositoriesCache()
+                dao.insertRepositoriesCache(cachedReposList)
+            } else {
                 syncStateLiveData.postValue(SyncStatus.FAILED)
             }
         }
 
-        return dao.getUserCache(user)
+        catch (e: Exception) {
+            //Log.d(LOG_TAG, "exception ${e}")
+            syncStateLiveData.postValue(SyncStatus.FAILED)
+        }
+
+        livedata.postValue(dao.getRepositoriesCache())
+
     }
+
 
     fun getSyncStatusLiveData(): MutableLiveData<SyncStatus> {
         return syncStateLiveData
-    }
-
-    fun getRepositoriesLiveDataFromCache(): LiveData<List<RepositoryEntity>> {
-
-        //Log.d(LOG_TAG, "REPOS CACHE 2")
-
-        CoroutineScope(Dispatchers.IO).launch {
-
-            syncStateLiveData.postValue(SyncStatus.PENDING)
-
-            try {
-                val res = api.getRepositoriesData()
-
-                if (res.isSuccessful) {
-
-                    syncStateLiveData.postValue(SyncStatus.SUCCESS)
-
-                    val reposList: List<RepositoryModel> = res.body()!!.items
-
-                    val cachedReposList = reposList.map { repositoryModel ->
-                        repoMapper.transform(repositoryModel)
-                    }
-
-                    dao.clearRepositoriesCache()
-                    dao.insertRepositoriesCache(cachedReposList)
-                }
-
-                else {
-                    syncStateLiveData.postValue(SyncStatus.FAILED)
-                }
-
-            }
-            catch (e: Exception) {
-                //Log.d(LOG_TAG, "exception ${e}")
-                syncStateLiveData.postValue(SyncStatus.FAILED)
-            }
-        }
-
-        return dao.getRepositoriesCache()
-
     }
 
 

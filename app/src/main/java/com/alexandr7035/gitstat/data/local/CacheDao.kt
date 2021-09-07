@@ -12,7 +12,7 @@ interface CacheDao {
     suspend fun insertUserCache(user: UserEntity)
 
     @Query("select * from user where login = (:user)")
-    fun getUserCache(user: String): LiveData<UserEntity>
+    fun getUserCache(user: String): UserEntity
 
     @Query("DELETE FROM user")
     suspend fun clearUserCache()
@@ -21,7 +21,7 @@ interface CacheDao {
     suspend fun insertRepositoriesCache(repos: List<RepositoryEntity>)
 
     @Query("select * from repositories")
-    fun getRepositoriesCache(): LiveData<List<RepositoryEntity>>
+    fun getRepositoriesCache(): List<RepositoryEntity>
 
     @Query("DELETE FROM repositories")
     suspend fun clearRepositoriesCache()

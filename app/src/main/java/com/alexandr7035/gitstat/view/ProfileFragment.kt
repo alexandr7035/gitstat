@@ -63,7 +63,7 @@ class ProfileFragment : Fragment() {
         super.onResume()
 
         // Update profile data
-        viewModel.getUserLData(user).observe(viewLifecycleOwner, {
+        viewModel.getUserLiveData(user).observe(viewLifecycleOwner, {
 
             if (it != null) {
 
@@ -103,9 +103,11 @@ class ProfileFragment : Fragment() {
                     binding.syncStatusView.setBackgroundResource(R.drawable.background_sync_button_pending)
                 }
                 SyncStatus.SUCCESS -> {
+                    binding.swipeRefreshLayout.isRefreshing = false
                     binding.syncStatusView.setBackgroundResource(R.drawable.background_sync_button_synced)
                 }
                 SyncStatus.FAILED -> {
+                    binding.swipeRefreshLayout.isRefreshing = false
                     binding.syncStatusView.setBackgroundResource(R.drawable.background_sync_button_failed)
                 }
             }
@@ -140,6 +142,11 @@ class ProfileFragment : Fragment() {
         }
 
 
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.updateUserData(user)
+        }
+
+        viewModel.updateUserData(user)
     }
 
 
