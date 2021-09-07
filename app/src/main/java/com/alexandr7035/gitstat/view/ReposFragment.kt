@@ -177,20 +177,20 @@ class ReposFragment : Fragment() {
                     binding.syncStatusView.setBackgroundResource(R.drawable.background_sync_button_pending)
                 }
                 SyncStatus.SUCCESS -> {
-                    binding.swipeRefreshLayout.isRefreshing = false
+//                    binding.swipeRefreshLayout.isRefreshing = false
                     binding.syncStatusView.setBackgroundResource(R.drawable.background_sync_button_synced)
                 }
                 SyncStatus.FAILED -> {
-                    binding.swipeRefreshLayout.isRefreshing = false
+//                    binding.swipeRefreshLayout.isRefreshing = false
                     binding.syncStatusView.setBackgroundResource(R.drawable.background_sync_button_failed)
                 }
             }
         })
 
-        binding.swipeRefreshLayout.setOnRefreshListener {
-            viewModel.updateRepositoriesLiveData()
-            binding.swipeRefreshLayout.isRefreshing = false
-        }
+//        binding.swipeRefreshLayout.setOnRefreshListener {
+//            viewModel.updateRepositoriesLiveData()
+//            binding.swipeRefreshLayout.isRefreshing = false
+//        }
 
 
         viewModel.updateRepositoriesLiveData()

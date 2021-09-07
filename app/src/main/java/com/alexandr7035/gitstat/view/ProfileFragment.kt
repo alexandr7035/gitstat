@@ -103,11 +103,11 @@ class ProfileFragment : Fragment() {
                     binding.syncStatusView.setBackgroundResource(R.drawable.background_sync_button_pending)
                 }
                 SyncStatus.SUCCESS -> {
-                    binding.swipeRefreshLayout.isRefreshing = false
+//                    binding.swipeRefreshLayout.isRefreshing = false
                     binding.syncStatusView.setBackgroundResource(R.drawable.background_sync_button_synced)
                 }
                 SyncStatus.FAILED -> {
-                    binding.swipeRefreshLayout.isRefreshing = false
+//                    binding.swipeRefreshLayout.isRefreshing = false
                     binding.syncStatusView.setBackgroundResource(R.drawable.background_sync_button_failed)
                 }
             }
@@ -142,9 +142,9 @@ class ProfileFragment : Fragment() {
         }
 
 
-        binding.swipeRefreshLayout.setOnRefreshListener {
-            viewModel.updateUserData(user)
-        }
+//        binding.swipeRefreshLayout.setOnRefreshListener {
+//            viewModel.updateUserData(user)
+//        }
 
         viewModel.updateUserData(user)
     }
