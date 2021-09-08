@@ -2,6 +2,7 @@ package com.alexandr7035.gitstat.view
 
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
+import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +14,7 @@ class RepositoriesAdapter(private val languagesColors: Map<String, Map<String, S
     private var items: List<RepositoryEntity> = ArrayList()
 
     private val colorUnknownLanguage = "#C3C3C3"
+    private val createdDateFormat = "yyyy-MM-dd"
 
     fun setItems(items: List<RepositoryEntity>) {
         this.items = items
@@ -30,9 +32,9 @@ class RepositoriesAdapter(private val languagesColors: Map<String, Map<String, S
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         //holder.itemView.name = repos[position].name
         holder.binding.repoName.text = items[position].name
-        holder.binding.createdDate.text = "2017-02-19"
+        holder.binding.createdDate.text = DateFormat.format(createdDateFormat, items[position].created_at)
         holder.binding.language.text = items[position].language
-        holder.binding.stars.text = "100"
+        holder.binding.stars.text = items[position].stars.toString()
 
         holder.binding.repoVisibility.text = when (items[position].isPrivate) {
             true -> "Private"
