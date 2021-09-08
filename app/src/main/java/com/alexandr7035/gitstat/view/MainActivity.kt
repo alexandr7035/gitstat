@@ -34,10 +34,12 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView.setupWithNavController(navController)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.loginFragment) {
-                bottomNavigationView.visibility = View.GONE
-            } else {
-                bottomNavigationView.visibility = View.VISIBLE
+
+            // FIXME find better solution
+            when (destination.id) {
+                R.id.profileFragment -> bottomNavigationView.visibility = View.VISIBLE
+                R.id.reposFragment -> bottomNavigationView.visibility = View.VISIBLE
+                else -> bottomNavigationView.visibility = View.GONE
             }
         }
 
