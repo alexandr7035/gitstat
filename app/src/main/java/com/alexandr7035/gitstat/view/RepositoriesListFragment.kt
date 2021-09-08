@@ -13,6 +13,9 @@ import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.data.local.model.RepositoryEntity
 import com.alexandr7035.gitstat.databinding.FragmentReposBinding
 import com.alexandr7035.gitstat.databinding.FragmentRepositoriesListBinding
+import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
+import java.io.InputStreamReader
 
 
 class RepositoriesListFragment : Fragment() {
@@ -43,7 +46,11 @@ class RepositoriesListFragment : Fragment() {
             findNavController().navigateUp()
         }
 
-        val adapter = RepositoriesAdapter()
+        // Load lang colors
+        // FIXME move to other place
+        val languagesColorsList: Map<String, Map<String, String>> = getLangColorsList()
+
+        val adapter = RepositoriesAdapter(languagesColorsList)
         binding!!.recyclerView.adapter = adapter
         binding!!.recyclerView.layoutManager = LinearLayoutManager(context)
 
@@ -52,6 +59,18 @@ class RepositoriesListFragment : Fragment() {
         })
 
         viewModel!!.updateRepositoriesLiveData()
+    }
+
+
+    // FIXME
+    private fun getLangColorsList(): Map<String, Map<String, String>> {
+        // Read colors jsom from resources
+        val inputStream = resources.openRawResource(R.raw.language_colors)
+        val reader = InputStreamReader(inputStream)
+        val builder = GsonBuilder()
+        val itemsMapType = object : TypeToken<Map<String, Map<String, String>>>() {}.type
+
+        return builder.create().fromJson(reader, itemsMapType)
     }
 
 }

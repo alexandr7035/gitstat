@@ -45,6 +45,7 @@
         app:layout_constraintTop_toBottomOf="@id/repoName">
 
         <View
+            android:id="@+id/languageColorView"
             android:layout_width="10dp"
             android:layout_height="10dp"
             android:layout_marginEnd="5dp"

@@ -1,14 +1,18 @@
 package com.alexandr7035.gitstat.view
 
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.alexandr7035.gitstat.data.local.model.RepositoryEntity
 import com.alexandr7035.gitstat.databinding.ViewRepositoryBinding
 
-class RepositoriesAdapter: RecyclerView.Adapter<RepositoriesAdapter.ViewHolder>() {
+class RepositoriesAdapter(private val languagesColors: Map<String, Map<String, String>>): RecyclerView.Adapter<RepositoriesAdapter.ViewHolder>() {
 
     private var items: List<RepositoryEntity> = ArrayList()
+
+    private val colorUnknownLanguage = "#C3C3C3"
 
     fun setItems(items: List<RepositoryEntity>) {
         this.items = items
@@ -35,6 +39,17 @@ class RepositoriesAdapter: RecyclerView.Adapter<RepositoriesAdapter.ViewHolder>(
             else -> "Public"
         }
 
+        val stringColor = when(languagesColors[holder.binding.language.text]) {
+            null -> colorUnknownLanguage
+            else -> languagesColors[holder.binding.language.text]!!["color"]
+        }
+
+        val color: Int = when(holder.binding.language.text) {
+            "Unknown" -> Color.parseColor(colorUnknownLanguage)
+            else -> Color.parseColor(stringColor)
+        }
+
+        (holder.binding.languageColorView.background as GradientDrawable).setColor(color)
     }
 
     class ViewHolder(val binding: ViewRepositoryBinding): RecyclerView.ViewHolder(binding.root)
