@@ -24,13 +24,11 @@ class RepositoriesAdapter(private val languagesColors: Map<String, Map<String, S
     override fun getItemCount() = items.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-//        val view: View = LayoutInflater.from(parent.context).inflate(R.layout.view_repository, parent, false)
         val binding = ViewRepositoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        //holder.itemView.name = repos[position].name
         holder.binding.repoName.text = items[position].name
         holder.binding.createdDate.text = DateFormat.format(createdDateFormat, items[position].created_at)
         holder.binding.language.text = items[position].language

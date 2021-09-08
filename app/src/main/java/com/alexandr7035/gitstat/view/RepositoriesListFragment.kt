@@ -25,9 +25,7 @@ class RepositoriesListFragment : Fragment() {
     private var viewModel: MainViewModel? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         binding = FragmentRepositoriesListBinding.inflate(inflater, container, false)
-
         return binding!!.root
     }
 
