@@ -3,10 +3,13 @@ package com.alexandr7035.gitstat.view
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.Toolbar
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alexandr7035.gitstat.R
@@ -57,6 +60,19 @@ class RepositoriesListFragment : Fragment() {
         })
 
         viewModel!!.updateRepositoriesLiveData()
+
+
+        binding!!.toolbar.inflateMenu(R.menu.menu_toolbar_repos_list)
+
+        binding!!.toolbar.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.item_filters -> {
+                    Log.d("DEBUG", "filters clicked")
+                }
+            }
+
+            true
+        }
     }
 
 
