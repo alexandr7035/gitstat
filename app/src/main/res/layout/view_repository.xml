@@ -30,8 +30,9 @@
         android:background="@drawable/background_repo_visibilily"
         android:paddingStart="5dp"
         android:paddingEnd="5dp"
-        app:layout_constraintStart_toEndOf="@id/languageView"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/languageView"
         tools:text="Private" />
 
     <LinearLayout
@@ -67,29 +68,30 @@
         android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBaseline_toBaselineOf="@id/repoName"
         app:layout_constraintEnd_toStartOf="@+id/starView"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/repoName"
+        app:layout_constraintBottom_toBottomOf="@id/repoName"
+
         tools:text="10" />
 
     <ImageView
         android:id="@+id/starView"
         android:layout_width="20sp"
         android:layout_height="20sp"
-        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_star" />
+        app:srcCompat="@drawable/ic_star"
+        app:layout_constraintBottom_toBottomOf="@id/stars"
+        app:layout_constraintTop_toTopOf="@id/stars" />
 
 
     <TextView
+        android:id="@+id/createdDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/createdDate"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:text="2017-02-21"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="2017-02-21" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
