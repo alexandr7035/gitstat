@@ -17,8 +17,10 @@
         android:textColor="@color/black"
         android:textSize="22sp"
         android:textStyle="bold"
+        android:layout_marginBottom="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/languageView"
         tools:text="GitStat" />
 
 
@@ -28,9 +30,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:background="@drawable/background_repo_visibilily"
-        android:paddingStart="5dp"
-        android:paddingEnd="5dp"
+        android:paddingStart="7dp"
+        android:paddingTop="3dp"
+        android:paddingEnd="7dp"
+        android:paddingBottom="3dp"
         android:textSize="14sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/languageView"
         tools:text="Private" />
@@ -41,9 +46,9 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/repoName">
+        app:layout_constraintTop_toTopOf="@id/repoVisibility"
+        app:layout_constraintBottom_toBottomOf="@id/repoVisibility">
 
         <View
             android:id="@+id/languageColorView"
@@ -89,8 +94,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/repoVisibility"
+        app:layout_constraintBottom_toBottomOf="@id/repoVisibility"
         tools:text="2017-02-21" />
 
 

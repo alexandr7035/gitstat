@@ -5,7 +5,9 @@ import android.graphics.drawable.GradientDrawable
 import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.data.local.model.RepositoryEntity
 import com.alexandr7035.gitstat.databinding.ViewRepositoryBinding
 
@@ -34,10 +36,30 @@ class RepositoriesAdapter(private val languagesColors: Map<String, Map<String, S
         holder.binding.language.text = items[position].language
         holder.binding.stars.text = items[position].stars.toString()
 
-        holder.binding.repoVisibility.text = when (items[position].isPrivate) {
-            true -> "Private"
-            else -> "Public"
+        when (items[position].isPrivate) {
+            true -> {
+                holder.binding.repoVisibility.text = "Private"
+                holder.binding.repoVisibility.setTextColor(ContextCompat.getColor(
+                    holder.itemView.context,
+                    R.color.white
+                ))
+
+                holder.binding.repoVisibility.background = ContextCompat.getDrawable(
+                    holder.itemView.context,
+                    R.drawable.background_repo_visibilily_private)
+            }
+            else -> {
+                holder.binding.repoVisibility.text = "Public"
+                holder.binding.repoVisibility.setTextColor(ContextCompat.getColor(
+                    holder.itemView.context,
+                    R.color.black
+                ))
+                holder.binding.repoVisibility.background = ContextCompat.getDrawable(
+                    holder.itemView.context,
+                    R.drawable.background_repo_visibilily)
+            }
         }
+
 
         val stringColor = when(languagesColors[holder.binding.language.text]) {
             null -> colorUnknownLanguage
