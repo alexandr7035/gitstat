@@ -41,6 +41,28 @@ class RepositoriesFiltersDialog(private val currentFilters: ReposFilters, privat
                 }
             }
 
+
+            when (binding!!.sortingTypeRadioGroup.checkedRadioButtonId) {
+                binding!!.sortByRepositoryNameBtn.id -> {
+                    newFilters.sortingType = ReposFilters.SortingType.BY_REPO_NAME
+                }
+
+                binding!!.sortByCreationDateBtn.id -> {
+                    newFilters.sortingType = ReposFilters.SortingType.BY_REPO_CREATION_DATE
+                }
+            }
+
+
+            when (binding!!.sortingOrderRadioGroup.checkedRadioButtonId) {
+                binding!!.sortAscendingBtn.id -> {
+                    newFilters.sortingOrder = ReposFilters.SortingOrder.ASCENDING_MODE
+                }
+
+                binding!!.sortDescendingBtn.id -> {
+                    newFilters.sortingOrder = ReposFilters.SortingOrder.DESCENDING_MODE
+                }
+            }
+
             filtersUpdateObserver.onFiltersUpdated(newFilters)
             dismiss()
         }

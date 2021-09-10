@@ -115,6 +115,7 @@ class RepositoriesListFragment : Fragment(), RepositoriesFiltersDialog.FiltersUp
     private fun getFilteredRepositoriesList(unfilteredList: List<RepositoryEntity>, filters: ReposFilters): List<RepositoryEntity> {
         val filteredList = ArrayList<RepositoryEntity>()
 
+        // Filtering
         when (filters.filterPrivacy) {
             ReposFilters.FilterPrivacy.PUBLIC_REPOS_ONLY -> unfilteredList.forEach {
                 if (! it.isPrivate) {
@@ -130,6 +131,24 @@ class RepositoriesListFragment : Fragment(), RepositoriesFiltersDialog.FiltersUp
 
             else -> filteredList.addAll(unfilteredList)
         }
+
+        // Sorting
+        when (filters.sortingType) {
+            ReposFilters.SortingType.BY_REPO_NAME -> {
+                when (filters.sortingOrder) {
+                    ReposFilters.SortingOrder.ASCENDING_MODE -> RepositoriesSorter.sortByRepoNameAscending(filteredList)
+                    ReposFilters.SortingOrder.DESCENDING_MODE -> RepositoriesSorter.sortByRepoNameDescending(filteredList)
+                }
+            }
+
+            ReposFilters.SortingType.BY_REPO_CREATION_DATE -> {
+                when (filters.sortingOrder) {
+                    ReposFilters.SortingOrder.ASCENDING_MODE -> RepositoriesSorter.sortByRepoCreationDateAscending(filteredList)
+                    ReposFilters.SortingOrder.DESCENDING_MODE -> RepositoriesSorter.sortByRepoCreationDateDescending(filteredList)
+                }
+            }
+        }
+
 
         return filteredList
     }
