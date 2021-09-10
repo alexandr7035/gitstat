@@ -44,4 +44,6 @@
     <string name="more">More</string>
     <string name="filters">Filters</string>
 
+    <string name="shared_prefs_filters">SP_filters</string>
+
 </resources>
