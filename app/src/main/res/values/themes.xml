@@ -15,4 +15,12 @@
 
         <item name="android:windowBackground">@color/primaryBackground</item>
     </style>
+
+    <style name="BottomSheetDialogStyle" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/bottomSheetBackground</item>
+    </style>
+
+    <style name="bottomSheetBackground">
+        <item name="android:background">@drawable/background_bottom_dialog</item>
+    </style>
 </resources>

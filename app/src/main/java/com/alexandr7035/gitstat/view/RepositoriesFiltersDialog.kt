@@ -4,12 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.databinding.FiltersDialogBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class RepositoriesFiltersDialog(private val currentFilters: ReposFilters, private val filtersUpdateObserver: FiltersUpdateObserver): BottomSheetDialogFragment() {
 
     private var binding: FiltersDialogBinding? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(STYLE_NORMAL, R.style.BottomSheetDialogStyle);
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FiltersDialogBinding.inflate(inflater, container, false)
