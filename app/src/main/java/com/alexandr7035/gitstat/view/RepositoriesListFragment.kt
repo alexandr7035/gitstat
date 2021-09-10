@@ -16,6 +16,8 @@ import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.data.local.model.RepositoryEntity
 import com.alexandr7035.gitstat.databinding.FragmentReposBinding
 import com.alexandr7035.gitstat.databinding.FragmentRepositoriesListBinding
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import java.io.InputStreamReader
@@ -68,11 +70,18 @@ class RepositoriesListFragment : Fragment() {
             when (item.itemId) {
                 R.id.item_filters -> {
                     Log.d("DEBUG", "filters clicked")
+                    showFiltersDialog()
                 }
             }
 
             true
         }
+    }
+
+
+    private fun showFiltersDialog() {
+        val dialog = RepositoriesFiltersDialog()
+        dialog.show(requireActivity().supportFragmentManager, "filtersDialog")
     }
 
 
