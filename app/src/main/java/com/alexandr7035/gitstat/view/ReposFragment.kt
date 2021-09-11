@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.alexandr7035.gitstat.R
+import com.alexandr7035.gitstat.core.App
 import com.alexandr7035.gitstat.core.SyncStatus
 import com.alexandr7035.gitstat.databinding.FragmentReposBinding
 import com.github.mikephil.charting.components.Legend
@@ -19,9 +20,6 @@ import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
-import com.google.gson.GsonBuilder
-import com.google.gson.reflect.TypeToken
-import java.io.InputStreamReader
 import java.util.*
 
 
@@ -96,42 +94,15 @@ class ReposFragment : Fragment() {
                 binding.privateReposCountView.text = privateReposCount.toString()
                 binding.publicReposCountView.text = publicReposCount.toString()
 
-                // Read colors jsom from resources
-                val languagesColorsList: Map<String, Map<String, String>> = getLangColorsList()
-
                 // Diagram data. Colors must correspond entries in their order in list
+                val languages = ((requireActivity().application) as App).progLangManager.getLanguagesList(reposList)
                 val entries = ArrayList<PieEntry>()
                 val diagramColors: MutableList<Int> = ArrayList()
 
-                // Init languages map
-                languagesList = TreeMap()
-                reposList.forEachIndexed { i, repo ->
-                    languagesList[repo.language] = 0
+                languages.forEach { language ->
+                    entries.add(PieEntry(language.count.toFloat(), language.name))
+                    diagramColors.add(Color.parseColor(language.color))
                 }
-
-                // Populate languages map
-                reposList.forEachIndexed { i, repo ->
-                    languagesList[repo.language] = languagesList[repo.language]!! + 1
-                }
-
-                for ((lang, count) in languagesList) {
-                    // Add entry
-                    entries.add(PieEntry(count.toFloat(), lang))
-
-                    // Add corresponding color from json
-                    if (lang == "Unknown") {
-                        diagramColors.add(Color.parseColor("#C3C3C3"))
-                    } else {
-                        val color = languagesColorsList[lang]!!["color"]
-                        if (color != null) {
-                            diagramColors.add(Color.parseColor(color))
-                        } else {
-                            // FIXME
-                        }
-                    }
-
-                }
-
 
                 // Chart
                 binding.languagesChart.invalidate()
@@ -236,14 +207,4 @@ class ReposFragment : Fragment() {
 
     }
 
-
-    private fun getLangColorsList(): Map<String, Map<String, String>> {
-        // Read colors jsom from resources
-        val inputStream = resources.openRawResource(R.raw.language_colors)
-        val reader = InputStreamReader(inputStream)
-        val builder = GsonBuilder()
-        val itemsMapType = object : TypeToken<Map<String, Map<String, String>>>() {}.type
-
-        return builder.create().fromJson(reader, itemsMapType)
-    }
 }
