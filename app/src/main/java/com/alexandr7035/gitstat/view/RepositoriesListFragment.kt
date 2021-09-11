@@ -2,6 +2,7 @@ package com.alexandr7035.gitstat.view
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.data.local.model.RepositoryEntity
 import com.alexandr7035.gitstat.databinding.FragmentRepositoriesListBinding
+import com.alexandr7035.gitstat.view.filters.LanguageTag
 import com.alexandr7035.gitstat.view.filters.ReposFilters
 import com.alexandr7035.gitstat.view.filters.RepositoriesFiltersDialog
 import com.alexandr7035.gitstat.view.filters.RepositoriesSorter
@@ -20,6 +22,8 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import java.io.InputStreamReader
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class RepositoriesListFragment : Fragment(), RepositoriesFiltersDialog.FiltersUpdateObserver {
@@ -30,6 +34,8 @@ class RepositoriesListFragment : Fragment(), RepositoriesFiltersDialog.FiltersUp
 
     // FIXME
     private var filters: ReposFilters = ReposFilters()
+    private val languageTagsList = ArrayList<LanguageTag>()
+    private val colorUnknownLanguage = "#C3C3C3"
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentRepositoriesListBinding.inflate(inflater, container, false)
@@ -68,6 +74,8 @@ class RepositoriesListFragment : Fragment(), RepositoriesFiltersDialog.FiltersUp
 
         viewModel!!.getRepositoriesData().observe(viewLifecycleOwner, { repositories ->
 
+            updateLanguageTagsList(repositories)
+
             val filteredList = getFilteredRepositoriesList(
                 unfilteredList = repositories,
                 filters = filters
@@ -97,7 +105,8 @@ class RepositoriesListFragment : Fragment(), RepositoriesFiltersDialog.FiltersUp
     private fun showFiltersDialog() {
         val dialog = RepositoriesFiltersDialog(
             currentFilters = filters,
-            filtersUpdateObserver = this
+            filtersUpdateObserver = this,
+            languageTags = languageTagsList
         )
         dialog.show(requireActivity().supportFragmentManager, "filtersDialog")
     }
@@ -170,6 +179,36 @@ class RepositoriesListFragment : Fragment(), RepositoriesFiltersDialog.FiltersUp
         sharedPreferences!!.edit()
             .putString(getString(R.string.shared_prefs_filters), gson.toJson(filters))
             .apply()
+    }
+
+
+    // FIXME find better approach
+    // TODO Move languages' logic out of ui
+    private fun updateLanguageTagsList(repositories: List<RepositoryEntity>) {
+        languageTagsList.clear()
+
+        val languagesList = TreeSet<String>()
+
+        repositories.forEach { repo ->
+            languagesList.add(repo.language)
+        }
+
+        languagesList.forEach { lang ->
+
+            var color: String
+
+            color = when (lang) {
+                "Unknown" -> colorUnknownLanguage
+                else -> getLangColorsList()[lang]!!["color"]!!
+            }
+
+            when(color) {
+                null -> languageTagsList.add(LanguageTag(lang, Color.parseColor(colorUnknownLanguage)))
+                else -> languageTagsList.add(LanguageTag(lang, Color.parseColor(color)))
+            }
+        }
+
+        Log.d("DEBUG_TAG", languageTagsList.toString())
     }
 
 }

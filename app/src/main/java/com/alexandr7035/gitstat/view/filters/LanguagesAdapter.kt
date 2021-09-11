@@ -28,7 +28,7 @@ class LanguagesAdapter: RecyclerView.Adapter<LanguagesAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.languageNameView.text = items[position].name
-        (holder.binding.languageTagColor.background as GradientDrawable).setColor(Color.parseColor("#D35400"))
+        (holder.binding.languageTagColor.background as GradientDrawable).setColor(items[position].color)
     }
 
 
