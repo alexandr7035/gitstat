@@ -161,15 +161,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/separator3" />
 
+<!--    Wrap content with max height-->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/languagesFilterRecyclerView"
         android:layout_width="0dp"
-        android:layout_height="120dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="5dp"
         app:layout_constraintBottom_toTopOf="@id/applyButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_default="wrap"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintHeight_max="120dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/includeLanguagesLabel" />
 
