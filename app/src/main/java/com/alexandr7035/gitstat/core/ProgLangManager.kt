@@ -2,15 +2,20 @@ package com.alexandr7035.gitstat.core
 
 import android.content.Context
 import com.alexandr7035.gitstat.R
+import com.alexandr7035.gitstat.data.local.model.RepositoryEntity
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import java.io.InputStreamReader
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ProgLangManager(context: Context) {
 
     private var languagesColorsList: Map<String, Map<String, String>>? = null
     private val colorUnknownLanguageOrNullColor = "#C3C3C3"
     private val UNKNOWN_LANGUAGE = "Unknown"
+
+    private var languagesList: TreeMap<String, Int>? = null
 
     init {
         val inputStream = context.resources.openRawResource(R.raw.language_colors)
@@ -38,5 +43,34 @@ class ProgLangManager(context: Context) {
         }
     }
 
+
+    // TODO simplify - too many loops
+    fun getLanguagesList(repositories: List<RepositoryEntity>): List<Language> {
+
+        val languagesList = ArrayList<Language>()
+
+        val languagesTreeMap: TreeMap<String, Int> = TreeMap()
+
+        // Init languages map
+        repositories.forEachIndexed { i, repo ->
+            languagesTreeMap[repo.language] = 0
+        }
+
+        // Populate languages map
+        repositories.forEachIndexed { i, repo ->
+            languagesTreeMap[repo.language] = languagesTreeMap[repo.language]!! + 1
+        }
+
+        languagesTreeMap.forEach {
+            languagesList.add(
+                Language(
+                    name = it.key,
+                    count = it.value,
+                    color = getLanguageColor(it.key)
+            ))
+        }
+
+        return languagesList
+    }
 
 }
