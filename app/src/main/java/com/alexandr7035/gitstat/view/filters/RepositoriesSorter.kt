@@ -1,8 +1,7 @@
-package com.alexandr7035.gitstat.view
+package com.alexandr7035.gitstat.view.filters
 
 import com.alexandr7035.gitstat.data.local.model.RepositoryEntity
 import java.util.*
-import kotlin.Comparator
 
 object RepositoriesSorter {
     fun sortByRepoNameAscending(repos: List<RepositoryEntity>) {

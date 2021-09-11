@@ -20,7 +20,7 @@
         android:layout_marginBottom="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/languageView"
+        app:layout_constraintBottom_toTopOf="@id/languageNameView"
         tools:text="GitStat" />
 
 
@@ -37,11 +37,11 @@
         android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/languageView"
+        app:layout_constraintStart_toEndOf="@id/languageNameView"
         tools:text="Private" />
 
     <LinearLayout
-        android:id="@+id/languageView"
+        android:id="@+id/languageNameView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"

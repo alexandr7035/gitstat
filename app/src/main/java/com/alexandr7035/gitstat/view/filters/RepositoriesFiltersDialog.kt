@@ -1,12 +1,21 @@
-package com.alexandr7035.gitstat.view
+package com.alexandr7035.gitstat.view.filters
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.databinding.FiltersDialogBinding
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import android.widget.FrameLayout
+
+import com.google.android.material.bottomsheet.BottomSheetDialog
+
+
+
 
 class RepositoriesFiltersDialog(private val currentFilters: ReposFilters, private val filtersUpdateObserver: FiltersUpdateObserver): BottomSheetDialogFragment() {
 
@@ -18,6 +27,15 @@ class RepositoriesFiltersDialog(private val currentFilters: ReposFilters, privat
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
+        // Allow to fill full screen
+        // Also disable dragging (for recyclerview correct work)
+        // TODO find better solution later
+        (dialog as? BottomSheetDialog)?.behavior?.apply {
+            state = BottomSheetBehavior.STATE_EXPANDED
+            isDraggable = false
+        }
+
         binding = FiltersDialogBinding.inflate(inflater, container, false)
         return binding!!.root
     }
@@ -28,6 +46,31 @@ class RepositoriesFiltersDialog(private val currentFilters: ReposFilters, privat
 
         // Load current filters settings
         setupFiltersViews()
+
+        val adapter = LanguagesAdapter()
+        val langs = listOf<LanguageTag>(
+            LanguageTag("Kotlin"),
+            LanguageTag("Python"),
+            LanguageTag("Shell"),
+            LanguageTag("Unknown"),
+            LanguageTag("Java"),
+            LanguageTag("C"),
+            LanguageTag("Rust"),
+            LanguageTag("Python"),
+            LanguageTag("Shell"),
+            LanguageTag("Unknown"),
+            LanguageTag("Java"),
+            LanguageTag("C"),
+            LanguageTag("Python aaaaa"),
+            LanguageTag("Shell aaaaaaa"),
+            LanguageTag("Unknown aaaaaaaa"),
+            LanguageTag("Java aaaaaaaaaa"),
+            LanguageTag("C aaaaaaaaaaaaaaaaaa"),
+        )
+        binding!!.languagesFilterRecyclerView.adapter = adapter
+        binding!!.languagesFilterRecyclerView.layoutManager = FlexboxLayoutManager(context)
+        adapter.setItems(langs)
+
 
         binding!!.applyButton.setOnClickListener {
 
@@ -89,7 +132,7 @@ class RepositoriesFiltersDialog(private val currentFilters: ReposFilters, privat
 
         when (currentFilters.sortingOrder) {
             ReposFilters.SortingOrder.ASCENDING_MODE -> binding!!.sortAscendingBtn.isChecked = true
-            ReposFilters.SortingOrder.DESCENDING_MODE-> binding!!.sortDescendingBtn.isChecked = true
+            ReposFilters.SortingOrder.DESCENDING_MODE -> binding!!.sortDescendingBtn.isChecked = true
         }
     }
 

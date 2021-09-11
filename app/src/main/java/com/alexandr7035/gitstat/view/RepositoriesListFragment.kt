@@ -13,6 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.data.local.model.RepositoryEntity
 import com.alexandr7035.gitstat.databinding.FragmentRepositoriesListBinding
+import com.alexandr7035.gitstat.view.filters.ReposFilters
+import com.alexandr7035.gitstat.view.filters.RepositoriesFiltersDialog
+import com.alexandr7035.gitstat.view.filters.RepositoriesSorter
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken

@@ -88,4 +88,5 @@ dependencies {
     implementation "androidx.room:room-ktx:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
     kapt("androidx.room:room-compiler:$room_version")
+    implementation 'com.google.android.flexbox:flexbox:3.0.0'
 }

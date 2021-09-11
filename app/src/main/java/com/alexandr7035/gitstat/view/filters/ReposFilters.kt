@@ -1,4 +1,4 @@
-package com.alexandr7035.gitstat.view
+package com.alexandr7035.gitstat.view.filters
 
 // Defaults in the constructor
 data class ReposFilters(
