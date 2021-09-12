@@ -1,5 +1,6 @@
 package com.alexandr7035.gitstat.view
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.text.format.DateFormat
@@ -17,6 +18,7 @@ class RepositoriesAdapter(private val langManager: ProgLangManager): RecyclerVie
     private var items: List<RepositoryEntity> = ArrayList()
     private val createdDateFormat = "yyyy-MM-dd"
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setItems(items: List<RepositoryEntity>) {
         this.items = items
         notifyDataSetChanged()
@@ -37,7 +39,7 @@ class RepositoriesAdapter(private val langManager: ProgLangManager): RecyclerVie
 
         when (items[position].isPrivate) {
             true -> {
-                holder.binding.repoVisibility.text = "Private"
+                holder.binding.repoVisibility.text = holder.itemView.context.getString(R.string.private_start_capital)
                 holder.binding.repoVisibility.setTextColor(ContextCompat.getColor(
                     holder.itemView.context,
                     R.color.white
@@ -48,7 +50,7 @@ class RepositoriesAdapter(private val langManager: ProgLangManager): RecyclerVie
                     R.drawable.background_repo_visibilily_private)
             }
             else -> {
-                holder.binding.repoVisibility.text = "Public"
+                holder.binding.repoVisibility.text = holder.itemView.context.getString(R.string.public_start_capital)
                 holder.binding.repoVisibility.setTextColor(ContextCompat.getColor(
                     holder.itemView.context,
                     R.color.black

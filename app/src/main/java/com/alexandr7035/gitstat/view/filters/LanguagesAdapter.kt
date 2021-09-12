@@ -1,5 +1,6 @@
 package com.alexandr7035.gitstat.view.filters
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
@@ -19,6 +20,7 @@ class LanguagesAdapter(checkedLanguages: HashSet<String>): RecyclerView.Adapter<
         return items.size
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setItems(items: List<Language>) {
         this.items = items
         notifyDataSetChanged()
@@ -28,6 +30,7 @@ class LanguagesAdapter(checkedLanguages: HashSet<String>): RecyclerView.Adapter<
         return checkedItems
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun clearCheckedLanguages() {
         checkedItems = HashSet()
         notifyDataSetChanged()

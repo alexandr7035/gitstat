@@ -1,5 +1,6 @@
 package com.alexandr7035.gitstat.view
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -18,8 +19,6 @@ import com.squareup.picasso.Picasso
 
 class ProfileFragment : Fragment() {
 
-    private val LOG_TAG = "DEBUG_TAG"
-
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var binding: FragmentProfileBinding
     private lateinit var viewModel: MainViewModel
@@ -31,7 +30,7 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         // Inflate the layout for this fragment
         binding = FragmentProfileBinding.inflate(inflater, container, false)
@@ -59,11 +58,12 @@ class ProfileFragment : Fragment() {
 
     }
 
+    @SuppressLint("ApplySharedPref")
     override fun onResume() {
         super.onResume()
 
         // Update profile data
-        viewModel.getUserLiveData(user).observe(viewLifecycleOwner, {
+        viewModel.getUserLiveData().observe(viewLifecycleOwner, {
 
             if (it != null) {
 
@@ -98,7 +98,7 @@ class ProfileFragment : Fragment() {
 
         // Update synchronization status view
         viewModel.getSyncStatusLData().observe(viewLifecycleOwner, {
-            when (it) {
+            when (it!!) {
                 SyncStatus.PENDING -> {
                     binding.syncStatusView.setBackgroundResource(R.drawable.background_sync_button_pending)
                 }
@@ -140,11 +140,6 @@ class ProfileFragment : Fragment() {
 
             navController.navigate(R.id.loginFragment)
         }
-
-
-//        binding.swipeRefreshLayout.setOnRefreshListener {
-//            viewModel.updateUserData(user)
-//        }
 
         viewModel.updateUserData(user)
     }

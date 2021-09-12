@@ -17,7 +17,6 @@ abstract class CacheDB : RoomDatabase() {
         private var sInstance: CacheDB? = null
         private const val dbName: String = "cache.db"
 
-        // Ge the singleton instance of SampleDatabase
         @Synchronized
         fun getInstance(context: Context): CacheDB {
             if (sInstance == null) {

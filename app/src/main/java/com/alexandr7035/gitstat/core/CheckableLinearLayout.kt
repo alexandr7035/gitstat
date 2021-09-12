@@ -1,9 +1,8 @@
 package com.alexandr7035.gitstat.core
 
-import android.R
+import android.R.attr.state_checked as attr_state_checked
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.widget.Checkable
 import android.widget.LinearLayout
 
@@ -13,7 +12,7 @@ class CheckableLinearLayout: LinearLayout, Checkable {
     constructor(context: Context, attrs: AttributeSet): super(context, attrs)
 
     companion object {
-        private val checkedStateSet = intArrayOf(R.attr.state_checked)
+        private val checkedStateSet = intArrayOf(attr_state_checked)
     }
 
     private var isChecked: Boolean = false
