@@ -1,27 +1,23 @@
 package com.alexandr7035.gitstat.view.filters
 
-import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.alexandr7035.gitstat.R
+import com.alexandr7035.gitstat.core.Language
 import com.alexandr7035.gitstat.databinding.FiltersDialogBinding
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import android.widget.FrameLayout
-
 import com.google.android.material.bottomsheet.BottomSheetDialog
-
-
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 
 class RepositoriesFiltersDialog(
     private val currentFilters: ReposFilters,
     private val filtersUpdateObserver: FiltersUpdateObserver,
     // FIXME
-    private val languageTags: List<LanguageTag>): BottomSheetDialogFragment() {
+    private val languages: List<Language>): BottomSheetDialogFragment() {
 
     private var binding: FiltersDialogBinding? = null
 
@@ -54,7 +50,7 @@ class RepositoriesFiltersDialog(
         val adapter = LanguagesAdapter()
         binding!!.languagesFilterRecyclerView.adapter = adapter
         binding!!.languagesFilterRecyclerView.layoutManager = FlexboxLayoutManager(context)
-        adapter.setItems(languageTags)
+        adapter.setItems(languages)
 
         binding!!.applyButton.setOnClickListener {
 

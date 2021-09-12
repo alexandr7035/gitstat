@@ -2,28 +2,23 @@ package com.alexandr7035.gitstat.view
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alexandr7035.gitstat.R
+import com.alexandr7035.gitstat.core.App
+import com.alexandr7035.gitstat.core.Language
 import com.alexandr7035.gitstat.data.local.model.RepositoryEntity
 import com.alexandr7035.gitstat.databinding.FragmentRepositoriesListBinding
-import com.alexandr7035.gitstat.view.filters.LanguageTag
 import com.alexandr7035.gitstat.view.filters.ReposFilters
 import com.alexandr7035.gitstat.view.filters.RepositoriesFiltersDialog
 import com.alexandr7035.gitstat.view.filters.RepositoriesSorter
 import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.google.gson.reflect.TypeToken
-import java.io.InputStreamReader
-import java.util.*
-import kotlin.collections.ArrayList
 
 
 class RepositoriesListFragment : Fragment(), RepositoriesFiltersDialog.FiltersUpdateObserver {
@@ -32,10 +27,8 @@ class RepositoriesListFragment : Fragment(), RepositoriesFiltersDialog.FiltersUp
     private var sharedPreferences: SharedPreferences? = null
     private var viewModel: MainViewModel? = null
 
-    // FIXME
     private var filters: ReposFilters = ReposFilters()
-    private val languageTagsList = ArrayList<LanguageTag>()
-    private val colorUnknownLanguage = "#C3C3C3"
+    private var languages = emptyList<Language>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentRepositoriesListBinding.inflate(inflater, container, false)
@@ -57,12 +50,8 @@ class RepositoriesListFragment : Fragment(), RepositoriesFiltersDialog.FiltersUp
             findNavController().navigateUp()
         }
 
-        // Load lang colors
-        // FIXME move to other place
-        val languagesColorsList: Map<String, Map<String, String>> = getLangColorsList()
-
         // Setup adapter
-        val adapter = RepositoriesAdapter(languagesColorsList)
+        val adapter = RepositoriesAdapter((requireActivity().application as App).progLangManager)
         binding!!.recyclerView.adapter = adapter
         binding!!.recyclerView.layoutManager = LinearLayoutManager(context)
 
@@ -74,7 +63,8 @@ class RepositoriesListFragment : Fragment(), RepositoriesFiltersDialog.FiltersUp
 
         viewModel!!.getRepositoriesData().observe(viewLifecycleOwner, { repositories ->
 
-            updateLanguageTagsList(repositories)
+            // Update languages list on each repos list change
+            updateLanguagesList(repositories)
 
             val filteredList = getFilteredRepositoriesList(
                 unfilteredList = repositories,
@@ -106,21 +96,9 @@ class RepositoriesListFragment : Fragment(), RepositoriesFiltersDialog.FiltersUp
         val dialog = RepositoriesFiltersDialog(
             currentFilters = filters,
             filtersUpdateObserver = this,
-            languageTags = languageTagsList
+            languages = languages
         )
         dialog.show(requireActivity().supportFragmentManager, "filtersDialog")
-    }
-
-
-    // FIXME
-    private fun getLangColorsList(): Map<String, Map<String, String>> {
-        // Read colors jsom from resources
-        val inputStream = resources.openRawResource(R.raw.language_colors)
-        val reader = InputStreamReader(inputStream)
-        val builder = GsonBuilder()
-        val itemsMapType = object : TypeToken<Map<String, Map<String, String>>>() {}.type
-
-        return builder.create().fromJson(reader, itemsMapType)
     }
 
 
@@ -182,33 +160,8 @@ class RepositoriesListFragment : Fragment(), RepositoriesFiltersDialog.FiltersUp
     }
 
 
-    // FIXME find better approach
-    // TODO Move languages' logic out of ui
-    private fun updateLanguageTagsList(repositories: List<RepositoryEntity>) {
-        languageTagsList.clear()
-
-        val languagesList = TreeSet<String>()
-
-        repositories.forEach { repo ->
-            languagesList.add(repo.language)
-        }
-
-        languagesList.forEach { lang ->
-
-            var color: String
-
-            color = when (lang) {
-                "Unknown" -> colorUnknownLanguage
-                else -> getLangColorsList()[lang]!!["color"]!!
-            }
-
-            when(color) {
-                null -> languageTagsList.add(LanguageTag(lang, Color.parseColor(colorUnknownLanguage)))
-                else -> languageTagsList.add(LanguageTag(lang, Color.parseColor(color)))
-            }
-        }
-
-        Log.d("DEBUG_TAG", languageTagsList.toString())
+    private fun updateLanguagesList(repositories: List<RepositoryEntity>) {
+        languages = (requireActivity().application as App).progLangManager.getLanguagesList(repositories)
     }
 
 }
