@@ -8,6 +8,7 @@ import java.util.*
 
 class RepositoryRemoteToCacheMapper: Mapper<RepositoryModel, RepositoryEntity> {
     override fun transform(data: RepositoryModel): RepositoryEntity {
+        // Do NOT fix. Can receive null from API.
         if (data.language == null) {
             data.language = "Unknown"
         }
@@ -15,7 +16,7 @@ class RepositoryRemoteToCacheMapper: Mapper<RepositoryModel, RepositoryEntity> {
         // Convert string dates to timestamp
         val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US)
         format.timeZone = TimeZone.getTimeZone("GMT")
-        val createdDate = format.parse(data.created_at).time
+        val createdDate = format.parse(data.created_at)!!.time
 
         return RepositoryEntity(
             id = data.id,

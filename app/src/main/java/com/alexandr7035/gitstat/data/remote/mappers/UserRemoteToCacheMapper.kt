@@ -13,8 +13,8 @@ class UserRemoteToCacheMapper: Mapper<UserModel, UserEntity> {
         val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US)
         format.timeZone = TimeZone.getTimeZone("GMT")
 
-        val createdDate = format.parse(data.created_at).time
-        val updatedDate = format.parse(data.updated_at).time
+        val createdDate = format.parse(data.created_at)!!.time
+        val updatedDate = format.parse(data.updated_at)!!.time
 
         return UserEntity(
             id = data.id,

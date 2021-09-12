@@ -31,8 +31,6 @@ class ReposFragment : Fragment() {
     private lateinit var navController: NavController
     private lateinit var viewModel: MainViewModel
 
-    private lateinit var languagesList: TreeMap<String, Int>
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View {
@@ -80,15 +78,14 @@ class ReposFragment : Fragment() {
                 val reposList = it
 
                 // Repos count views
-                var totalReposCount = it.size
+                val totalReposCount = it.size
                 var privateReposCount = 0
-                var publicReposCount = 0
-                it.forEach {
-                    if (it.isPrivate){
+                it.forEach { repo ->
+                    if (repo.isPrivate){
                         privateReposCount += 1
                     }
                 }
-                publicReposCount = totalReposCount - privateReposCount
+                val publicReposCount: Int = totalReposCount - privateReposCount
 
                 binding.totalReposCountView.text = totalReposCount.toString()
                 binding.privateReposCountView.text = privateReposCount.toString()
@@ -143,7 +140,7 @@ class ReposFragment : Fragment() {
         // Update synchronization status view
         viewModel.getSyncStatusLData().observe(viewLifecycleOwner, {
 
-            when (it) {
+            when (it!!) {
                 SyncStatus.PENDING -> {
                     binding.syncStatusView.setBackgroundResource(R.drawable.background_sync_button_pending)
                 }
@@ -200,7 +197,7 @@ class ReposFragment : Fragment() {
         // General chart settings
         binding.languagesChart.apply {
             setEntryLabelTextSize(16f)
-            setDrawSliceText(false)
+            setDrawEntryLabels(false)
             description.isEnabled = false
             setCenterTextSize(30f)
         }

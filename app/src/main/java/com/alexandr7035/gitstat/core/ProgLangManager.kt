@@ -15,8 +15,6 @@ class ProgLangManager(context: Context) {
     private val colorUnknownLanguageOrNullColor = "#C3C3C3"
     private val UNKNOWN_LANGUAGE = "Unknown"
 
-    private var languagesList: TreeMap<String, Int>? = null
-
     init {
         val inputStream = context.resources.openRawResource(R.raw.language_colors)
         val reader = InputStreamReader(inputStream)

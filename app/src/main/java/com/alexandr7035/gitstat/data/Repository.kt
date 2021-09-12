@@ -1,17 +1,19 @@
 package com.alexandr7035.gitstat.data
 
 import android.app.Application
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.alexandr7035.gitstat.core.SyncStatus
 import com.alexandr7035.gitstat.data.local.CacheDB
 import com.alexandr7035.gitstat.data.local.model.RepositoryEntity
 import com.alexandr7035.gitstat.data.local.model.UserEntity
 import com.alexandr7035.gitstat.data.remote.NetworkModule
-import com.alexandr7035.gitstat.data.remote.model.RepositoryModel
 import com.alexandr7035.gitstat.data.remote.mappers.RepositoryRemoteToCacheMapper
 import com.alexandr7035.gitstat.data.remote.mappers.UserRemoteToCacheMapper
-import kotlinx.coroutines.*
+import com.alexandr7035.gitstat.data.remote.model.RepositoryModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class Repository(
     application: Application,

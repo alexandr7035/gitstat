@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.children
 import com.alexandr7035.gitstat.R
-import com.alexandr7035.gitstat.core.CheckableLinearLayout
 import com.alexandr7035.gitstat.core.Language
 import com.alexandr7035.gitstat.databinding.FiltersDialogBinding
 import com.google.android.flexbox.FlexboxLayoutManager
@@ -27,14 +25,13 @@ class RepositoriesFiltersDialog(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NORMAL, R.style.BottomSheetDialogStyle);
+        setStyle(STYLE_NORMAL, R.style.BottomSheetDialogStyle)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
         // Allow to fill full screen
         // Also disable dragging (for recyclerview correct work)
-        // TODO find better solution later
         (dialog as? BottomSheetDialog)?.behavior?.apply {
             state = BottomSheetBehavior.STATE_EXPANDED
             isDraggable = false

@@ -28,6 +28,8 @@
     <string name="total">total</string>
     <string name="public_">public</string>
     <string name="private_">private</string>
+    <string name="private_start_capital">Private</string>
+    <string name="public_start_capital">Public</string>
 
     <string name="loading">Loading…</string>
     <string name="synced">Synced</string>

@@ -1,7 +1,5 @@
 package com.alexandr7035.gitstat.view.filters
 
-import com.alexandr7035.gitstat.core.Language
-
 // Defaults in the constructor
 data class ReposFilters(
     var sortingType: SortingType = SortingType.BY_REPO_NAME,

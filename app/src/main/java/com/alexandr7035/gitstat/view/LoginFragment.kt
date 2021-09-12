@@ -1,5 +1,6 @@
 package com.alexandr7035.gitstat.view
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -27,14 +28,13 @@ class LoginFragment : Fragment() {
     private lateinit var sharedPreferences: SharedPreferences
 
     private lateinit var viewModel: MainViewModel
-    private val loginResponseLiveData = MutableLiveData<Int>()
 
     private lateinit var token: String
     private lateinit var login: String
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
 
         // Shared pref
         sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
@@ -54,6 +54,7 @@ class LoginFragment : Fragment() {
     }
 
 
+    @SuppressLint("ApplySharedPref")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

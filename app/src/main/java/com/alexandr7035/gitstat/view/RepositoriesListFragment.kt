@@ -3,7 +3,6 @@ package com.alexandr7035.gitstat.view
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,7 +29,7 @@ class RepositoriesListFragment : Fragment(), RepositoriesFiltersDialog.FiltersUp
     private var filters: ReposFilters = ReposFilters()
     private var languages = emptyList<Language>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentRepositoriesListBinding.inflate(inflater, container, false)
         return binding!!.root
     }

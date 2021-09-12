@@ -14,10 +14,10 @@ class NetworkModule(application: Application, user: String, token: String) {
 
     private val LOG_TAG = "DEBUG_TAG"
 
-    private lateinit var gitHubApi: GitHubApi
-    private lateinit var user: String
-    private lateinit var token: String
-    private lateinit var authCredentials: String
+    private var gitHubApi: GitHubApi
+    private var user: String
+    private var token: String
+    private var authCredentials: String
 
 
     init {
