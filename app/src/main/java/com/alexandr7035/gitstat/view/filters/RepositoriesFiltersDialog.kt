@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.children
 import com.alexandr7035.gitstat.R
+import com.alexandr7035.gitstat.core.CheckableLinearLayout
 import com.alexandr7035.gitstat.core.Language
 import com.alexandr7035.gitstat.databinding.FiltersDialogBinding
 import com.google.android.flexbox.FlexboxLayoutManager
@@ -20,6 +22,8 @@ class RepositoriesFiltersDialog(
     private val languages: List<Language>): BottomSheetDialogFragment() {
 
     private var binding: FiltersDialogBinding? = null
+    private var checkedLanguages = HashSet<String>()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +51,7 @@ class RepositoriesFiltersDialog(
         // Load current filters settings
         setupFiltersViews()
 
-        val adapter = LanguagesAdapter()
+        val adapter = LanguagesAdapter(checkedLanguages)
         binding!!.languagesFilterRecyclerView.adapter = adapter
         binding!!.languagesFilterRecyclerView.layoutManager = FlexboxLayoutManager(context)
         adapter.setItems(languages)
@@ -92,6 +96,8 @@ class RepositoriesFiltersDialog(
                 }
             }
 
+            newFilters.filterLanguages = adapter.getCheckedLanguages()
+
             filtersUpdateObserver.onFiltersUpdated(newFilters)
             dismiss()
         }
@@ -114,8 +120,9 @@ class RepositoriesFiltersDialog(
             ReposFilters.SortingOrder.ASCENDING_MODE -> binding!!.sortAscendingBtn.isChecked = true
             ReposFilters.SortingOrder.DESCENDING_MODE -> binding!!.sortDescendingBtn.isChecked = true
         }
-    }
 
+        checkedLanguages = currentFilters.filterLanguages as HashSet<String>
+    }
 
     interface FiltersUpdateObserver {
         fun onFiltersUpdated(filters: ReposFilters)

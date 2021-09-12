@@ -1,10 +1,13 @@
 package com.alexandr7035.gitstat.view.filters
 
+import com.alexandr7035.gitstat.core.Language
+
 // Defaults in the constructor
 data class ReposFilters(
     var sortingType: SortingType = SortingType.BY_REPO_NAME,
     var sortingOrder: SortingOrder = SortingOrder.ASCENDING_MODE,
-    var filterPrivacy: FilterPrivacy = FilterPrivacy.ALL_REPOS
+    var filterPrivacy: FilterPrivacy = FilterPrivacy.ALL_REPOS,
+    var filterLanguages: Set<String> = HashSet()
 )
 
 {

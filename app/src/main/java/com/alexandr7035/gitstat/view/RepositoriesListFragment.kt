@@ -103,6 +103,8 @@ class RepositoriesListFragment : Fragment(), RepositoriesFiltersDialog.FiltersUp
 
 
     private fun getFilteredRepositoriesList(unfilteredList: List<RepositoryEntity>, filters: ReposFilters): List<RepositoryEntity> {
+        Log.d("DEBUG_TAG", "apply $filters")
+
         val filteredList = ArrayList<RepositoryEntity>()
 
         // Filtering
@@ -122,6 +124,13 @@ class RepositoriesListFragment : Fragment(), RepositoriesFiltersDialog.FiltersUp
             else -> filteredList.addAll(unfilteredList)
         }
 
+        // Remove all repos if language is not from filters' set
+        if (filters.filterLanguages.isNotEmpty()) {
+            filteredList.removeAll {
+                !filters.filterLanguages.contains(it.language)
+            }
+        }
+
         // Sorting
         when (filters.sortingType) {
             ReposFilters.SortingType.BY_REPO_NAME -> {
@@ -138,7 +147,6 @@ class RepositoriesListFragment : Fragment(), RepositoriesFiltersDialog.FiltersUp
                 }
             }
         }
-
 
         return filteredList
     }
