@@ -34,7 +34,7 @@ class CheckableLinearLayout: LinearLayout, Checkable {
     }
 
     override fun performClick(): Boolean {
-        Log.d("DEBUG", "toggle checkable layout $id")
+        //Log.d("DEBUG", "toggle checkable layout $id")
         toggle()
         return super.performClick()
     }

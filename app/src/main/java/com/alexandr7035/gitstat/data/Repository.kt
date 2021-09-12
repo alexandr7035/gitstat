@@ -36,7 +36,7 @@ class Repository(
 
         try {
             val res = api.getUserData()
-            //Log.d(LOG_TAG, "USER cache request")
+            ////Log.d(LOG_TAG, "USER cache request")
 
             if (res.isSuccessful) {
 
@@ -52,7 +52,7 @@ class Repository(
 
         }
         catch (e: Exception) {
-                //Log.d(LOG_TAG, "exception $e")
+                ////Log.d(LOG_TAG, "exception $e")
                 syncStateLiveData.postValue(SyncStatus.FAILED)
         }
 
@@ -87,7 +87,7 @@ class Repository(
         }
 
         catch (e: Exception) {
-            //Log.d(LOG_TAG, "exception ${e}")
+            ////Log.d(LOG_TAG, "exception ${e}")
             syncStateLiveData.postValue(SyncStatus.FAILED)
         }
 
@@ -103,20 +103,20 @@ class Repository(
 
     fun doLoginRequest(loginLiveData: MutableLiveData<Int>, user: String, token: String) {
 
-        //Log.d(LOG_TAG, "repo DO LOGIN REQ")
+        ////Log.d(LOG_TAG, "repo DO LOGIN REQ")
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val res = api.loginRequest(user, token)
 
                 withContext(Dispatchers.Main) {
-                    //Log.d(LOG_TAG, "code ${res.code()}")
+                    ////Log.d(LOG_TAG, "code ${res.code()}")
                     loginLiveData.value = res.code()
                 }
             }
             catch (e: Exception) {
                 withContext(Dispatchers.Main) {
-                    //Log.d(LOG_TAG, "code ")
+                    ////Log.d(LOG_TAG, "code ")
                     loginLiveData.value = 0
                 }
             }

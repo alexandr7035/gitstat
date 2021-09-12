@@ -103,7 +103,7 @@ class RepositoriesListFragment : Fragment(), RepositoriesFiltersDialog.FiltersUp
 
 
     private fun getFilteredRepositoriesList(unfilteredList: List<RepositoryEntity>, filters: ReposFilters): List<RepositoryEntity> {
-        Log.d("DEBUG_TAG", "apply $filters")
+        //Log.d("DEBUG_TAG", "apply $filters")
 
         val filteredList = ArrayList<RepositoryEntity>()
 
@@ -154,7 +154,7 @@ class RepositoriesListFragment : Fragment(), RepositoriesFiltersDialog.FiltersUp
 
     // Called when "apply" button is clicked in filters dialog
     override fun onFiltersUpdated(filters: ReposFilters) {
-        Log.d("DEBUG", "update filters $filters")
+        //Log.d("DEBUG", "update filters $filters")
         this.filters = filters
 
         // FIXME
