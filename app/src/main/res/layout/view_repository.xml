@@ -12,16 +12,20 @@
 
     <TextView
         android:id="@+id/repoName"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:textSize="22sp"
         android:textStyle="bold"
+        android:ellipsize="end"
+        android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
+        app:layout_constraintEnd_toStartOf="@id/stars"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/languageNameView"
-        tools:text="GitStat" />
+        tools:text="GitStat is a really ling repo with big name aaaaaa"
+        android:maxLines="1"/>
 
 
     <TextView
