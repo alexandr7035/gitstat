@@ -28,6 +28,11 @@ class LanguagesAdapter(checkedLanguages: HashSet<String>): RecyclerView.Adapter<
         return checkedItems
     }
 
+    fun clearCheckedLanguages() {
+        checkedItems = HashSet()
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ViewLanguageTagBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)

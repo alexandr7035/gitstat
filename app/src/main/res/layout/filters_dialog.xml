@@ -161,6 +161,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/separator3" />
 
+    <TextView
+        android:id="@+id/clearLanguagesBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:text="@string/clear_underlined"
+        android:textColor="@color/color_clear_filter_button"
+        app:layout_constraintBottom_toBottomOf="@id/includeLanguagesLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/includeLanguagesLabel" />
+
+    <TextView
+        android:id="@+id/clearVisibilityBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:text="@string/clear_underlined"
+        android:textColor="@color/color_clear_filter_button"
+        app:layout_constraintBottom_toBottomOf="@id/includeRepositoriesLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/includeRepositoriesLabel" />
+
 <!--    Wrap content with max height-->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/languagesFilterRecyclerView"

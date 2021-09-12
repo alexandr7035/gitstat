@@ -101,6 +101,16 @@ class RepositoriesFiltersDialog(
             filtersUpdateObserver.onFiltersUpdated(newFilters)
             dismiss()
         }
+
+
+        // Clear buttons
+        binding!!.clearVisibilityBtn.setOnClickListener {
+            binding!!.includeRepositoriesRadioGroup.check(R.id.includeAllBtn)
+        }
+
+        binding!!.clearLanguagesBtn.setOnClickListener {
+            adapter.clearCheckedLanguages()
+        }
     }
 
 

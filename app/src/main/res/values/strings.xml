@@ -43,6 +43,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="more">More</string>
     <string name="filters">Filters</string>
+    <string name="clear_underlined"><u>Clear</u></string>
 
     <string name="shared_prefs_filters">SP_filters</string>
 
