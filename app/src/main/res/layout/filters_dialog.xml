@@ -168,6 +168,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="5dp"
+        android:overScrollMode="never"
         app:layout_constraintBottom_toTopOf="@id/applyButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constrainedHeight="true"
