@@ -49,15 +49,14 @@
                 android:id="@+id/reposStatDetailedBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
                 android:clickable="true"
-                android:gravity="right"
+                android:gravity="end"
                 android:includeFontPadding="false"
                 android:maxLines="1"
-                android:text="@string/show_more"
+                android:textColor="@color/color_gray_underlined_button"
+                android:text="@string/show_more_underlined"
                 android:textAlignment="viewEnd"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textSize="18sp" />
         </LinearLayout>
 
         <LinearLayout

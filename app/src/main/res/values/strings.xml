@@ -10,7 +10,7 @@
     <string name="other">Other</string>
 
     <string name="profile">Profile</string>
-    <string name="show_more">Show more</string>
+    <string name="show_more_underlined"><u>Show more</u></string>
     <string name="total_repos">Total repos</string>
     <string name="public_repos">Public repos</string>
     <string name="private_repos">Private repos</string>
