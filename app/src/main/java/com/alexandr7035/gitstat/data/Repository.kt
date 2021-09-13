@@ -20,7 +20,7 @@ class Repository(
     token: String) {
     private val LOG_TAG = "DEBUG_TAG"
     private val dao = CacheDB.getInstance(context = application).getDao()
-    private val api = NetworkModule(token)
+    private val api = NetworkModule.getInstance(token)
 
     private val syncStateLiveData = MutableLiveData<SyncStatus>()
 

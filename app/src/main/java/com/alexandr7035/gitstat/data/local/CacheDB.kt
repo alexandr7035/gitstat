@@ -14,6 +14,7 @@ abstract class CacheDB : RoomDatabase() {
 
     companion object {
 
+        @Volatile
         private var sInstance: CacheDB? = null
         private const val dbName: String = "cache.db"
 

@@ -1,5 +1,6 @@
 package com.alexandr7035.gitstat.data.remote
 
+import com.alexandr7035.gitstat.data.local.CacheDB
 import com.alexandr7035.gitstat.data.remote.model.RepositoryModel
 import com.alexandr7035.gitstat.data.remote.model.UserModel
 import okhttp3.OkHttpClient
@@ -10,13 +11,24 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 
-class NetworkModule(token: String) {
+class NetworkModule private constructor(private var token: String) {
 
     private val LOG_TAG = "DEBUG_TAG"
 
     private var gitHubApi: GitHubApi
-    private var token: String
-    private var auth: String
+
+    companion object {
+        private var instance: NetworkModule? = null
+
+        @Synchronized
+        fun getInstance(token: String): NetworkModule {
+            if (NetworkModule.instance == null) {
+                instance = NetworkModule(token)
+            }
+
+            return instance!!
+        }
+    }
 
     init {
         val okHttpClient = OkHttpClient.Builder()
@@ -38,23 +50,19 @@ class NetworkModule(token: String) {
 
         gitHubApi = retrofit.create(GitHubApi::class.java)
 
-        this.token = token
-        auth = "token ${this.token}"
-
     }
 
     suspend fun getUserData(): Response<UserModel> {
-        return gitHubApi.getUser(auth)
+        return gitHubApi.getUser("token ${this.token}")
     }
 
     suspend fun getRepositoriesData(): Response<List<RepositoryModel>> {
-        return gitHubApi.getRepositories(auth)
+        return gitHubApi.getRepositories("token ${this.token}")
     }
 
     // FIXME temp
     suspend fun loginRequest(token: String): Response<UserModel> {
-        val auth = "token $token"
-        return gitHubApi.getUser(auth)
+        return gitHubApi.getUser("token ${this.token}")
     }
 
 }
