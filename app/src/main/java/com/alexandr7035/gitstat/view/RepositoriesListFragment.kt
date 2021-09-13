@@ -146,6 +146,9 @@ class RepositoriesListFragment : Fragment(), RepositoriesFiltersDialog.FiltersUp
             }
         }
 
+        // TODO add logics for filters mark on toolbar here
+        // TODO update screenshots in README
+
         return filteredList
     }
 
