@@ -9,6 +9,7 @@ class RepositoryEntity(
     var id: Long,
     var name: String,
     var isPrivate: Boolean,
+    var fork: Boolean,
     var language: String,
     var stars: Long,
     var created_at: Long)

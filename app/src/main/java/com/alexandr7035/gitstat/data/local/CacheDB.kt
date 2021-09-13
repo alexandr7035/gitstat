@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.alexandr7035.gitstat.data.local.model.RepositoryEntity
 import com.alexandr7035.gitstat.data.local.model.UserEntity
 
-@Database(entities = [UserEntity::class, RepositoryEntity::class], version = 2)
+@Database(entities = [UserEntity::class, RepositoryEntity::class], version = 3)
 abstract class CacheDB : RoomDatabase() {
 
     abstract fun getDao(): CacheDao

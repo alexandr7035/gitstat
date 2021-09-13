@@ -23,6 +23,7 @@ class RepositoryRemoteToCacheMapper: Mapper<RepositoryModel, RepositoryEntity> {
             name = data.name,
             language = data.language,
             isPrivate = data.private,
+            fork = data.fork,
             stars = data.stargazers_count,
             created_at = createdDate
         )
