@@ -31,4 +31,4 @@ used to implement languages filter (see third screenshot).
 - Create personal access token with ```read:user``` and ```repo``` access scopes. (**Note**: full ```repo``` scope is used only to have access to your private repos data. No malicious write operations are performed by the app).
 - Use the obtained token as auth credetial in the application login form.
 
-More user-friendly auth method may be implemented later. Actually, authorization process in the app is ugly and **needs additional research and refactoring** from an architectural point of view.
+More user-friendly auth method may be implemented later. Authorization process in the app **needs additional research and refactoring**.
