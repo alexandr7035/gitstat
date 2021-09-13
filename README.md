@@ -5,9 +5,9 @@ GitStat is a simple android app designed to aggregate Github profile data into i
 
 ### Screenshots
 <p align="center">
-<img src="doc/screenshot_login.jpg" width="30%"/>
-<img src="doc/screenshot_repositories.jpg" width="30%"/>
-<img src="doc/screenshot_repositories_filters.jpg" width="30%"/>
+<img src="doc/screenshot_login.png" width="30%"/>
+<img src="doc/screenshot_repositories_stat.png" width="30%"/>
+<img src="doc/screenshot_filters.png" width="30%"/>
 </p>
 
 
@@ -16,7 +16,7 @@ GitStat is a simple android app designed to aggregate Github profile data into i
 - Used single activity approach and [Navigation component](https://developer.android.com/guide/navigation) to navigate across fragments.
 - [View binding](https://developer.android.com/topic/libraries/view-binding) is used to interact with views within fragments and recyclerview adapters.
 - Kotlin coroutines are used for asynchronous operations.
-- [Retrofit](https://github.com/square/retrofit) is used to perform [Github API](https://docs.github.com/en/rest) calls to obtain the data.
+- [Retrofit](https://github.com/square/retrofit) is used to perform [Github API](https://docs.github.com/en/rest) calls to obtain the data. Also use [OkHttp Logging Interceptor](https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor) to log requests.
 - [Room](https://developer.android.com/jetpack/androidx/releases/room) database is used for cache implementation.
 - [colors.json]() file is borrowed from the [github-colors](https://github.com/ozh/github-colors) repository and parsed with [Gson](https://github.com/google/gson) library in order to obtain and display native github colors for programming languages.
 - Google's [FlexboxLayout](https://github.com/google/flexbox-layout) as LayoutManager and custom checkable LinearLayout are 
@@ -29,6 +29,6 @@ used to implement languages filter (see third screenshot).
 - Download APK from the [releases](https://github.com/alexandr7035/gitstat/releases) page and install it.
 - Go to [Personal access tokens](https://github.com/settings/tokens) section in your Github profile settings.
 - Create personal access token with ```read:user``` and ```repo``` access scopes. (**Note**: full ```repo``` scope is used only to have access to your private repos data. No malicious write operations are performed by the app).
-- Use your github login and obtained token as auth credetials in the application login form.
+- Use the obtained token as auth credetial in the application login form.
 
 More user-friendly auth method may be implemented later. Actually, authorization process in the app is ugly and **needs additional research and refactoring** from an architectural point of view.
