@@ -100,7 +100,7 @@
 
 
     <TextView
-        android:id="@+id/includeRepositoriesLabel"
+        android:id="@+id/filterPrivacyLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Include repositories"
@@ -110,15 +110,15 @@
 
 
     <RadioGroup
-        android:id="@+id/includeRepositoriesRadioGroup"
+        android:id="@+id/filterPrivacyRadioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/includeRepositoriesLabel"
+        app:layout_constraintTop_toBottomOf="@id/filterPrivacyLabel"
         app:layout_constraintStart_toStartOf="parent">
 
         <RadioButton
-            android:id="@+id/includeAllBtn"
+            android:id="@+id/filterPrivacyIncludeAllBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
@@ -126,7 +126,7 @@
             android:text="All" />
 
         <RadioButton
-            android:id="@+id/includePublicOnlyBtn"
+            android:id="@+id/filterPrivacyIncludePublicOnlyBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
@@ -134,7 +134,7 @@
             android:text="Public only" />
 
         <RadioButton
-            android:id="@+id/includePrivateOnlyBtn"
+            android:id="@+id/filterPrivacyIncludePrivateOnlyBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:buttonTint="@color/gray_500"
@@ -147,7 +147,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/gray_200"
-        app:layout_constraintTop_toBottomOf="@+id/includeRepositoriesRadioGroup"
+        app:layout_constraintTop_toBottomOf="@+id/filterPrivacyRadioGroup"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -179,9 +179,9 @@
         android:clickable="true"
         android:text="@string/clear_underlined"
         android:textColor="@color/color_clear_filter_button"
-        app:layout_constraintBottom_toBottomOf="@id/includeRepositoriesLabel"
+        app:layout_constraintBottom_toBottomOf="@id/filterPrivacyLabel"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/includeRepositoriesLabel" />
+        app:layout_constraintTop_toTopOf="@id/filterPrivacyLabel" />
 
 <!--    Wrap content with max height-->
     <androidx.recyclerview.widget.RecyclerView

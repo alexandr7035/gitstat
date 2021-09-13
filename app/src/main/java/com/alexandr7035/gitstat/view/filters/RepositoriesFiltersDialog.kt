@@ -57,16 +57,16 @@ class RepositoriesFiltersDialog(
 
             val newFilters = ReposFilters()
 
-            when (binding!!.includeRepositoriesRadioGroup.checkedRadioButtonId) {
-                binding!!.includeAllBtn.id -> {
+            when (binding!!.filterPrivacyRadioGroup.checkedRadioButtonId) {
+                binding!!.filterPrivacyIncludeAllBtn.id -> {
                     newFilters.filterPrivacy = ReposFilters.FilterPrivacy.ALL_REPOS
                 }
 
-                binding!!.includePrivateOnlyBtn.id -> {
+                binding!!.filterPrivacyIncludePrivateOnlyBtn.id -> {
                     newFilters.filterPrivacy = ReposFilters.FilterPrivacy.PRIVATE_REPOS_ONLY
                 }
 
-                binding!!.includePublicOnlyBtn.id -> {
+                binding!!.filterPrivacyIncludePublicOnlyBtn.id -> {
                     newFilters.filterPrivacy = ReposFilters.FilterPrivacy.PUBLIC_REPOS_ONLY
                 }
             }
@@ -102,7 +102,7 @@ class RepositoriesFiltersDialog(
 
         // Clear buttons
         binding!!.clearVisibilityBtn.setOnClickListener {
-            binding!!.includeRepositoriesRadioGroup.check(R.id.includeAllBtn)
+            binding!!.filterPrivacyRadioGroup.check(R.id.filterPrivacyIncludeAllBtn)
         }
 
         binding!!.clearLanguagesBtn.setOnClickListener {
@@ -113,9 +113,9 @@ class RepositoriesFiltersDialog(
 
     private fun setupFiltersViews() {
         when (currentFilters.filterPrivacy) {
-            ReposFilters.FilterPrivacy.PRIVATE_REPOS_ONLY -> binding!!.includePrivateOnlyBtn.isChecked = true
-            ReposFilters.FilterPrivacy.PUBLIC_REPOS_ONLY -> binding!!.includePublicOnlyBtn.isChecked = true
-            ReposFilters.FilterPrivacy.ALL_REPOS -> binding!!.includeAllBtn.isChecked = true
+            ReposFilters.FilterPrivacy.PRIVATE_REPOS_ONLY -> binding!!.filterPrivacyIncludePrivateOnlyBtn.isChecked = true
+            ReposFilters.FilterPrivacy.PUBLIC_REPOS_ONLY -> binding!!.filterPrivacyIncludePublicOnlyBtn.isChecked = true
+            ReposFilters.FilterPrivacy.ALL_REPOS -> binding!!.filterPrivacyIncludeAllBtn.isChecked = true
         }
 
         when (currentFilters.sortingType) {
