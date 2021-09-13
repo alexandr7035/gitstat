@@ -29,7 +29,6 @@ class LoginFragment : Fragment() {
     private lateinit var viewModel: MainViewModel
 
     private lateinit var token: String
-    private lateinit var login: String
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
@@ -55,28 +54,6 @@ class LoginFragment : Fragment() {
     @SuppressLint("ApplySharedPref")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
-        binding.loginEditText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-            }
-
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                if (s.isNotEmpty()) {
-                    if (!TextUtils.isEmpty(binding.loginField.error)) {
-                        binding.loginField.error = null
-                        binding.loginField.isErrorEnabled = false
-                    }
-                }
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-
-            }
-
-        })
-
 
         binding.tokenEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -109,7 +86,6 @@ class LoginFragment : Fragment() {
                 }
                 else {
                     ////Log.d(LOG_TAG, "do login request")
-                    login = binding.loginEditText.text.toString()
                     token = binding.tokenEditText.text.toString()
                     viewModel.doLoginRequest(token)
                 }
@@ -128,9 +104,6 @@ class LoginFragment : Fragment() {
                     prefEditor.putString(
                         getString(R.string.shared_pref_token), token)
 
-                    prefEditor.putString(
-                        getString(R.string.shared_pref_login), login)
-
                     prefEditor.commit()
 
                     navController.navigate(R.id.actionLoginToMain)
@@ -140,7 +113,6 @@ class LoginFragment : Fragment() {
                 // when token is correct but provided user name doesn't exist on github
                 401, 404 -> {
                     binding.tokenField.error = getString(R.string.error_wrong_data_field)
-                    binding.loginField.error = getString(R.string.error_wrong_data_field)
                 }
 
                 else -> {
@@ -157,11 +129,6 @@ class LoginFragment : Fragment() {
     private fun checkLoginFormIfValid(): Boolean {
 
         var isValid = true
-
-        if (binding.loginEditText.text.isNullOrBlank()) {
-            binding.loginField.error = getString(R.string.error_empty_field)
-            isValid = false
-        }
 
         if (binding.tokenEditText.text.isNullOrBlank()) {
             binding.tokenField.error = getString(R.string.error_empty_field)
