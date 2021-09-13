@@ -18,7 +18,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var sharedPreferences: SharedPreferences
 
-    private lateinit var user: String
     private lateinit var token: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,12 +46,11 @@ class MainActivity : AppCompatActivity() {
 
         // Shared pref
         sharedPreferences = getPreferences(Context.MODE_PRIVATE)
-        user = sharedPreferences.getString(getString(R.string.shared_pref_login), "NONE")!!
         token = sharedPreferences.getString(getString(R.string.shared_pref_token), "NONE")!!
 
         // Dynamically change initial fragment
         val navGraph = navController.navInflater.inflate(R.navigation.nav_graph)
-        if (token != getString(R.string.shared_pref_default_string_value) && user != getString(R.string.shared_pref_default_string_value)) {
+        if (token != getString(R.string.shared_pref_default_string_value)) {
             navGraph.startDestination = R.id.profileFragment
         }
         else {
