@@ -46,7 +46,6 @@ class ProfileFragment : Fragment() {
 
         // Shared pref
         sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
-        user = sharedPreferences.getString(getString(R.string.shared_pref_login), "NONE")!!
         val token = sharedPreferences.getString(getString(R.string.shared_pref_token), "NONE")
         ////Log.d(LOG_TAG, "Auth '$user' with token '$token'")
 
@@ -54,7 +53,7 @@ class ProfileFragment : Fragment() {
         val hf: NavHostFragment = activity?.supportFragmentManager?.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = hf.navController
 
-        viewModel = MainViewModel(requireActivity().application, "$user", "$token")
+        viewModel = MainViewModel(requireActivity().application, "$token")
 
     }
 
@@ -141,7 +140,7 @@ class ProfileFragment : Fragment() {
             navController.navigate(R.id.loginFragment)
         }
 
-        viewModel.updateUserData(user)
+        viewModel.updateUserData()
     }
 
 

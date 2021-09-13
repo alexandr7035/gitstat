@@ -12,22 +12,22 @@ import com.alexandr7035.gitstat.data.local.model.UserEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MainViewModel(application: Application, user: String, token: String) : AndroidViewModel(application) {
+class MainViewModel(application: Application, token: String) : AndroidViewModel(application) {
 
     private val userLiveData = MutableLiveData<UserEntity>()
     private val repositoriesLiveData = MutableLiveData<List<RepositoryEntity>>()
     private val loginResponseCodeLiveData = MutableLiveData<Int>()
 
-    private val repository = Repository(application, user, token)
+    private val repository = Repository(application, token)
 
     // Fixme ID
     fun getUserLiveData(): LiveData<UserEntity> {
         return userLiveData
     }
 
-    fun updateUserData(user: String) {
+    fun updateUserData() {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.getUserLiveDataFromCache(userLiveData, user)
+            repository.getUserLiveDataFromCache(userLiveData)
         }
     }
 
@@ -45,8 +45,8 @@ class MainViewModel(application: Application, user: String, token: String) : And
         return repository.getSyncStatusLiveData()
     }
 
-    fun doLoginRequest(user: String, token: String) {
-        repository.doLoginRequest(loginResponseCodeLiveData, user, token)
+    fun doLoginRequest(token: String) {
+        repository.doLoginRequest(loginResponseCodeLiveData, token)
     }
 
     fun getLoginResponseCodeLiveData(): MutableLiveData<Int> {

@@ -48,12 +48,10 @@ class ReposFragment : Fragment() {
 
         // Shared pref
         sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
-
-        val user = sharedPreferences.getString(getString(R.string.shared_pref_login), "NONE")
         val token = sharedPreferences.getString(getString(R.string.shared_pref_token), "NONE")
         ////Log.d(LOG_TAG, "Auth '$user' with token '$token'")
 
-        viewModel = MainViewModel(requireActivity().application, "$user", "$token")
+        viewModel = MainViewModel(requireActivity().application, "$token")
 
         // NavController
         val hf: NavHostFragment = activity?.supportFragmentManager?.findFragmentById(R.id.nav_host_fragment) as NavHostFragment

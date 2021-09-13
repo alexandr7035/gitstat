@@ -7,12 +7,11 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.MutableLiveData
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.alexandr7035.gitstat.R
@@ -38,11 +37,10 @@ class LoginFragment : Fragment() {
 
         // Shared pref
         sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
-        val user = sharedPreferences.getString(getString(R.string.shared_pref_login), "NONE")
         val token = sharedPreferences.getString(getString(R.string.shared_pref_token), "NONE")
 
         // ViewModel
-        viewModel = MainViewModel(requireActivity().application, "$user", "$token")
+        viewModel = MainViewModel(requireActivity().application, "$token")
 
         // NavController
         val hf: NavHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
@@ -113,7 +111,7 @@ class LoginFragment : Fragment() {
                     ////Log.d(LOG_TAG, "do login request")
                     login = binding.loginEditText.text.toString()
                     token = binding.tokenEditText.text.toString()
-                    viewModel.doLoginRequest(login, token)
+                    viewModel.doLoginRequest(token)
                 }
 
             }

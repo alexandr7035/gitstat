@@ -17,21 +17,19 @@ import kotlinx.coroutines.withContext
 
 class Repository(
     application: Application,
-    user: String,
-    token: String
-) {
+    token: String) {
     private val LOG_TAG = "DEBUG_TAG"
     private val dao = CacheDB.getInstance(context = application).getDao()
-    private val api = NetworkModule(application, user, token)
+    private val api = NetworkModule(token)
 
     private val syncStateLiveData = MutableLiveData<SyncStatus>()
 
     private val userMapper = UserRemoteToCacheMapper()
     private val repoMapper = RepositoryRemoteToCacheMapper()
 
-    suspend fun getUserLiveDataFromCache(livedata: MutableLiveData<UserEntity>, user: String) {
+    suspend fun getUserLiveDataFromCache(livedata: MutableLiveData<UserEntity>) {
 
-        livedata.postValue(dao.getUserCache(user))
+        livedata.postValue(dao.getUserCache())
 
         // For loading animations, etc
         syncStateLiveData.postValue(SyncStatus.PENDING)
@@ -58,7 +56,7 @@ class Repository(
                 syncStateLiveData.postValue(SyncStatus.FAILED)
         }
 
-        livedata.postValue(dao.getUserCache(user))
+        livedata.postValue(dao.getUserCache())
     }
 
 
@@ -75,7 +73,7 @@ class Repository(
 
                 syncStateLiveData.postValue(SyncStatus.SUCCESS)
 
-                val reposList: List<RepositoryModel> = res.body()!!.items
+                val reposList: List<RepositoryModel> = res.body()!!
 
                 val cachedReposList = reposList.map { repositoryModel ->
                     repoMapper.transform(repositoryModel)
@@ -103,13 +101,13 @@ class Repository(
     }
 
 
-    fun doLoginRequest(loginLiveData: MutableLiveData<Int>, user: String, token: String) {
+    fun doLoginRequest(loginLiveData: MutableLiveData<Int>, token: String) {
 
         ////Log.d(LOG_TAG, "repo DO LOGIN REQ")
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val res = api.loginRequest(user, token)
+                val res = api.loginRequest(token)
 
                 withContext(Dispatchers.Main) {
                     ////Log.d(LOG_TAG, "code ${res.code()}")

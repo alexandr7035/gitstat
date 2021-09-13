@@ -40,10 +40,9 @@ class RepositoriesListFragment : Fragment(), RepositoriesFiltersDialog.FiltersUp
 
         // Shared pref
         sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
-        val user = sharedPreferences!!.getString(getString(R.string.shared_pref_login), "NONE")!!
         val token = sharedPreferences!!.getString(getString(R.string.shared_pref_token), "NONE")
 
-        viewModel = MainViewModel(requireActivity().application, "$user", "$token")
+        viewModel = MainViewModel(requireActivity().application,  "$token")
 
         binding!!.toolbar.setNavigationOnClickListener {
             findNavController().navigateUp()
