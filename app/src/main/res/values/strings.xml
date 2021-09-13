@@ -48,5 +48,6 @@
     <string name="clear_underlined"><u>Clear</u></string>
 
     <string name="shared_prefs_filters">SP_filters</string>
+    <string name="fork">Fork</string>
 
 </resources>

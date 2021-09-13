@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.text.format.DateFormat
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -59,6 +60,13 @@ class RepositoriesAdapter(private val langManager: ProgLangManager): RecyclerVie
                     holder.itemView.context,
                     R.drawable.background_repo_visibilily)
             }
+        }
+
+        // Show corresponding label if repo is fork
+        // Hide otherwise
+        when (items[position].fork) {
+            true -> holder.binding.repoIsForkView.visibility = View.VISIBLE
+            false -> holder.binding.repoIsForkView.visibility = View.GONE
         }
 
         val color = langManager.getLanguageColor(language = holder.binding.language.text as String)

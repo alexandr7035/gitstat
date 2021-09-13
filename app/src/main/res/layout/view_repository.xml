@@ -20,11 +20,11 @@
         android:ellipsize="end"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
-        app:layout_constraintEnd_toStartOf="@id/stars"
+        app:layout_constraintEnd_toStartOf="@id/repoIsForkView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/languageNameView"
-        tools:text="GitStat is a really ling repo with big name aaaaaa"
+        tools:text="GitStat"
         android:maxLines="1"/>
 
 
@@ -43,6 +43,26 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/languageNameView"
         tools:text="Private" />
+
+    <TextView
+        android:id="@+id/repoIsForkView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/background_repo_is_fork"
+        android:paddingStart="7dp"
+        android:textColor="@color/white"
+        android:paddingTop="3dp"
+        android:paddingEnd="7dp"
+        android:paddingBottom="3dp"
+        android:layout_marginEnd="5dp"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/stars"
+        app:layout_constraintTop_toTopOf="@id/repoName"
+        app:layout_constraintBottom_toBottomOf="@id/repoName"
+        android:text="@string/fork" />
+
 
     <LinearLayout
         android:id="@+id/languageNameView"
@@ -78,8 +98,8 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/starView"
-        app:layout_constraintTop_toTopOf="@id/repoName"
-        app:layout_constraintBottom_toBottomOf="@id/repoName"
+        app:layout_constraintTop_toTopOf="@id/repoIsForkView"
+        app:layout_constraintBottom_toBottomOf="@id/repoIsForkView"
 
         tools:text="10" />
 
