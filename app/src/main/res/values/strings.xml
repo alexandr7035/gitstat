@@ -64,5 +64,6 @@
     <string name="exclude_forks">Exclude forks</string>
     <string name="include_languages">Include languages</string>
     <string name="apply">Apply</string>
+    <string name="contributions">Contributions</string>
 
 </resources>

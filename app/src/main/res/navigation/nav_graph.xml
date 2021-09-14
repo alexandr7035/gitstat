@@ -34,4 +34,9 @@
         android:name="com.alexandr7035.gitstat.view.RepositoriesListFragment"
         android:label="fragment_repositories_list"
         tools:layout="@layout/fragment_repositories_list" />
+    <fragment
+        android:id="@+id/contributionsFragment"
+        android:name="com.alexandr7035.gitstat.view.ContributionsFragment"
+        android:label="fragment_contributions"
+        tools:layout="@layout/fragment_contributions" />
 </navigation>
