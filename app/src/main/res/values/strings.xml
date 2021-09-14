@@ -48,6 +48,21 @@
     <string name="clear_underlined"><u>Clear</u></string>
 
     <string name="shared_prefs_filters">SP_filters</string>
+
     <string name="fork">Fork</string>
+    <string name="sorting_type">Sorting type</string>
+    <string name="repository_name">Repository name</string>
+    <string name="creation_date">Creation date</string>
+    <string name="sorting_order">Sorting order</string>
+    <string name="sort_ascending">Ascending</string>
+    <string name="sort_descending">Descending</string>
+    <string name="include_repositories">Include repositories</string>
+    <string name="all">All</string>
+    <string name="public_only">Public only</string>
+    <string name="private_only">Private only</string>
+    <string name="forks_only">Forks only</string>
+    <string name="exclude_forks">Exclude forks</string>
+    <string name="include_languages">Include languages</string>
+    <string name="apply">Apply</string>
 
 </resources>

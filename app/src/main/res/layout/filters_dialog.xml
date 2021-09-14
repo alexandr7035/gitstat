@@ -12,7 +12,7 @@
         android:id="@+id/sortingLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sorting type"
+        android:text="@string/sorting_type"
         android:textColor="@color/gray_300"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -32,14 +32,14 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
             android:buttonTint="@color/gray_500"
-            android:text="Repository name" />
+            android:text="@string/repository_name" />
 
         <RadioButton
             android:id="@+id/sortByCreationDateBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:buttonTint="@color/gray_500"
-            android:text="Creation date" />
+            android:text="@string/creation_date" />
 
 
     </RadioGroup>
@@ -58,7 +58,7 @@
         android:id="@+id/sortingOrderLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sorting order"
+        android:text="@string/sorting_order"
         android:textColor="@color/gray_300"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/separator1" />
@@ -78,14 +78,14 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
             android:buttonTint="@color/gray_500"
-            android:text="Ascending" />
+            android:text="@string/sort_ascending" />
 
         <RadioButton
             android:id="@+id/sortDescendingBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:buttonTint="@color/gray_500"
-            android:text="Descending" />
+            android:text="@string/sort_descending" />
 
     </RadioGroup>
 
@@ -103,7 +103,7 @@
         android:id="@+id/filterPrivacyLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Include repositories"
+        android:text="@string/include_repositories"
         android:textColor="@color/gray_300"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/separator2" />
@@ -123,7 +123,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
             android:buttonTint="@color/gray_500"
-            android:text="All" />
+            android:text="@string/all" />
 
         <RadioButton
             android:id="@+id/filterPrivacyIncludePublicOnlyBtn"
@@ -131,14 +131,14 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
             android:buttonTint="@color/gray_500"
-            android:text="Public only" />
+            android:text="@string/public_only" />
 
         <RadioButton
             android:id="@+id/filterPrivacyIncludePrivateOnlyBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:buttonTint="@color/gray_500"
-            android:text="Private only" />
+            android:text="@string/private_only" />
 
     </RadioGroup>
 
@@ -156,7 +156,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
             android:buttonTint="@color/gray_500"
-            android:text="All" />
+            android:text="@string/all" />
 
         <RadioButton
             android:id="@+id/filterForksIncludeForksOnlyBtn"
@@ -164,14 +164,14 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
             android:buttonTint="@color/gray_500"
-            android:text="Forks only" />
+            android:text="@string/forks_only" />
 
         <RadioButton
             android:id="@+id/filterForksExcludeForksBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:buttonTint="@color/gray_500"
-            android:text="Exclude forks" />
+            android:text="@string/exclude_forks" />
 
     </RadioGroup>
 
@@ -189,7 +189,7 @@
         android:id="@+id/includeLanguagesLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Include languages"
+        android:text="@string/include_languages"
         android:textColor="@color/gray_300"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/separator3" />
@@ -238,7 +238,7 @@
 
         android:background="@drawable/background_gray_button_rounded"
         android:clickable="true"
-        android:text="Apply"
+        android:text="@string/apply"
         android:textAlignment="center"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
