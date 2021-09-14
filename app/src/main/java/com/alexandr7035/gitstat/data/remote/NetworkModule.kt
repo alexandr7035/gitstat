@@ -1,10 +1,8 @@
 package com.alexandr7035.gitstat.data.remote
 
-import com.alexandr7035.gitstat.data.local.CacheDB
 import com.alexandr7035.gitstat.data.remote.model.RepositoryModel
 import com.alexandr7035.gitstat.data.remote.model.UserModel
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -22,7 +20,7 @@ class NetworkModule private constructor(private var token: String) {
 
         @Synchronized
         fun getInstance(token: String): NetworkModule {
-            if (NetworkModule.instance == null) {
+            if (instance == null) {
                 instance = NetworkModule(token)
             }
 
@@ -62,6 +60,7 @@ class NetworkModule private constructor(private var token: String) {
 
     // FIXME temp
     suspend fun loginRequest(token: String): Response<UserModel> {
+        this.token = token
         return gitHubApi.getUser("token ${this.token}")
     }
 
