@@ -106,6 +106,7 @@ class RepositoriesListFragment : Fragment(), RepositoriesFiltersDialog.FiltersUp
         val filteredList = ArrayList<RepositoryEntity>()
 
         // Filtering
+        // Private / public repos
         when (filters.filterPrivacy) {
             ReposFilters.FilterPrivacy.PUBLIC_REPOS_ONLY -> unfilteredList.forEach {
                 if (! it.isPrivate) {
@@ -120,6 +121,23 @@ class RepositoriesListFragment : Fragment(), RepositoriesFiltersDialog.FiltersUp
             }
 
             else -> filteredList.addAll(unfilteredList)
+        }
+
+        // Forks
+        when (filters.filterForks) {
+            ReposFilters.FilterForks.FORKS_ONLY -> unfilteredList.forEach {
+                if (! it.fork) {
+                    filteredList.remove(it)
+                }
+            }
+
+            ReposFilters.FilterForks.EXCLUDE_FORKS -> unfilteredList.forEach {
+                if (it.fork) {
+                    filteredList.remove(it)
+                }
+            }
+
+            ReposFilters.FilterForks.ALL_REPOS -> true
         }
 
         // Remove all repos if language is not from filters' set

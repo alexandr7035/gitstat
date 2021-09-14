@@ -71,6 +71,19 @@ class RepositoriesFiltersDialog(
                 }
             }
 
+            when (binding!!.filterForksRadioGroup.checkedRadioButtonId) {
+                binding!!.filterForksIncludeAllBtn.id -> {
+                    newFilters.filterForks = ReposFilters.FilterForks.ALL_REPOS
+                }
+
+                binding!!.filterForksIncludeForksOnlyBtn.id -> {
+                    newFilters.filterForks = ReposFilters.FilterForks.FORKS_ONLY
+                }
+
+                binding!!.filterForksExcludeForksBtn.id -> {
+                    newFilters.filterForks = ReposFilters.FilterForks.EXCLUDE_FORKS
+                }
+            }
 
             when (binding!!.sortingTypeRadioGroup.checkedRadioButtonId) {
                 binding!!.sortByRepositoryNameBtn.id -> {
@@ -101,8 +114,9 @@ class RepositoriesFiltersDialog(
 
 
         // Clear buttons
-        binding!!.clearVisibilityBtn.setOnClickListener {
+        binding!!.clearForksAndPrivacyFiltersBtn.setOnClickListener {
             binding!!.filterPrivacyRadioGroup.check(R.id.filterPrivacyIncludeAllBtn)
+            binding!!.filterForksRadioGroup.check(R.id.filterForksIncludeAllBtn)
         }
 
         binding!!.clearLanguagesBtn.setOnClickListener {
@@ -116,6 +130,12 @@ class RepositoriesFiltersDialog(
             ReposFilters.FilterPrivacy.PRIVATE_REPOS_ONLY -> binding!!.filterPrivacyIncludePrivateOnlyBtn.isChecked = true
             ReposFilters.FilterPrivacy.PUBLIC_REPOS_ONLY -> binding!!.filterPrivacyIncludePublicOnlyBtn.isChecked = true
             ReposFilters.FilterPrivacy.ALL_REPOS -> binding!!.filterPrivacyIncludeAllBtn.isChecked = true
+        }
+
+        when (currentFilters.filterForks) {
+            ReposFilters.FilterForks.FORKS_ONLY -> binding!!.filterForksIncludeForksOnlyBtn.isChecked = true
+            ReposFilters.FilterForks.EXCLUDE_FORKS -> binding!!.filterForksExcludeForksBtn.isChecked = true
+            ReposFilters.FilterForks.ALL_REPOS-> binding!!.filterForksIncludeAllBtn.isChecked = true
         }
 
         when (currentFilters.sortingType) {
