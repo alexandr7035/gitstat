@@ -10,7 +10,7 @@
     <string name="other">Other</string>
 
     <string name="profile">Profile</string>
-    <string name="show_more">Show more</string>
+    <string name="show_more_underlined"><u>Show more</u></string>
     <string name="total_repos">Total repos</string>
     <string name="public_repos">Public repos</string>
     <string name="private_repos">Private repos</string>
@@ -28,16 +28,41 @@
     <string name="total">total</string>
     <string name="public_">public</string>
     <string name="private_">private</string>
+    <string name="private_start_capital">Private</string>
+    <string name="public_start_capital">Public</string>
 
     <string name="loading">Loading…</string>
     <string name="synced">Synced</string>
     <string name="failed">Failed</string>
 
-    <string name="logout">Log out</string>
-    
+    <string name="logout_underlined"><u>Log out</u></string>
+
     <string name="error_empty_field">This field cannot be empty</string>
     <string name="error_wrong_data_field">Invalid authorization data. Check login and token</string>
     <string name="error_cant_get_data_remote">Failed to get data from GitHub. Check your internet connection and try again</string>
     <string name="repositories_by_language">Repositories by language</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="more_underlined"><u>More</u></string>
+    <string name="filters">Filters</string>
+    <string name="clear_underlined"><u>Clear</u></string>
+
+    <string name="shared_prefs_filters">SP_filters</string>
+
+    <string name="fork">Fork</string>
+    <string name="sorting_type">Sorting type</string>
+    <string name="repository_name">Repository name</string>
+    <string name="creation_date">Creation date</string>
+    <string name="sorting_order">Sorting order</string>
+    <string name="sort_ascending">Ascending</string>
+    <string name="sort_descending">Descending</string>
+    <string name="include_repositories">Include repositories</string>
+    <string name="all">All</string>
+    <string name="public_only">Public only</string>
+    <string name="private_only">Private only</string>
+    <string name="forks_only">Forks only</string>
+    <string name="exclude_forks">Exclude forks</string>
+    <string name="include_languages">Include languages</string>
+    <string name="apply">Apply</string>
 
 </resources>

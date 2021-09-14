@@ -1,5 +1,6 @@
-package com.alexandr7035.gitstat.presentation
+package com.alexandr7035.gitstat.view
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -11,14 +12,12 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.alexandr7035.gitstat.R
-import com.alexandr7035.gitstat.common.SyncStatus
+import com.alexandr7035.gitstat.core.SyncStatus
 import com.alexandr7035.gitstat.databinding.FragmentProfileBinding
 import com.squareup.picasso.Picasso
 
 
 class ProfileFragment : Fragment() {
-
-    private val LOG_TAG = "DEBUG_TAG"
 
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var binding: FragmentProfileBinding
@@ -31,7 +30,7 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         // Inflate the layout for this fragment
         binding = FragmentProfileBinding.inflate(inflater, container, false)
@@ -43,27 +42,27 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //Log.d(LOG_TAG, "profile fragment onviewcreated")
+        ////Log.d(LOG_TAG, "profile fragment onviewcreated")
 
         // Shared pref
         sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
-        user = sharedPreferences.getString(getString(R.string.shared_pref_login), "NONE")!!
         val token = sharedPreferences.getString(getString(R.string.shared_pref_token), "NONE")
-        //Log.d(LOG_TAG, "Auth '$user' with token '$token'")
+        ////Log.d(LOG_TAG, "Auth '$user' with token '$token'")
 
         // Navigation controller
         val hf: NavHostFragment = activity?.supportFragmentManager?.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = hf.navController
 
-        viewModel = MainViewModel(requireActivity().application, "$user", "$token")
+        viewModel = MainViewModel(requireActivity().application, "$token")
 
     }
 
+    @SuppressLint("ApplySharedPref")
     override fun onResume() {
         super.onResume()
 
         // Update profile data
-        viewModel.getUserLData(user).observe(viewLifecycleOwner, {
+        viewModel.getUserLiveData().observe(viewLifecycleOwner, {
 
             if (it != null) {
 
@@ -98,34 +97,20 @@ class ProfileFragment : Fragment() {
 
         // Update synchronization status view
         viewModel.getSyncStatusLData().observe(viewLifecycleOwner, {
-
-            when (it) {
+            when (it!!) {
                 SyncStatus.PENDING -> {
-                    binding.syncStatusBtn.isClickable = false
-                    binding.syncStatusBtn.text = getString(R.string.loading)
-                    binding.syncStatusBtn.setBackgroundResource(R.drawable.background_sync_button_pending)
+                    binding.syncStatusView.setBackgroundResource(R.drawable.background_sync_button_pending)
                 }
                 SyncStatus.SUCCESS -> {
-                    binding.syncStatusBtn.isClickable = true
-                    binding.syncStatusBtn.text = getString(R.string.synced)
-                    binding.syncStatusBtn.setBackgroundResource(R.drawable.background_sync_button_synced)
+//                    binding.swipeRefreshLayout.isRefreshing = false
+                    binding.syncStatusView.setBackgroundResource(R.drawable.background_sync_button_synced)
                 }
                 SyncStatus.FAILED -> {
-                    // FIXME currently disabled. Fix when implement refresh
-                    binding.syncStatusBtn.isClickable = true
-                    binding.syncStatusBtn.text = getString(R.string.failed)
-                    binding.syncStatusBtn.setBackgroundResource(R.drawable.background_sync_button_failed)
+//                    binding.swipeRefreshLayout.isRefreshing = false
+                    binding.syncStatusView.setBackgroundResource(R.drawable.background_sync_button_failed)
                 }
             }
-
         })
-
-
-        // Refresh the data on status btn click
-        binding.syncStatusBtn.setOnClickListener {
-            // Just renavigate to this fragment
-            navController.navigate(R.id.profileFragment)
-        }
 
         binding.reposStatDetailedBtn.setOnClickListener {
             navController.navigate(R.id.reposFragment)
@@ -133,7 +118,7 @@ class ProfileFragment : Fragment() {
 
         binding.logOutBtn.setOnClickListener {
 
-            //Log.d(LOG_TAG, "log out")
+            ////Log.d(LOG_TAG, "log out")
 
             // Reset shared prefs
             val editor = sharedPreferences.edit()
@@ -155,7 +140,7 @@ class ProfileFragment : Fragment() {
             navController.navigate(R.id.loginFragment)
         }
 
-
+        viewModel.updateUserData()
     }
 
 

@@ -1,6 +1,7 @@
 package com.alexandr7035.gitstat.data.remote
 
-import android.app.Application
+import com.alexandr7035.gitstat.data.remote.model.RepositoryModel
+import com.alexandr7035.gitstat.data.remote.model.UserModel
 import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -8,21 +9,33 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 
-class NetworkModule(application: Application, user: String, token: String) {
+class NetworkModule private constructor(private var token: String) {
 
     private val LOG_TAG = "DEBUG_TAG"
 
-    private lateinit var gitHubApi: GitHubApi
-    private lateinit var user: String
-    private lateinit var token: String
-    private lateinit var authCredentials: String
+    private var gitHubApi: GitHubApi
 
+    companion object {
+        private var instance: NetworkModule? = null
+
+        @Synchronized
+        fun getInstance(token: String): NetworkModule {
+            if (instance == null) {
+                instance = NetworkModule(token)
+            }
+
+            return instance!!
+        }
+    }
 
     init {
         val okHttpClient = OkHttpClient.Builder()
             .connectTimeout(5, TimeUnit.SECONDS)
             .readTimeout(5, TimeUnit.SECONDS)
             .writeTimeout(5, TimeUnit.SECONDS)
+//            .addInterceptor(HttpLoggingInterceptor().apply {
+//                level = HttpLoggingInterceptor.Level.BODY
+//            })
             .retryOnConnectionFailure(false)
             .build()
 
@@ -35,26 +48,20 @@ class NetworkModule(application: Application, user: String, token: String) {
 
         gitHubApi = retrofit.create(GitHubApi::class.java)
 
-        this.user = user
-        this.token = token
-        authCredentials = "token ${this.token}"
-
     }
-
 
     suspend fun getUserData(): Response<UserModel> {
-        return gitHubApi.getUser(authCredentials, user)
+        return gitHubApi.getUser("token ${this.token}")
     }
 
-    suspend fun getRepositoriesData(): Response<ReposSearchModel> {
-        return gitHubApi.getRepositories(authCredentials, userParam = "user:$user", page = 1, perPage = 100)
+    suspend fun getRepositoriesData(): Response<List<RepositoryModel>> {
+        return gitHubApi.getRepositories("token ${this.token}")
     }
-
 
     // FIXME temp
-    suspend fun loginRequest(user: String, token: String): Response<UserModel> {
-        val creds = "token $token"
-        return gitHubApi.getUser(creds, user)
+    suspend fun loginRequest(token: String): Response<UserModel> {
+        this.token = token
+        return gitHubApi.getUser("token ${this.token}")
     }
 
 }
