@@ -31,4 +31,21 @@
         app:layout_constraintStart_toEndOf="@id/fragmentTitle"
         app:layout_constraintTop_toTopOf="@id/fragmentTitle" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:background="@drawable/background_card"
+        app:layout_constraintTop_toBottomOf="@id/fragmentTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/contributionsChart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
