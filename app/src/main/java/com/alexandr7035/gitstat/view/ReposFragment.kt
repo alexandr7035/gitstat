@@ -160,7 +160,7 @@ class ReposFragment : Fragment() {
 
 
         binding.toReposListBtn.setOnClickListener {
-            navController.navigate(R.id.action_reposFragment_to_repositoriesListFragment)
+            navController.navigate(R.id.action_reposFragment_to_repositoriesListHostFragment)
         }
 
 

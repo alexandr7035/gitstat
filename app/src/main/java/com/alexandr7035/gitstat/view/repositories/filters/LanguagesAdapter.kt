@@ -1,4 +1,4 @@
-package com.alexandr7035.gitstat.view.filters
+package com.alexandr7035.gitstat.view.repositories.filters
 
 import android.annotation.SuppressLint
 import android.graphics.Color

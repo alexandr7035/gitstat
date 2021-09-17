@@ -51,9 +51,7 @@ class MainActivity : AppCompatActivity() {
         // Dynamically change initial fragment
         val navGraph = navController.navInflater.inflate(R.navigation.nav_graph)
         if (token != getString(R.string.shared_pref_default_string_value)) {
-            // FIXME later. Debug
-            //navGraph.startDestination = R.id.profileFragment
-            navGraph.startDestination = R.id.contributionsFragment
+            navGraph.startDestination = R.id.profileFragment
         }
         else {
             navGraph.startDestination = R.id.loginFragment

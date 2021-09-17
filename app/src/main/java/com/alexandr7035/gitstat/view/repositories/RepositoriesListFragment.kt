@@ -1,4 +1,4 @@
-package com.alexandr7035.gitstat.view
+package com.alexandr7035.gitstat.view.repositories
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -14,9 +14,10 @@ import com.alexandr7035.gitstat.core.App
 import com.alexandr7035.gitstat.core.Language
 import com.alexandr7035.gitstat.data.local.model.RepositoryEntity
 import com.alexandr7035.gitstat.databinding.FragmentRepositoriesListBinding
-import com.alexandr7035.gitstat.view.filters.ReposFilters
-import com.alexandr7035.gitstat.view.filters.RepositoriesFiltersDialog
-import com.alexandr7035.gitstat.view.filters.RepositoriesSorter
+import com.alexandr7035.gitstat.view.MainViewModel
+import com.alexandr7035.gitstat.view.repositories.filters.ReposFilters
+import com.alexandr7035.gitstat.view.repositories.filters.RepositoriesFiltersDialog
+import com.alexandr7035.gitstat.view.repositories.filters.RepositoriesSorter
 import com.google.gson.Gson
 
 

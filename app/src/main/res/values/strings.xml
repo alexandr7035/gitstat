@@ -65,5 +65,7 @@
     <string name="include_languages">Include languages</string>
     <string name="apply">Apply</string>
     <string name="contributions">Contributions</string>
+    <string name="active">Active</string>
+    <string name="archived">Archived</string>
 
 </resources>

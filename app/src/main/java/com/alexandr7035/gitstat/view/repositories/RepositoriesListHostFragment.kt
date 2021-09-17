@@ -7,22 +7,20 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.alexandr7035.gitstat.R
-import com.alexandr7035.gitstat.databinding.FragmentBaseRepositoriesListBinding
+import com.alexandr7035.gitstat.databinding.FragmentHostRepositoriesListBinding
 import com.google.android.material.tabs.TabLayoutMediator
 
-class FragmentBaseRepositoriesList : Fragment() {
+class RepositoriesListHostFragment : Fragment() {
 
-    private var binding: FragmentBaseRepositoriesListBinding? = null
-
-    private val PAGES_COUNT = 3
+    private var binding: FragmentHostRepositoriesListBinding? = null
 
     val tabTitles = listOf(
-        getString(R.string.active),
-        getString(R.string.archived)
+        "Active",
+        "Archived"
     )
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentBaseRepositoriesListBinding.inflate(inflater, container, false)
+        binding = FragmentHostRepositoriesListBinding.inflate(inflater, container, false)
         return binding!!.root
     }
 
