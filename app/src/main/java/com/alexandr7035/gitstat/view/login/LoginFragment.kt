@@ -23,7 +23,7 @@ class LoginFragment : Fragment() {
     private val LOG_TAG = "DEBUG_TAG"
     private lateinit var navController: NavController
 
-    private lateinit var binding: FragmentLoginBinding
+    private var binding: FragmentLoginBinding? = null
 
     private lateinit var sharedPreferences: SharedPreferences
 
@@ -48,7 +48,7 @@ class LoginFragment : Fragment() {
 
         // Inflate the layout for this fragment
         binding = FragmentLoginBinding.inflate(inflater, container, false)
-        return binding.root
+        return binding!!.root
     }
 
 
@@ -56,16 +56,16 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.tokenEditText.addTextChangedListener(object : TextWatcher {
+        binding!!.tokenEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 if (s.isNotEmpty()) {
-                    if (!TextUtils.isEmpty(binding.tokenField.error)) {
-                        binding.tokenField.error = null
-                        binding.tokenField.isErrorEnabled = false
+                    if (!TextUtils.isEmpty(binding!!.tokenField.error)) {
+                        binding!!.tokenField.error = null
+                        binding!!.tokenField.isErrorEnabled = false
                     }
                 }
             }
@@ -77,7 +77,7 @@ class LoginFragment : Fragment() {
         })
 
 
-        binding.signInBtn.setOnClickListener(object : View.OnClickListener {
+        binding!!.signInBtn.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View) {
                 ////Log.d(LOG_TAG, "Login btn pressed")
 
@@ -87,7 +87,7 @@ class LoginFragment : Fragment() {
                 }
                 else {
                     ////Log.d(LOG_TAG, "do login request")
-                    token = binding.tokenEditText.text.toString()
+                    token = binding!!.tokenEditText.text.toString()
                     viewModel.doLoginRequest(token)
                 }
 
@@ -113,7 +113,7 @@ class LoginFragment : Fragment() {
                 // 404 may also be caused by wrong login data
                 // when token is correct but provided user name doesn't exist on github
                 401, 404 -> {
-                    binding.tokenField.error = getString(R.string.error_wrong_data_field)
+                    binding!!.tokenField.error = getString(R.string.error_wrong_data_field)
                 }
 
                 else -> {
@@ -131,12 +131,18 @@ class LoginFragment : Fragment() {
 
         var isValid = true
 
-        if (binding.tokenEditText.text.isNullOrBlank()) {
-            binding.tokenField.error = getString(R.string.error_empty_field)
+        if (binding!!.tokenEditText.text.isNullOrBlank()) {
+            binding!!.tokenField.error = getString(R.string.error_empty_field)
             isValid = false
         }
 
         return isValid
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        binding = null
     }
 
 }

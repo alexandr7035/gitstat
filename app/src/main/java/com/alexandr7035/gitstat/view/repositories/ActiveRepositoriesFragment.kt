@@ -81,4 +81,10 @@ class ActiveRepositoriesFragment : Fragment() {
         // Populate the list
         viewModel!!.updateRepositoriesLiveData()
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        binding = null
+    }
 }

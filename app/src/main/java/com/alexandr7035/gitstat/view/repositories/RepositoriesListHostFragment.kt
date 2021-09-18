@@ -39,4 +39,11 @@ class RepositoriesListHostFragment : Fragment() {
         }.attach()
     }
 
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        binding = null
+    }
+
 }

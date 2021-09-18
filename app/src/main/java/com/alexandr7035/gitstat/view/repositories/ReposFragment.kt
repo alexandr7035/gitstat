@@ -28,7 +28,7 @@ class ReposFragment : Fragment() {
 
     private val LOG_TAG = "DEBUG_TAG"
     private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var binding: FragmentReposBinding
+    private var binding: FragmentReposBinding? = null
     private lateinit var navController: NavController
     private lateinit var viewModel: MainViewModel
 
@@ -38,7 +38,7 @@ class ReposFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentReposBinding.inflate(inflater, container, false)
 
-        return binding.root
+        return binding!!.root
     }
 
 
@@ -86,9 +86,9 @@ class ReposFragment : Fragment() {
                 }
                 val publicReposCount: Int = totalReposCount - privateReposCount
 
-                binding.totalReposCountView.text = totalReposCount.toString()
-                binding.privateReposCountView.text = privateReposCount.toString()
-                binding.publicReposCountView.text = publicReposCount.toString()
+                binding!!.totalReposCountView.text = totalReposCount.toString()
+                binding!!.privateReposCountView.text = privateReposCount.toString()
+                binding!!.publicReposCountView.text = publicReposCount.toString()
 
                 // Diagram data. Colors must correspond entries in their order in list
                 val languages = ((requireActivity().application) as App).progLangManager.getLanguagesList(reposList)
@@ -101,7 +101,7 @@ class ReposFragment : Fragment() {
                 }
 
                 // Chart
-                binding.languagesChart.invalidate()
+                binding!!.languagesChart.invalidate()
 
                 val dataSet = PieDataSet(entries, "")
                 dataSet.apply {
@@ -121,7 +121,7 @@ class ReposFragment : Fragment() {
                 })
 
                 // Update data
-                binding.languagesChart.apply {
+                binding!!.languagesChart.apply {
                     centerText = totalReposCount.toString()
                     // Should be in the end to display legend correctly
                     data = pieData
@@ -141,26 +141,26 @@ class ReposFragment : Fragment() {
 
             when (it!!) {
                 SyncStatus.PENDING -> {
-                    binding.syncStatusView.setBackgroundResource(R.drawable.background_sync_button_pending)
+                    binding!!.syncStatusView.setBackgroundResource(R.drawable.background_sync_button_pending)
                 }
                 SyncStatus.SUCCESS -> {
-//                    binding.swipeRefreshLayout.isRefreshing = false
-                    binding.syncStatusView.setBackgroundResource(R.drawable.background_sync_button_synced)
+//                    binding!!.swipeRefreshLayout.isRefreshing = false
+                    binding!!.syncStatusView.setBackgroundResource(R.drawable.background_sync_button_synced)
                 }
                 SyncStatus.FAILED -> {
-//                    binding.swipeRefreshLayout.isRefreshing = false
-                    binding.syncStatusView.setBackgroundResource(R.drawable.background_sync_button_failed)
+//                    binding!!.swipeRefreshLayout.isRefreshing = false
+                    binding!!.syncStatusView.setBackgroundResource(R.drawable.background_sync_button_failed)
                 }
             }
         })
 
-//        binding.swipeRefreshLayout.setOnRefreshListener {
+//        binding!!.swipeRefreshLayout.setOnRefreshListener {
 //            viewModel.updateRepositoriesLiveData()
-//            binding.swipeRefreshLayout.isRefreshing = false
+//            binding!!.swipeRefreshLayout.isRefreshing = false
 //        }
 
 
-        binding.toReposListBtn.setOnClickListener {
+        binding!!.toReposListBtn.setOnClickListener {
             navController.navigate(R.id.action_reposFragment_to_repositoriesListHostFragment)
         }
 
@@ -170,20 +170,20 @@ class ReposFragment : Fragment() {
 
 
     private fun hideRepositoriesViews() {
-        binding.reposCountCard.visibility = View.GONE
-        binding.languagesCard.visibility = View.GONE
+        binding!!.reposCountCard.visibility = View.GONE
+        binding!!.languagesCard.visibility = View.GONE
     }
 
 
     private fun showRepositoriesViews() {
-        binding.reposCountCard.visibility = View.VISIBLE
-        binding.languagesCard.visibility = View.VISIBLE
+        binding!!.reposCountCard.visibility = View.VISIBLE
+        binding!!.languagesCard.visibility = View.VISIBLE
     }
 
 
     private fun setupLanguagesChart() {
         // Legend settings
-        binding.languagesChart.legend.apply {
+        binding!!.languagesChart.legend.apply {
             verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
             horizontalAlignment = Legend.LegendHorizontalAlignment.LEFT
             orientation = Legend.LegendOrientation.HORIZONTAL
@@ -194,13 +194,19 @@ class ReposFragment : Fragment() {
         }
 
         // General chart settings
-        binding.languagesChart.apply {
+        binding!!.languagesChart.apply {
             setEntryLabelTextSize(16f)
             setDrawEntryLabels(false)
             description.isEnabled = false
             setCenterTextSize(30f)
         }
 
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        binding = null
     }
 
 }
