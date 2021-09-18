@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:clipToPadding="false"
     android:paddingBottom="20dp"
-    tools:context=".view.ReposFragment">
+    tools:context=".view.repositories.ReposFragment">
 
     <View
         android:id="@+id/syncStatusView"

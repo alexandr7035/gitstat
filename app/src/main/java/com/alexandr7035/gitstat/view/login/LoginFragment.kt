@@ -1,4 +1,4 @@
-package com.alexandr7035.gitstat.view
+package com.alexandr7035.gitstat.view.login
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -16,6 +16,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.databinding.FragmentLoginBinding
+import com.alexandr7035.gitstat.view.MainViewModel
 
 class LoginFragment : Fragment() {
 

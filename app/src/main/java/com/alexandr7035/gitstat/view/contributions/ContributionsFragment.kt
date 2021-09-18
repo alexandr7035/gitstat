@@ -1,4 +1,4 @@
-package com.alexandr7035.gitstat.view
+package com.alexandr7035.gitstat.view.contributions
 
 import android.os.Bundle
 import android.util.Log
@@ -13,7 +13,6 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
-import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import java.text.SimpleDateFormat
 import java.util.*

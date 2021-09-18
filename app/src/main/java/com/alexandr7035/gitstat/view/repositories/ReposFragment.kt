@@ -1,4 +1,4 @@
-package com.alexandr7035.gitstat.view
+package com.alexandr7035.gitstat.view.repositories
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -15,6 +15,7 @@ import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.core.App
 import com.alexandr7035.gitstat.core.SyncStatus
 import com.alexandr7035.gitstat.databinding.FragmentReposBinding
+import com.alexandr7035.gitstat.view.MainViewModel
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet

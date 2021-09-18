@@ -6,7 +6,7 @@
     app:startDestination="@id/loginFragment">
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.alexandr7035.gitstat.view.LoginFragment"
+        android:name="com.alexandr7035.gitstat.view.login.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -16,13 +16,13 @@
 
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.alexandr7035.gitstat.view.ProfileFragment"
+        android:name="com.alexandr7035.gitstat.view.profile.ProfileFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_profile" />
 
     <fragment
         android:id="@+id/reposFragment"
-        android:name="com.alexandr7035.gitstat.view.ReposFragment"
+        android:name="com.alexandr7035.gitstat.view.repositories.ReposFragment"
         android:label="fragment_repos"
         tools:layout="@layout/fragment_repos" >
         <action
@@ -36,7 +36,7 @@
         tools:layout="@layout/fragment_repositories_list" />
     <fragment
         android:id="@+id/contributionsFragment"
-        android:name="com.alexandr7035.gitstat.view.ContributionsFragment"
+        android:name="com.alexandr7035.gitstat.view.contributions.ContributionsFragment"
         android:label="fragment_contributions"
         tools:layout="@layout/fragment_contributions" />
     <fragment

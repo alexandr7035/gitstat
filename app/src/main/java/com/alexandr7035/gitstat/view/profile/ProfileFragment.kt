@@ -1,4 +1,4 @@
-package com.alexandr7035.gitstat.view
+package com.alexandr7035.gitstat.view.profile
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -14,6 +14,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.core.SyncStatus
 import com.alexandr7035.gitstat.databinding.FragmentProfileBinding
+import com.alexandr7035.gitstat.view.MainViewModel
 import com.squareup.picasso.Picasso
 
 
