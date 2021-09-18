@@ -1,4 +1,4 @@
-package com.alexandr7035.gitstat.view.repositories
+package com.alexandr7035.gitstat.view.repositories_list
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.databinding.FragmentHostRepositoriesListBinding
 import com.google.android.material.tabs.TabLayoutMediator
 

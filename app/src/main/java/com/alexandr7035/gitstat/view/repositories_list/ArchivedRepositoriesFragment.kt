@@ -1,4 +1,4 @@
-package com.alexandr7035.gitstat.view.repositories
+package com.alexandr7035.gitstat.view.repositories_list
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

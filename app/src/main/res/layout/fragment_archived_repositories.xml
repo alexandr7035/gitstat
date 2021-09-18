@@ -8,6 +8,6 @@
     android:paddingTop="10dp"
     android:clipToPadding="false"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.alexandr7035.gitstat.view.repositories.RepositoriesListFragment">
+    tools:context="com.alexandr7035.gitstat.view.repositories_list.RepositoriesListFragment">
 
 </androidx.recyclerview.widget.RecyclerView>

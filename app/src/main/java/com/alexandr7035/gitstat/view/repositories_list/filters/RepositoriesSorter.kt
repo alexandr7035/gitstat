@@ -1,4 +1,4 @@
-package com.alexandr7035.gitstat.view.repositories.filters
+package com.alexandr7035.gitstat.view.repositories_list.filters
 
 import com.alexandr7035.gitstat.data.local.model.RepositoryEntity
 import java.util.*

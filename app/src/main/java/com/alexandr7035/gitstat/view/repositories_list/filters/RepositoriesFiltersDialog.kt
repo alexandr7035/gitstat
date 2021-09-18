@@ -1,4 +1,4 @@
-package com.alexandr7035.gitstat.view.repositories.filters
+package com.alexandr7035.gitstat.view.repositories_list.filters
 
 import android.os.Bundle
 import android.view.LayoutInflater
