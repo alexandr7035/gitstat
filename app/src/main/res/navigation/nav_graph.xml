@@ -30,20 +30,15 @@
             app:destination="@id/repositoriesListHostFragment" />
     </fragment>
     <fragment
-        android:id="@+id/repositoriesListFragment"
-        android:name="com.alexandr7035.gitstat.view.repositories_list.RepositoriesListFragment"
+        android:id="@+id/activeRepositoriesFragment"
+        android:name="com.alexandr7035.gitstat.view.repositories_list.ActiveRepositoriesFragment"
         android:label="fragment_repositories_list"
-        tools:layout="@layout/fragment_repositories_list" />
+        tools:layout="@layout/fragment_active_repositories" />
     <fragment
         android:id="@+id/contributionsFragment"
         android:name="com.alexandr7035.gitstat.view.contributions.ContributionsFragment"
         android:label="fragment_contributions"
         tools:layout="@layout/fragment_contributions" />
-    <fragment
-        android:id="@+id/activeRepositoriesFragment"
-        android:name="com.alexandr7035.gitstat.view.repositories_list.ActiveRepositoriesFragment"
-        android:label="fragment_active_repositories"
-        tools:layout="@layout/fragment_active_repositories" />
     <fragment
         android:id="@+id/archivedRepositoriesFragment"
         android:name="com.alexandr7035.gitstat.view.repositories_list.ArchivedRepositoriesFragment"
