@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:paddingStart="16dp"
     android:paddingEnd="16dp"
-    android:paddingTop="20dp"
+    android:paddingTop="10dp"
     android:clipToPadding="false"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.alexandr7035.gitstat.view.repositories.RepositoriesListFragment">

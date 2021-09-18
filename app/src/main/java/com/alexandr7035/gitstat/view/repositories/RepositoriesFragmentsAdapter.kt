@@ -10,7 +10,7 @@ class RepositoriesFragmentsAdapter(fragment: Fragment): FragmentStateAdapter(fra
     override fun createFragment(position: Int): Fragment {
 
         val fragment = when (position) {
-            1 -> ActiveRepositoriesFragment()
+            0 -> ActiveRepositoriesFragment()
             else -> ArchivedRepositoriesFragment()
         }
 
