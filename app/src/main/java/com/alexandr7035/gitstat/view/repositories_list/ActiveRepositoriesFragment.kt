@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.core.App
@@ -20,7 +21,9 @@ class ActiveRepositoriesFragment : Fragment() {
 
     private var binding: FragmentActiveRepositoriesBinding? = null
     private var sharedPreferences: SharedPreferences? = null
-    private var viewModel: MainViewModel? = null
+//    private var viewModel: MainViewModel? = null
+//
+    private val viewModel by navGraphViewModels<RepositoriesListViewModel>(R.id.repositoriesListGraph)
 
     private var filters: ReposFilters = ReposFilters()
     private var languages = emptyList<Language>()
@@ -38,7 +41,7 @@ class ActiveRepositoriesFragment : Fragment() {
         sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
         val token = sharedPreferences!!.getString(getString(R.string.shared_pref_token), "NONE")
 
-        viewModel = MainViewModel(requireActivity().application,  "$token")
+//        viewModel = MainViewModel(requireActivity().application,  "$token")
 
         // Setup adapter
         val adapter = RepositoriesAdapter((requireActivity().application as App).progLangManager)
@@ -51,19 +54,19 @@ class ActiveRepositoriesFragment : Fragment() {
         val filtersStr = sharedPreferences!!.getString(getString(R.string.shared_prefs_filters), gson.toJson(ReposFilters()))
         filters = gson.fromJson(filtersStr, ReposFilters::class.java)
 
-        viewModel!!.getRepositoriesData().observe(viewLifecycleOwner, { repositories ->
-
-//            Update languages list on each repos list change
-//            updateLanguagesList(repositories)
-
-//            val filteredList = getFilteredRepositoriesList(
-//                unfilteredList = repositories,
-//                filters = filters
-//            )
-
-//            adapter.setItems(filteredList)
-            adapter.setItems(repositories)
-        })
+//        viewModel!!.getRepositoriesData().observe(viewLifecycleOwner, { repositories ->
+//
+////            Update languages list on each repos list change
+////            updateLanguagesList(repositories)
+//
+////            val filteredList = getFilteredRepositoriesList(
+////                unfilteredList = repositories,
+////                filters = filters
+////            )
+//
+////            adapter.setItems(filteredList)
+//            adapter.setItems(repositories)
+//        })
 
 //        binding!!.toolbar.inflateMenu(R.menu.menu_toolbar_repos_list)
 //
@@ -79,7 +82,9 @@ class ActiveRepositoriesFragment : Fragment() {
 
 
         // Populate the list
-        viewModel!!.updateRepositoriesLiveData()
+//        viewModel!!.updateRepositoriesLiveData()
+
+        viewModel.testScope()
     }
 
     override fun onDestroyView() {
