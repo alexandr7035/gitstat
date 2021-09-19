@@ -1,6 +1,7 @@
 package com.alexandr7035.gitstat.data
 
 import android.app.Application
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.alexandr7035.gitstat.core.SyncStatus
 import com.alexandr7035.gitstat.data.local.CacheDB
@@ -130,6 +131,11 @@ class Repository(
             dao.clearRepositoriesCache()
             dao.clearUserCache()
         }
+    }
+
+
+   fun getActiveRepositoriesLiveData(): LiveData<List<RepositoryEntity>> {
+        return dao.getActiveRepositoriesLiveData()
     }
 
 }

@@ -84,6 +84,16 @@ class ActiveRepositoriesFragment : Fragment() {
         // Populate the list
 //        viewModel!!.updateRepositoriesLiveData()
 
+
+        viewModel.getActiveRepositoriesLiveData().observe(viewLifecycleOwner, { repos ->
+            adapter.setItems(repos)
+        })
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+
         viewModel.testScope()
     }
 

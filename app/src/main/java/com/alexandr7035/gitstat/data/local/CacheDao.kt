@@ -1,5 +1,6 @@
 package com.alexandr7035.gitstat.data.local
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -27,4 +28,7 @@ interface CacheDao {
 
     @Query("DELETE FROM repositories")
     suspend fun clearRepositoriesCache()
+
+    @Query("select * from repositories where fork")
+    fun getActiveRepositoriesLiveData(): LiveData<List<RepositoryEntity>>
 }
