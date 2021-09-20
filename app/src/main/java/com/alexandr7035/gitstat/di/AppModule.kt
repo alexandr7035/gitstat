@@ -2,6 +2,7 @@ package com.alexandr7035.gitstat.di
 
 import android.app.Application
 import com.alexandr7035.gitstat.core.AppPreferences
+import com.alexandr7035.gitstat.core.ProgLangManager
 import com.alexandr7035.gitstat.data.remote.GitHubApi
 import dagger.Module
 import dagger.Provides
@@ -56,4 +57,9 @@ object AppModule {
         return AppPreferences(application)
     }
 
+    @Provides
+    @Singleton
+    fun provideLanguagesManager(application: Application): ProgLangManager{
+        return ProgLangManager(application)
+    }
 }
