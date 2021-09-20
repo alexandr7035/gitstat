@@ -12,4 +12,8 @@ class AppPreferences @Inject constructor(private val application: Application) {
     var token: String?
         get() = prefs.getString(application.getString(R.string.shared_pref_token), null)
         set(value) = prefs.edit().putString(application.getString(R.string.shared_pref_token), value).apply()
+
+    var repositoriesFilters: String?
+        get() = prefs.getString(application.getString(R.string.shared_prefs_filters), null)
+        set(value) = prefs.edit().putString(application.getString(R.string.shared_prefs_filters), value).apply()
 }
