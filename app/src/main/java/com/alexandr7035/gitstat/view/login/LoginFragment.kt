@@ -1,8 +1,5 @@
 package com.alexandr7035.gitstat.view.login
 
-import android.annotation.SuppressLint
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
@@ -12,35 +9,27 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.databinding.FragmentLoginBinding
-import com.alexandr7035.gitstat.view.MainViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-class LoginFragment : Fragment() {
+@AndroidEntryPoint
+class LoginFragment: Fragment() {
 
     private val LOG_TAG = "DEBUG_TAG"
     private lateinit var navController: NavController
-
     private var binding: FragmentLoginBinding? = null
 
-    private lateinit var sharedPreferences: SharedPreferences
-
-    private lateinit var viewModel: MainViewModel
+    private val viewModel by viewModels<LoginViewModel>()
 
     private lateinit var token: String
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-
-        // Shared pref
-        sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
-        val token = sharedPreferences.getString(getString(R.string.shared_pref_token), "NONE")
-
-        // ViewModel
-        viewModel = MainViewModel(requireActivity().application, "$token")
 
         // NavController
         val hf: NavHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
@@ -52,7 +41,6 @@ class LoginFragment : Fragment() {
     }
 
 
-    @SuppressLint("ApplySharedPref")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -101,15 +89,11 @@ class LoginFragment : Fragment() {
 
             when (it) {
                 200 -> {
-                    val prefEditor = sharedPreferences.edit()
-                    prefEditor.putString(
-                        getString(R.string.shared_pref_token), token)
-
-                    prefEditor.commit()
-
+                    viewModel.saveToken(token)
                     navController.navigate(R.id.actionLoginToMain)
                 }
 
+                // FIXME
                 // 404 may also be caused by wrong login data
                 // when token is correct but provided user name doesn't exist on github
                 401, 404 -> {

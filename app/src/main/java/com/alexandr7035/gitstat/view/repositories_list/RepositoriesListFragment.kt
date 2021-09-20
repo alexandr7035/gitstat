@@ -19,8 +19,9 @@ import com.alexandr7035.gitstat.view.repositories_list.filters.ReposFilters
 import com.alexandr7035.gitstat.view.repositories_list.filters.RepositoriesFiltersDialog
 import com.alexandr7035.gitstat.view.repositories_list.filters.RepositoriesSorter
 import com.google.gson.Gson
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class RepositoriesListFragment : Fragment(), RepositoriesFiltersDialog.FiltersUpdateObserver {
 
     private var binding: FragmentRepositoriesListBinding? = null
@@ -43,7 +44,7 @@ class RepositoriesListFragment : Fragment(), RepositoriesFiltersDialog.FiltersUp
         sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
         val token = sharedPreferences!!.getString(getString(R.string.shared_pref_token), "NONE")
 
-        viewModel = MainViewModel(requireActivity().application,  "$token")
+        //viewModel = MainViewModel(requireActivity().application,  "$token")
 
         binding!!.toolbar.setNavigationOnClickListener {
             findNavController().navigateUp()

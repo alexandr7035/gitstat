@@ -1,14 +1,13 @@
 package com.alexandr7035.gitstat.view.profile
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.alexandr7035.gitstat.R
@@ -16,16 +15,16 @@ import com.alexandr7035.gitstat.core.SyncStatus
 import com.alexandr7035.gitstat.databinding.FragmentProfileBinding
 import com.alexandr7035.gitstat.view.MainViewModel
 import com.squareup.picasso.Picasso
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class ProfileFragment : Fragment() {
 
-    private lateinit var sharedPreferences: SharedPreferences
     private var binding: FragmentProfileBinding? = null
-    private lateinit var viewModel: MainViewModel
     private lateinit var navController: NavController
 
-    private lateinit var user: String
+    private val viewModel by viewModels<MainViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,18 +42,9 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        ////Log.d(LOG_TAG, "profile fragment onviewcreated")
-
-        // Shared pref
-        sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
-        val token = sharedPreferences.getString(getString(R.string.shared_pref_token), "NONE")
-        ////Log.d(LOG_TAG, "Auth '$user' with token '$token'")
-
         // Navigation controller
         val hf: NavHostFragment = activity?.supportFragmentManager?.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = hf.navController
-
-        viewModel = MainViewModel(requireActivity().application, "$token")
 
     }
 
@@ -118,26 +108,7 @@ class ProfileFragment : Fragment() {
         }
 
         binding!!.logOutBtn.setOnClickListener {
-
-            ////Log.d(LOG_TAG, "log out")
-
-            // Reset shared prefs
-            val editor = sharedPreferences.edit()
-            editor.putString(
-                getString(R.string.shared_pref_login),
-                getString(R.string.shared_pref_default_string_value)
-            )
-
-            editor.putString(
-                getString(R.string.shared_pref_token),
-                getString(R.string.shared_pref_default_string_value)
-            )
-
-            editor.commit()
-
-            // Clear room cache
-            viewModel.clearCache()
-
+            viewModel.doLogOut()
             navController.navigate(R.id.loginFragment)
         }
 
