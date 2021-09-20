@@ -1,7 +1,5 @@
 package com.alexandr7035.gitstat.view.repositories_list
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,17 +11,15 @@ import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.core.App
 import com.alexandr7035.gitstat.core.Language
 import com.alexandr7035.gitstat.databinding.FragmentActiveRepositoriesBinding
-import com.alexandr7035.gitstat.view.MainViewModel
 import com.alexandr7035.gitstat.view.repositories_list.filters.ReposFilters
-import com.google.gson.Gson
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ActiveRepositoriesFragment : Fragment() {
 
     private var binding: FragmentActiveRepositoriesBinding? = null
-    private var sharedPreferences: SharedPreferences? = null
-//    private var viewModel: MainViewModel? = null
-//
-    private val viewModel by navGraphViewModels<RepositoriesListViewModel>(R.id.repositoriesListGraph)
+
+    private val viewModel by navGraphViewModels<RepositoriesListViewModel>(R.id.repositoriesListGraph) { defaultViewModelProviderFactory }
 
     private var filters: ReposFilters = ReposFilters()
     private var languages = emptyList<Language>()
@@ -37,22 +33,16 @@ class ActiveRepositoriesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Shared pref
-        sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
-        val token = sharedPreferences!!.getString(getString(R.string.shared_pref_token), "NONE")
-
-//        viewModel = MainViewModel(requireActivity().application,  "$token")
-
         // Setup adapter
         val adapter = RepositoriesAdapter((requireActivity().application as App).progLangManager)
         binding!!.root.adapter = adapter
         binding!!.root.layoutManager = LinearLayoutManager(context)
 
-        // Load filters settings for adapter from memory
-        // The default shared pref value is based on new ReposFilters() object and it's params
-        val gson = Gson()
-        val filtersStr = sharedPreferences!!.getString(getString(R.string.shared_prefs_filters), gson.toJson(ReposFilters()))
-        filters = gson.fromJson(filtersStr, ReposFilters::class.java)
+//        // Load filters settings for adapter from memory
+//        // The default shared pref value is based on new ReposFilters() object and it's params
+//        val gson = Gson()
+//        val filtersStr = sharedPreferences!!.getString(getString(R.string.shared_prefs_filters), gson.toJson(ReposFilters()))
+//        filters = gson.fromJson(filtersStr, ReposFilters::class.java)
 
 //        viewModel!!.getRepositoriesData().observe(viewLifecycleOwner, { repositories ->
 //
@@ -93,8 +83,6 @@ class ActiveRepositoriesFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-
-        viewModel.testScope()
     }
 
     override fun onDestroyView() {

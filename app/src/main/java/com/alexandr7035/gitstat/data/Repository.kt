@@ -139,6 +139,10 @@ class Repository @Inject constructor(private val appPreferences: AppPreferences,
         return dao.getActiveRepositoriesLiveData()
     }
 
+    fun getArchivedRepositoriesLiveData(): LiveData<List<RepositoryEntity>> {
+        return dao.getArchivedRepositoriesLiveData()
+    }
+
     fun saveToken(token: String) {
         appPreferences.token = token
     }

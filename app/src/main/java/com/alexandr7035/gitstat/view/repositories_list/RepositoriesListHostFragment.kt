@@ -10,7 +10,9 @@ import androidx.navigation.navGraphViewModels
 import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.databinding.FragmentHostRepositoriesListBinding
 import com.google.android.material.tabs.TabLayoutMediator
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RepositoriesListHostFragment : Fragment() {
 
     private var binding: FragmentHostRepositoriesListBinding? = null
@@ -20,7 +22,7 @@ class RepositoriesListHostFragment : Fragment() {
         "Archived"
     )
 
-    private val viewModel by navGraphViewModels<RepositoriesListViewModel>(R.id.repositoriesListGraph)
+    private val viewModel by navGraphViewModels<RepositoriesListViewModel>(R.id.repositoriesListGraph) { defaultViewModelProviderFactory }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentHostRepositoriesListBinding.inflate(inflater, container, false)
@@ -41,7 +43,6 @@ class RepositoriesListHostFragment : Fragment() {
             tab.text = tabTitles[position]
         }.attach()
 
-        viewModel.testScope()
     }
 
 
