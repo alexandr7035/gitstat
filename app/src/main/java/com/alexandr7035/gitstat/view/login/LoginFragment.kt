@@ -1,8 +1,5 @@
 package com.alexandr7035.gitstat.view.login
 
-import android.annotation.SuppressLint
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
@@ -16,11 +13,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.alexandr7035.gitstat.R
-import com.alexandr7035.gitstat.core.AppPreferences
 import com.alexandr7035.gitstat.databinding.FragmentLoginBinding
-import com.alexandr7035.gitstat.view.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class LoginFragment: Fragment() {

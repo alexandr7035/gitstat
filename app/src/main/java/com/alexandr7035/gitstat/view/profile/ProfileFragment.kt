@@ -1,8 +1,6 @@
 package com.alexandr7035.gitstat.view.profile
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.format.DateFormat
 import android.view.LayoutInflater

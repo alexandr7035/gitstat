@@ -1,7 +1,9 @@
 package com.alexandr7035.gitstat.view
 
-import android.app.Application
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.alexandr7035.gitstat.core.BaseViewModel
 import com.alexandr7035.gitstat.core.SyncStatus
 import com.alexandr7035.gitstat.data.Repository

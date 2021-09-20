@@ -1,7 +1,5 @@
 package com.alexandr7035.gitstat.view.repositories_main
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
