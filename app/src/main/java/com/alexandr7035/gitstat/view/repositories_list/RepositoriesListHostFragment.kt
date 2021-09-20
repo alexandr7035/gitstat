@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.databinding.FragmentHostRepositoriesListBinding
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -42,6 +43,15 @@ class RepositoriesListHostFragment : Fragment() {
         TabLayoutMediator(binding!!.tabLayout, binding!!.pager) { tab, position ->
             tab.text = tabTitles[position]
         }.attach()
+
+        // Update counters in the tabs
+        viewModel.getActiveRepositoriesLiveData().observe(viewLifecycleOwner, {
+            (binding!!.tabLayout.getTabAt(0) as TabLayout.Tab).text = "Active (${it.size})"
+        })
+
+        viewModel.getArchivedRepositoriesLiveData().observe(viewLifecycleOwner, {
+            (binding!!.tabLayout.getTabAt(1) as TabLayout.Tab).text = "Archived (${it.size})"
+        })
 
     }
 
