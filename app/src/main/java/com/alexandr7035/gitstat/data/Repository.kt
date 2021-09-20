@@ -143,4 +143,8 @@ class Repository @Inject constructor(private val appPreferences: AppPreferences,
         appPreferences.token = token
     }
 
+    fun doLogout() {
+        appPreferences.token = null
+    }
+
 }

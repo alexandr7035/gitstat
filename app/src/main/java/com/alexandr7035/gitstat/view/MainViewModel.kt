@@ -53,7 +53,8 @@ class MainViewModel @Inject constructor(private val repository: Repository) : Vi
         return loginResponseCodeLiveData
     }
 
-    fun clearCache() {
+    fun doLogOut() {
+        repository.doLogout()
         repository.clearAllCache()
     }
 
