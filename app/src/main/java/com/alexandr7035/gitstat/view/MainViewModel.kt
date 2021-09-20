@@ -1,24 +1,24 @@
 package com.alexandr7035.gitstat.view
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.alexandr7035.gitstat.core.SyncStatus
 import com.alexandr7035.gitstat.data.Repository
 import com.alexandr7035.gitstat.data.local.model.RepositoryEntity
 import com.alexandr7035.gitstat.data.local.model.UserEntity
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainViewModel(application: Application, token: String) : AndroidViewModel(application) {
+@HiltViewModel
+class MainViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
 
     private val userLiveData = MutableLiveData<UserEntity>()
     private val repositoriesLiveData = MutableLiveData<List<RepositoryEntity>>()
     private val loginResponseCodeLiveData = MutableLiveData<Int>()
 
-    private val repository = Repository(application, token)
+    //private val repository = Repository(application, token)
 
     // Fixme ID
     fun getUserLiveData(): LiveData<UserEntity> {

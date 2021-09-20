@@ -2,21 +2,17 @@ package com.alexandr7035.gitstat.view.repositories_list
 
 import android.app.Application
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.alexandr7035.gitstat.data.Repository
 import com.alexandr7035.gitstat.data.local.model.RepositoryEntity
 import com.alexandr7035.gitstat.view.repositories_list.filters.ReposFilters
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class RepositoriesListViewModel(application: Application, token: String): AndroidViewModel(application) {
+class RepositoriesListViewModel @Inject constructor(private val repository: Repository): ViewModel() {
 
     private val filtersLiveData = MutableLiveData<ReposFilters>()
-
-    private val repository = Repository(application, token)
 
     private var counter = 0
 

@@ -3,6 +3,7 @@ package com.alexandr7035.gitstat.data
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.alexandr7035.gitstat.core.AppPreferences
 import com.alexandr7035.gitstat.core.SyncStatus
 import com.alexandr7035.gitstat.data.local.CacheDB
 import com.alexandr7035.gitstat.data.local.model.RepositoryEntity
@@ -11,17 +12,17 @@ import com.alexandr7035.gitstat.data.remote.NetworkModule
 import com.alexandr7035.gitstat.data.remote.mappers.RepositoryRemoteToCacheMapper
 import com.alexandr7035.gitstat.data.remote.mappers.UserRemoteToCacheMapper
 import com.alexandr7035.gitstat.data.remote.model.RepositoryModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class Repository(
-    application: Application,
-    token: String) {
+class Repository @Inject constructor(private val appPreferences: AppPreferences, private val application: Application, private val api: NetworkModule) {
     private val LOG_TAG = "DEBUG_TAG"
     private val dao = CacheDB.getInstance(context = application).getDao()
-    private val api = NetworkModule.getInstance(token)
+    //private val api = NetworkModule(token)
 
     private val syncStateLiveData = MutableLiveData<SyncStatus>()
 
@@ -136,6 +137,10 @@ class Repository(
 
    fun getActiveRepositoriesLiveData(): LiveData<List<RepositoryEntity>> {
         return dao.getActiveRepositoriesLiveData()
+    }
+
+    fun saveToken(token: String) {
+        appPreferences.token = token
     }
 
 }

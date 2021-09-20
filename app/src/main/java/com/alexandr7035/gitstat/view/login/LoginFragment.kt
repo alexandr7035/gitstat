@@ -12,13 +12,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.alexandr7035.gitstat.R
+import com.alexandr7035.gitstat.core.AppPreferences
 import com.alexandr7035.gitstat.databinding.FragmentLoginBinding
 import com.alexandr7035.gitstat.view.MainViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-class LoginFragment : Fragment() {
+@AndroidEntryPoint
+class LoginFragment: Fragment() {
 
     private val LOG_TAG = "DEBUG_TAG"
     private lateinit var navController: NavController
@@ -27,7 +32,7 @@ class LoginFragment : Fragment() {
 
     private lateinit var sharedPreferences: SharedPreferences
 
-    private lateinit var viewModel: MainViewModel
+    private val viewModel by viewModels<LoginViewModel>()
 
     private lateinit var token: String
 
@@ -38,9 +43,6 @@ class LoginFragment : Fragment() {
         // Shared pref
         sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
         val token = sharedPreferences.getString(getString(R.string.shared_pref_token), "NONE")
-
-        // ViewModel
-        viewModel = MainViewModel(requireActivity().application, "$token")
 
         // NavController
         val hf: NavHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
@@ -101,12 +103,13 @@ class LoginFragment : Fragment() {
 
             when (it) {
                 200 -> {
-                    val prefEditor = sharedPreferences.edit()
-                    prefEditor.putString(
-                        getString(R.string.shared_pref_token), token)
+//                    val prefEditor = sharedPreferences.edit()
+//                    prefEditor.putString(
+//                        getString(R.string.shared_pref_token), token)
+//
+//                    prefEditor.commit()
 
-                    prefEditor.commit()
-
+                    viewModel.saveToken(token)
                     navController.navigate(R.id.actionLoginToMain)
                 }
 

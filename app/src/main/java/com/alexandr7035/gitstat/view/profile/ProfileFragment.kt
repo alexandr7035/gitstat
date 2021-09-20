@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.alexandr7035.gitstat.R
@@ -16,16 +17,19 @@ import com.alexandr7035.gitstat.core.SyncStatus
 import com.alexandr7035.gitstat.databinding.FragmentProfileBinding
 import com.alexandr7035.gitstat.view.MainViewModel
 import com.squareup.picasso.Picasso
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class ProfileFragment : Fragment() {
 
     private lateinit var sharedPreferences: SharedPreferences
     private var binding: FragmentProfileBinding? = null
-    private lateinit var viewModel: MainViewModel
     private lateinit var navController: NavController
 
     private lateinit var user: String
+
+    private val viewModel by viewModels<MainViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,7 +58,7 @@ class ProfileFragment : Fragment() {
         val hf: NavHostFragment = activity?.supportFragmentManager?.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = hf.navController
 
-        viewModel = MainViewModel(requireActivity().application, "$token")
+        //viewModel = MainViewModel(requireActivity().application, "$token")
 
     }
 

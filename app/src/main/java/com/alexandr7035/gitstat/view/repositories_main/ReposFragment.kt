@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.alexandr7035.gitstat.R
@@ -21,16 +22,17 @@ import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
-
+@AndroidEntryPoint
 class ReposFragment : Fragment() {
 
     private val LOG_TAG = "DEBUG_TAG"
     private lateinit var sharedPreferences: SharedPreferences
     private var binding: FragmentReposBinding? = null
     private lateinit var navController: NavController
-    private lateinit var viewModel: MainViewModel
+    private val viewModel by viewModels<MainViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,7 +54,7 @@ class ReposFragment : Fragment() {
         val token = sharedPreferences.getString(getString(R.string.shared_pref_token), "NONE")
         ////Log.d(LOG_TAG, "Auth '$user' with token '$token'")
 
-        viewModel = MainViewModel(requireActivity().application, "$token")
+        //viewModel = MainViewModel(requireActivity().application, "$token")
 
         // NavController
         val hf: NavHostFragment = activity?.supportFragmentManager?.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
