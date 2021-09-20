@@ -53,6 +53,10 @@ class MainViewModel @Inject constructor(private val repository: Repository) : Vi
         return loginResponseCodeLiveData
     }
 
+    fun checkIfLoggedIn(): Boolean {
+        return repository.checkIfLoggedIn()
+    }
+
     fun doLogOut() {
         repository.doLogout()
         repository.clearAllCache()

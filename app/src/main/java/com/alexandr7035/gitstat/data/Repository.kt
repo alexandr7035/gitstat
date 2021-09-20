@@ -147,4 +147,11 @@ class Repository @Inject constructor(private val appPreferences: AppPreferences,
         appPreferences.token = null
     }
 
+    fun checkIfLoggedIn(): Boolean {
+        return when (appPreferences.token) {
+            null -> false
+            else -> true
+        }
+    }
+
 }
