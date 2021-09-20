@@ -22,7 +22,7 @@ import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RepositoriesListFragment : Fragment(), RepositoriesFiltersDialog.FiltersUpdateObserver {
+class RepositoriesListFragment : Fragment() {
 
     private var binding: FragmentRepositoriesListBinding? = null
     private var sharedPreferences: SharedPreferences? = null
@@ -93,12 +93,12 @@ class RepositoriesListFragment : Fragment(), RepositoriesFiltersDialog.FiltersUp
 
 
     private fun showFiltersDialog() {
-        val dialog = RepositoriesFiltersDialog(
-            currentFilters = filters,
-            filtersUpdateObserver = this,
-            languages = languages
-        )
-        dialog.show(requireActivity().supportFragmentManager, "filtersDialog")
+//        val dialog = RepositoriesFiltersDialog(
+//            currentFilters = filters,
+//            filtersUpdateObserver = this,
+//            languages = languages
+//        )
+//        dialog.show(requireActivity().supportFragmentManager, "filtersDialog")
     }
 
 
@@ -171,23 +171,6 @@ class RepositoriesListFragment : Fragment(), RepositoriesFiltersDialog.FiltersUp
 
         return filteredList
     }
-
-
-    // Called when "apply" button is clicked in filters dialog
-    override fun onFiltersUpdated(filters: ReposFilters) {
-        //Log.d("DEBUG", "update filters $filters")
-        this.filters = filters
-
-        // FIXME
-        viewModel!!.updateRepositoriesLiveData()
-
-        // Save changes in memory
-        val gson = Gson()
-        sharedPreferences!!.edit()
-            .putString(getString(R.string.shared_prefs_filters), gson.toJson(filters))
-            .apply()
-    }
-
 
     private fun updateLanguagesList(repositories: List<RepositoryEntity>) {
         languages = (requireActivity().application as App).progLangManager.getLanguagesList(repositories)

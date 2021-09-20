@@ -4,24 +4,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.navGraphViewModels
 import com.alexandr7035.gitstat.R
-import com.alexandr7035.gitstat.core.Language
 import com.alexandr7035.gitstat.databinding.FiltersDialogBinding
+import com.alexandr7035.gitstat.view.repositories_list.RepositoriesListViewModel
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
 
-
-class RepositoriesFiltersDialog(
-    private val currentFilters: ReposFilters,
-    private val filtersUpdateObserver: FiltersUpdateObserver,
-    // FIXME
-    private val languages: List<Language>): BottomSheetDialogFragment() {
-
+@AndroidEntryPoint
+class RepositoriesFiltersDialog(): BottomSheetDialogFragment() {
     private var binding: FiltersDialogBinding? = null
     private var checkedLanguages = HashSet<String>()
 
+    private val viewModel by navGraphViewModels<RepositoriesListViewModel>(R.id.repositoriesListGraph) { defaultViewModelProviderFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,12 +44,19 @@ class RepositoriesFiltersDialog(
         super.onViewCreated(view, savedInstanceState)
 
         // Load current filters settings
-        setupFiltersViews()
+        setupFiltersViews(viewModel.getRepositoriesFilters())
 
         val adapter = LanguagesAdapter(checkedLanguages)
         binding!!.languagesFilterRecyclerView.adapter = adapter
         binding!!.languagesFilterRecyclerView.layoutManager = FlexboxLayoutManager(context)
-        adapter.setItems(languages)
+
+        // FIXME
+        // Now build langs list depending on ALL the repos of a user
+        // Create different filters for active/archived later
+        viewModel.getAllRepositoriesListLiveData().observe(viewLifecycleOwner, { repos ->
+            adapter.setItems(viewModel.getLanguagesForReposList(repos))
+        })
+
 
         binding!!.applyButton.setOnClickListener {
 
@@ -108,7 +113,9 @@ class RepositoriesFiltersDialog(
 
             newFilters.filterLanguages = adapter.getCheckedLanguages()
 
-            filtersUpdateObserver.onFiltersUpdated(newFilters)
+            // Save filters to persistent storage
+            viewModel.saveRepositoriesFilters(newFilters)
+
             dismiss()
         }
 
@@ -125,7 +132,7 @@ class RepositoriesFiltersDialog(
     }
 
 
-    private fun setupFiltersViews() {
+    private fun setupFiltersViews(currentFilters: ReposFilters) {
         when (currentFilters.filterPrivacy) {
             ReposFilters.FilterPrivacy.PRIVATE_REPOS_ONLY -> binding!!.filterPrivacyIncludePrivateOnlyBtn.isChecked = true
             ReposFilters.FilterPrivacy.PUBLIC_REPOS_ONLY -> binding!!.filterPrivacyIncludePublicOnlyBtn.isChecked = true
@@ -149,10 +156,6 @@ class RepositoriesFiltersDialog(
         }
 
         checkedLanguages = currentFilters.filterLanguages as HashSet<String>
-    }
-
-    interface FiltersUpdateObserver {
-        fun onFiltersUpdated(filters: ReposFilters)
     }
 
 }

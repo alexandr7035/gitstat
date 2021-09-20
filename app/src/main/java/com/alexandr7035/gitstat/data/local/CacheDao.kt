@@ -34,4 +34,7 @@ interface CacheDao {
 
     @Query("select * from repositories where archived")
     fun getArchivedRepositoriesLiveData(): LiveData<List<RepositoryEntity>>
+
+    @Query("select * from repositories")
+    fun getAllRepositoriesLiveData(): LiveData<List<RepositoryEntity>>
 }

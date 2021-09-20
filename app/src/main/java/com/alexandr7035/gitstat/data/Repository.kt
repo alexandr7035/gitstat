@@ -4,6 +4,8 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.alexandr7035.gitstat.core.AppPreferences
+import com.alexandr7035.gitstat.core.Language
+import com.alexandr7035.gitstat.core.ProgLangManager
 import com.alexandr7035.gitstat.core.SyncStatus
 import com.alexandr7035.gitstat.data.local.CacheDB
 import com.alexandr7035.gitstat.data.local.model.RepositoryEntity
@@ -12,6 +14,8 @@ import com.alexandr7035.gitstat.data.remote.NetworkModule
 import com.alexandr7035.gitstat.data.remote.mappers.RepositoryRemoteToCacheMapper
 import com.alexandr7035.gitstat.data.remote.mappers.UserRemoteToCacheMapper
 import com.alexandr7035.gitstat.data.remote.model.RepositoryModel
+import com.alexandr7035.gitstat.view.repositories_list.filters.ReposFilters
+import com.google.gson.Gson
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -19,7 +23,14 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class Repository @Inject constructor(private val appPreferences: AppPreferences, private val application: Application, private val api: NetworkModule) {
+class Repository @Inject constructor(
+    private val appPreferences: AppPreferences,
+    private val application: Application,
+    private val api: NetworkModule,
+    private val langManager: ProgLangManager,
+    private val gson: Gson
+) {
+
     private val LOG_TAG = "DEBUG_TAG"
     private val dao = CacheDB.getInstance(context = application).getDao()
     //private val api = NetworkModule(token)
@@ -134,6 +145,9 @@ class Repository @Inject constructor(private val appPreferences: AppPreferences,
         }
     }
 
+    fun getAllRepositoriesLiveData(): LiveData<List<RepositoryEntity>> {
+        return dao.getAllRepositoriesLiveData()
+    }
 
    fun getActiveRepositoriesLiveData(): LiveData<List<RepositoryEntity>> {
         return dao.getActiveRepositoriesLiveData()
@@ -156,6 +170,29 @@ class Repository @Inject constructor(private val appPreferences: AppPreferences,
             null -> false
             else -> true
         }
+    }
+
+    fun getLanguagesForReposList(repos: List<RepositoryEntity>): List<Language> {
+        return langManager.getLanguagesList(repos)
+    }
+
+    fun getRepositoriesFilters(): ReposFilters {
+
+        val filtersStr = appPreferences.repositoriesFilters
+
+        return if (filtersStr == null) {
+            // New instance with default params
+            // See filters class
+            ReposFilters()
+        } else {
+            // Load from persistent storage
+            gson.fromJson(filtersStr, ReposFilters::class.java)
+        }
+    }
+
+
+    fun saveRepositoriesFilters(filters: ReposFilters) {
+        appPreferences.repositoriesFilters = gson.toJson(filters)
     }
 
 }

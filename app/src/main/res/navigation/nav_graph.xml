@@ -56,6 +56,13 @@
             <action
                 android:id="@+id/action_repositoriesListHostFragment_to_archivedRepositoriesFragment"
                 app:destination="@id/archivedRepositoriesFragment" />
+            <action
+                android:id="@+id/action_repositoriesListHostFragment_to_repositoriesFiltersDialog"
+                app:destination="@id/repositoriesFiltersDialog" />
         </fragment>
+        <dialog
+            android:id="@+id/repositoriesFiltersDialog"
+            android:name="com.alexandr7035.gitstat.view.repositories_list.filters.RepositoriesFiltersDialog"
+            android:label="RepositoriesFiltersDialog" />
     </navigation>
 </navigation>

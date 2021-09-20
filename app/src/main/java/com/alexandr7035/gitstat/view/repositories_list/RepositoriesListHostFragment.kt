@@ -1,6 +1,7 @@
 package com.alexandr7035.gitstat.view.repositories_list
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,6 +45,19 @@ class RepositoriesListHostFragment : Fragment() {
             tab.text = tabTitles[position]
         }.attach()
 
+        // Inflate toolbar menu
+        binding!!.toolbar.inflateMenu(R.menu.menu_toolbar_repos_list)
+        binding!!.toolbar.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.item_filters -> {
+                    showFiltersDialog()
+                }
+            }
+
+            true
+        }
+
+
         // Update counters in the tabs
         viewModel.getActiveRepositoriesLiveData().observe(viewLifecycleOwner, {
             (binding!!.tabLayout.getTabAt(0) as TabLayout.Tab).text = "Active (${it.size})"
@@ -53,6 +67,12 @@ class RepositoriesListHostFragment : Fragment() {
             (binding!!.tabLayout.getTabAt(1) as TabLayout.Tab).text = "Archived (${it.size})"
         })
 
+    }
+
+
+    private fun showFiltersDialog() {
+        Log.d("DEBUG_TAG", "show filters")
+        findNavController().navigate(R.id.action_repositoriesListHostFragment_to_repositoriesFiltersDialog)
     }
 
 
