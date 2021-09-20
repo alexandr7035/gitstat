@@ -8,5 +8,6 @@ data class RepositoryModel(
     var language: String,
     val open_issues: Long,
     val created_at: String,
-    val stargazers_count: Long
+    val stargazers_count: Long,
+    val archived: Boolean
 )

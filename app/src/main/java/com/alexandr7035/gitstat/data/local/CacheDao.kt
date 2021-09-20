@@ -29,6 +29,9 @@ interface CacheDao {
     @Query("DELETE FROM repositories")
     suspend fun clearRepositoriesCache()
 
-    @Query("select * from repositories where fork")
+    @Query("select * from repositories where not archived")
     fun getActiveRepositoriesLiveData(): LiveData<List<RepositoryEntity>>
+
+    @Query("select * from repositories where archived")
+    fun getArchivedRepositoriesLiveData(): LiveData<List<RepositoryEntity>>
 }
