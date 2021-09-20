@@ -66,7 +66,7 @@ class RepositoriesAdapter(private val langManager: ProgLangManager): RecyclerVie
         // Hide otherwise
         when (items[position].fork) {
             true -> holder.binding.repoIsForkView.visibility = View.VISIBLE
-            false -> holder.binding.repoIsForkView.visibility = View.GONE
+            false -> holder.binding.repoIsForkView.visibility = View.INVISIBLE
         }
 
         val color = langManager.getLanguageColor(language = holder.binding.language.text as String)
