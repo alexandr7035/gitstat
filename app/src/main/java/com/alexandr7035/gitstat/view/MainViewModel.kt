@@ -2,6 +2,7 @@ package com.alexandr7035.gitstat.view
 
 import android.app.Application
 import androidx.lifecycle.*
+import com.alexandr7035.gitstat.core.BaseViewModel
 import com.alexandr7035.gitstat.core.SyncStatus
 import com.alexandr7035.gitstat.data.Repository
 import com.alexandr7035.gitstat.data.local.model.RepositoryEntity
@@ -12,7 +13,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
+class MainViewModel @Inject constructor(private val repository: Repository) : ViewModel(), BaseViewModel {
 
     private val userLiveData = MutableLiveData<UserEntity>()
     private val repositoriesLiveData = MutableLiveData<List<RepositoryEntity>>()
@@ -57,7 +58,7 @@ class MainViewModel @Inject constructor(private val repository: Repository) : Vi
         return repository.checkIfLoggedIn()
     }
 
-    fun doLogOut() {
+    override fun doLogOut() {
         repository.doLogout()
         repository.clearAllCache()
     }
