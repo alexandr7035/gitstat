@@ -4,6 +4,7 @@ import android.app.Application
 import com.alexandr7035.gitstat.core.AppPreferences
 import com.alexandr7035.gitstat.core.ProgLangManager
 import com.alexandr7035.gitstat.data.remote.GitHubApi
+import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -61,5 +62,12 @@ object AppModule {
     @Singleton
     fun provideLanguagesManager(application: Application): ProgLangManager{
         return ProgLangManager(application)
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideGson(): Gson {
+        return Gson()
     }
 }
