@@ -1,12 +1,18 @@
 package com.alexandr7035.gitstat.di
 
 import android.app.Application
+import androidx.room.RoomDatabase
 import com.alexandr7035.gitstat.core.AppPreferences
 import com.alexandr7035.gitstat.core.ProgLangManager
 import com.alexandr7035.gitstat.data.LoginRepository
 import com.alexandr7035.gitstat.data.Repository
+import com.alexandr7035.gitstat.data.UserRepository
+import com.alexandr7035.gitstat.data.local.CacheDB
+import com.alexandr7035.gitstat.data.local.CacheDB_Impl
+import com.alexandr7035.gitstat.data.local.CacheDao
 import com.alexandr7035.gitstat.data.remote.GitHubApi
 import com.alexandr7035.gitstat.data.remote.NetworkModule
+import com.alexandr7035.gitstat.data.remote.mappers.UserRemoteToCacheMapper
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -79,8 +85,31 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun provideUserRepository(api: NetworkModule, dao: CacheDao, userMapper: UserRemoteToCacheMapper): UserRepository {
+        return UserRepository(api, dao, userMapper)
+    }
+
+    @Provides
+    fun provideUserMapper(): UserRemoteToCacheMapper {
+        return UserRemoteToCacheMapper()
+    }
+
+    @Provides
+    @Singleton
     fun provideAppPrefs(application: Application): AppPreferences {
         return AppPreferences(application)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRoomDb(application: Application): CacheDB {
+        return CacheDB.getInstance(application)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRoomDao(db: CacheDB): CacheDao {
+        return db.getDao()
     }
 
     @Provides
@@ -88,7 +117,6 @@ object AppModule {
     fun provideLanguagesManager(application: Application): ProgLangManager{
         return ProgLangManager(application)
     }
-
 
     @Provides
     @Singleton

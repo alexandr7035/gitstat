@@ -13,7 +13,6 @@ import androidx.navigation.fragment.NavHostFragment
 import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.core.SyncStatus
 import com.alexandr7035.gitstat.databinding.FragmentProfileBinding
-import com.alexandr7035.gitstat.view.MainViewModel
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,7 +23,7 @@ class ProfileFragment : Fragment() {
     private var binding: FragmentProfileBinding? = null
     private lateinit var navController: NavController
 
-    private val viewModel by viewModels<MainViewModel>()
+    private val viewModel by viewModels<ProfileViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,7 +47,6 @@ class ProfileFragment : Fragment() {
 
     }
 
-    @SuppressLint("ApplySharedPref")
     override fun onResume() {
         super.onResume()
 
@@ -87,7 +85,7 @@ class ProfileFragment : Fragment() {
 
 
         // Update synchronization status view
-        viewModel.getSyncStatusLData().observe(viewLifecycleOwner, {
+        viewModel.getSyncStatusLiveData().observe(viewLifecycleOwner, {
             when (it!!) {
                 SyncStatus.PENDING -> {
                     binding!!.syncStatusView.setBackgroundResource(R.drawable.background_sync_button_pending)
@@ -108,11 +106,11 @@ class ProfileFragment : Fragment() {
         }
 
         binding!!.logOutBtn.setOnClickListener {
-            viewModel.doLogOut()
+            //viewModel.doLogOut()
             navController.navigate(R.id.loginFragment)
         }
 
-        viewModel.updateUserData()
+        viewModel.syncUserDta()
     }
 
 

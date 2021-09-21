@@ -17,6 +17,9 @@ interface CacheDao {
     @Query("select * from user")
     fun getUserCache(): UserEntity
 
+    @Query("select * from user")
+    fun getUserCacheLiveData(): LiveData<UserEntity>
+
     @Query("DELETE FROM user")
     suspend fun clearUserCache()
 
