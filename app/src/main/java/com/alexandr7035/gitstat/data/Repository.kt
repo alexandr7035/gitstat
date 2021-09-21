@@ -116,31 +116,6 @@ class Repository @Inject constructor(
         return syncStateLiveData
     }
 
-
-    fun doLoginRequest(loginLiveData: MutableLiveData<Int>, token: String) {
-
-        ////Log.d(LOG_TAG, "repo DO LOGIN REQ")
-
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val res = api.loginRequest(token)
-
-                withContext(Dispatchers.Main) {
-                    ////Log.d(LOG_TAG, "code ${res.code()}")
-                    loginLiveData.value = res.code()
-                }
-            }
-            catch (e: Exception) {
-                withContext(Dispatchers.Main) {
-                    ////Log.d(LOG_TAG, "code ")
-                    loginLiveData.value = 0
-                }
-            }
-        }
-
-    }
-
-
     fun clearAllCache() {
         CoroutineScope(Dispatchers.IO).launch {
             dao.clearRepositoriesCache()
@@ -148,19 +123,9 @@ class Repository @Inject constructor(
         }
     }
 
-    fun saveToken(token: String) {
-        appPreferences.token = token
-    }
 
     fun doLogout() {
         appPreferences.token = null
-    }
-
-    fun checkIfLoggedIn(): Boolean {
-        return when (appPreferences.token) {
-            null -> false
-            else -> true
-        }
     }
 
     fun getLanguagesForReposList(repos: List<RepositoryEntity>): List<Language> {

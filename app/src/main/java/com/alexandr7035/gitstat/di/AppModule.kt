@@ -3,6 +3,7 @@ package com.alexandr7035.gitstat.di
 import android.app.Application
 import com.alexandr7035.gitstat.core.AppPreferences
 import com.alexandr7035.gitstat.core.ProgLangManager
+import com.alexandr7035.gitstat.data.LoginRepository
 import com.alexandr7035.gitstat.data.Repository
 import com.alexandr7035.gitstat.data.remote.GitHubApi
 import com.alexandr7035.gitstat.data.remote.NetworkModule
@@ -68,6 +69,12 @@ object AppModule {
         progLangManager: ProgLangManager,
         gson: Gson): Repository {
         return Repository(appPreferences, application, networkModule, progLangManager, gson)
+    }
+
+    @Provides
+    @Singleton
+    fun provideLoginRepository(appPreferences: AppPreferences, networkModule: NetworkModule): LoginRepository {
+        return LoginRepository(appPreferences, networkModule)
     }
 
     @Provides

@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alexandr7035.gitstat.core.BaseViewModel
 import com.alexandr7035.gitstat.core.SyncStatus
+import com.alexandr7035.gitstat.data.LoginRepository
 import com.alexandr7035.gitstat.data.Repository
 import com.alexandr7035.gitstat.data.local.model.RepositoryEntity
 import com.alexandr7035.gitstat.data.local.model.UserEntity
@@ -15,7 +16,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val repository: Repository) : ViewModel(), BaseViewModel {
+class MainViewModel @Inject constructor(private val repository: Repository, private val loginRepository: LoginRepository) : ViewModel(), BaseViewModel {
 
     private val userLiveData = MutableLiveData<UserEntity>()
     private val repositoriesLiveData = MutableLiveData<List<RepositoryEntity>>()
@@ -48,16 +49,12 @@ class MainViewModel @Inject constructor(private val repository: Repository) : Vi
         return repository.getSyncStatusLiveData()
     }
 
-    fun doLoginRequest(token: String) {
-        repository.doLoginRequest(loginResponseCodeLiveData, token)
-    }
-
     fun getLoginResponseCodeLiveData(): MutableLiveData<Int> {
         return loginResponseCodeLiveData
     }
 
     fun checkIfLoggedIn(): Boolean {
-        return repository.checkIfLoggedIn()
+        return loginRepository.checkIfLoggedIn()
     }
 
     override fun doLogOut() {
