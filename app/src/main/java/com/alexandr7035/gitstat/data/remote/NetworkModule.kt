@@ -16,6 +16,7 @@ import javax.inject.Inject
 class NetworkModule @Inject constructor(private val appPrefs: AppPreferences, private val gitHubApi: GitHubApi) {
 
     private val LOG_TAG = "DEBUG_TAG"
+    private val REPOS_PER_PAGE = 1000
 
     suspend fun getUserData(): Response<UserModel> {
         Log.d("DEBUG_TAG", appPrefs.hashCode().toString())
@@ -24,7 +25,7 @@ class NetworkModule @Inject constructor(private val appPrefs: AppPreferences, pr
     }
 
     suspend fun getRepositoriesData(): Response<List<RepositoryModel>> {
-        return gitHubApi.getRepositories("token ${appPrefs.token}")
+        return gitHubApi.getRepositories(auth = "token ${appPrefs.token}", per_page = REPOS_PER_PAGE)
     }
 
 
