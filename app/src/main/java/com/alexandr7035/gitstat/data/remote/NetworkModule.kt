@@ -19,8 +19,6 @@ class NetworkModule @Inject constructor(private val appPrefs: AppPreferences, pr
     private val REPOS_PER_PAGE = 1000
 
     suspend fun getUserData(): Response<UserModel> {
-        Log.d("DEBUG_TAG", appPrefs.hashCode().toString())
-
         return gitHubApi.getUser("token ${appPrefs.token}")
     }
 
