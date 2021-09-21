@@ -3,7 +3,9 @@ package com.alexandr7035.gitstat.di
 import android.app.Application
 import com.alexandr7035.gitstat.core.AppPreferences
 import com.alexandr7035.gitstat.core.ProgLangManager
+import com.alexandr7035.gitstat.data.Repository
 import com.alexandr7035.gitstat.data.remote.GitHubApi
+import com.alexandr7035.gitstat.data.remote.NetworkModule
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -13,7 +15,6 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
-import javax.inject.Inject
 import javax.inject.Singleton
 
 @Module
@@ -50,6 +51,23 @@ object AppModule {
     @Singleton
     fun provideApi(retrofit: Retrofit): GitHubApi {
         return retrofit.create(GitHubApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideNetworkModule(appPreferences: AppPreferences, gitHubApi: GitHubApi): NetworkModule {
+        return NetworkModule(appPreferences, gitHubApi)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRepository(
+        application: Application,
+        appPreferences: AppPreferences,
+        networkModule: NetworkModule,
+        progLangManager: ProgLangManager,
+        gson: Gson): Repository {
+        return Repository(appPreferences, application, networkModule, progLangManager, gson)
     }
 
     @Provides

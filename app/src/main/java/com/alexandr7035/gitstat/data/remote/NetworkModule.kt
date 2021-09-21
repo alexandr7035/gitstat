@@ -1,15 +1,9 @@
 package com.alexandr7035.gitstat.data.remote
 
-import android.app.Application
-import android.util.Log
 import com.alexandr7035.gitstat.core.AppPreferences
 import com.alexandr7035.gitstat.data.remote.model.RepositoryModel
 import com.alexandr7035.gitstat.data.remote.model.UserModel
-import okhttp3.OkHttpClient
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 
