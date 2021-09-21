@@ -57,7 +57,6 @@ class RepositoriesFiltersDialog(): BottomSheetDialogFragment() {
             adapter.setItems(viewModel.getLanguagesForReposList(repos))
         })
 
-
         binding!!.applyButton.setOnClickListener {
 
             val newFilters = ReposFilters()
@@ -115,6 +114,11 @@ class RepositoriesFiltersDialog(): BottomSheetDialogFragment() {
 
             // Save filters to persistent storage
             viewModel.saveRepositoriesFilters(newFilters)
+
+            // Reload the lists from cache
+            // FIXME separate for tabs
+            viewModel.updateArchivedRepositoriesLiveData()
+            viewModel.updateActiveRepositoriesLiveData()
 
             dismiss()
         }

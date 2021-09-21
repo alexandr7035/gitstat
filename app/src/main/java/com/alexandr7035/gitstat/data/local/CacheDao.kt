@@ -24,17 +24,15 @@ interface CacheDao {
     suspend fun insertRepositoriesCache(repos: List<RepositoryEntity>)
 
     @Query("select * from repositories")
-    fun getRepositoriesCache(): List<RepositoryEntity>
+    suspend fun getRepositoriesCache(): List<RepositoryEntity>
+
+    @Query("select * from repositories where not archived")
+    suspend fun getActiveRepositoriesCache(): List<RepositoryEntity>
+
+    @Query("select * from repositories where archived")
+    suspend fun getArchivedRepositoriesCache(): List<RepositoryEntity>
 
     @Query("DELETE FROM repositories")
     suspend fun clearRepositoriesCache()
 
-    @Query("select * from repositories where not archived")
-    fun getActiveRepositoriesLiveData(): LiveData<List<RepositoryEntity>>
-
-    @Query("select * from repositories where archived")
-    fun getArchivedRepositoriesLiveData(): LiveData<List<RepositoryEntity>>
-
-    @Query("select * from repositories")
-    fun getAllRepositoriesLiveData(): LiveData<List<RepositoryEntity>>
 }

@@ -1,6 +1,7 @@
 package com.alexandr7035.gitstat.data
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.alexandr7035.gitstat.core.AppPreferences
@@ -88,6 +89,8 @@ class Repository @Inject constructor(
 
                 val reposList: List<RepositoryModel> = res.body()!!
 
+                Log.d("DEBUG_TAG", "repos count ${reposList.size}")
+
                 val cachedReposList = reposList.map { repositoryModel ->
                     repoMapper.transform(repositoryModel)
                 }
@@ -145,18 +148,6 @@ class Repository @Inject constructor(
         }
     }
 
-    fun getAllRepositoriesLiveData(): LiveData<List<RepositoryEntity>> {
-        return dao.getAllRepositoriesLiveData()
-    }
-
-   fun getActiveRepositoriesLiveData(): LiveData<List<RepositoryEntity>> {
-        return dao.getActiveRepositoriesLiveData()
-    }
-
-    fun getArchivedRepositoriesLiveData(): LiveData<List<RepositoryEntity>> {
-        return dao.getArchivedRepositoriesLiveData()
-    }
-
     fun saveToken(token: String) {
         appPreferences.token = token
     }
@@ -193,6 +184,20 @@ class Repository @Inject constructor(
 
     fun saveRepositoriesFilters(filters: ReposFilters) {
         appPreferences.repositoriesFilters = gson.toJson(filters)
+    }
+
+    // FIXME todo update repository
+    suspend fun fetchAllRepositoriesFromDb(): List<RepositoryEntity> {
+        return dao.getRepositoriesCache()
+    }
+
+
+    suspend fun fetchActiveRepositoriesFromDb(): List<RepositoryEntity> {
+        return dao.getActiveRepositoriesCache()
+    }
+
+    suspend fun fetchArchivedRepositoriesFromDb(): List<RepositoryEntity> {
+        return dao.getArchivedRepositoriesCache()
     }
 
 }

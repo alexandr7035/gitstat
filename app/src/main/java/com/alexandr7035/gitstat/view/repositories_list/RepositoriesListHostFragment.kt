@@ -19,7 +19,7 @@ class RepositoriesListHostFragment : Fragment() {
 
     private var binding: FragmentHostRepositoriesListBinding? = null
 
-    val tabTitles = listOf(
+    private val tabTitles = listOf(
         "Active",
         "Archived"
     )
@@ -57,7 +57,6 @@ class RepositoriesListHostFragment : Fragment() {
             true
         }
 
-
         // Update counters in the tabs
         viewModel.getActiveRepositoriesLiveData().observe(viewLifecycleOwner, {
             (binding!!.tabLayout.getTabAt(0) as TabLayout.Tab).text = "Active (${it.size})"
@@ -67,6 +66,15 @@ class RepositoriesListHostFragment : Fragment() {
             (binding!!.tabLayout.getTabAt(1) as TabLayout.Tab).text = "Archived (${it.size})"
         })
 
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+
+        viewModel.updateActiveRepositoriesLiveData()
+        viewModel.updateArchivedRepositoriesLiveData()
+        viewModel.updateAllRepositoriesLiveData()
     }
 
 

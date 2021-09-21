@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.core.App
 import com.alexandr7035.gitstat.databinding.FragmentArchivedRepositoriesBinding
+import com.alexandr7035.gitstat.view.repositories_list.filters.RepositoriesListFiltersHelper
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -17,6 +18,7 @@ class ArchivedRepositoriesFragment : Fragment() {
 
     private val viewModel by navGraphViewModels<RepositoriesListViewModel>(R.id.repositoriesListGraph) { defaultViewModelProviderFactory }
     private var binding: FragmentArchivedRepositoriesBinding? = null
+    private var adapter: RepositoriesAdapter? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -31,17 +33,21 @@ class ArchivedRepositoriesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Setup adapter
-        val adapter = RepositoriesAdapter((requireActivity().application as App).progLangManager)
+        adapter = RepositoriesAdapter((requireActivity().application as App).progLangManager)
         binding!!.root.adapter = adapter
         binding!!.root.layoutManager = LinearLayoutManager(context)
-
-        viewModel.getArchivedRepositoriesLiveData().observe(viewLifecycleOwner, { repos ->
-            adapter.setItems(repos)
-        })
     }
 
     override fun onResume() {
         super.onResume()
+
+        viewModel.getArchivedRepositoriesLiveData().observe(viewLifecycleOwner, { repos ->
+            val filteredList = RepositoriesListFiltersHelper.getFilteredRepositoriesList(
+                repos,
+                viewModel.getRepositoriesFilters()
+            )
+            adapter!!.setItems(filteredList)
+        })
     }
 
     override fun onDestroyView() {
