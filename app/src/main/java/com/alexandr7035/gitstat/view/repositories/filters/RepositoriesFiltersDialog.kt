@@ -117,6 +117,7 @@ class RepositoriesFiltersDialog(): BottomSheetDialogFragment() {
 
             // Reload the lists from cache
             // FIXME separate for tabs
+            viewModel.updateAllRepositoriesLiveData()
             viewModel.updateArchivedRepositoriesLiveData()
             viewModel.updateActiveRepositoriesLiveData()
 
