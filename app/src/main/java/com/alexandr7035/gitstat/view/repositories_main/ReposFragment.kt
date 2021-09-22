@@ -14,7 +14,7 @@ import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.core.App
 import com.alexandr7035.gitstat.core.SyncStatus
 import com.alexandr7035.gitstat.databinding.FragmentReposBinding
-import com.alexandr7035.gitstat.view.repositories_list.RepositoriesListViewModel
+import com.alexandr7035.gitstat.view.repositories_list.RepositoriesViewModel
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
@@ -29,7 +29,7 @@ class ReposFragment : Fragment() {
     private val LOG_TAG = "DEBUG_TAG"
     private var binding: FragmentReposBinding? = null
     private lateinit var navController: NavController
-    private val viewModel by viewModels<RepositoriesListViewModel>()
+    private val viewModel by viewModels<RepositoriesViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

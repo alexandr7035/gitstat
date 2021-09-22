@@ -9,16 +9,14 @@ import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.core.App
-import com.alexandr7035.gitstat.core.Language
 import com.alexandr7035.gitstat.databinding.FragmentActiveRepositoriesBinding
-import com.alexandr7035.gitstat.view.repositories_list.filters.ReposFilters
 import com.alexandr7035.gitstat.view.repositories_list.filters.RepositoriesListFiltersHelper
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ActiveRepositoriesFragment : Fragment() {
 
-    private val viewModel by navGraphViewModels<RepositoriesListViewModel>(R.id.repositoriesListGraph) { defaultViewModelProviderFactory }
+    private val viewModel by navGraphViewModels<RepositoriesViewModel>(R.id.repositoriesListGraph) { defaultViewModelProviderFactory }
     private var binding: FragmentActiveRepositoriesBinding? = null
     private var adapter: RepositoriesAdapter? = null
 

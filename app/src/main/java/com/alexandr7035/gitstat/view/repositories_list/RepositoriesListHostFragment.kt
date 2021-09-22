@@ -24,7 +24,7 @@ class RepositoriesListHostFragment : Fragment() {
         "Archived"
     )
 
-    private val viewModel by navGraphViewModels<RepositoriesListViewModel>(R.id.repositoriesListGraph) { defaultViewModelProviderFactory }
+    private val viewModel by navGraphViewModels<RepositoriesViewModel>(R.id.repositoriesListGraph) { defaultViewModelProviderFactory }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentHostRepositoriesListBinding.inflate(inflater, container, false)

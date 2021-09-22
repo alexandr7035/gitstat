@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class RepositoriesListViewModel @Inject constructor(private val repository: ReposRepository): ViewModel() {
+class RepositoriesViewModel @Inject constructor(private val repository: ReposRepository): ViewModel() {
 
     private val allRepositoriesLiveData = MutableLiveData<List<RepositoryEntity>>()
     private val activeReposLiveData = MutableLiveData<List<RepositoryEntity>>()

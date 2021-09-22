@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.navigation.navGraphViewModels
 import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.databinding.FiltersDialogBinding
-import com.alexandr7035.gitstat.view.repositories_list.RepositoriesListViewModel
+import com.alexandr7035.gitstat.view.repositories_list.RepositoriesViewModel
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -19,7 +19,7 @@ class RepositoriesFiltersDialog(): BottomSheetDialogFragment() {
     private var binding: FiltersDialogBinding? = null
     private var checkedLanguages = HashSet<String>()
 
-    private val viewModel by navGraphViewModels<RepositoriesListViewModel>(R.id.repositoriesListGraph) { defaultViewModelProviderFactory }
+    private val viewModel by navGraphViewModels<RepositoriesViewModel>(R.id.repositoriesListGraph) { defaultViewModelProviderFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
