@@ -12,6 +12,7 @@ import com.alexandr7035.gitstat.data.local.CacheDB_Impl
 import com.alexandr7035.gitstat.data.local.CacheDao
 import com.alexandr7035.gitstat.data.remote.GitHubApi
 import com.alexandr7035.gitstat.data.remote.NetworkModule
+import com.alexandr7035.gitstat.data.remote.mappers.RepositoryRemoteToCacheMapper
 import com.alexandr7035.gitstat.data.remote.mappers.UserRemoteToCacheMapper
 import com.google.gson.Gson
 import dagger.Module
@@ -92,6 +93,11 @@ object AppModule {
     @Provides
     fun provideUserMapper(): UserRemoteToCacheMapper {
         return UserRemoteToCacheMapper()
+    }
+
+    @Provides
+    fun provideReposMapper(): RepositoryRemoteToCacheMapper {
+        return RepositoryRemoteToCacheMapper()
     }
 
     @Provides

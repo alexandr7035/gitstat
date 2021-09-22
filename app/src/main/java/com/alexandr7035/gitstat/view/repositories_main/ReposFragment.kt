@@ -14,7 +14,7 @@ import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.core.App
 import com.alexandr7035.gitstat.core.SyncStatus
 import com.alexandr7035.gitstat.databinding.FragmentReposBinding
-import com.alexandr7035.gitstat.view.MainViewModel
+import com.alexandr7035.gitstat.view.repositories_list.RepositoriesListViewModel
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
@@ -29,7 +29,7 @@ class ReposFragment : Fragment() {
     private val LOG_TAG = "DEBUG_TAG"
     private var binding: FragmentReposBinding? = null
     private lateinit var navController: NavController
-    private val viewModel by viewModels<MainViewModel>()
+    private val viewModel by viewModels<RepositoriesListViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,7 +57,7 @@ class ReposFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        viewModel.getRepositoriesData().observe(viewLifecycleOwner, {
+        viewModel.getAllRepositoriesListLiveData().observe(viewLifecycleOwner, {
 
             if (it != null && it.isNotEmpty()) {
                 
@@ -126,7 +126,7 @@ class ReposFragment : Fragment() {
 
 
         // Update synchronization status view
-        viewModel.getSyncStatusLData().observe(viewLifecycleOwner, {
+        viewModel.getSyncStatusLiveData().observe(viewLifecycleOwner, {
 
             when (it!!) {
                 SyncStatus.PENDING -> {
@@ -148,7 +148,9 @@ class ReposFragment : Fragment() {
         }
 
 
-        viewModel.updateRepositoriesLiveData()
+        viewModel.syncRepositoriesData()
+        // TODO find better solution
+        viewModel.updateAllRepositoriesLiveData()
     }
 
 
