@@ -44,11 +44,6 @@ class ProfileFragment : Fragment() {
         val hf: NavHostFragment = activity?.supportFragmentManager?.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = hf.navController
 
-    }
-
-    override fun onResume() {
-        super.onResume()
-
         // Update profile data
         viewModel.getUserLiveData().observe(viewLifecycleOwner, {
 
@@ -110,6 +105,7 @@ class ProfileFragment : Fragment() {
         }
 
         viewModel.syncUserDta()
+
     }
 
 

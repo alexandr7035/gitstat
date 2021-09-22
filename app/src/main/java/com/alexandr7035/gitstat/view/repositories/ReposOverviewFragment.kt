@@ -50,16 +50,10 @@ class ReposOverviewFragment : Fragment() {
         // Setup chart configuration
         setupLanguagesChart()
 
-    }
-
-
-    override fun onResume() {
-        super.onResume()
-
         viewModel.getAllRepositoriesListLiveData().observe(viewLifecycleOwner, {
 
             if (it != null && it.isNotEmpty()) {
-                
+
                 showRepositoriesViews()
 
                 val reposList = it
@@ -150,6 +144,7 @@ class ReposOverviewFragment : Fragment() {
         viewModel.syncRepositoriesData()
         // TODO find better solution
         viewModel.updateAllRepositoriesLiveData()
+
     }
 
 
