@@ -13,7 +13,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.core.App
 import com.alexandr7035.gitstat.core.SyncStatus
-import com.alexandr7035.gitstat.databinding.FragmentReposBinding
+import com.alexandr7035.gitstat.databinding.FragmentReposOverviewBinding
 import com.alexandr7035.gitstat.view.repositories_list.RepositoriesViewModel
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
@@ -24,10 +24,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
 @AndroidEntryPoint
-class ReposFragment : Fragment() {
+class ReposOverviewFragment : Fragment() {
 
     private val LOG_TAG = "DEBUG_TAG"
-    private var binding: FragmentReposBinding? = null
+    private var binding: FragmentReposOverviewBinding? = null
     private lateinit var navController: NavController
     private val viewModel by viewModels<RepositoriesViewModel>()
 
@@ -35,7 +35,7 @@ class ReposFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
-        binding = FragmentReposBinding.inflate(inflater, container, false)
+        binding = FragmentReposOverviewBinding.inflate(inflater, container, false)
 
         return binding!!.root
     }

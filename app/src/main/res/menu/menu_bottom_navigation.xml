@@ -5,7 +5,7 @@
         android:title="@string/profile"
         android:icon="@drawable/ic_profile_filled" />
 
-    <item android:id="@+id/reposFragment"
+    <item android:id="@+id/reposOverviewFragment"
         android:title="@string/repos"
         android:icon="@drawable/ic_repo_filled" />
 

@@ -1,6 +1,5 @@
 package com.alexandr7035.gitstat.view.profile
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.format.DateFormat
 import android.view.LayoutInflater
@@ -102,7 +101,7 @@ class ProfileFragment : Fragment() {
         })
 
         binding!!.reposStatDetailedBtn.setOnClickListener {
-            navController.navigate(R.id.reposFragment)
+            navController.navigate(R.id.reposOverviewFragment)
         }
 
         binding!!.logOutBtn.setOnClickListener {

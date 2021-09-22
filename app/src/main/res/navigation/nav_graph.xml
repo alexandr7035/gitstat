@@ -21,10 +21,10 @@
         tools:layout="@layout/fragment_profile" />
 
     <fragment
-        android:id="@+id/reposFragment"
-        android:name="com.alexandr7035.gitstat.view.repositories_main.ReposFragment"
+        android:id="@+id/reposOverviewFragment"
+        android:name="com.alexandr7035.gitstat.view.repositories_main.ReposOverviewFragment"
         android:label="fragment_repos"
-        tools:layout="@layout/fragment_repos" >
+        tools:layout="@layout/fragment_repos_overview" >
         <action
             android:id="@+id/action_reposFragment_to_repositoriesListHostFragment"
             app:destination="@id/repositoriesListGraph" />
