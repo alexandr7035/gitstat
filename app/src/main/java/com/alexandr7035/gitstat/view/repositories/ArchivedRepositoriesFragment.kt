@@ -1,4 +1,4 @@
-package com.alexandr7035.gitstat.view.repositories_list
+package com.alexandr7035.gitstat.view.repositories
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,22 +9,25 @@ import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.core.App
-import com.alexandr7035.gitstat.databinding.FragmentActiveRepositoriesBinding
-import com.alexandr7035.gitstat.view.repositories_list.filters.RepositoriesListFiltersHelper
+import com.alexandr7035.gitstat.databinding.FragmentArchivedRepositoriesBinding
+import com.alexandr7035.gitstat.view.repositories.filters.RepositoriesListFiltersHelper
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ActiveRepositoriesFragment : Fragment() {
+class ArchivedRepositoriesFragment : Fragment() {
 
     private val viewModel by navGraphViewModels<RepositoriesViewModel>(R.id.repositoriesListGraph) { defaultViewModelProviderFactory }
-    private var binding: FragmentActiveRepositoriesBinding? = null
+    private var binding: FragmentArchivedRepositoriesBinding? = null
     private var adapter: RepositoriesAdapter? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        binding = FragmentActiveRepositoriesBinding.inflate(inflater, container, false)
-        return binding!!.root
+
+        binding = FragmentArchivedRepositoriesBinding.inflate(inflater, container, false)
+
+        return binding?.root
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -33,13 +36,12 @@ class ActiveRepositoriesFragment : Fragment() {
         adapter = RepositoriesAdapter((requireActivity().application as App).progLangManager)
         binding!!.root.adapter = adapter
         binding!!.root.layoutManager = LinearLayoutManager(context)
-
     }
 
     override fun onResume() {
         super.onResume()
 
-        viewModel.getActiveRepositoriesLiveData().observe(viewLifecycleOwner, { repos ->
+        viewModel.getArchivedRepositoriesLiveData().observe(viewLifecycleOwner, { repos ->
             val filteredList = RepositoriesListFiltersHelper.getFilteredRepositoriesList(
                 repos,
                 viewModel.getRepositoriesFilters()
@@ -53,4 +55,5 @@ class ActiveRepositoriesFragment : Fragment() {
 
         binding = null
     }
+
 }

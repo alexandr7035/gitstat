@@ -1,4 +1,4 @@
-package com.alexandr7035.gitstat.view.repositories_list
+package com.alexandr7035.gitstat.view.repositories
 
 import android.os.Bundle
 import android.util.Log

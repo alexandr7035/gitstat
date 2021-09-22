@@ -1,4 +1,4 @@
-package com.alexandr7035.gitstat.view.repositories_list
+package com.alexandr7035.gitstat.view.repositories
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter

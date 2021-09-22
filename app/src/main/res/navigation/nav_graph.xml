@@ -22,7 +22,7 @@
 
     <fragment
         android:id="@+id/reposOverviewFragment"
-        android:name="com.alexandr7035.gitstat.view.repositories_main.ReposOverviewFragment"
+        android:name="com.alexandr7035.gitstat.view.repositories.ReposOverviewFragment"
         android:label="fragment_repos"
         tools:layout="@layout/fragment_repos_overview" >
         <action
@@ -38,17 +38,17 @@
         app:startDestination="@id/repositoriesListHostFragment">
         <fragment
             android:id="@+id/archivedRepositoriesFragment"
-            android:name="com.alexandr7035.gitstat.view.repositories_list.ArchivedRepositoriesFragment"
+            android:name="com.alexandr7035.gitstat.view.repositories.ArchivedRepositoriesFragment"
             android:label="fragment_archived_repositories"
             tools:layout="@layout/fragment_archived_repositories" />
         <fragment
             android:id="@+id/activeRepositoriesFragment"
-            android:name="com.alexandr7035.gitstat.view.repositories_list.ActiveRepositoriesFragment"
+            android:name="com.alexandr7035.gitstat.view.repositories.ActiveRepositoriesFragment"
             android:label="fragment_repositories_list"
             tools:layout="@layout/fragment_active_repositories" />
         <fragment
             android:id="@+id/repositoriesListHostFragment"
-            android:name="com.alexandr7035.gitstat.view.repositories_list.RepositoriesListHostFragment"
+            android:name="com.alexandr7035.gitstat.view.repositories.RepositoriesListHostFragment"
             android:label="RepositoriesListHostFragment" >
             <action
                 android:id="@+id/action_repositoriesListHostFragment_to_activeRepositoriesFragment"
@@ -62,7 +62,7 @@
         </fragment>
         <dialog
             android:id="@+id/repositoriesFiltersDialog"
-            android:name="com.alexandr7035.gitstat.view.repositories_list.filters.RepositoriesFiltersDialog"
+            android:name="com.alexandr7035.gitstat.view.repositories.filters.RepositoriesFiltersDialog"
             android:label="RepositoriesFiltersDialog" />
     </navigation>
 </navigation>

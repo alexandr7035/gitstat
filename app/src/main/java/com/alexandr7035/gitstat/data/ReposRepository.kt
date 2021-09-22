@@ -1,6 +1,5 @@
 package com.alexandr7035.gitstat.data
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.alexandr7035.gitstat.core.AppPreferences
 import com.alexandr7035.gitstat.core.Language
@@ -11,7 +10,7 @@ import com.alexandr7035.gitstat.data.local.model.RepositoryEntity
 import com.alexandr7035.gitstat.data.remote.NetworkModule
 import com.alexandr7035.gitstat.data.remote.mappers.RepositoryRemoteToCacheMapper
 import com.alexandr7035.gitstat.data.remote.model.RepositoryModel
-import com.alexandr7035.gitstat.view.repositories_list.filters.ReposFilters
+import com.alexandr7035.gitstat.view.repositories.filters.ReposFilters
 import com.google.gson.Gson
 import javax.inject.Inject
 

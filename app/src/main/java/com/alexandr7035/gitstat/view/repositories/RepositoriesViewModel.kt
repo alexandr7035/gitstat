@@ -1,4 +1,4 @@
-package com.alexandr7035.gitstat.view.repositories_list
+package com.alexandr7035.gitstat.view.repositories
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,8 +8,8 @@ import com.alexandr7035.gitstat.core.Language
 import com.alexandr7035.gitstat.core.SyncStatus
 import com.alexandr7035.gitstat.data.ReposRepository
 import com.alexandr7035.gitstat.data.local.model.RepositoryEntity
-import com.alexandr7035.gitstat.view.repositories_list.filters.ReposFilters
-import com.alexandr7035.gitstat.view.repositories_list.filters.RepositoriesListFiltersHelper
+import com.alexandr7035.gitstat.view.repositories.filters.ReposFilters
+import com.alexandr7035.gitstat.view.repositories.filters.RepositoriesListFiltersHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

@@ -1,4 +1,4 @@
-package com.alexandr7035.gitstat.view.repositories_list.filters
+package com.alexandr7035.gitstat.view.repositories.filters
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.navigation.navGraphViewModels
 import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.databinding.FiltersDialogBinding
-import com.alexandr7035.gitstat.view.repositories_list.RepositoriesViewModel
+import com.alexandr7035.gitstat.view.repositories.RepositoriesViewModel
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog

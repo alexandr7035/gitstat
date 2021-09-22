@@ -1,4 +1,4 @@
-package com.alexandr7035.gitstat.view.repositories_main
+package com.alexandr7035.gitstat.view.repositories
 
 import android.graphics.Color
 import android.graphics.Typeface
@@ -14,7 +14,6 @@ import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.core.App
 import com.alexandr7035.gitstat.core.SyncStatus
 import com.alexandr7035.gitstat.databinding.FragmentReposOverviewBinding
-import com.alexandr7035.gitstat.view.repositories_list.RepositoriesViewModel
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
