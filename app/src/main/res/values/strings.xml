@@ -38,7 +38,7 @@
     <string name="logout_underlined"><u>Log out</u></string>
 
     <string name="error_empty_field">This field cannot be empty</string>
-    <string name="error_wrong_data_field">Invalid authorization data. Check login and token</string>
+    <string name="error_wrong_data_field">Invalid authorization data. Check the token and try again</string>
     <string name="error_cant_get_data_remote">Failed to get data from GitHub. Check your internet connection and try again</string>
     <string name="repositories_by_language">Repositories by language</string>
     <!-- TODO: Remove or change this placeholder text -->
