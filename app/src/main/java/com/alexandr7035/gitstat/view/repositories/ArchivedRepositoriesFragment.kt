@@ -36,6 +36,15 @@ class ArchivedRepositoriesFragment : Fragment() {
         adapter = RepositoriesAdapter((requireActivity().application as App).progLangManager)
         binding!!.root.adapter = adapter
         binding!!.root.layoutManager = LinearLayoutManager(context)
+
+        viewModel.getTabRefreshedLiveData().observe(viewLifecycleOwner, {
+            // If current fragment
+            // FIXME find better solution
+            if (it == 1) {
+                //binding!!.root.smoothScrollToPosition(0)
+                binding!!.root.layoutManager!!.scrollToPosition(0)
+            }
+        })
     }
 
     override fun onResume() {

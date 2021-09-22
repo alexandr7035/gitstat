@@ -45,6 +45,22 @@ class RepositoriesListHostFragment : Fragment() {
             tab.text = tabTitles[position]
         }.attach()
 
+        binding!!.tabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {
+
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab) {
+                Log.d("DEBUG_TAG", "reselect tab")
+                viewModel.refreshTabRecycler(tab.position)
+            }
+
+        })
+
         // Inflate toolbar menu
         binding!!.toolbar.inflateMenu(R.menu.menu_toolbar_repos_list)
         binding!!.toolbar.setOnMenuItemClickListener { item ->

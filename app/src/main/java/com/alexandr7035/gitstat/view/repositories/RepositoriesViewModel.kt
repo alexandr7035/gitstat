@@ -10,6 +10,7 @@ import com.alexandr7035.gitstat.data.ReposRepository
 import com.alexandr7035.gitstat.data.local.model.RepositoryEntity
 import com.alexandr7035.gitstat.view.repositories.filters.ReposFilters
 import com.alexandr7035.gitstat.view.repositories.filters.RepositoriesListFiltersHelper
+import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,7 +22,7 @@ class RepositoriesViewModel @Inject constructor(private val repository: ReposRep
     private val allRepositoriesLiveData = MutableLiveData<List<RepositoryEntity>>()
     private val activeReposLiveData = MutableLiveData<List<RepositoryEntity>>()
     private val archivedReposLiveData = MutableLiveData<List<RepositoryEntity>>()
-
+    private val tabRefreshedLiveData = MutableLiveData<Int>()
 
     // Sync from remote source to the DB
     fun syncRepositoriesData() {
@@ -89,6 +90,17 @@ class RepositoriesViewModel @Inject constructor(private val repository: ReposRep
     // Languages
     fun getLanguagesForReposList(repos: List<RepositoryEntity>): List<Language> {
         return repository.getLanguagesForReposList(repos)
+    }
+
+
+    // For scrolling recyclers up when tab is refreshed
+    // Takes tab position as argument
+    fun getTabRefreshedLiveData(): LiveData<Int> {
+        return tabRefreshedLiveData
+    }
+
+    fun refreshTabRecycler(position: Int) {
+        tabRefreshedLiveData.value = position
     }
 
 }
