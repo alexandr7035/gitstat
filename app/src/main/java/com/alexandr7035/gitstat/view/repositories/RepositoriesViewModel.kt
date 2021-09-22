@@ -28,6 +28,10 @@ class RepositoriesViewModel @Inject constructor(private val repository: ReposRep
     fun syncRepositoriesData() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.syncRepositoriesData()
+
+            updateAllRepositoriesLiveData()
+            updateActiveRepositoriesLiveData()
+            updateArchivedRepositoriesLiveData()
         }
     }
 

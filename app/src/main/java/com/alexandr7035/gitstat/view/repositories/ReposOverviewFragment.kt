@@ -3,6 +3,7 @@ package com.alexandr7035.gitstat.view.repositories
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -51,6 +52,8 @@ class ReposOverviewFragment : Fragment() {
         setupLanguagesChart()
 
         viewModel.getAllRepositoriesListLiveData().observe(viewLifecycleOwner, {
+
+            Log.d("DEBUG_TAG", "update livedata $it")
 
             if (it != null && it.isNotEmpty()) {
 
@@ -140,10 +143,11 @@ class ReposOverviewFragment : Fragment() {
             navController.navigate(R.id.action_reposFragment_to_repositoriesListHostFragment)
         }
 
-
-        viewModel.syncRepositoriesData()
-        // TODO find better solution
+        // FIrst gets from cache
+        // Then sync with remote
+        // FIXME find better solution (see viewmodel)
         viewModel.updateAllRepositoriesLiveData()
+        viewModel.syncRepositoriesData()
 
     }
 
