@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.alexandr7035.gitstat.core.Language
 import com.alexandr7035.gitstat.core.SyncStatus
 import com.alexandr7035.gitstat.data.ReposRepository
-import com.alexandr7035.gitstat.data.Repository
 import com.alexandr7035.gitstat.data.local.model.RepositoryEntity
 import com.alexandr7035.gitstat.view.repositories_list.filters.ReposFilters
 import com.alexandr7035.gitstat.view.repositories_list.filters.RepositoriesListFiltersHelper

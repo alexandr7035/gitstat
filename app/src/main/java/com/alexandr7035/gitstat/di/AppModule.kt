@@ -1,14 +1,12 @@
 package com.alexandr7035.gitstat.di
 
 import android.app.Application
-import androidx.room.RoomDatabase
 import com.alexandr7035.gitstat.core.AppPreferences
 import com.alexandr7035.gitstat.core.ProgLangManager
 import com.alexandr7035.gitstat.data.LoginRepository
-import com.alexandr7035.gitstat.data.Repository
+import com.alexandr7035.gitstat.data.ReposRepository
 import com.alexandr7035.gitstat.data.UserRepository
 import com.alexandr7035.gitstat.data.local.CacheDB
-import com.alexandr7035.gitstat.data.local.CacheDB_Impl
 import com.alexandr7035.gitstat.data.local.CacheDao
 import com.alexandr7035.gitstat.data.remote.GitHubApi
 import com.alexandr7035.gitstat.data.remote.NetworkModule
@@ -69,13 +67,14 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideRepository(
-        application: Application,
-        appPreferences: AppPreferences,
+    fun provideReposRepository(
         networkModule: NetworkModule,
+        dao: CacheDao,
+        repositoryMapper: RepositoryRemoteToCacheMapper,
+        appPreferences: AppPreferences,
         progLangManager: ProgLangManager,
-        gson: Gson): Repository {
-        return Repository(appPreferences, application, networkModule, progLangManager, gson)
+        gson: Gson): ReposRepository {
+        return ReposRepository(networkModule, dao, repositoryMapper, appPreferences, gson, progLangManager)
     }
 
     @Provides

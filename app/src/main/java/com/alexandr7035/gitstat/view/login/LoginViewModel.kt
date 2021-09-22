@@ -23,4 +23,8 @@ class LoginViewModel @Inject constructor(private val loginRepository: LoginRepos
     fun saveToken(token: String) {
         loginRepository.saveToken(token)
     }
+
+    fun checkIfLoggedIn(): Boolean {
+        return loginRepository.checkIfLoggedIn()
+    }
 }
