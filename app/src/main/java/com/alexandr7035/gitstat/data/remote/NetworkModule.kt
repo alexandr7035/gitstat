@@ -9,7 +9,6 @@ import javax.inject.Inject
 
 class NetworkModule @Inject constructor(private val appPrefs: AppPreferences, private val gitHubApi: GitHubApi) {
 
-    private val LOG_TAG = "DEBUG_TAG"
     private val REPOS_PER_PAGE = 1000
 
     suspend fun getUserData(): Response<UserModel> {

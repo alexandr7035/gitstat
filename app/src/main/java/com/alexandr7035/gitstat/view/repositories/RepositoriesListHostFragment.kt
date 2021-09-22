@@ -2,7 +2,6 @@ package com.alexandr7035.gitstat.view.repositories
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -60,7 +59,7 @@ class RepositoriesListHostFragment : Fragment() {
             }
 
             override fun onTabReselected(tab: TabLayout.Tab) {
-                Log.d("DEBUG_TAG", "reselect tab")
+               //Log.d("DEBUG_TAG", "reselect tab")
                 viewModel.refreshTabRecycler(tab.position)
             }
 
@@ -116,7 +115,7 @@ class RepositoriesListHostFragment : Fragment() {
 
 
     private fun showFiltersDialog() {
-        Log.d("DEBUG_TAG", "show filters")
+       //Log.d("DEBUG_TAG", "show filters")
         findNavController().navigate(R.id.action_repositoriesListHostFragment_to_repositoriesFiltersDialog)
     }
 

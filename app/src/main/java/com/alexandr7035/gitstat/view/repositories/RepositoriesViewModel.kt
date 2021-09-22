@@ -10,7 +10,6 @@ import com.alexandr7035.gitstat.data.ReposRepository
 import com.alexandr7035.gitstat.data.local.model.RepositoryEntity
 import com.alexandr7035.gitstat.view.repositories.filters.ReposFilters
 import com.alexandr7035.gitstat.view.repositories.filters.RepositoriesListFiltersHelper
-import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

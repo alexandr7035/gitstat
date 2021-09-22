@@ -3,7 +3,6 @@ package com.alexandr7035.gitstat.view.repositories
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,7 +25,6 @@ import java.util.*
 @AndroidEntryPoint
 class ReposOverviewFragment : Fragment() {
 
-    private val LOG_TAG = "DEBUG_TAG"
     private var binding: FragmentReposOverviewBinding? = null
     private lateinit var navController: NavController
     private val viewModel by viewModels<RepositoriesViewModel>()
@@ -53,7 +51,7 @@ class ReposOverviewFragment : Fragment() {
 
         viewModel.getAllRepositoriesListLiveData().observe(viewLifecycleOwner, {
 
-            Log.d("DEBUG_TAG", "update livedata $it")
+           //Log.d("DEBUG_TAG", "update livedata $it")
 
             if (it != null && it.isNotEmpty()) {
 

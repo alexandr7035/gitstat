@@ -1,12 +1,11 @@
 package com.alexandr7035.gitstat.view.contributions
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.databinding.FragmentContributionsBinding
 import com.github.mikephil.charting.components.XAxis
@@ -22,10 +21,6 @@ import kotlin.collections.ArrayList
 class ContributionsFragment : Fragment() {
 
     private var binding: FragmentContributionsBinding? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -71,7 +66,7 @@ class ContributionsFragment : Fragment() {
             val longDate = format.parse(dateStr)!!.time
 
             entries.add(Entry(longDate.toFloat(), it.count.toFloat()))
-            Log.d("DEBUG_TAG", longDate.toString())
+           //Log.d("DEBUG_TAG", longDate.toString())
         }
 
         val months = arrayOf("M", "T", "W", "T", "F", "S", "S")

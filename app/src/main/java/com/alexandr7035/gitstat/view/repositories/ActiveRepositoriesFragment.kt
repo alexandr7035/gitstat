@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.viewpager2.widget.ViewPager2
 import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.core.App
 import com.alexandr7035.gitstat.databinding.FragmentActiveRepositoriesBinding

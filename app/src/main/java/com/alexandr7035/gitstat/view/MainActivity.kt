@@ -15,7 +15,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private val LOG_TAG = "DEBUG_TAG"
     private lateinit var navController: NavController
 
     private val viewModel by viewModels<LoginViewModel>()

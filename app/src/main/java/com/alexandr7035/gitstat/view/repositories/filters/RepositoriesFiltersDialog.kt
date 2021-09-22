@@ -15,7 +15,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RepositoriesFiltersDialog(): BottomSheetDialogFragment() {
+class RepositoriesFiltersDialog : BottomSheetDialogFragment() {
     private var binding: FiltersDialogBinding? = null
     private var checkedLanguages = HashSet<String>()
 

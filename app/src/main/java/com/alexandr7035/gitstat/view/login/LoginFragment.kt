@@ -19,7 +19,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class LoginFragment: Fragment() {
 
-    private val LOG_TAG = "DEBUG_TAG"
     private lateinit var navController: NavController
     private var binding: FragmentLoginBinding? = null
 
