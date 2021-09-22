@@ -79,8 +79,8 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideLoginRepository(appPreferences: AppPreferences, networkModule: NetworkModule): LoginRepository {
-        return LoginRepository(appPreferences, networkModule)
+    fun provideLoginRepository(appPreferences: AppPreferences, networkModule: NetworkModule, dao: CacheDao): LoginRepository {
+        return LoginRepository(appPreferences, networkModule, dao)
     }
 
     @Provides

@@ -12,6 +12,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.core.SyncStatus
 import com.alexandr7035.gitstat.databinding.FragmentProfileBinding
+import com.alexandr7035.gitstat.view.login.LoginViewModel
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,6 +24,8 @@ class ProfileFragment : Fragment() {
     private lateinit var navController: NavController
 
     private val viewModel by viewModels<ProfileViewModel>()
+    // FIXME find better solution than having two viewmodels
+    private val loginViewModel by viewModels<LoginViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -100,7 +103,7 @@ class ProfileFragment : Fragment() {
         }
 
         binding!!.logOutBtn.setOnClickListener {
-            //viewModel.doLogOut()
+            loginViewModel.logOut()
             navController.navigate(R.id.loginFragment)
         }
 
