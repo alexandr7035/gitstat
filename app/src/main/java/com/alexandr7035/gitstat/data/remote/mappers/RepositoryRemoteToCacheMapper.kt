@@ -25,7 +25,8 @@ class RepositoryRemoteToCacheMapper: Mapper<RepositoryModel, RepositoryEntity> {
             isPrivate = data.private,
             fork = data.fork,
             stars = data.stargazers_count,
-            created_at = createdDate
+            created_at = createdDate,
+            archived = data.archived
         )
     }
 }

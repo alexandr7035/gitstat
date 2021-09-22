@@ -1,67 +1,27 @@
 package com.alexandr7035.gitstat.data.remote
 
+import com.alexandr7035.gitstat.core.AppPreferences
 import com.alexandr7035.gitstat.data.remote.model.RepositoryModel
 import com.alexandr7035.gitstat.data.remote.model.UserModel
-import okhttp3.OkHttpClient
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 
-class NetworkModule private constructor(private var token: String) {
+class NetworkModule @Inject constructor(private val appPrefs: AppPreferences, private val gitHubApi: GitHubApi) {
 
-    private val LOG_TAG = "DEBUG_TAG"
-
-    private var gitHubApi: GitHubApi
-
-    companion object {
-        private var instance: NetworkModule? = null
-
-        @Synchronized
-        fun getInstance(token: String): NetworkModule {
-            if (instance == null) {
-                instance = NetworkModule(token)
-            }
-
-            return instance!!
-        }
-    }
-
-    init {
-        val okHttpClient = OkHttpClient.Builder()
-            .connectTimeout(5, TimeUnit.SECONDS)
-            .readTimeout(5, TimeUnit.SECONDS)
-            .writeTimeout(5, TimeUnit.SECONDS)
-//            .addInterceptor(HttpLoggingInterceptor().apply {
-//                level = HttpLoggingInterceptor.Level.BODY
-//            })
-            .retryOnConnectionFailure(false)
-            .build()
-
-        val retrofit = Retrofit.Builder()
-                // Fixme - move to strings
-            .baseUrl("https://api.github.com/")
-            .client(okHttpClient)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-        gitHubApi = retrofit.create(GitHubApi::class.java)
-
-    }
+    private val REPOS_PER_PAGE = 1000
 
     suspend fun getUserData(): Response<UserModel> {
-        return gitHubApi.getUser("token ${this.token}")
+        return gitHubApi.getUser("token ${appPrefs.token}")
     }
 
     suspend fun getRepositoriesData(): Response<List<RepositoryModel>> {
-        return gitHubApi.getRepositories("token ${this.token}")
+        return gitHubApi.getRepositories(auth = "token ${appPrefs.token}", per_page = REPOS_PER_PAGE)
     }
 
-    // FIXME temp
+
     suspend fun loginRequest(token: String): Response<UserModel> {
-        this.token = token
-        return gitHubApi.getUser("token ${this.token}")
+        return gitHubApi.getUser("token ${token}")
     }
 
 }

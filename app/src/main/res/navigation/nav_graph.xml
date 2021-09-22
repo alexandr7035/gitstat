@@ -6,7 +6,7 @@
     app:startDestination="@id/loginFragment">
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.alexandr7035.gitstat.view.LoginFragment"
+        android:name="com.alexandr7035.gitstat.view.login.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -16,22 +16,48 @@
 
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.alexandr7035.gitstat.view.ProfileFragment"
+        android:name="com.alexandr7035.gitstat.view.profile.ProfileFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_profile" />
 
     <fragment
-        android:id="@+id/reposFragment"
-        android:name="com.alexandr7035.gitstat.view.ReposFragment"
+        android:id="@+id/reposOverviewFragment"
+        android:name="com.alexandr7035.gitstat.view.repositories.ReposOverviewFragment"
         android:label="fragment_repos"
-        tools:layout="@layout/fragment_repos" >
+        tools:layout="@layout/fragment_repos_overview" >
         <action
-            android:id="@+id/action_reposFragment_to_repositoriesListFragment"
-            app:destination="@id/repositoriesListFragment" />
+            android:id="@+id/action_reposFragment_to_repositoriesListHostFragment"
+            app:destination="@id/repositoriesListGraph" />
     </fragment>
-    <fragment
-        android:id="@+id/repositoriesListFragment"
-        android:name="com.alexandr7035.gitstat.view.RepositoriesListFragment"
-        android:label="fragment_repositories_list"
-        tools:layout="@layout/fragment_repositories_list" />
+    <navigation android:id="@+id/repositoriesListGraph"
+        app:startDestination="@id/repositoriesListHostFragment">
+        <fragment
+            android:id="@+id/archivedRepositoriesFragment"
+            android:name="com.alexandr7035.gitstat.view.repositories.ArchivedRepositoriesFragment"
+            android:label="fragment_archived_repositories"
+            tools:layout="@layout/fragment_archived_repositories" />
+        <fragment
+            android:id="@+id/activeRepositoriesFragment"
+            android:name="com.alexandr7035.gitstat.view.repositories.ActiveRepositoriesFragment"
+            android:label="fragment_repositories_list"
+            tools:layout="@layout/fragment_active_repositories" />
+        <fragment
+            android:id="@+id/repositoriesListHostFragment"
+            android:name="com.alexandr7035.gitstat.view.repositories.RepositoriesListHostFragment"
+            android:label="RepositoriesListHostFragment" >
+            <action
+                android:id="@+id/action_repositoriesListHostFragment_to_activeRepositoriesFragment"
+                app:destination="@id/activeRepositoriesFragment" />
+            <action
+                android:id="@+id/action_repositoriesListHostFragment_to_archivedRepositoriesFragment"
+                app:destination="@id/archivedRepositoriesFragment" />
+            <action
+                android:id="@+id/action_repositoriesListHostFragment_to_repositoriesFiltersDialog"
+                app:destination="@id/repositoriesFiltersDialog" />
+        </fragment>
+        <dialog
+            android:id="@+id/repositoriesFiltersDialog"
+            android:name="com.alexandr7035.gitstat.view.repositories.filters.RepositoriesFiltersDialog"
+            android:label="RepositoriesFiltersDialog" />
+    </navigation>
 </navigation>

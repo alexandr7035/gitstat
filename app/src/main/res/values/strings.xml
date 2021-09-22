@@ -1,13 +1,10 @@
 <resources>
     <string name="app_name">GitStat</string>
 
-    <string name="login">Login</string>
-    <string name="password">Password</string>
     <string name="token">Token</string>
     <string name="sign_in">Sign in</string>
 
     <string name="repos">Repositories</string>
-    <string name="other">Other</string>
 
     <string name="profile">Profile</string>
     <string name="show_more_underlined"><u>Show more</u></string>
@@ -15,10 +12,7 @@
     <string name="public_repos">Public repos</string>
     <string name="private_repos">Private repos</string>
 
-    <string name="shared_pref_login">SHARED_PREF_LOGIN</string>
     <string name="shared_pref_token">SHARED_PREF_TOKEN</string>
-    <string name="shared_pref_name">SHARED_PREF</string>
-    <string name="shared_pref_default_string_value">NONE</string>
 
     <string name="id">ID</string>
     <string name="created">Created</string>
@@ -31,18 +25,12 @@
     <string name="private_start_capital">Private</string>
     <string name="public_start_capital">Public</string>
 
-    <string name="loading">Loading…</string>
-    <string name="synced">Synced</string>
-    <string name="failed">Failed</string>
-
     <string name="logout_underlined"><u>Log out</u></string>
 
     <string name="error_empty_field">This field cannot be empty</string>
-    <string name="error_wrong_data_field">Invalid authorization data. Check login and token</string>
+    <string name="error_wrong_data_field">Invalid authorization data. Check the token and try again</string>
     <string name="error_cant_get_data_remote">Failed to get data from GitHub. Check your internet connection and try again</string>
     <string name="repositories_by_language">Repositories by language</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="more_underlined"><u>More</u></string>
     <string name="filters">Filters</string>
     <string name="clear_underlined"><u>Clear</u></string>
@@ -64,5 +52,8 @@
     <string name="exclude_forks">Exclude forks</string>
     <string name="include_languages">Include languages</string>
     <string name="apply">Apply</string>
+    <string name="contributions">Contributions</string>
+    <string name="active">Active</string>
+    <string name="archived">Archived</string>
 
 </resources>

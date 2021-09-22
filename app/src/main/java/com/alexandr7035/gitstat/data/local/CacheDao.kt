@@ -1,5 +1,6 @@
 package com.alexandr7035.gitstat.data.local
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -16,6 +17,9 @@ interface CacheDao {
     @Query("select * from user")
     fun getUserCache(): UserEntity
 
+    @Query("select * from user")
+    fun getUserCacheLiveData(): LiveData<UserEntity>
+
     @Query("DELETE FROM user")
     suspend fun clearUserCache()
 
@@ -23,8 +27,15 @@ interface CacheDao {
     suspend fun insertRepositoriesCache(repos: List<RepositoryEntity>)
 
     @Query("select * from repositories")
-    fun getRepositoriesCache(): List<RepositoryEntity>
+    suspend fun getRepositoriesCache(): List<RepositoryEntity>
+
+    @Query("select * from repositories where not archived")
+    suspend fun getActiveRepositoriesCache(): List<RepositoryEntity>
+
+    @Query("select * from repositories where archived")
+    suspend fun getArchivedRepositoriesCache(): List<RepositoryEntity>
 
     @Query("DELETE FROM repositories")
     suspend fun clearRepositoriesCache()
+
 }

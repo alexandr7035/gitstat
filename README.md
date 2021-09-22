@@ -14,6 +14,7 @@ GitStat is a simple android app designed to aggregate Github profile data into i
 ### Technology (some notes)
 
 - Used single activity approach and [Navigation component](https://developer.android.com/guide/navigation) to navigate across fragments.
+- Used [Hilt](https://dagger.dev/hilt/) for dependency injection.
 - [View binding](https://developer.android.com/topic/libraries/view-binding) is used to interact with views within fragments and recyclerview adapters.
 - Kotlin coroutines are used for asynchronous operations.
 - [Retrofit](https://github.com/square/retrofit) is used to perform [Github API](https://docs.github.com/en/rest) calls to obtain the data. Also use [OkHttp Logging Interceptor](https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor) to log requests.
@@ -31,4 +32,4 @@ used to implement languages filter (see third screenshot).
 - Create personal access token with ```read:user``` and ```repo``` access scopes. (**Note**: full ```repo``` scope is used only to have access to your private repos data. No malicious write operations are performed by the app).
 - Use the obtained token as auth credetial in the application login form.
 
-More user-friendly auth method may be implemented later. Authorization process in the app **needs additional research and refactoring**.
+More user-friendly **OAuth** method may be implemented later.

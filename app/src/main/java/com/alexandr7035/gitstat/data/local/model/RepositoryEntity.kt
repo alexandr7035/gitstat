@@ -12,4 +12,5 @@ class RepositoryEntity(
     var fork: Boolean,
     var language: String,
     var stars: Long,
-    var created_at: Long)
+    var created_at: Long,
+    var archived: Boolean)
