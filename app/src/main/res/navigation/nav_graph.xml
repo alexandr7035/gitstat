@@ -29,11 +29,6 @@
             android:id="@+id/action_reposFragment_to_repositoriesListHostFragment"
             app:destination="@id/repositoriesListGraph" />
     </fragment>
-    <fragment
-        android:id="@+id/contributionsFragment"
-        android:name="com.alexandr7035.gitstat.view.contributions.ContributionsFragment"
-        android:label="fragment_contributions"
-        tools:layout="@layout/fragment_contributions" />
     <navigation android:id="@+id/repositoriesListGraph"
         app:startDestination="@id/repositoriesListHostFragment">
         <fragment

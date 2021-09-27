@@ -9,8 +9,4 @@
         android:title="@string/repos"
         android:icon="@drawable/ic_repo_filled" />
 
-<!--    <item android:id="@+id/contributionsFragment"-->
-<!--        android:title="@string/contributions"-->
-<!--        android:icon="@drawable/ic_branch"/>-->
-
 </menu>
