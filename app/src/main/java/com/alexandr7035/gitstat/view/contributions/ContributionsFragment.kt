@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.databinding.FragmentContributionsBinding
+import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -37,73 +38,75 @@ class ContributionsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val days: ArrayList<ContributionDay> = arrayListOf(
-            ContributionDay(date = "2020-07-17", count = 11),
-            ContributionDay(date = "2020-07-18", count = 5),
-            ContributionDay(date = "2020-07-19", count = 13),
-            ContributionDay(date = "2020-07-20", count = 7),
-            ContributionDay(date = "2020-07-21", count = 11),
-            ContributionDay(date = "2020-07-22", count = 3),
-            ContributionDay(date = "2020-07-23", count = 0),
-            ContributionDay(date = "2020-07-24", count = 2),
-            ContributionDay(date = "2020-07-25", count = 4)
-        )
+        var counter = 0
+        val startTime = 1609459200000
+        val endTime = 1640908800000
+        var curr = startTime
 
-        val entries = ArrayList<Entry>()
+        val days: ArrayList<ContributionDay> = ArrayList()
+        while (curr <= endTime) {
+            counter += 1
 
-//        val entries: ArrayList<Entry> = arrayListOf(
-//            Entry(1f, 2f),
-//            Entry(2f, 5f),
-//            Entry(3f, 20f),
-//            Entry(4f, 5f)
-//        )
+            days.add(ContributionDay(date = curr, count = (0..25).random()))
 
-        val format = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-        format.timeZone = TimeZone.getTimeZone("GMT")
-
-        days.forEach {
-            val dateStr = it.date
-            val longDate = format.parse(dateStr)!!.time
-
-            entries.add(Entry(longDate.toFloat(), it.count.toFloat()))
-            //Log.d("DEBUG_TAG", longDate.toString())
+            curr += 86400000
         }
 
-        val months = arrayOf("M", "T", "W", "T", "F", "S", "S")
 
+        val entries = ArrayList<Entry>()
+        days.forEach {
+            entries.add(Entry(it.date.toFloat(), it.count.toFloat()))
+        }
 
         val dataset = LineDataSet(entries, "")
-        dataset.setDrawFilled(true)
-        dataset.fillDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.background_contributions_graph)
+        dataset.apply {
+            setDrawFilled(true)
+            setDrawCircles(false)
+            setDrawValues(false)
+
+            color = ContextCompat.getColor(requireContext(), R.color.contributions_color)
+            fillDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.background_contributions_graph)
+        }
 
         val lineData = LineData(dataset)
 
-        val vf = DateValueFormatter()
-
         binding!!.contributionsChart.apply {
-            data = lineData
-            setScaleEnabled(false)
-            xAxis.position = XAxis.XAxisPosition.BOTTOM
-            axisRight.setDrawLabels(false)
 
-            axisRight.setDrawGridLines(false)
-            axisLeft.setDrawGridLines(false)
+            data = lineData
+
+            // Disable legend
+            legend.form = Legend.LegendForm.NONE
+
+            setScaleEnabled(false)
+
+            xAxis.position = XAxis.XAxisPosition.BOTTOM
             xAxis.setDrawGridLines(false)
+            xAxis.textSize = 16f
+            // Show months names
+            xAxis.valueFormatter = DateMonthsValueFormatter()
+
+            axisRight.setDrawLabels(false)
+            axisRight.setDrawGridLines(false)
+
+            axisLeft.setDrawGridLines(false)
+            axisLeft.textSize = 16f
 
             description.isEnabled = false
             data.isHighlightEnabled = false
-
-            xAxis.valueFormatter = vf
         }
     }
 
-    inner class DateValueFormatter: ValueFormatter() {
+    inner class DateMonthsValueFormatter: ValueFormatter() {
         override fun getFormattedValue(value: Float): String {
-            //return super.getFormattedValue(value)
-            return  "2020-01"
+            val format = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+            format.timeZone = TimeZone.getTimeZone("GMT")
+
+            val unixDate = SimpleDateFormat("MMM", Locale.US).format(value)
+
+            return unixDate.toString()
         }
     }
 
-    data class ContributionDay(val date: String, val count: Int)
+    data class ContributionDay(val date: Long, val count: Int)
 
 }

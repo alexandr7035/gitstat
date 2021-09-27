@@ -18,4 +18,7 @@
     <color name="gray_100">#B1B1B1</color>
 
     <color name="yellow_400">#FFC107</color>
+
+    <!--  FIXME use themes -->
+    <color name="contributions_color">#4CAF50</color>
 </resources>
