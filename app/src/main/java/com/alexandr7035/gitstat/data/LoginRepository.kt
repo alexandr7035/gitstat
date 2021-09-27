@@ -3,14 +3,14 @@ package com.alexandr7035.gitstat.data
 import androidx.lifecycle.MutableLiveData
 import com.alexandr7035.gitstat.core.AppPreferences
 import com.alexandr7035.gitstat.data.local.CacheDao
-import com.alexandr7035.gitstat.data.remote.NetworkModule
+import com.alexandr7035.gitstat.data.remote.RestApiHelper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class LoginRepository @Inject constructor(private val appPreferences: AppPreferences, private val api: NetworkModule, private val dao: CacheDao) {
+class LoginRepository @Inject constructor(private val appPreferences: AppPreferences, private val api: RestApiHelper, private val dao: CacheDao) {
 
     fun doLoginRequest(loginLiveData: MutableLiveData<Int>, token: String) {
 

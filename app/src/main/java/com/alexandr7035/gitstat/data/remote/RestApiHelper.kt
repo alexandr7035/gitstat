@@ -7,21 +7,21 @@ import retrofit2.Response
 import javax.inject.Inject
 
 
-class NetworkModule @Inject constructor(private val appPrefs: AppPreferences, private val gitHubApi: GitHubApi) {
+class RestApiHelper @Inject constructor(private val appPrefs: AppPreferences, private val restApi: RestApi) {
 
     private val REPOS_PER_PAGE = 1000
 
     suspend fun getUserData(): Response<UserModel> {
-        return gitHubApi.getUser("token ${appPrefs.token}")
+        return restApi.getUser("token ${appPrefs.token}")
     }
 
     suspend fun getRepositoriesData(): Response<List<RepositoryModel>> {
-        return gitHubApi.getRepositories(auth = "token ${appPrefs.token}", per_page = REPOS_PER_PAGE)
+        return restApi.getRepositories(auth = "token ${appPrefs.token}", per_page = REPOS_PER_PAGE)
     }
 
 
     suspend fun loginRequest(token: String): Response<UserModel> {
-        return gitHubApi.getUser("token ${token}")
+        return restApi.getUser("token ${token}")
     }
 
 }

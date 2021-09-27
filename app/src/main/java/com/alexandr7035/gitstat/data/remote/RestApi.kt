@@ -7,7 +7,7 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Query
 
-interface GitHubApi {
+interface RestApi {
     @GET("/user")
     suspend fun getUser(@Header("Authorization") auth: String): Response<UserModel>
 

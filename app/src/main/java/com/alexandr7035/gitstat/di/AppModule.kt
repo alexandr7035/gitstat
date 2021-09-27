@@ -8,8 +8,8 @@ import com.alexandr7035.gitstat.data.ReposRepository
 import com.alexandr7035.gitstat.data.UserRepository
 import com.alexandr7035.gitstat.data.local.CacheDB
 import com.alexandr7035.gitstat.data.local.CacheDao
-import com.alexandr7035.gitstat.data.remote.GitHubApi
-import com.alexandr7035.gitstat.data.remote.NetworkModule
+import com.alexandr7035.gitstat.data.remote.RestApi
+import com.alexandr7035.gitstat.data.remote.RestApiHelper
 import com.alexandr7035.gitstat.data.remote.mappers.RepositoryRemoteToCacheMapper
 import com.alexandr7035.gitstat.data.remote.mappers.UserRemoteToCacheMapper
 import com.google.gson.Gson
@@ -55,37 +55,37 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideApi(retrofit: Retrofit): GitHubApi {
-        return retrofit.create(GitHubApi::class.java)
+    fun provideRestApi(retrofit: Retrofit): RestApi {
+        return retrofit.create(RestApi::class.java)
     }
 
     @Provides
     @Singleton
-    fun provideNetworkModule(appPreferences: AppPreferences, gitHubApi: GitHubApi): NetworkModule {
-        return NetworkModule(appPreferences, gitHubApi)
+    fun provideRestApiHelper(appPreferences: AppPreferences, restApi: RestApi): RestApiHelper {
+        return RestApiHelper(appPreferences, restApi)
     }
 
     @Provides
     @Singleton
     fun provideReposRepository(
-        networkModule: NetworkModule,
+        restApiHelper: RestApiHelper,
         dao: CacheDao,
         repositoryMapper: RepositoryRemoteToCacheMapper,
         appPreferences: AppPreferences,
         progLangManager: ProgLangManager,
         gson: Gson): ReposRepository {
-        return ReposRepository(networkModule, dao, repositoryMapper, appPreferences, gson, progLangManager)
+        return ReposRepository(restApiHelper, dao, repositoryMapper, appPreferences, gson, progLangManager)
     }
 
     @Provides
     @Singleton
-    fun provideLoginRepository(appPreferences: AppPreferences, networkModule: NetworkModule, dao: CacheDao): LoginRepository {
-        return LoginRepository(appPreferences, networkModule, dao)
+    fun provideLoginRepository(appPreferences: AppPreferences, restApiHelper: RestApiHelper, dao: CacheDao): LoginRepository {
+        return LoginRepository(appPreferences, restApiHelper, dao)
     }
 
     @Provides
     @Singleton
-    fun provideUserRepository(api: NetworkModule, dao: CacheDao, userMapper: UserRemoteToCacheMapper): UserRepository {
+    fun provideUserRepository(api: RestApiHelper, dao: CacheDao, userMapper: UserRemoteToCacheMapper): UserRepository {
         return UserRepository(api, dao, userMapper)
     }
 

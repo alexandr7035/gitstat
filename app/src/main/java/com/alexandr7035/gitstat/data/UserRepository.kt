@@ -5,12 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import com.alexandr7035.gitstat.core.SyncStatus
 import com.alexandr7035.gitstat.data.local.CacheDao
 import com.alexandr7035.gitstat.data.local.model.UserEntity
-import com.alexandr7035.gitstat.data.remote.NetworkModule
+import com.alexandr7035.gitstat.data.remote.RestApiHelper
 import com.alexandr7035.gitstat.data.remote.mappers.UserRemoteToCacheMapper
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(
-    private val api: NetworkModule,
+    private val api: RestApiHelper,
     private val dao: CacheDao,
     private val userMapper: UserRemoteToCacheMapper) {
 

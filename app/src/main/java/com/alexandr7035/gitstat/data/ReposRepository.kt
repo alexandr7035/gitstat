@@ -7,7 +7,7 @@ import com.alexandr7035.gitstat.core.ProgLangManager
 import com.alexandr7035.gitstat.core.SyncStatus
 import com.alexandr7035.gitstat.data.local.CacheDao
 import com.alexandr7035.gitstat.data.local.model.RepositoryEntity
-import com.alexandr7035.gitstat.data.remote.NetworkModule
+import com.alexandr7035.gitstat.data.remote.RestApiHelper
 import com.alexandr7035.gitstat.data.remote.mappers.RepositoryRemoteToCacheMapper
 import com.alexandr7035.gitstat.data.remote.model.RepositoryModel
 import com.alexandr7035.gitstat.view.repositories.filters.ReposFilters
@@ -15,7 +15,7 @@ import com.google.gson.Gson
 import javax.inject.Inject
 
 class ReposRepository @Inject constructor(
-    private val api: NetworkModule,
+    private val api: RestApiHelper,
     private val dao: CacheDao,
     private val repoMapper: RepositoryRemoteToCacheMapper,
     private val appPreferences: AppPreferences,
