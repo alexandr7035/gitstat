@@ -122,8 +122,12 @@ class ContributionsFragment : Fragment() {
 
     inner class DateMonthsValueFormatter: ValueFormatter() {
         override fun getFormattedValue(value: Float): String {
-            val date = DateFormat.format("MMM", value.toLong())
-            return date.toString()
+
+            // Example: convert "2020-02" to Feb
+            val format = SimpleDateFormat("MMM", Locale.US)
+            format.timeZone = TimeZone.getTimeZone("GMT")
+
+            return format.format(value.toLong()).toString()
         }
     }
 
