@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.alexandr7035.gitstat.data.local.model.ContributionDayEntity
 import com.alexandr7035.gitstat.data.local.model.RepositoryEntity
 import com.alexandr7035.gitstat.data.local.model.UserEntity
 
@@ -23,6 +24,7 @@ interface CacheDao {
     @Query("DELETE FROM user")
     suspend fun clearUserCache()
 
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertRepositoriesCache(repos: List<RepositoryEntity>)
 
@@ -38,4 +40,13 @@ interface CacheDao {
     @Query("DELETE FROM repositories")
     suspend fun clearRepositoriesCache()
 
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertContributionsDaysCache(contributions: List<ContributionDayEntity>)
+
+    @Query("select * from contributions order by date")
+    fun getContributionDaysCache(): LiveData<List<ContributionDayEntity>>
+
+    @Query("DELETE FROM contributions")
+    suspend fun clearContributionsDaysCache()
 }
