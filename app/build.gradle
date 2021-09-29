@@ -100,9 +100,7 @@ dependencies {
 
     // Apollo
     def apollo_version = "3.0.0-alpha06"
-    implementation("com.apollographql.apollo:apollo-runtime:$apollo_version")
-    // Coroutines extensions for easier asynchronicity handling
-    implementation("com.apollographql.apollo:apollo-coroutines-support:$apollo_version")
+    implementation("com.apollographql.apollo3:apollo-runtime:$apollo_version")
 
 }
 
