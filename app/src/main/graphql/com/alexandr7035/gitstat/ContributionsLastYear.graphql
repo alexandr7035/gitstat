@@ -3,6 +3,12 @@ query ContributionsLastYear {
         contributionsCollection {
             contributionCalendar {
                 totalContributions
+                weeks {
+                    contributionDays {
+                        contributionCount
+                        date
+                    }
+                }
             }
         }
     }

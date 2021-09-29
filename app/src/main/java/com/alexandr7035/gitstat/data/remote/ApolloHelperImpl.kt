@@ -3,6 +3,7 @@ package com.alexandr7035.gitstat.data.remote
 import android.util.Log
 import com.alexandr7035.gitstat.apollo.ContributionsLastYearQuery
 import com.alexandr7035.gitstat.apollo.TestQuery
+import com.alexandr7035.gitstat.apollo.adapter.ContributionsLastYearQuery_ResponseAdapter
 import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.exception.ApolloException
 import javax.inject.Inject
@@ -23,7 +24,10 @@ class ApolloHelperImpl @Inject constructor(private val apolloClient: ApolloClien
     }
 
 
-    suspend fun getLastYearContributions() {
+    suspend fun syncContributions() {
+
+        val contributionDays = ArrayList<ContributionsLastYearQuery.ContributionDay>()
+
         val response = apolloClient.query(ContributionsLastYearQuery())
 
         if (response.hasErrors()) {
@@ -32,6 +36,16 @@ class ApolloHelperImpl @Inject constructor(private val apolloClient: ApolloClien
         else {
             Log.d("DEBUG_APOLLO", "success")
             Log.d("DEBUG_APOLLO", "data ${ response.data?.viewer?.contributionsCollection}")
+
+            if (response.data?.viewer?.contributionsCollection?.contributionCalendar?.weeks != null) {
+                for (week in response.data!!.viewer.contributionsCollection.contributionCalendar.weeks) {
+                    for (day in week.contributionDays) {
+                        Log.d("DEBUG_APOLLO", "$day")
+                        contributionDays.add(day)
+                    }
+                }
+            }
+            
         }
 
     }
