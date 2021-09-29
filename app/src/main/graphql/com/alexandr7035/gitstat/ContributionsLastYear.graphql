@@ -1,0 +1,9 @@
+query ContributionsLastYear {
+    viewer {
+        contributionsCollection {
+            contributionCalendar {
+                totalContributions
+            }
+        }
+    }
+}

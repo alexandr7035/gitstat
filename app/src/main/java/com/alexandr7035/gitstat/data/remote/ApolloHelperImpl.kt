@@ -1,6 +1,7 @@
 package com.alexandr7035.gitstat.data.remote
 
 import android.util.Log
+import com.alexandr7035.gitstat.apollo.ContributionsLastYearQuery
 import com.alexandr7035.gitstat.apollo.TestQuery
 import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.exception.ApolloException
@@ -19,5 +20,19 @@ class ApolloHelperImpl @Inject constructor(private val apolloClient: ApolloClien
             Log.d("DEBUG_APOLLO", "success")
             Log.d("DEBUG_APOLLO", "data ${ response.data?.viewer?.login}")
         }
+    }
+
+
+    suspend fun getLastYearContributions() {
+        val response = apolloClient.query(ContributionsLastYearQuery())
+
+        if (response.hasErrors()) {
+            Log.d("DEBUG_APOLLO", "errors")
+        }
+        else {
+            Log.d("DEBUG_APOLLO", "success")
+            Log.d("DEBUG_APOLLO", "data ${ response.data?.viewer?.contributionsCollection}")
+        }
+
     }
 }

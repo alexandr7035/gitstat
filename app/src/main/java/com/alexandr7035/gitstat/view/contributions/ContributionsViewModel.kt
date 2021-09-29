@@ -15,4 +15,10 @@ class ContributionsViewModel @Inject constructor(private val repository: Contrib
             repository.test()
         }
     }
+
+    fun getLastYearContributions() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.getLastYearContributions()
+        }
+    }
 }

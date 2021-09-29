@@ -43,6 +43,7 @@ class ContributionsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.test()
+        viewModel.getLastYearContributions()
 
         var counter = 0
         val startTime = 1609459200000

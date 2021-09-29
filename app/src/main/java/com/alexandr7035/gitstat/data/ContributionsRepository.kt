@@ -8,4 +8,8 @@ class ContributionsRepository @Inject constructor(private val apolloHelper: Apol
     suspend fun test() {
         apolloHelper.test()
     }
+
+    suspend fun getLastYearContributions() {
+        apolloHelper.getLastYearContributions()
+    }
 }
