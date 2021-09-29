@@ -2,16 +2,20 @@ package com.alexandr7035.gitstat.di
 
 import android.app.Application
 import com.alexandr7035.gitstat.core.AppPreferences
+import com.alexandr7035.gitstat.core.DaggerApp_HiltComponents_SingletonC.builder
 import com.alexandr7035.gitstat.core.ProgLangManager
 import com.alexandr7035.gitstat.data.LoginRepository
 import com.alexandr7035.gitstat.data.ReposRepository
 import com.alexandr7035.gitstat.data.UserRepository
 import com.alexandr7035.gitstat.data.local.CacheDB
 import com.alexandr7035.gitstat.data.local.CacheDao
+import com.alexandr7035.gitstat.data.remote.ApolloInterceptor
 import com.alexandr7035.gitstat.data.remote.RestApi
 import com.alexandr7035.gitstat.data.remote.RestApiHelper
 import com.alexandr7035.gitstat.data.remote.mappers.RepositoryRemoteToCacheMapper
 import com.alexandr7035.gitstat.data.remote.mappers.UserRemoteToCacheMapper
+import com.apollographql.apollo3.ApolloClient
+import com.apollographql.apollo3.network.http.HttpNetworkTransport
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -52,6 +56,11 @@ object AppModule {
             .build()
     }
 
+    @Provides
+    @Singleton
+    fun provideApollo(appPreferences: AppPreferences): ApolloClient {
+        return ApolloClient(networkTransport = HttpNetworkTransport("https://api.github.com/graphql", interceptors = listOf(ApolloInterceptor(appPreferences))))
+    }
 
     @Provides
     @Singleton

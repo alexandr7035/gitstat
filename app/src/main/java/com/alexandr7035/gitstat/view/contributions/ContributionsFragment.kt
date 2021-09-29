@@ -6,22 +6,26 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.databinding.FragmentContributionsBinding
+import com.apollographql.apollo3.ApolloClient
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-
+@AndroidEntryPoint
 class ContributionsFragment : Fragment() {
 
     private var binding: FragmentContributionsBinding? = null
+    private val viewModel by viewModels<ContributionsViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,6 +41,8 @@ class ContributionsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.test()
 
         var counter = 0
         val startTime = 1609459200000
