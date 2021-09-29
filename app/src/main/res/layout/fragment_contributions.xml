@@ -45,12 +45,13 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <TextView
+            android:id="@+id/contributionsCountView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:textSize="18sp"
             android:textColor="@color/black"
-            android:text="2020"/>
+            android:text="@string/contributions_count"/>
 
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/contributionsChart"

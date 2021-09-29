@@ -56,4 +56,6 @@
     <string name="active">Active</string>
     <string name="archived">Archived</string>
 
+    <string name="contributions_count">%1$s (%2$s)</string>
+
 </resources>

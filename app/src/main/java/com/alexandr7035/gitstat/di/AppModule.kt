@@ -4,6 +4,7 @@ import android.app.Application
 import com.alexandr7035.gitstat.core.AppPreferences
 import com.alexandr7035.gitstat.core.DaggerApp_HiltComponents_SingletonC.builder
 import com.alexandr7035.gitstat.core.ProgLangManager
+import com.alexandr7035.gitstat.data.ContributionsRepository
 import com.alexandr7035.gitstat.data.LoginRepository
 import com.alexandr7035.gitstat.data.ReposRepository
 import com.alexandr7035.gitstat.data.UserRepository
@@ -12,6 +13,7 @@ import com.alexandr7035.gitstat.data.local.CacheDao
 import com.alexandr7035.gitstat.data.remote.ApolloInterceptor
 import com.alexandr7035.gitstat.data.remote.RestApi
 import com.alexandr7035.gitstat.data.remote.RestApiHelper
+import com.alexandr7035.gitstat.data.remote.mappers.ContributionDayRemoteToCacheMapper
 import com.alexandr7035.gitstat.data.remote.mappers.RepositoryRemoteToCacheMapper
 import com.alexandr7035.gitstat.data.remote.mappers.UserRemoteToCacheMapper
 import com.apollographql.apollo3.ApolloClient
@@ -104,8 +106,22 @@ object AppModule {
     }
 
     @Provides
+    @Singleton
+    fun provideContributionsRepository(
+        apolloClient: ApolloClient,
+        dao: CacheDao,
+        mapper: ContributionDayRemoteToCacheMapper): ContributionsRepository {
+        return ContributionsRepository(apolloClient, dao, mapper)
+    }
+
+    @Provides
     fun provideReposMapper(): RepositoryRemoteToCacheMapper {
         return RepositoryRemoteToCacheMapper()
+    }
+
+    @Provides
+    fun provideContributionDayMapper(): ContributionDayRemoteToCacheMapper {
+        return ContributionDayRemoteToCacheMapper()
     }
 
     @Provides

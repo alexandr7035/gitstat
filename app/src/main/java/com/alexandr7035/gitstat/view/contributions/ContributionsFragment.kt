@@ -1,6 +1,8 @@
 package com.alexandr7035.gitstat.view.contributions
 
 import android.os.Bundle
+import android.text.format.DateFormat
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,13 +11,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.databinding.FragmentContributionsBinding
-import com.apollographql.apollo3.ApolloClient
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.formatter.IFillFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
+import com.github.mikephil.charting.interfaces.dataprovider.LineDataProvider
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
@@ -42,44 +46,8 @@ class ContributionsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.test()
-        viewModel.getLastYearContributions()
-
-        var counter = 0
-        val startTime = 1609459200000
-        val endTime = 1640908800000
-        var curr = startTime
-
-        val days: ArrayList<ContributionDay> = ArrayList()
-        while (curr <= endTime) {
-            counter += 1
-
-            days.add(ContributionDay(date = curr, count = (0..25).random()))
-
-            curr += 86400000
-        }
-
-
-        val entries = ArrayList<Entry>()
-        days.forEach {
-            entries.add(Entry(it.date.toFloat(), it.count.toFloat()))
-        }
-
-        val dataset = LineDataSet(entries, "")
-        dataset.apply {
-            setDrawFilled(true)
-            setDrawCircles(false)
-            setDrawValues(false)
-
-            color = ContextCompat.getColor(requireContext(), R.color.contributions_color)
-            fillDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.background_contributions_graph)
-        }
-
-        val lineData = LineData(dataset)
-
+        // Plot setup
         binding!!.contributionsChart.apply {
-
-            data = lineData
 
             // Disable legend
             legend.form = Legend.LegendForm.NONE
@@ -93,27 +61,70 @@ class ContributionsFragment : Fragment() {
             xAxis.valueFormatter = DateMonthsValueFormatter()
 
             axisRight.setDrawLabels(false)
+            axisRight.axisMinimum = 0f
             axisRight.setDrawGridLines(false)
 
             axisLeft.setDrawGridLines(false)
+            axisLeft.axisMinimum = 0f
             axisLeft.textSize = 16f
 
             description.isEnabled = false
-            data.isHighlightEnabled = false
         }
+
+
+        // Update data
+        viewModel.getContributions().observe(viewLifecycleOwner, { contributions ->
+
+            if (contributions.isNotEmpty()) {
+
+                Log.d("DEBUG_TAG", "viewmodel get $contributions")
+
+                val entries = ArrayList<Entry>()
+                contributions.forEach { contributionDay ->
+                    entries.add(Entry(contributionDay.date.toFloat(), contributionDay.count.toFloat()))
+                }
+
+                val dataset = LineDataSet(entries, "")
+
+                // Fill only from zero point
+                dataset.fillFormatter = IFillFormatter { dataSet, dataProvider -> 0f }
+
+                dataset.apply {
+                    setDrawFilled(true)
+                    setDrawCircles(false)
+                    setDrawValues(false)
+
+                    color = ContextCompat.getColor(requireContext(), R.color.contributions_color)
+                    fillDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.background_contributions_graph)
+                }
+
+                val lineData = LineData(dataset)
+
+                binding!!.contributionsChart.apply {
+                    data = lineData
+                    data.isHighlightEnabled = false
+                }
+
+                // Update chart
+                binding?.contributionsChart?.invalidate()
+
+
+                binding?.contributionsCountView?.text = getString(
+                    R.string.contributions_count,
+                    "Last year",
+                    contributions.size.toString())
+            }
+        })
+
+        viewModel.syncContributions()
+
     }
 
     inner class DateMonthsValueFormatter: ValueFormatter() {
         override fun getFormattedValue(value: Float): String {
-            val format = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-            format.timeZone = TimeZone.getTimeZone("GMT")
-
-            val unixDate = SimpleDateFormat("MMM", Locale.US).format(value)
-
-            return unixDate.toString()
+            val date = DateFormat.format("MMM", value.toLong())
+            return date.toString()
         }
     }
-
-    data class ContributionDay(val date: Long, val count: Int)
 
 }
