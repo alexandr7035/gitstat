@@ -112,7 +112,7 @@ class ContributionsFragment : Fragment() {
                 binding?.contributionsCountView?.text = getString(
                     R.string.contributions_count,
                     "Last year",
-                    contributions.size.toString())
+                    contributions.sumOf { it.count }.toString())
             }
         })
 
