@@ -31,27 +31,35 @@
         app:layout_constraintStart_toEndOf="@id/fragmentTitle"
         app:layout_constraintTop_toTopOf="@id/fragmentTitle" />
 
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/yearsViewPager"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/fragmentTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_margin="10dp"
-        android:paddingStart="5dp"
-        android:paddingEnd="5dp"
-        android:paddingTop="5dp"
         android:background="@drawable/background_card"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/fragmentTitle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        android:paddingStart="5dp"
+        android:paddingTop="5dp"
+        android:paddingEnd="5dp"
+        app:layout_constraintTop_toBottomOf="@id/yearsViewPager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:id="@+id/contributionsCountView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="18sp"
+            android:text="@string/contributions_count"
             android:textColor="@color/black"
-            android:text="@string/contributions_count"/>
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/contributionsChart"

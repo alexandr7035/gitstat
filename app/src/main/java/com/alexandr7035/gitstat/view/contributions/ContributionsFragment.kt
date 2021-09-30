@@ -1,7 +1,6 @@
 package com.alexandr7035.gitstat.view.contributions
 
 import android.os.Bundle
-import android.text.format.DateFormat
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -18,8 +17,6 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IFillFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
-import com.github.mikephil.charting.interfaces.dataprovider.LineDataProvider
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
@@ -30,6 +27,8 @@ class ContributionsFragment : Fragment() {
 
     private var binding: FragmentContributionsBinding? = null
     private val viewModel by viewModels<ContributionsViewModel>()
+
+    private lateinit var adapter: YearContributionsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,6 +44,11 @@ class ContributionsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+       adapter = YearContributionsAdapter(this)
+        binding?.yearsViewPager?.adapter = adapter
+
+
 
         // Plot setup
         binding!!.contributionsChart.apply {
