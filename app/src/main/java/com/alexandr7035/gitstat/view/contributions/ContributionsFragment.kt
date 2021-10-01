@@ -48,16 +48,6 @@ class ContributionsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        // FIXME test
-//        val yearsData = listOf<ContributionsYear>(
-//            ContributionsYear(2018),
-//            ContributionsYear(2019),
-//            ContributionsYear(2020),
-//        )
-
-
-
-
         // Plot setup
         binding!!.contributionsChart.apply {
 
@@ -101,46 +91,49 @@ class ContributionsFragment : Fragment() {
                 adapter.setItems(yearsData)
                 binding?.yearsViewPager?.adapter = adapter
 
-//                Log.d("DEBUG_TAG", "viewmodel get $contributions")
-//
-//                val entries = ArrayList<Entry>()
-//                contributions.forEach { contributionDay ->
-//                    entries.add(Entry(contributionDay.date.toFloat(), contributionDay.count.toFloat()))
-//                }
-//
-//                val dataset = LineDataSet(entries, "")
-//
-//                // Fill only from zero point
-//                dataset.fillFormatter = IFillFormatter { dataSet, dataProvider -> 0f }
-//
-//                dataset.apply {
-//                    setDrawFilled(true)
-//                    setDrawCircles(false)
-//                    setDrawValues(false)
-//
-//                    color = ContextCompat.getColor(requireContext(), R.color.contributions_color)
-//                    fillDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.background_contributions_graph)
-//                }
-//
-//                val lineData = LineData(dataset)
-//
-//                binding!!.contributionsChart.apply {
-//                    data = lineData
-//                    data.isHighlightEnabled = false
-//                }
-//
-//                // Update chart
-//                binding?.contributionsChart?.invalidate()
-//
-//
-//                binding?.contributionsCountView?.text = getString(
-//                    R.string.contributions_count,
-//                    "Last year",
-//                    contributions.sumOf { it.count }.toString())
+
+                // FIXME
+
+                Log.d("DEBUG_TAG", "viewmodel get $contributions")
+
+                val entries = ArrayList<Entry>()
+                contributions.forEach { contributionDay ->
+                    entries.add(Entry(contributionDay.date.toFloat(), contributionDay.count.toFloat()))
+                }
+
+                val dataset = LineDataSet(entries, "")
+
+                // Fill only from zero point
+                dataset.fillFormatter = IFillFormatter { dataSet, dataProvider -> 0f }
+
+                dataset.apply {
+                    setDrawFilled(true)
+                    setDrawCircles(false)
+                    setDrawValues(false)
+
+                    color = ContextCompat.getColor(requireContext(), R.color.contributions_color)
+                    fillDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.background_contributions_graph)
+                }
+
+                val lineData = LineData(dataset)
+
+                binding!!.contributionsChart.apply {
+                    data = lineData
+                    data.isHighlightEnabled = false
+                }
+
+                // Update chart
+                binding?.contributionsChart?.invalidate()
+
+
+                binding?.contributionsCountView?.text = getString(
+                    R.string.contributions_count,
+                    "Last year",
+                    contributions.sumOf { it.count }.toString())
             }
         })
 
-        viewModel.syncContributions()
+//        viewModel.syncContributions()
 
     }
 
