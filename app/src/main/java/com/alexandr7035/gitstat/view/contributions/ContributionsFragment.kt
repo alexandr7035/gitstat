@@ -7,7 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentPagerAdapter
+import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.fragment.app.viewModels
+import androidx.viewpager2.widget.ViewPager2
 import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.databinding.FragmentContributionsBinding
 import com.github.mikephil.charting.components.Legend
@@ -45,8 +48,13 @@ class ContributionsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-       adapter = YearContributionsAdapter(this)
-        binding?.yearsViewPager?.adapter = adapter
+//        // FIXME test
+//        val yearsData = listOf<ContributionsYear>(
+//            ContributionsYear(2018),
+//            ContributionsYear(2019),
+//            ContributionsYear(2020),
+//        )
+
 
 
 
@@ -81,42 +89,54 @@ class ContributionsFragment : Fragment() {
 
             if (contributions.isNotEmpty()) {
 
-                Log.d("DEBUG_TAG", "viewmodel get $contributions")
 
-                val entries = ArrayList<Entry>()
-                contributions.forEach { contributionDay ->
-                    entries.add(Entry(contributionDay.date.toFloat(), contributionDay.count.toFloat()))
-                }
+                // FIXME test
+                val yearsData = listOf<ContributionsYear>(
+                    ContributionsYear(2018, contributions),
+                    ContributionsYear(2019, contributions),
+                    ContributionsYear(2020, contributions)
+                )
 
-                val dataset = LineDataSet(entries, "")
+                adapter = YearContributionsAdapter(this)
+                adapter.setItems(yearsData)
+                binding?.yearsViewPager?.adapter = adapter
 
-                // Fill only from zero point
-                dataset.fillFormatter = IFillFormatter { dataSet, dataProvider -> 0f }
-
-                dataset.apply {
-                    setDrawFilled(true)
-                    setDrawCircles(false)
-                    setDrawValues(false)
-
-                    color = ContextCompat.getColor(requireContext(), R.color.contributions_color)
-                    fillDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.background_contributions_graph)
-                }
-
-                val lineData = LineData(dataset)
-
-                binding!!.contributionsChart.apply {
-                    data = lineData
-                    data.isHighlightEnabled = false
-                }
-
-                // Update chart
-                binding?.contributionsChart?.invalidate()
-
-
-                binding?.contributionsCountView?.text = getString(
-                    R.string.contributions_count,
-                    "Last year",
-                    contributions.sumOf { it.count }.toString())
+//                Log.d("DEBUG_TAG", "viewmodel get $contributions")
+//
+//                val entries = ArrayList<Entry>()
+//                contributions.forEach { contributionDay ->
+//                    entries.add(Entry(contributionDay.date.toFloat(), contributionDay.count.toFloat()))
+//                }
+//
+//                val dataset = LineDataSet(entries, "")
+//
+//                // Fill only from zero point
+//                dataset.fillFormatter = IFillFormatter { dataSet, dataProvider -> 0f }
+//
+//                dataset.apply {
+//                    setDrawFilled(true)
+//                    setDrawCircles(false)
+//                    setDrawValues(false)
+//
+//                    color = ContextCompat.getColor(requireContext(), R.color.contributions_color)
+//                    fillDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.background_contributions_graph)
+//                }
+//
+//                val lineData = LineData(dataset)
+//
+//                binding!!.contributionsChart.apply {
+//                    data = lineData
+//                    data.isHighlightEnabled = false
+//                }
+//
+//                // Update chart
+//                binding?.contributionsChart?.invalidate()
+//
+//
+//                binding?.contributionsCountView?.text = getString(
+//                    R.string.contributions_count,
+//                    "Last year",
+//                    contributions.sumOf { it.count }.toString())
             }
         })
 

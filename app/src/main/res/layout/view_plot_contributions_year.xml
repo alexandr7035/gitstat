@@ -22,7 +22,7 @@
         app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
-        android:id="@+id/contributionsTotalCount"
+        android:id="@+id/contributionsCountView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="725 contributions"
@@ -30,6 +30,7 @@
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/contributionsChart"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         app:layout_constraintBottom_toBottomOf="parent"
