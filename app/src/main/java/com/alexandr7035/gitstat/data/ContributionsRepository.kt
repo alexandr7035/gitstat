@@ -2,7 +2,6 @@ package com.alexandr7035.gitstat.data
 
 import android.util.Log
 import androidx.lifecycle.LiveData
-import com.alexandr7035.gitstat.apollo.ContributionsLastYearQuery
 import com.alexandr7035.gitstat.apollo.ContributionsQuery
 import com.alexandr7035.gitstat.data.local.CacheDao
 import com.alexandr7035.gitstat.data.local.model.ContributionDayEntity
@@ -68,38 +67,75 @@ class ContributionsRepository @Inject constructor(
 
 
     suspend fun syncAllContributions() {
-        val contributionDays = ArrayList<ContributionsQuery.ContributionDay>()
+
 
 //        val response = apolloClient.query(ContributionsQuery("", ""))
-        val response = getContributionsForDateRange(year = 2021)
 
-        // FIXME error handling
-        if (response.hasErrors()) {
-            Log.d("DEBUG_APOLLO", "errors")
-            Log.d("DEBUG_APOLLO", "${response.errors}")
-        }
-        else {
-            Log.d("DEBUG_APOLLO", "success")
-            Log.d("DEBUG_APOLLO", "data ${ response.data?.viewer?.contributionsCollection}")
+        // Date range more than a year is not allowed in this api
 
-            if (response.data?.viewer?.contributionsCollection?.contributionCalendar?.weeks != null) {
-                for (week in response.data!!.viewer.contributionsCollection.contributionCalendar.weeks) {
-                    for (day in week.contributionDays) {
-                        Log.d("DEBUG_APOLLO", "$day")
-                        contributionDays.add(day)
+        var isFetchingSuccessFull = true
+        val contributionDays = ArrayList<ContributionsQuery.ContributionDay>()
+
+        for (year in 2016..2021) {
+            val response = getContributionsForDateRange(year = year)
+
+            if (response.hasErrors()) {
+                Log.e("DEBUG_APOLLO", "${response.errors}")
+                isFetchingSuccessFull = false
+            }
+
+            else {
+                if (response.data?.viewer?.contributionsCollection?.contributionCalendar?.weeks != null) {
+                    for (week in response.data!!.viewer.contributionsCollection.contributionCalendar.weeks) {
+                        for (day in week.contributionDays) {
+                            Log.d("DEBUG_APOLLO", "$day")
+                            contributionDays.add(day)
+                        }
                     }
                 }
-
-                Log.d("DEBUG_APOLLO", "contributions $contributionDays")
-
-                val cachedContributions = contributionDays.map { remoteDay ->
-                    mapper.transform(remoteDay)
-                }
-
-                dao.clearLastYearContributionsDaysCache()
-                dao.insertLastYearContributionsDaysCache(cachedContributions)
             }
         }
+
+
+        if (isFetchingSuccessFull) {
+            val cachedContributions = contributionDays.map { remoteDay ->
+                mapper.transform(remoteDay)
+            }
+
+            dao.clearLastYearContributionsDaysCache()
+            dao.insertLastYearContributionsDaysCache(cachedContributions)
+        }
+
+
+//        val response = getContributionsForDateRange(year = 2021)
+//
+//        // FIXME error handling
+//        if (response.hasErrors()) {
+//            Log.d("DEBUG_APOLLO", "errors")
+//            Log.e("DEBUG_APOLLO", "${response.errors}")
+//        }
+//        else {
+//            Log.d("DEBUG_APOLLO", "success")
+//            Log.d("DEBUG_APOLLO", "data ${ response.data?.viewer?.contributionsCollection}")
+//
+//            if (response.data?.viewer?.contributionsCollection?.contributionCalendar?.weeks != null) {
+//                for (week in response.data!!.viewer.contributionsCollection.contributionCalendar.weeks) {
+//                    for (day in week.contributionDays) {
+//                        Log.d("DEBUG_APOLLO", "$day")
+//                        contributionDays.add(day)
+//                    }
+//                }
+//
+//                Log.d("DEBUG_APOLLO", "contributions $contributionDays")
+//
+//                val cachedContributions = contributionDays.map { remoteDay ->
+//                    mapper.transform(remoteDay)
+//                }
+//
+//                dao.clearLastYearContributionsDaysCache()
+//                dao.insertLastYearContributionsDaysCache(cachedContributions)
+//            }
+//        }
     }
 
     fun getAllContributions(): LiveData<List<ContributionDayEntity>> {
