@@ -130,7 +130,7 @@ class ContributionsFragment : Fragment() {
             }
         })
 
-//        viewModel.syncContributions()
+        viewModel.syncLastYearContributions()
 
     }
 
@@ -143,6 +143,7 @@ class ContributionsFragment : Fragment() {
 
             return format.format(value.toLong()).toString()
         }
+
     }
 
 }
