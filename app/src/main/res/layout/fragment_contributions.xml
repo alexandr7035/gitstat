@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:paddingBottom="20dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.contributions.ContributionsFragment">
 
@@ -30,15 +32,6 @@
         app:layout_constraintBottom_toBottomOf="@id/fragmentTitle"
         app:layout_constraintStart_toEndOf="@id/fragmentTitle"
         app:layout_constraintTop_toTopOf="@id/fragmentTitle" />
-
-    <androidx.viewpager2.widget.ViewPager2
-        android:layout_marginTop="20dp"
-        android:id="@+id/yearsViewPager"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/lastYearContributionsGroup"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
 
     <LinearLayout
         android:id="@+id/lastYearContributionsGroup"
@@ -72,6 +65,28 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:id="@+id/viewPagerGroup"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:elevation="5dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/background_card"
+        app:layout_constraintTop_toBottomOf="@id/lastYearContributionsGroup"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/yearsViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:layout_height="200dp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
