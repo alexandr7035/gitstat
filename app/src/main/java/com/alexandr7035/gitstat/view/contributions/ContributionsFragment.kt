@@ -7,10 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentPagerAdapter
-import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.fragment.app.viewModels
-import androidx.viewpager2.widget.ViewPager2
 import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.databinding.FragmentContributionsBinding
 import com.github.mikephil.charting.components.Legend
@@ -75,7 +72,7 @@ class ContributionsFragment : Fragment() {
 
 
         // Update data
-        viewModel.getContributions().observe(viewLifecycleOwner, { contributions ->
+        viewModel.getLastYearContributions().observe(viewLifecycleOwner, { contributions ->
 
             if (contributions.isNotEmpty()) {
 

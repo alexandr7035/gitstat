@@ -12,21 +12,17 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ContributionsViewModel @Inject constructor(private val repository: ContributionsRepository): ViewModel() {
-    fun test() {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.test()
-        }
-    }
 
-    fun syncContributions() {
+
+    fun syncLastYearContributions() {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.syncContributions()
+            repository.syncLastYearContributions()
         }
     }
 
 
     // FIXME by year
-    fun getContributions(): LiveData<List<ContributionDayEntity>> {
-        return repository.getContributions()
+    fun getLastYearContributions(): LiveData<List<ContributionDayEntity>> {
+        return repository.getLastYearContributions()
     }
 }

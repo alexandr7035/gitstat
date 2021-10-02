@@ -15,11 +15,7 @@ class ContributionsRepository @Inject constructor(
     private val dao: CacheDao,
     private val mapper: ContributionDayRemoteToCacheMapper) {
 
-    suspend fun test() {
-
-    }
-
-    suspend fun syncContributions() {
+    suspend fun syncLastYearContributions() {
         val contributionDays = ArrayList<ContributionsLastYearQuery.ContributionDay>()
 
         val response = apolloClient.query(ContributionsLastYearQuery())
@@ -49,13 +45,13 @@ class ContributionsRepository @Inject constructor(
 
                 Log.d("DEBUG_APOLLO", "TOTAL contributions ${cachedContributions.size}")
 
-                dao.clearContributionsDaysCache()
-                dao.insertContributionsDaysCache(cachedContributions)
+                dao.clearLastYearContributionsDaysCache()
+                dao.insertLastYearContributionsDaysCache(cachedContributions)
             }
         }
     }
 
-    fun getContributions(): LiveData<List<ContributionDayEntity>> {
-        return dao.getContributionDaysCache()
+    fun getLastYearContributions(): LiveData<List<ContributionDayEntity>> {
+        return dao.getLastYearContributionDaysCache()
     }
 }
