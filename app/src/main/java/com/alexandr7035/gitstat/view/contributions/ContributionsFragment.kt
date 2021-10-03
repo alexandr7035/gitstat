@@ -103,6 +103,8 @@ class ContributionsFragment : Fragment() {
                 adapter = YearContributionsAdapter(this)
                 adapter.setItems(yearsData)
                 binding?.yearsViewPager?.adapter = adapter
+                // Set to last position
+                binding?.yearsViewPager?.setCurrentItem(yearsData.size - 1, false)
 
 
                 // FIXME

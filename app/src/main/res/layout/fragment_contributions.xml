@@ -36,7 +36,7 @@
     <LinearLayout
         android:id="@+id/lastYearContributionsGroup"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
@@ -63,7 +63,7 @@
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/contributionsChart"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="200dp" />
 
     </LinearLayout>
 
