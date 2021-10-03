@@ -1,28 +1,35 @@
 package com.alexandr7035.gitstat.view.contributions
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alexandr7035.gitstat.data.ContributionsRepository
 import com.alexandr7035.gitstat.data.local.model.ContributionDayEntity
+import com.alexandr7035.gitstat.data.local.model.ContributionsYear
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okhttp3.internal.wait
 import javax.inject.Inject
 
 @HiltViewModel
 class ContributionsViewModel @Inject constructor(private val repository: ContributionsRepository): ViewModel() {
 
+    private val contributionYearsLiveData = MutableLiveData<List<ContributionsYear>>()
 
-    fun syncLastYearContributions() {
+    fun getContributionsLiveData(): LiveData<List<ContributionDayEntity>> {
+        return repository.getAllContributionsLiveData()
+    }
+
+    fun fetchContributionYears() {
         viewModelScope.launch(Dispatchers.IO) {
-//            repository.syncLastYearContributions()
+            val data = repository.getContributionYears()
+            contributionYearsLiveData.postValue(data)
         }
     }
 
-
-    // FIXME by year
-    fun getLastYearContributions(): LiveData<List<ContributionDayEntity>> {
-        return repository.getAllContributions()
+    fun getContributionYearsLiveData(): MutableLiveData<List<ContributionsYear>> {
+        return contributionYearsLiveData
     }
 }

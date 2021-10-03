@@ -8,6 +8,7 @@ import com.alexandr7035.gitstat.core.TimeHelper
 import com.alexandr7035.gitstat.data.*
 import com.alexandr7035.gitstat.data.local.CacheDB
 import com.alexandr7035.gitstat.data.local.CacheDao
+import com.alexandr7035.gitstat.data.local.mappers.ContributionsDaysToYearsMapper
 import com.alexandr7035.gitstat.data.remote.ApolloInterceptor
 import com.alexandr7035.gitstat.data.remote.RestApi
 import com.alexandr7035.gitstat.data.remote.RestApiHelper
@@ -116,8 +117,8 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideContributionsRepository(dao: CacheDao): ContributionsRepository{
-        return ContributionsRepository(dao)
+    fun provideContributionsRepository(dao: CacheDao, toYearsMapper: ContributionsDaysToYearsMapper): ContributionsRepository{
+        return ContributionsRepository(dao, toYearsMapper)
     }
 
     @Provides

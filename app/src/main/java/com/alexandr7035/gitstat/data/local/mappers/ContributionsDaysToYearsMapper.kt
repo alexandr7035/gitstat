@@ -1,5 +1,6 @@
 package com.alexandr7035.gitstat.data.local.mappers
 
+import android.util.Log
 import com.alexandr7035.gitstat.core.Mapper
 import com.alexandr7035.gitstat.core.TimeHelper
 import com.alexandr7035.gitstat.data.local.model.ContributionDayEntity
@@ -10,6 +11,9 @@ import javax.inject.Inject
 class ContributionsDaysToYearsMapper @Inject constructor(private val timeHelper: TimeHelper): Mapper<List<ContributionDayEntity>, List<ContributionsYear>> {
 
     override fun transform(data: List<ContributionDayEntity>): List<ContributionsYear> {
+
+        val start = System.currentTimeMillis()
+
         val years = ArrayList<ContributionsYear>()
 
         // Get start and end end for contributions list
@@ -23,6 +27,10 @@ class ContributionsDaysToYearsMapper @Inject constructor(private val timeHelper:
             }
             years.add(ContributionsYear(year, yearContributions))
         }
+
+        val end = System.currentTimeMillis()
+
+        Log.d("DEBUG_TAG", "map in ${end-start} ms")
 
         return years
     }
