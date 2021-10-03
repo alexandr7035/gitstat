@@ -3,6 +3,7 @@ package com.alexandr7035.gitstat.data
 import android.util.Log
 import androidx.lifecycle.LiveData
 import com.alexandr7035.gitstat.apollo.ContributionsQuery
+import com.alexandr7035.gitstat.apollo.ProfileCreationDateQuery
 import com.alexandr7035.gitstat.data.local.CacheDao
 import com.alexandr7035.gitstat.data.local.model.ContributionDayEntity
 import com.alexandr7035.gitstat.data.remote.mappers.ContributionDayRemoteToCacheMapper
@@ -10,7 +11,10 @@ import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.api.ApolloResponse
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 // FIXME use interface
 class ContributionsRepository @Inject constructor(
@@ -74,9 +78,36 @@ class ContributionsRepository @Inject constructor(
         // Date range more than a year is not allowed in this api
 
         var isFetchingSuccessFull = true
+
+        var creationYear: Int = 0
+
+        val profileCreationDateRes = getProfileCreationDate()
+        if (profileCreationDateRes.hasErrors()) {
+            Log.e("DEBUG_APOLLO", "${profileCreationDateRes.errors}")
+            isFetchingSuccessFull = false
+        }
+        else {
+            val date = profileCreationDateRes.data?.viewer?.createdAt as String
+
+            val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US)
+            format.timeZone = TimeZone.getTimeZone("GMT")
+            val unixDate = format.parse(date)!!.time
+
+            val yearFormat = SimpleDateFormat("yyyy", Locale.US)
+            yearFormat.timeZone = TimeZone.getTimeZone("GMT")
+
+            creationYear = yearFormat.format(unixDate).toInt()
+        }
+
+        val yearFormat = SimpleDateFormat("yyyy", Locale.US)
+        yearFormat.timeZone = TimeZone.getTimeZone("GMT")
+        val currentYear = yearFormat.format(System.currentTimeMillis()).toInt()
+
+        Log.d("DEBUG_TAG", "$creationYear $currentYear")
+
         val contributionDays = ArrayList<ContributionsQuery.ContributionDay>()
 
-        for (year in 2016..2021) {
+        for (year in creationYear..currentYear) {
             val response = getContributionsForDateRange(year = year)
 
             if (response.hasErrors()) {
@@ -155,5 +186,10 @@ class ContributionsRepository @Inject constructor(
         } else {
             apolloClient.query(ContributionsQuery(date_from = startDate, date_to = endDate))
         }
+    }
+
+
+    private suspend fun getProfileCreationDate(): ApolloResponse<ProfileCreationDateQuery.Data> {
+        return apolloClient.query(ProfileCreationDateQuery())
     }
 }
