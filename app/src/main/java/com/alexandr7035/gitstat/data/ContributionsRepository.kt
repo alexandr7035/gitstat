@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import com.alexandr7035.gitstat.apollo.ContributionsQuery
 import com.alexandr7035.gitstat.apollo.ProfileCreationDateQuery
+import com.alexandr7035.gitstat.core.TimeHelper
 import com.alexandr7035.gitstat.data.local.CacheDao
 import com.alexandr7035.gitstat.data.local.model.ContributionDayEntity
 import com.alexandr7035.gitstat.data.remote.mappers.ContributionDayRemoteToCacheMapper
@@ -20,7 +21,8 @@ import kotlin.collections.ArrayList
 class ContributionsRepository @Inject constructor(
     private val apolloClient: ApolloClient,
     private val dao: CacheDao,
-    private val mapper: ContributionDayRemoteToCacheMapper) {
+    private val mapper: ContributionDayRemoteToCacheMapper,
+    private val timeHelper: TimeHelper) {
 
     // FIXME test
     init {
@@ -42,20 +44,11 @@ class ContributionsRepository @Inject constructor(
         }
         else {
             val date = profileCreationDateRes.data?.viewer?.createdAt as String
-
-            val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US)
-            format.timeZone = TimeZone.getTimeZone("GMT")
-            val unixDate = format.parse(date)!!.time
-
-            val yearFormat = SimpleDateFormat("yyyy", Locale.US)
-            yearFormat.timeZone = TimeZone.getTimeZone("GMT")
-
-            creationYear = yearFormat.format(unixDate).toInt()
+            val unixDate = timeHelper.getUnixDateFromISO8601(date)
+            creationYear = timeHelper.getYearFromUnixDate(unixDate)
         }
 
-        val yearFormat = SimpleDateFormat("yyyy", Locale.US)
-        yearFormat.timeZone = TimeZone.getTimeZone("GMT")
-        val currentYear = yearFormat.format(System.currentTimeMillis()).toInt()
+        val currentYear = timeHelper.getYearFromUnixDate(System.currentTimeMillis())
 
         Log.d("DEBUG_TAG", "$creationYear $currentYear")
 
@@ -102,14 +95,15 @@ class ContributionsRepository @Inject constructor(
     // Pass null to get contributions for the last year
     private suspend fun getContributionsForDateRange(year: Int?): ApolloResponse<ContributionsQuery.Data> {
 
-        // Format : ISO-8601
-        val startDate = "$year-01-01T00:00:00Z"
-        val endDate = "$year-12-31T23:59:59Z"
-
         return if (year == null) {
             apolloClient.query(ContributionsQuery(date_from = null, date_to = null))
-        } else {
-            apolloClient.query(ContributionsQuery(date_from = startDate, date_to = endDate))
+        }
+        else {
+            val iso8601Year = timeHelper.getDatesRangeForYear_iso8601(year)
+            apolloClient.query(ContributionsQuery(
+                date_from = iso8601Year.startDate,
+                date_to = iso8601Year.endDate
+            ))
         }
     }
 
