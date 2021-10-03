@@ -1,6 +1,5 @@
-package com.alexandr7035.gitstat.view.contributions
+package com.alexandr7035.gitstat.data.local.model
 
-import com.alexandr7035.gitstat.data.local.model.ContributionDayEntity
 import java.io.Serializable
 
 data class ContributionsYear(
