@@ -1,8 +1,11 @@
 package com.alexandr7035.gitstat.data
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.alexandr7035.gitstat.apollo.ContributionsQuery
 import com.alexandr7035.gitstat.apollo.ProfileCreationDateQuery
+import com.alexandr7035.gitstat.core.SyncStatus
 import com.alexandr7035.gitstat.core.TimeHelper
 import com.alexandr7035.gitstat.data.local.CacheDao
 import com.alexandr7035.gitstat.data.local.model.ContributionDayEntity
@@ -17,9 +20,12 @@ class SyncRepository @Inject constructor(
     private val mapper: ContributionsDaysListRemoteToCacheMapper,
     private val timeHelper: TimeHelper) {
 
-    suspend fun syncAllContributions() {
+    suspend fun syncAllContributions(syncLiveData: MutableLiveData<SyncStatus>) {
 
         try {
+
+            syncLiveData.postValue(SyncStatus.PENDING)
+
             val profileCreationDate = performApolloRequest(ProfileCreationDateQuery()).viewer.createdAt as String
 
             val unixCreationDate = timeHelper.getUnixDateFromISO8601(profileCreationDate)
@@ -37,12 +43,15 @@ class SyncRepository @Inject constructor(
                 // Transform apollo result into room cache
                 contributionDaysCached.addAll(mapper.transform(resData))
             }
+
+            syncLiveData.postValue(SyncStatus.SUCCESS)
         }
 
         // TODO pass errors to UI here
         catch (e: SyncFailedException) {
             Log.d("DEBUG_TAG", "apollo error")
             e.printStackTrace()
+            syncLiveData.postValue(SyncStatus.FAILED)
         }
 
     }

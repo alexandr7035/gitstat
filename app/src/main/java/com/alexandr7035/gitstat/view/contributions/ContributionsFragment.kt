@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.alexandr7035.gitstat.R
+import com.alexandr7035.gitstat.data.local.model.ContributionsYear
 import com.alexandr7035.gitstat.databinding.FragmentContributionsBinding
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis

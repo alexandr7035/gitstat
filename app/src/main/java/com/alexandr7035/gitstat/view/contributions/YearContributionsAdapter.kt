@@ -3,7 +3,7 @@ package com.alexandr7035.gitstat.view.contributions
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import java.io.Serializable
+import com.alexandr7035.gitstat.data.local.model.ContributionsYear
 
 
 class YearContributionsAdapter(fragment: Fragment): FragmentStateAdapter(fragment) {

@@ -14,6 +14,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.databinding.FragmentLoginBinding
+import com.alexandr7035.gitstat.view.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -89,7 +90,7 @@ class LoginFragment: Fragment() {
             when (it) {
                 200 -> {
                     viewModel.saveToken(token)
-                    navController.navigate(R.id.actionLoginToMain)
+                    (activity as MainActivity).loginCallback()
                 }
 
                 // FIXME

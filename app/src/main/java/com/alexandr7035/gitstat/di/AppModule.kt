@@ -5,16 +5,14 @@ import com.alexandr7035.gitstat.core.AppPreferences
 import com.alexandr7035.gitstat.core.DaggerApp_HiltComponents_SingletonC.builder
 import com.alexandr7035.gitstat.core.ProgLangManager
 import com.alexandr7035.gitstat.core.TimeHelper
-import com.alexandr7035.gitstat.data.ContributionsRepository
-import com.alexandr7035.gitstat.data.LoginRepository
-import com.alexandr7035.gitstat.data.ReposRepository
-import com.alexandr7035.gitstat.data.UserRepository
+import com.alexandr7035.gitstat.data.*
 import com.alexandr7035.gitstat.data.local.CacheDB
 import com.alexandr7035.gitstat.data.local.CacheDao
 import com.alexandr7035.gitstat.data.remote.ApolloInterceptor
 import com.alexandr7035.gitstat.data.remote.RestApi
 import com.alexandr7035.gitstat.data.remote.RestApiHelper
 import com.alexandr7035.gitstat.data.remote.mappers.ContributionDayRemoteToCacheMapper
+import com.alexandr7035.gitstat.data.remote.mappers.ContributionsDaysListRemoteToCacheMapper
 import com.alexandr7035.gitstat.data.remote.mappers.RepositoryRemoteToCacheMapper
 import com.alexandr7035.gitstat.data.remote.mappers.UserRemoteToCacheMapper
 import com.apollographql.apollo3.ApolloClient
@@ -108,12 +106,18 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideContributionsRepository(
+    fun provideSyncRepository(
         apolloClient: ApolloClient,
         dao: CacheDao,
-        mapper: ContributionDayRemoteToCacheMapper,
-        timeHelper: TimeHelper): ContributionsRepository {
-        return ContributionsRepository(apolloClient, dao, mapper, timeHelper)
+        mapper: ContributionsDaysListRemoteToCacheMapper,
+        timeHelper: TimeHelper): SyncRepository {
+        return SyncRepository(apolloClient, dao, mapper, timeHelper)
+    }
+
+    @Provides
+    @Singleton
+    fun provideContributionsRepository(dao: CacheDao): ContributionsRepository{
+        return ContributionsRepository(dao)
     }
 
     @Provides
