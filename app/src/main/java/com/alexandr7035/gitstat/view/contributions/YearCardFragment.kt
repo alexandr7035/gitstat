@@ -93,11 +93,7 @@ class YearCardFragment: Fragment() {
             // Update chart
             binding?.contributionsChart?.invalidate()
 
-            binding?.contributionsCountView?.text = getString(
-                R.string.contributions_count,
-                "Last year",
-                this.days.sumOf { it.count }.toString()
-            )
+            binding?.contributionsCountView?.text = this.days.sumOf { it.count }.toString()
         }
 
 

@@ -78,11 +78,27 @@ class ContributionsFragment : Fragment() {
 
 
                 // FIXME test
-                val yearsData = listOf<ContributionsYear>(
-                    ContributionsYear(2018, contributions),
-                    ContributionsYear(2019, contributions),
-                    ContributionsYear(2020, contributions)
-                )
+                val yearsData = ArrayList<ContributionsYear>()
+
+                val yearFormat = SimpleDateFormat("yyyy", Locale.US)
+                yearFormat.timeZone = TimeZone.getTimeZone("GMT")
+
+                // FIXME debug only
+                for (year in 2016..2021) {
+                    val data = contributions.filter {
+
+                       val contributionYear = yearFormat.format(it.date).toInt()
+                        contributionYear == year
+                    }
+
+                    yearsData.add(ContributionsYear(year, data))
+                }
+
+
+//                    ContributionsYear(2018, contributions),
+//                    ContributionsYear(2019, contributions),
+//                    ContributionsYear(2020, contributions)
+//                )
 
                 adapter = YearContributionsAdapter(this)
                 adapter.setItems(yearsData)
