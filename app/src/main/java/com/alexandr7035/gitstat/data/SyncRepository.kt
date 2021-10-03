@@ -44,6 +44,9 @@ class SyncRepository @Inject constructor(
                 contributionDaysCached.addAll(mapper.transform(resData))
             }
 
+            dao.clearContributionsDaysCache()
+            dao.insertContributionsDaysCache(contributionDaysCached)
+
             syncLiveData.postValue(SyncStatus.SUCCESS)
         }
 
