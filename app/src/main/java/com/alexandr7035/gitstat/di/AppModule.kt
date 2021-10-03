@@ -4,6 +4,7 @@ import android.app.Application
 import com.alexandr7035.gitstat.core.AppPreferences
 import com.alexandr7035.gitstat.core.DaggerApp_HiltComponents_SingletonC.builder
 import com.alexandr7035.gitstat.core.ProgLangManager
+import com.alexandr7035.gitstat.core.TimeHelper
 import com.alexandr7035.gitstat.data.ContributionsRepository
 import com.alexandr7035.gitstat.data.LoginRepository
 import com.alexandr7035.gitstat.data.ReposRepository
@@ -110,8 +111,9 @@ object AppModule {
     fun provideContributionsRepository(
         apolloClient: ApolloClient,
         dao: CacheDao,
-        mapper: ContributionDayRemoteToCacheMapper): ContributionsRepository {
-        return ContributionsRepository(apolloClient, dao, mapper)
+        mapper: ContributionDayRemoteToCacheMapper,
+        timeHelper: TimeHelper): ContributionsRepository {
+        return ContributionsRepository(apolloClient, dao, mapper, timeHelper)
     }
 
     @Provides
@@ -152,5 +154,11 @@ object AppModule {
     @Singleton
     fun provideGson(): Gson {
         return Gson()
+    }
+
+    @Provides
+    @Singleton
+    fun provideTimeHelper(): TimeHelper {
+        return TimeHelper()
     }
 }
