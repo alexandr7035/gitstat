@@ -16,13 +16,13 @@ class ContributionsViewModel @Inject constructor(private val repository: Contrib
 
     fun syncLastYearContributions() {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.syncLastYearContributions()
+//            repository.syncLastYearContributions()
         }
     }
 
 
     // FIXME by year
     fun getLastYearContributions(): LiveData<List<ContributionDayEntity>> {
-        return repository.getLastYearContributions()
+        return repository.getAllContributions()
     }
 }

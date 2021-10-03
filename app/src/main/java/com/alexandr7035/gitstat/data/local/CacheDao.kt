@@ -42,11 +42,11 @@ interface CacheDao {
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertLastYearContributionsDaysCache(contributions: List<ContributionDayEntity>)
+    suspend fun insertContributionsDaysCache(contributions: List<ContributionDayEntity>)
 
     @Query("select * from contributions order by date")
-    fun getLastYearContributionDaysCache(): LiveData<List<ContributionDayEntity>>
+    fun getContributionsDaysCache(): LiveData<List<ContributionDayEntity>>
 
     @Query("DELETE FROM contributions")
-    suspend fun clearLastYearContributionsDaysCache()
+    suspend fun clearContributionsDaysCache()
 }

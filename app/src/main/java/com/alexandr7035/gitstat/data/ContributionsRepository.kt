@@ -29,53 +29,7 @@ class ContributionsRepository @Inject constructor(
         }
     }
 
-    suspend fun syncLastYearContributions() {
-//        val contributionDays = ArrayList<ContributionsLastYearQuery.ContributionDay>()
-//
-//        val response = apolloClient.query(ContributionsLastYearQuery())
-//
-//        // FIXME error handling
-//        if (response.hasErrors()) {
-//            Log.d("DEBUG_APOLLO", "errors")
-//        }
-//        else {
-//            Log.d("DEBUG_APOLLO", "success")
-//            Log.d("DEBUG_APOLLO", "data ${ response.data?.viewer?.contributionsCollection}")
-//
-//            if (response.data?.viewer?.contributionsCollection?.contributionCalendar?.weeks != null) {
-//                for (week in response.data!!.viewer.contributionsCollection.contributionCalendar.weeks) {
-//                    for (day in week.contributionDays) {
-////                        Log.d("DEBUG_APOLLO", "$day")
-//                        contributionDays.add(day)
-//                    }
-//                }
-//
-//                Log.d("DEBUG_APOLLO", "contributions $contributionDays")
-//                Log.d("DEBUG_APOLLO", "TOTAL contributions ${contributionDays.size}")
-//
-//                val cachedContributions = contributionDays.map { remoteDay ->
-//                    mapper.transform(remoteDay)
-//                }
-//
-//                Log.d("DEBUG_APOLLO", "TOTAL contributions ${cachedContributions.size}")
-//
-//                dao.clearLastYearContributionsDaysCache()
-//                dao.insertLastYearContributionsDaysCache(cachedContributions)
-//            }
-//        }
-    }
-
-    fun getLastYearContributions(): LiveData<List<ContributionDayEntity>> {
-        return dao.getLastYearContributionDaysCache()
-    }
-
-
     suspend fun syncAllContributions() {
-
-
-//        val response = apolloClient.query(ContributionsQuery("", ""))
-
-        // Date range more than a year is not allowed in this api
 
         var isFetchingSuccessFull = true
 
@@ -107,6 +61,7 @@ class ContributionsRepository @Inject constructor(
 
         val contributionDays = ArrayList<ContributionsQuery.ContributionDay>()
 
+        // Date range more than a year is not allowed in this api
         for (year in creationYear..currentYear) {
             val response = getContributionsForDateRange(year = year)
 
@@ -133,44 +88,14 @@ class ContributionsRepository @Inject constructor(
                 mapper.transform(remoteDay)
             }
 
-            dao.clearLastYearContributionsDaysCache()
-            dao.insertLastYearContributionsDaysCache(cachedContributions)
+            dao.clearContributionsDaysCache()
+            dao.insertContributionsDaysCache(cachedContributions)
         }
 
-
-//        val response = getContributionsForDateRange(year = 2021)
-//
-//        // FIXME error handling
-//        if (response.hasErrors()) {
-//            Log.d("DEBUG_APOLLO", "errors")
-//            Log.e("DEBUG_APOLLO", "${response.errors}")
-//        }
-//        else {
-//            Log.d("DEBUG_APOLLO", "success")
-//            Log.d("DEBUG_APOLLO", "data ${ response.data?.viewer?.contributionsCollection}")
-//
-//            if (response.data?.viewer?.contributionsCollection?.contributionCalendar?.weeks != null) {
-//                for (week in response.data!!.viewer.contributionsCollection.contributionCalendar.weeks) {
-//                    for (day in week.contributionDays) {
-//                        Log.d("DEBUG_APOLLO", "$day")
-//                        contributionDays.add(day)
-//                    }
-//                }
-//
-//                Log.d("DEBUG_APOLLO", "contributions $contributionDays")
-//
-//                val cachedContributions = contributionDays.map { remoteDay ->
-//                    mapper.transform(remoteDay)
-//                }
-//
-//                dao.clearLastYearContributionsDaysCache()
-//                dao.insertLastYearContributionsDaysCache(cachedContributions)
-//            }
-//        }
     }
 
     fun getAllContributions(): LiveData<List<ContributionDayEntity>> {
-        return dao.getLastYearContributionDaysCache()
+        return dao.getContributionsDaysCache()
     }
 
 

@@ -148,7 +148,7 @@ class ContributionsFragment : Fragment() {
             }
         })
 
-        viewModel.syncLastYearContributions()
+//        viewModel.syncLastYearContributions()
 
     }
 
