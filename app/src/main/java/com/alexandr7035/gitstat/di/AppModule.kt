@@ -1,6 +1,7 @@
 package com.alexandr7035.gitstat.di
 
 import android.app.Application
+import androidx.room.Room
 import com.alexandr7035.gitstat.core.AppPreferences
 import com.alexandr7035.gitstat.core.DaggerApp_HiltComponents_SingletonC.builder
 import com.alexandr7035.gitstat.core.ProgLangManager
@@ -141,7 +142,10 @@ object AppModule {
     @Provides
     @Singleton
     fun provideRoomDb(application: Application): CacheDB {
-        return CacheDB.getInstance(application)
+        return Room
+            .databaseBuilder(application.applicationContext, CacheDB::class.java, "cache.db")
+            .fallbackToDestructiveMigration()
+            .build()
     }
 
     @Provides
