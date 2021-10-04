@@ -1,0 +1,32 @@
+query Profile {
+    viewer {
+        databaseId
+        login
+        avatarUrl
+        name
+        location
+
+        privateRepositories: repositories(privacy: PRIVATE) {
+            totalCount
+        }
+
+        publicRepositories: repositories(privacy: PUBLIC) {
+            totalCount
+        }
+
+        allRepositories: repositories {
+            totalCount
+        }
+
+        followers {
+            totalCount
+        }
+
+        following {
+            totalCount
+        }
+
+        createdAt
+        updatedAt
+    }
+}
