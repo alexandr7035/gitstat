@@ -96,13 +96,13 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideUserRepository(api: RestApiHelper, dao: CacheDao, userMapper: UserRemoteToCacheMapper): UserRepository {
-        return UserRepository(api, dao, userMapper)
+    fun provideUserRepository(dao: CacheDao): UserRepository {
+        return UserRepository(dao)
     }
 
     @Provides
-    fun provideUserMapper(): UserRemoteToCacheMapper {
-        return UserRemoteToCacheMapper()
+    fun provideUserMapper(timeHelper: TimeHelper): UserRemoteToCacheMapper {
+        return UserRemoteToCacheMapper(timeHelper)
     }
 
     @Provides
@@ -110,9 +110,10 @@ object AppModule {
     fun provideSyncRepository(
         apolloClient: ApolloClient,
         dao: CacheDao,
-        mapper: ContributionsDaysListRemoteToCacheMapper,
+        profileMapper: UserRemoteToCacheMapper,
+        contributionsMapper: ContributionsDaysListRemoteToCacheMapper,
         timeHelper: TimeHelper): SyncRepository {
-        return SyncRepository(apolloClient, dao, mapper, timeHelper)
+        return SyncRepository(apolloClient, dao, profileMapper, contributionsMapper, timeHelper)
     }
 
     @Provides

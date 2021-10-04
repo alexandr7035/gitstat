@@ -1,15 +1,16 @@
 package com.alexandr7035.gitstat.data
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.alexandr7035.gitstat.apollo.ContributionsQuery
 import com.alexandr7035.gitstat.apollo.ProfileCreationDateQuery
-import com.alexandr7035.gitstat.core.SyncStatus
+import com.alexandr7035.gitstat.apollo.ProfileQuery
+import com.alexandr7035.gitstat.core.DataSyncStatus
 import com.alexandr7035.gitstat.core.TimeHelper
 import com.alexandr7035.gitstat.data.local.CacheDao
 import com.alexandr7035.gitstat.data.local.model.ContributionDayEntity
 import com.alexandr7035.gitstat.data.remote.mappers.ContributionsDaysListRemoteToCacheMapper
+import com.alexandr7035.gitstat.data.remote.mappers.UserRemoteToCacheMapper
 import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.api.Query
 import javax.inject.Inject
@@ -17,48 +18,66 @@ import javax.inject.Inject
 class SyncRepository @Inject constructor(
     private val apolloClient: ApolloClient,
     private val dao: CacheDao,
-    private val mapper: ContributionsDaysListRemoteToCacheMapper,
+    private val profileMapper: UserRemoteToCacheMapper,
+    private val contributionsMapper: ContributionsDaysListRemoteToCacheMapper,
     private val timeHelper: TimeHelper) {
 
-    suspend fun syncAllContributions(syncLiveData: MutableLiveData<SyncStatus>) {
+    suspend fun syncAllData(syncLiveData: MutableLiveData<DataSyncStatus>) {
 
         try {
+            syncLiveData.postValue(DataSyncStatus.PENDING_PROFILE)
+            syncProfileData()
 
-            syncLiveData.postValue(SyncStatus.PENDING)
+            syncLiveData.postValue(DataSyncStatus.PENDING_REPOSITORIES)
+            // TODO
 
-            val profileCreationDate = performApolloRequest(ProfileCreationDateQuery()).viewer.createdAt as String
+            syncLiveData.postValue(DataSyncStatus.PENDING_CONTRIBUTIONS)
+            syncAllContributions()
 
-            val unixCreationDate = timeHelper.getUnixDateFromISO8601(profileCreationDate)
-            val creationYear = timeHelper.getYearFromUnixDate(unixCreationDate)
-            val currentYear = timeHelper.getYearFromUnixDate(System.currentTimeMillis())
-
-            Log.d("DEBUG_TAG", "$creationYear $currentYear")
-
-            val contributionDaysCached = ArrayList<ContributionDayEntity>()
-
-            // Date range more than a year is not allowed in this api
-            // So we have to deal with multiple requests
-            for (year in creationYear..currentYear) {
-                val resData = getContributionsForDateRange(year)
-                // Transform apollo result into room cache
-                contributionDaysCached.addAll(mapper.transform(resData))
-            }
-
-            dao.clearContributionsDaysCache()
-            dao.insertContributionsDaysCache(contributionDaysCached)
-
-            syncLiveData.postValue(SyncStatus.SUCCESS)
+            syncLiveData.postValue(DataSyncStatus.SUCCESS)
         }
-
-        // TODO pass errors to UI here
         catch (e: SyncFailedException) {
+            // TODO pass errors to UI here
             Log.d("DEBUG_TAG", "apollo error")
             e.printStackTrace()
-            syncLiveData.postValue(SyncStatus.FAILED)
+            // FIXME handle 2 fail statuses
+            syncLiveData.postValue(DataSyncStatus.FAILED_WITH_CACHE)
         }
+    }
+
+
+    private suspend fun syncAllContributions() {
+
+        val profileCreationDate = performApolloRequest(ProfileCreationDateQuery()).viewer.createdAt as String
+
+        val unixCreationDate = timeHelper.getUnixDateFromISO8601(profileCreationDate)
+        val creationYear = timeHelper.getYearFromUnixDate(unixCreationDate)
+        val currentYear = timeHelper.getYearFromUnixDate(System.currentTimeMillis())
+
+        Log.d("DEBUG_TAG", "$creationYear $currentYear")
+
+        val contributionDaysCached = ArrayList<ContributionDayEntity>()
+
+        // Date range more than a year is not allowed in this api
+        // So we have to deal with multiple requests
+        for (year in creationYear..currentYear) {
+            val resData = getContributionsForDateRange(year)
+            // Transform apollo result into room cache
+            contributionDaysCached.addAll(contributionsMapper.transform(resData))
+        }
+
+        dao.clearContributionsDaysCache()
+        dao.insertContributionsDaysCache(contributionDaysCached)
 
     }
 
+
+    private suspend fun syncProfileData() {
+        val data = performApolloRequest(ProfileQuery())
+        val cachedProfile = profileMapper.transform(data)
+        dao.clearUserCache()
+        dao.insertUserCache(cachedProfile)
+    }
 
     // Pass null to get contributions for the last year
     private suspend fun getContributionsForDateRange(year: Int?): ContributionsQuery.Data {
