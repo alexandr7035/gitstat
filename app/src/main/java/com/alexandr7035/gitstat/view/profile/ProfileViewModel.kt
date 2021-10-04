@@ -18,14 +18,4 @@ class ProfileViewModel @Inject constructor(private val userRepository: UserRepos
         return userRepository.getUserLiveDataFromCache()
     }
 
-    fun getSyncStatusLiveData(): LiveData<SyncStatus> {
-        return userRepository.getSyncStatusLiveData()
-    }
-
-    fun syncUserDta() {
-        viewModelScope.launch(Dispatchers.IO) {
-            userRepository.syncUserData()
-        }
-    }
-
 }

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.alexandr7035.gitstat.core.DataSyncStatus
 import com.alexandr7035.gitstat.core.SyncStatus
 import com.alexandr7035.gitstat.data.LoginRepository
 import com.alexandr7035.gitstat.data.SyncRepository
@@ -18,7 +19,7 @@ class LoginViewModel @Inject constructor(
     private val syncRepository: SyncRepository): ViewModel() {
 
     private val resCodeLiveData = MutableLiveData<Int>()
-    private val syncStatusLiveData = MutableLiveData<SyncStatus>()
+    private val syncStatusLiveData = MutableLiveData<DataSyncStatus>()
 
     fun doLoginRequest(token: String) {
         loginRepository.doLoginRequest(resCodeLiveData, token)
@@ -45,14 +46,14 @@ class LoginViewModel @Inject constructor(
     }
 
 
-    fun getSyncStatusLiveData(): MutableLiveData<SyncStatus> {
+    fun getSyncStatusLiveData(): MutableLiveData<DataSyncStatus> {
         return syncStatusLiveData
     }
 
     fun syncData() {
         // FIXME sync all data here
         viewModelScope.launch(Dispatchers.IO) {
-            syncRepository.syncAllContributions(syncStatusLiveData)
+            syncRepository.syncAllData(syncStatusLiveData)
         }
     }
 

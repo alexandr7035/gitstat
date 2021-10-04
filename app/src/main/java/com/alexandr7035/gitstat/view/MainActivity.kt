@@ -9,6 +9,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.alexandr7035.gitstat.R
+import com.alexandr7035.gitstat.core.DataSyncStatus
 import com.alexandr7035.gitstat.core.SyncStatus
 import com.alexandr7035.gitstat.databinding.ActivityMainBinding
 import com.alexandr7035.gitstat.view.login.LoginViewModel
@@ -66,7 +67,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.getSyncStatusLiveData().observe(this, { status ->
 
             when (status) {
-                SyncStatus.SUCCESS -> {
+                DataSyncStatus.SUCCESS -> {
                     Log.d("DEBUG_TAG", "SYNC success")
                     navController.navigate(R.id.actionLoginToMain)
                     binding.progressView.visibility = View.GONE
@@ -74,12 +75,13 @@ class MainActivity : AppCompatActivity() {
                     updateStartDestination(R.id.profileFragment)
                 }
 
-                SyncStatus.PENDING -> {
+                // FIXME handle all
+                DataSyncStatus.PENDING_PROFILE -> {
                     binding.progressView.visibility = View.VISIBLE
                     Log.d("DEBUG_TAG", "SYNC pending")
                 }
 
-                SyncStatus.FAILED -> {
+                DataSyncStatus.FAILED_WITH_CACHE -> {
                     // FIXME
                     // 2 fail statuses
                     binding.progressView.visibility = View.VISIBLE

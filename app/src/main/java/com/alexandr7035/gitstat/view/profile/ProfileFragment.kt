@@ -68,9 +68,9 @@ class ProfileFragment : Fragment() {
                 binding!!.followersView.text = it.followers.toString()
                 binding!!.locationView.text = it.location
 
-                binding!!.totalReposView.text = (it.total_private_repos + it.public_repos).toString()
-                binding!!.privateReposView.text = it.total_private_repos.toString()
-                binding!!.publicReposView.text = it.public_repos.toString()
+                binding!!.totalReposView.text = it.total_repos_count.toString()
+                binding!!.privateReposView.text = it.private_repos_count.toString()
+                binding!!.publicReposView.text = it.public_repos_count.toString()
             }
 
             // Cache db is empty
@@ -78,24 +78,6 @@ class ProfileFragment : Fragment() {
                 hideProfileViews()
             }
 
-        })
-
-
-        // Update synchronization status view
-        viewModel.getSyncStatusLiveData().observe(viewLifecycleOwner, {
-            when (it!!) {
-                SyncStatus.PENDING -> {
-                    binding!!.syncStatusView.setBackgroundResource(R.drawable.background_sync_button_pending)
-                }
-                SyncStatus.SUCCESS -> {
-//                    binding.swipeRefreshLayout.isRefreshing = false
-                    binding!!.syncStatusView.setBackgroundResource(R.drawable.background_sync_button_synced)
-                }
-                SyncStatus.FAILED -> {
-//                    binding.swipeRefreshLayout.isRefreshing = false
-                    binding!!.syncStatusView.setBackgroundResource(R.drawable.background_sync_button_failed)
-                }
-            }
         })
 
         binding!!.reposStatDetailedBtn.setOnClickListener {
@@ -106,8 +88,6 @@ class ProfileFragment : Fragment() {
             loginViewModel.logOut()
             navController.navigate(R.id.loginFragment)
         }
-
-        viewModel.syncUserDta()
 
     }
 
