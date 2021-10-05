@@ -9,8 +9,6 @@ import com.alexandr7035.gitstat.data.local.CacheDB
 import com.alexandr7035.gitstat.data.local.CacheDao
 import com.alexandr7035.gitstat.data.local.mappers.ContributionsDaysToYearsMapper
 import com.alexandr7035.gitstat.data.remote.ApolloInterceptor
-import com.alexandr7035.gitstat.data.remote.RestApi
-import com.alexandr7035.gitstat.data.remote.RestApiHelper
 import com.alexandr7035.gitstat.data.remote.mappers.ContributionDayRemoteToCacheMapper
 import com.alexandr7035.gitstat.data.remote.mappers.ContributionsDaysListRemoteToCacheMapper
 import com.alexandr7035.gitstat.data.remote.mappers.RepositoriesRemoteToCacheMapper
@@ -22,10 +20,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import okhttp3.OkHttpClient
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
@@ -34,46 +28,10 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideHttpClient(): OkHttpClient {
-        return  OkHttpClient.Builder()
-            .connectTimeout(5, TimeUnit.SECONDS)
-            .readTimeout(5, TimeUnit.SECONDS)
-            .writeTimeout(5, TimeUnit.SECONDS)
-//            .addInterceptor(HttpLoggingInterceptor().apply {
-//                level = HttpLoggingInterceptor.Level.BODY
-//            })
-            .retryOnConnectionFailure(false)
-            .build()
-    }
-
-
-    @Provides
-    @Singleton
-    fun provideRetrofit(client: OkHttpClient): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl("https://api.github.com/")
-            .client(client)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
-
-    @Provides
-    @Singleton
     fun provideApollo(appPreferences: AppPreferences): ApolloClient {
         return ApolloClient(networkTransport = HttpNetworkTransport("https://api.github.com/graphql", interceptors = listOf(ApolloInterceptor(appPreferences))))
     }
 
-    @Provides
-    @Singleton
-    fun provideRestApi(retrofit: Retrofit): RestApi {
-        return retrofit.create(RestApi::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun provideRestApiHelper(appPreferences: AppPreferences, restApi: RestApi): RestApiHelper {
-        return RestApiHelper(appPreferences, restApi)
-    }
 
     @Provides
     @Singleton
@@ -86,8 +44,8 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideLoginRepository(appPreferences: AppPreferences, restApiHelper: RestApiHelper, dao: CacheDao): LoginRepository {
-        return LoginRepository(appPreferences, restApiHelper, dao)
+    fun provideLoginRepository(appPreferences: AppPreferences, dao: CacheDao): LoginRepository {
+        return LoginRepository(appPreferences, dao)
     }
 
     @Provides
