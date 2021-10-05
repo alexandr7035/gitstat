@@ -23,20 +23,20 @@ class RepositoriesViewModel @Inject constructor(private val repository: ReposRep
     private val archivedReposLiveData = MutableLiveData<List<RepositoryEntity>>()
     private val tabRefreshedLiveData = MutableLiveData<Int>()
 
-    // Sync from remote source to the DB
-    fun syncRepositoriesData() {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.syncRepositoriesData()
-
-            updateAllRepositoriesLiveData()
-            updateActiveRepositoriesLiveData()
-            updateArchivedRepositoriesLiveData()
-        }
-    }
-
-    fun getSyncStatusLiveData(): LiveData<SyncStatus> {
-        return repository.getSyncStatusLiveData()
-    }
+//    // Sync from remote source to the DB
+//    fun syncRepositoriesData() {
+//        viewModelScope.launch(Dispatchers.IO) {
+//            repository.syncRepositoriesData()
+//
+//            updateAllRepositoriesLiveData()
+//            updateActiveRepositoriesLiveData()
+//            updateArchivedRepositoriesLiveData()
+//        }
+//    }
+//
+//    fun getSyncStatusLiveData(): LiveData<SyncStatus> {
+//        return repository.getSyncStatusLiveData()
+//    }
 
 
     // Repos livedata

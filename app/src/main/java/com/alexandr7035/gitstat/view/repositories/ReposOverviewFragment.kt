@@ -11,8 +11,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.alexandr7035.gitstat.R
-import com.alexandr7035.gitstat.core.App
-import com.alexandr7035.gitstat.core.SyncStatus
 import com.alexandr7035.gitstat.databinding.FragmentReposOverviewBinding
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
@@ -74,7 +72,7 @@ class ReposOverviewFragment : Fragment() {
                 binding!!.publicReposCountView.text = publicReposCount.toString()
 
                 // Diagram data. Colors must correspond entries in their order in list
-                val languages = ((requireActivity().application) as App).progLangManager.getLanguagesList(reposList)
+                val languages = viewModel.getLanguagesForReposList(reposList)
                 val entries = ArrayList<PieEntry>()
                 val diagramColors: MutableList<Int> = ArrayList()
 
@@ -119,33 +117,13 @@ class ReposOverviewFragment : Fragment() {
         })
 
 
-        // Update synchronization status view
-        viewModel.getSyncStatusLiveData().observe(viewLifecycleOwner, {
-
-            when (it!!) {
-                SyncStatus.PENDING -> {
-                    binding!!.syncStatusView.setBackgroundResource(R.drawable.background_sync_button_pending)
-                }
-                SyncStatus.SUCCESS -> {
-//                    binding!!.swipeRefreshLayout.isRefreshing = false
-                    binding!!.syncStatusView.setBackgroundResource(R.drawable.background_sync_button_synced)
-                }
-                SyncStatus.FAILED -> {
-//                    binding!!.swipeRefreshLayout.isRefreshing = false
-                    binding!!.syncStatusView.setBackgroundResource(R.drawable.background_sync_button_failed)
-                }
-            }
-        })
-
         binding!!.toReposListBtn.setOnClickListener {
             navController.navigate(R.id.action_reposFragment_to_repositoriesListHostFragment)
         }
 
-        // FIrst gets from cache
-        // Then sync with remote
+
         // FIXME find better solution (see viewmodel)
         viewModel.updateAllRepositoriesLiveData()
-        viewModel.syncRepositoriesData()
 
     }
 

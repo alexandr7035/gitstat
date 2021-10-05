@@ -30,7 +30,7 @@ class ActiveRepositoriesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Setup adapter
-        adapter = RepositoriesAdapter((requireActivity().application as App).progLangManager)
+        adapter = RepositoriesAdapter()
         binding!!.root.adapter = adapter
         binding!!.root.layoutManager = LinearLayoutManager(context)
 

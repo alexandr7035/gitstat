@@ -30,13 +30,13 @@ object RepositoriesListFiltersHelper {
         // Forks
         when (filters.filterForks) {
             ReposFilters.FilterForks.FORKS_ONLY -> unfilteredList.forEach {
-                if (! it.fork) {
+                if (! it.isFork) {
                     filteredList.remove(it)
                 }
             }
 
             ReposFilters.FilterForks.EXCLUDE_FORKS -> unfilteredList.forEach {
-                if (it.fork) {
+                if (it.isFork) {
                     filteredList.remove(it)
                 }
             }
