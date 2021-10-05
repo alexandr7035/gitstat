@@ -3,7 +3,6 @@ package com.alexandr7035.gitstat.di
 import android.app.Application
 import androidx.room.Room
 import com.alexandr7035.gitstat.core.AppPreferences
-import com.alexandr7035.gitstat.core.DaggerApp_HiltComponents_SingletonC.builder
 import com.alexandr7035.gitstat.core.ProgLangManager
 import com.alexandr7035.gitstat.core.TimeHelper
 import com.alexandr7035.gitstat.data.*
@@ -15,7 +14,7 @@ import com.alexandr7035.gitstat.data.remote.RestApi
 import com.alexandr7035.gitstat.data.remote.RestApiHelper
 import com.alexandr7035.gitstat.data.remote.mappers.ContributionDayRemoteToCacheMapper
 import com.alexandr7035.gitstat.data.remote.mappers.ContributionsDaysListRemoteToCacheMapper
-import com.alexandr7035.gitstat.data.remote.mappers.RepositoryRemoteToCacheMapper
+import com.alexandr7035.gitstat.data.remote.mappers.RepositoriesRemoteToCacheMapper
 import com.alexandr7035.gitstat.data.remote.mappers.UserRemoteToCacheMapper
 import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.network.http.HttpNetworkTransport
@@ -80,13 +79,11 @@ object AppModule {
     @Provides
     @Singleton
     fun provideReposRepository(
-        restApiHelper: RestApiHelper,
         dao: CacheDao,
-        repositoryMapper: RepositoryRemoteToCacheMapper,
         appPreferences: AppPreferences,
         progLangManager: ProgLangManager,
         gson: Gson): ReposRepository {
-        return ReposRepository(restApiHelper, dao, repositoryMapper, appPreferences, gson, progLangManager)
+        return ReposRepository(dao, appPreferences, gson, progLangManager)
     }
 
     @Provides
@@ -112,9 +109,10 @@ object AppModule {
         apolloClient: ApolloClient,
         dao: CacheDao,
         profileMapper: UserRemoteToCacheMapper,
+        repositoriesMapper: RepositoriesRemoteToCacheMapper,
         contributionsMapper: ContributionsDaysListRemoteToCacheMapper,
         timeHelper: TimeHelper): SyncRepository {
-        return SyncRepository(apolloClient, dao, profileMapper, contributionsMapper, timeHelper)
+        return SyncRepository(apolloClient, dao, profileMapper, repositoriesMapper, contributionsMapper, timeHelper)
     }
 
     @Provides
@@ -124,8 +122,8 @@ object AppModule {
     }
 
     @Provides
-    fun provideReposMapper(): RepositoryRemoteToCacheMapper {
-        return RepositoryRemoteToCacheMapper()
+    fun provideReposMapper(timeHelper: TimeHelper): RepositoriesRemoteToCacheMapper {
+        return RepositoriesRemoteToCacheMapper(timeHelper)
     }
 
     @Provides

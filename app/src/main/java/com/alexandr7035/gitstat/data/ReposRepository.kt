@@ -1,60 +1,51 @@
 package com.alexandr7035.gitstat.data
 
-import androidx.lifecycle.MutableLiveData
 import com.alexandr7035.gitstat.core.AppPreferences
 import com.alexandr7035.gitstat.core.Language
 import com.alexandr7035.gitstat.core.ProgLangManager
-import com.alexandr7035.gitstat.core.SyncStatus
 import com.alexandr7035.gitstat.data.local.CacheDao
 import com.alexandr7035.gitstat.data.local.model.RepositoryEntity
-import com.alexandr7035.gitstat.data.remote.RestApiHelper
-import com.alexandr7035.gitstat.data.remote.mappers.RepositoryRemoteToCacheMapper
-import com.alexandr7035.gitstat.data.remote.model.RepositoryModel
 import com.alexandr7035.gitstat.view.repositories.filters.ReposFilters
 import com.google.gson.Gson
 import javax.inject.Inject
 
 class ReposRepository @Inject constructor(
-    private val api: RestApiHelper,
     private val dao: CacheDao,
-    private val repoMapper: RepositoryRemoteToCacheMapper,
     private val appPreferences: AppPreferences,
     private val gson: Gson,
-    private val langManager: ProgLangManager
-) {
-    private val syncStateLiveData = MutableLiveData<SyncStatus>()
+    private val langManager: ProgLangManager) {
 
-    suspend fun syncRepositoriesData() {
-
-        syncStateLiveData.postValue(SyncStatus.PENDING)
-
-        try {
-            val res = api.getRepositoriesData()
-
-            if (res.isSuccessful) {
-                syncStateLiveData.postValue(SyncStatus.SUCCESS)
-                val reposList: List<RepositoryModel> = res.body()!!
-
-                val cachedReposList = reposList.map { repositoryModel ->
-                    repoMapper.transform(repositoryModel)
-                }
-
-                dao.clearRepositoriesCache()
-                dao.insertRepositoriesCache(cachedReposList)
-            } else {
-                syncStateLiveData.postValue(SyncStatus.FAILED)
-            }
-        }
-
-        catch (e: Exception) {
-            ////Log.d(LOG_TAG, "exception ${e}")
-            syncStateLiveData.postValue(SyncStatus.FAILED)
-        }
-    }
-
-    fun getSyncStatusLiveData(): MutableLiveData<SyncStatus> {
-        return syncStateLiveData
-    }
+//    suspend fun syncRepositoriesData() {
+//
+////        syncStateLiveData.postValue(SyncStatus.PENDING)
+//
+//        try {
+//            val res = api.getRepositoriesData()
+//
+//            if (res.isSuccessful) {
+//                syncStateLiveData.postValue(SyncStatus.SUCCESS)
+//                val reposList: List<RepositoryModel> = res.body()!!
+//
+////                val cachedReposList = reposList.map { repositoryModel ->
+////                    repoMapper.transform(repositoryModel)
+////                }
+//
+////                dao.clearRepositoriesCache()
+////                dao.insertRepositoriesCache(cachedReposList)
+//            } else {
+//                syncStateLiveData.postValue(SyncStatus.FAILED)
+//            }
+//        }
+//
+//        catch (e: Exception) {
+//            ////Log.d(LOG_TAG, "exception ${e}")
+//            syncStateLiveData.postValue(SyncStatus.FAILED)
+//        }
+//    }
+//
+//    fun getSyncStatusLiveData(): MutableLiveData<SyncStatus> {
+//        return syncStateLiveData
+//    }
 
     suspend fun fetchAllRepositoriesFromDb(): List<RepositoryEntity> {
         return dao.getRepositoriesCache()

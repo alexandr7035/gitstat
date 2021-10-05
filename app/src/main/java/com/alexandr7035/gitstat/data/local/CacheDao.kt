@@ -31,10 +31,10 @@ interface CacheDao {
     @Query("select * from repositories")
     suspend fun getRepositoriesCache(): List<RepositoryEntity>
 
-    @Query("select * from repositories where not archived")
+    @Query("select * from repositories where not isArchived")
     suspend fun getActiveRepositoriesCache(): List<RepositoryEntity>
 
-    @Query("select * from repositories where archived")
+    @Query("select * from repositories where isArchived")
     suspend fun getArchivedRepositoriesCache(): List<RepositoryEntity>
 
     @Query("DELETE FROM repositories")

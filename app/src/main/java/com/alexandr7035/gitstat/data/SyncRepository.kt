@@ -5,11 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import com.alexandr7035.gitstat.apollo.ContributionsQuery
 import com.alexandr7035.gitstat.apollo.ProfileCreationDateQuery
 import com.alexandr7035.gitstat.apollo.ProfileQuery
+import com.alexandr7035.gitstat.apollo.RepositoriesQuery
 import com.alexandr7035.gitstat.core.DataSyncStatus
 import com.alexandr7035.gitstat.core.TimeHelper
 import com.alexandr7035.gitstat.data.local.CacheDao
 import com.alexandr7035.gitstat.data.local.model.ContributionDayEntity
 import com.alexandr7035.gitstat.data.remote.mappers.ContributionsDaysListRemoteToCacheMapper
+import com.alexandr7035.gitstat.data.remote.mappers.RepositoriesRemoteToCacheMapper
 import com.alexandr7035.gitstat.data.remote.mappers.UserRemoteToCacheMapper
 import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.api.Query
@@ -19,22 +21,29 @@ class SyncRepository @Inject constructor(
     private val apolloClient: ApolloClient,
     private val dao: CacheDao,
     private val profileMapper: UserRemoteToCacheMapper,
+    private val repositoriesMapper: RepositoriesRemoteToCacheMapper,
     private val contributionsMapper: ContributionsDaysListRemoteToCacheMapper,
     private val timeHelper: TimeHelper) {
 
     suspend fun syncAllData(syncLiveData: MutableLiveData<DataSyncStatus>) {
+
+        val start = System.currentTimeMillis()
 
         try {
             syncLiveData.postValue(DataSyncStatus.PENDING_PROFILE)
             syncProfileData()
 
             syncLiveData.postValue(DataSyncStatus.PENDING_REPOSITORIES)
-            // TODO
+            syncRepositories()
 
             syncLiveData.postValue(DataSyncStatus.PENDING_CONTRIBUTIONS)
             syncAllContributions()
 
             syncLiveData.postValue(DataSyncStatus.SUCCESS)
+
+            val end = System.currentTimeMillis()
+
+            Log.d("DEBUG_TAG", "sync finished in ${end-start} ms")
         }
         catch (e: SyncFailedException) {
             // TODO pass errors to UI here
@@ -78,6 +87,14 @@ class SyncRepository @Inject constructor(
         dao.clearUserCache()
         dao.insertUserCache(cachedProfile)
     }
+
+    private suspend fun syncRepositories() {
+        val data = performApolloRequest(RepositoriesQuery())
+        val cachedRepositories = repositoriesMapper.transform(data)
+        Log.d("DEBUG_TAG", "${cachedRepositories.size}")
+        dao.insertRepositoriesCache(cachedRepositories)
+    }
+
 
     // Pass null to get contributions for the last year
     private suspend fun getContributionsForDateRange(year: Int?): ContributionsQuery.Data {
