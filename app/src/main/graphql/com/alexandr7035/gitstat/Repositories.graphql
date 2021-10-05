@@ -1,0 +1,24 @@
+query Repositories {
+    viewer {
+        # FIXME pagination
+        repositories(first: 100)  {
+            nodes {
+                databaseId
+                name
+
+                primaryLanguage {
+                    color
+                    name
+                }
+
+                isPrivate
+                isArchived
+                isFork
+
+                stargazerCount
+
+                createdAt
+            }
+        }
+    }
+}
