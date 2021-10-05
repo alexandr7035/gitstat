@@ -1,12 +1,14 @@
 package com.alexandr7035.gitstat.view.contributions
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.alexandr7035.gitstat.R
+import com.alexandr7035.gitstat.data.YAxisParams
 import com.alexandr7035.gitstat.data.local.model.ContributionsYear
 import com.alexandr7035.gitstat.databinding.ViewPlotContributionsYearBinding
 import com.github.mikephil.charting.components.Legend
@@ -62,6 +64,9 @@ class YearCardFragment: Fragment() {
 
         val yearData = arguments?.getSerializable("yearData") as ContributionsYear
 
+        val yAxisParams = YAxisParams.getParamsForContributionYearCard(yearData)
+        Log.d("DEBUG_TAG", "axisparams $yAxisParams")
+
         yearData.apply {
             binding?.contributionsYear?.text = this.year.toString()
 
@@ -89,6 +94,15 @@ class YearCardFragment: Fragment() {
             binding!!.contributionsChart.apply {
                 data = lineData
                 data.isHighlightEnabled = false
+
+                // Update axis params
+                axisLeft.axisMinimum = yAxisParams.minValue
+                axisLeft.axisMaximum = yAxisParams.maxValue
+                axisLeft.labelCount = yAxisParams.labelsCount
+
+                axisRight.axisMinimum = yAxisParams.minValue
+                axisRight.axisMaximum = yAxisParams.maxValue
+                axisRight.labelCount = yAxisParams.labelsCount
             }
 
             // Update chart
