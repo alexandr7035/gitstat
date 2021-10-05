@@ -61,5 +61,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="total_contributions">total contributions</string>
     <string name="contributions_rate">%1$.2f / d</string>
+    <string name="no_contributions_for_period">No contributions for this period of time :(</string>
 
 </resources>

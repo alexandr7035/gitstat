@@ -94,7 +94,18 @@ class YearCardFragment: Fragment() {
             // Update chart
             binding?.contributionsChart?.invalidate()
 
-            binding?.contributionsCountView?.text = this.days.sumOf { it.count }.toString()
+            val contributionsCount = this.days.sumOf { it.count }
+            binding?.contributionsCountView?.text = contributionsCount.toString()
+
+            // Show stub if no contributions for this year
+            if (contributionsCount == 0) {
+                binding?.emptyPlotStub?.visibility = View.VISIBLE
+                binding?.contributionsChart?.visibility = View.GONE
+            }
+            else {
+                binding?.emptyPlotStub?.visibility = View.GONE
+                binding?.contributionsChart?.visibility = View.VISIBLE
+            }
         }
 
 
