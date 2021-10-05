@@ -3,7 +3,6 @@ package com.alexandr7035.gitstat.di
 import android.app.Application
 import androidx.room.Room
 import com.alexandr7035.gitstat.core.AppPreferences
-import com.alexandr7035.gitstat.core.ProgLangManager
 import com.alexandr7035.gitstat.core.TimeHelper
 import com.alexandr7035.gitstat.data.*
 import com.alexandr7035.gitstat.data.local.CacheDB
@@ -81,9 +80,8 @@ object AppModule {
     fun provideReposRepository(
         dao: CacheDao,
         appPreferences: AppPreferences,
-        progLangManager: ProgLangManager,
         gson: Gson): ReposRepository {
-        return ReposRepository(dao, appPreferences, gson, progLangManager)
+        return ReposRepository(dao, appPreferences, gson)
     }
 
     @Provides
@@ -150,12 +148,6 @@ object AppModule {
     @Singleton
     fun provideRoomDao(db: CacheDB): CacheDao {
         return db.getDao()
-    }
-
-    @Provides
-    @Singleton
-    fun provideLanguagesManager(application: Application): ProgLangManager{
-        return ProgLangManager(application)
     }
 
     @Provides

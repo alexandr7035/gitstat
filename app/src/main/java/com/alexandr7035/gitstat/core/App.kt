@@ -5,11 +5,7 @@ import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
 class App(): Application() {
-
-    lateinit var progLangManager: ProgLangManager
-
     override fun onCreate() {
         super.onCreate()
-        progLangManager = ProgLangManager(context = applicationContext)
     }
 }
