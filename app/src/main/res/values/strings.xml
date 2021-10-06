@@ -63,4 +63,8 @@
     <string name="contributions_rate">%1$.2f / d</string>
     <string name="no_contributions_for_period">No contributions for this period of time :(</string>
 
+    <string name="stage_profile">1 / 3 Fetching profile…</string>
+    <string name="stage_repositories">2 / 3 Fetching repositories…</string>
+    <string name="stage_contributions">3 / 3 Fetching contributions…</string>
+
 </resources>

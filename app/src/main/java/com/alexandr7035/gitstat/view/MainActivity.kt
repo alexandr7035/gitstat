@@ -66,19 +66,29 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.getSyncStatusLiveData().observe(this, { status ->
 
+            Log.d("DEBUG_TAG", "SYNC status changed $status")
+
             when (status) {
                 DataSyncStatus.SUCCESS -> {
-                    Log.d("DEBUG_TAG", "SYNC success")
                     navController.navigate(R.id.actionLoginToMain)
                     binding.progressView.visibility = View.GONE
 
                     updateStartDestination(R.id.profileFragment)
                 }
 
-                // FIXME handle all
                 DataSyncStatus.PENDING_PROFILE -> {
                     binding.progressView.visibility = View.VISIBLE
-                    Log.d("DEBUG_TAG", "SYNC pending")
+                    binding.syncStageView.text = getString(R.string.stage_profile)
+                }
+
+                DataSyncStatus.PENDING_REPOSITORIES -> {
+                    binding.progressView.visibility = View.VISIBLE
+                    binding.syncStageView.text = getString(R.string.stage_repositories)
+                }
+
+                DataSyncStatus.PENDING_CONTRIBUTIONS -> {
+                    binding.progressView.visibility = View.VISIBLE
+                    binding.syncStageView.text = getString(R.string.stage_contributions)
                 }
 
                 DataSyncStatus.FAILED_WITH_CACHE -> {
@@ -87,6 +97,14 @@ class MainActivity : AppCompatActivity() {
                     binding.progressView.visibility = View.VISIBLE
                     Log.d("DEBUG_TAG", "SYNC failed")
                 }
+
+                DataSyncStatus.FAILED_WITH_NO_CACHE -> {
+                    // FIXME
+                    binding.progressView.visibility = View.VISIBLE
+                    Log.d("DEBUG_TAG", "SYNC failed")
+                }
+
+
             }
 
         })
