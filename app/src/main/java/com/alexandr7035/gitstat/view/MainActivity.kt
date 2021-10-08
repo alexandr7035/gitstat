@@ -10,7 +10,6 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.core.DataSyncStatus
-import com.alexandr7035.gitstat.core.SyncStatus
 import com.alexandr7035.gitstat.databinding.ActivityMainBinding
 import com.alexandr7035.gitstat.view.login.LoginViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -91,19 +90,24 @@ class MainActivity : AppCompatActivity() {
                     binding.syncStageView.text = getString(R.string.stage_contributions)
                 }
 
-                DataSyncStatus.FAILED_WITH_CACHE -> {
+                DataSyncStatus.FAILED_NETWORK_WITH_CACHE -> {
                     // FIXME
                     // 2 fail statuses
                     binding.progressView.visibility = View.VISIBLE
                     Log.d("DEBUG_TAG", "SYNC failed")
                 }
 
-                DataSyncStatus.FAILED_WITH_NO_CACHE -> {
+                DataSyncStatus.FAILED_NETWORK_WITH_NO_CACHE -> {
                     // FIXME
                     binding.progressView.visibility = View.VISIBLE
                     Log.d("DEBUG_TAG", "SYNC failed")
                 }
 
+                DataSyncStatus.AUTHORIZATION_ERROR -> {
+                    // FIXME
+                    binding.progressView.visibility = View.VISIBLE
+                    Log.d("DEBUG_TAG", "SYNC failed")
+                }
 
             }
 

@@ -6,7 +6,9 @@ import com.alexandr7035.gitstat.apollo.ContributionsQuery
 import com.alexandr7035.gitstat.apollo.ProfileCreationDateQuery
 import com.alexandr7035.gitstat.apollo.ProfileQuery
 import com.alexandr7035.gitstat.apollo.RepositoriesQuery
+import com.alexandr7035.gitstat.core.AppError
 import com.alexandr7035.gitstat.core.DataSyncStatus
+import com.alexandr7035.gitstat.core.ErrorType
 import com.alexandr7035.gitstat.core.TimeHelper
 import com.alexandr7035.gitstat.data.local.CacheDao
 import com.alexandr7035.gitstat.data.local.model.ContributionDayEntity
@@ -30,14 +32,14 @@ class SyncRepository @Inject constructor(
         val start = System.currentTimeMillis()
 
         try {
-//            syncLiveData.postValue(DataSyncStatus.PENDING_PROFILE)
-//            syncProfileData()
-//
-//            syncLiveData.postValue(DataSyncStatus.PENDING_REPOSITORIES)
-//            syncRepositories()
-//
-//            syncLiveData.postValue(DataSyncStatus.PENDING_CONTRIBUTIONS)
-//            syncAllContributions()
+            syncLiveData.postValue(DataSyncStatus.PENDING_PROFILE)
+            syncProfileData()
+
+            syncLiveData.postValue(DataSyncStatus.PENDING_REPOSITORIES)
+            syncRepositories()
+
+            syncLiveData.postValue(DataSyncStatus.PENDING_CONTRIBUTIONS)
+            syncAllContributions()
 
             syncLiveData.postValue(DataSyncStatus.SUCCESS)
 
@@ -45,12 +47,22 @@ class SyncRepository @Inject constructor(
 
             Log.d("DEBUG_TAG", "sync finished in ${end-start} ms")
         }
-        catch (e: SyncFailedException) {
-            // TODO pass errors to UI here
-            Log.d("DEBUG_TAG", "apollo error")
-            e.printStackTrace()
-            // FIXME handle 2 fail statuses
-            syncLiveData.postValue(DataSyncStatus.FAILED_WITH_CACHE)
+        catch (e: AppError) {
+            when (e.type) {
+                ErrorType.FAILED_CONNECTION -> {
+                    // FIXME check cache
+                    syncLiveData.postValue(DataSyncStatus.FAILED_NETWORK_WITH_CACHE)
+                }
+
+                ErrorType.FAILED_AUTHORIZATION -> {
+                    syncLiveData.postValue(DataSyncStatus.AUTHORIZATION_ERROR)
+                }
+
+                ErrorType.UNKNOWN_ERROR -> {
+                    // FIXME check cache
+                    syncLiveData.postValue(DataSyncStatus.FAILED_NETWORK_WITH_CACHE)
+                }
+            }
         }
     }
 
@@ -119,20 +131,16 @@ class SyncRepository @Inject constructor(
         val response = apolloClient.query(query)
 
         if (response.hasErrors()) {
-            throw SyncFailedException("Apollo sync failed: ERRORS ${response.errors}")
+            throw AppError(ErrorType.UNKNOWN_ERROR)
         }
         else {
             if (response.data == null) {
-                throw SyncFailedException("Apollo: sync failed: DATA is null")
+                throw AppError(ErrorType.UNKNOWN_ERROR)
             }
             else {
                 return response.data!!
             }
         }
-    }
-
-    class SyncFailedException(message: String? = null, cause: Throwable? = null) : Exception(message, cause) {
-        constructor(cause: Throwable) : this(null, cause)
     }
 
 }
