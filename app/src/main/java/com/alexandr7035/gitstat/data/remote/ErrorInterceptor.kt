@@ -12,8 +12,6 @@ import com.apollographql.apollo3.network.http.HttpInterceptorChain
 class ErrorInterceptor: HttpInterceptor {
     override suspend fun intercept(request: HttpRequest, chain: HttpInterceptorChain): HttpResponse {
 
-        Log.d("DEBUG_TAG", "proceed request")
-
         val res = try {
             chain.proceed(request)
         }
@@ -22,6 +20,12 @@ class ErrorInterceptor: HttpInterceptor {
         // Apollo errors are inhereted from RuntimeException
         catch (e: ApolloException) {
             throw AppError(ErrorType.FAILED_CONNECTION)
+        }
+
+        // May be raised when wrong token provided
+        // E.g. 0x0a in token string
+        catch (e: IllegalArgumentException) {
+            throw AppError(ErrorType.UNKNOWN_ERROR)
         }
 
         if (res.statusCode != 200) {
