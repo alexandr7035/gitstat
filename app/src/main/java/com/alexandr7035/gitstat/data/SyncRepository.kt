@@ -30,14 +30,14 @@ class SyncRepository @Inject constructor(
         val start = System.currentTimeMillis()
 
         try {
-            syncLiveData.postValue(DataSyncStatus.PENDING_PROFILE)
-            syncProfileData()
-
-            syncLiveData.postValue(DataSyncStatus.PENDING_REPOSITORIES)
-            syncRepositories()
-
-            syncLiveData.postValue(DataSyncStatus.PENDING_CONTRIBUTIONS)
-            syncAllContributions()
+//            syncLiveData.postValue(DataSyncStatus.PENDING_PROFILE)
+//            syncProfileData()
+//
+//            syncLiveData.postValue(DataSyncStatus.PENDING_REPOSITORIES)
+//            syncRepositories()
+//
+//            syncLiveData.postValue(DataSyncStatus.PENDING_CONTRIBUTIONS)
+//            syncAllContributions()
 
             syncLiveData.postValue(DataSyncStatus.SUCCESS)
 
