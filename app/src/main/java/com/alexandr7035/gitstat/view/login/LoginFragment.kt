@@ -103,7 +103,7 @@ class LoginFragment: Fragment() {
 
                 AuthStatus.FAILED_CREDENTIALS -> {
                     viewModel.clearToken()
-                    Toast.makeText(requireContext(), "FAILED auth: BAD TOKEN", Toast.LENGTH_SHORT).show()
+                    binding!!.tokenField.error = getString(R.string.error_wrong_token_field)
                 }
 
                 AuthStatus.UNKNOWN_ERROR -> {
