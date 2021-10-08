@@ -6,10 +6,7 @@ import com.alexandr7035.gitstat.apollo.ContributionsQuery
 import com.alexandr7035.gitstat.apollo.ProfileCreationDateQuery
 import com.alexandr7035.gitstat.apollo.ProfileQuery
 import com.alexandr7035.gitstat.apollo.RepositoriesQuery
-import com.alexandr7035.gitstat.core.AppError
-import com.alexandr7035.gitstat.core.DataSyncStatus
-import com.alexandr7035.gitstat.core.ErrorType
-import com.alexandr7035.gitstat.core.TimeHelper
+import com.alexandr7035.gitstat.core.*
 import com.alexandr7035.gitstat.data.local.CacheDao
 import com.alexandr7035.gitstat.data.local.model.ContributionDayEntity
 import com.alexandr7035.gitstat.data.remote.mappers.ContributionsDaysListRemoteToCacheMapper
@@ -25,7 +22,12 @@ class SyncRepository @Inject constructor(
     private val profileMapper: UserRemoteToCacheMapper,
     private val repositoriesMapper: RepositoriesRemoteToCacheMapper,
     private val contributionsMapper: ContributionsDaysListRemoteToCacheMapper,
-    private val timeHelper: TimeHelper) {
+    private val timeHelper: TimeHelper,
+    private val appPreferences: AppPreferences) {
+
+    fun checkIfTokenSaved(): Boolean {
+        return appPreferences.token != null
+    }
 
     suspend fun syncAllData(syncLiveData: MutableLiveData<DataSyncStatus>) {
 

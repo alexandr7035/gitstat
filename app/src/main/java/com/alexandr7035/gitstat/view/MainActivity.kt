@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
     private lateinit var binding: ActivityMainBinding
-    private val viewModel by viewModels<LoginViewModel>()
+    private val viewModel by viewModels<MainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,8 +51,7 @@ class MainActivity : AppCompatActivity() {
         // Dynamically change initial fragment
 //        val navGraph = navController.navInflater.inflate(R.navigation.nav_graph)
 
-        if (viewModel.checkIfLoggedIn()) {
-            // FIXME
+        if (viewModel.checkIfTokenSaved()) {
             viewModel.syncData()
         }
         else {

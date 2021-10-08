@@ -68,8 +68,9 @@ object AppModule {
         profileMapper: UserRemoteToCacheMapper,
         repositoriesMapper: RepositoriesRemoteToCacheMapper,
         contributionsMapper: ContributionsDaysListRemoteToCacheMapper,
-        timeHelper: TimeHelper): SyncRepository {
-        return SyncRepository(apolloClient, dao, profileMapper, repositoriesMapper, contributionsMapper, timeHelper)
+        timeHelper: TimeHelper,
+        appPreferences: AppPreferences): SyncRepository {
+        return SyncRepository(apolloClient, dao, profileMapper, repositoriesMapper, contributionsMapper, timeHelper, appPreferences)
     }
 
     @Provides
