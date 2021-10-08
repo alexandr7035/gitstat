@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.alexandr7035.gitstat.R
+import com.alexandr7035.gitstat.core.AuthStatus
 import com.alexandr7035.gitstat.databinding.FragmentLoginBinding
 import com.alexandr7035.gitstat.view.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,7 +24,7 @@ class LoginFragment: Fragment() {
     private lateinit var navController: NavController
     private var binding: FragmentLoginBinding? = null
 
-    private val viewModel by viewModels<LoginViewModel>()
+    private val viewModel by viewModels<AuthViewModel>()
 
     private lateinit var token: String
 
@@ -76,36 +77,62 @@ class LoginFragment: Fragment() {
                 else {
                     ////Log.d(LOG_TAG, "do login request")
                     token = binding!!.tokenEditText.text.toString()
-                    viewModel.doLoginRequest(token)
-                }
+//                    viewModel.doLoginRequest(token)
 
-            }
-        })
-
-
-        // Login results handling
-        viewModel.getLoginResponseCodeLiveData().observe(viewLifecycleOwner, {
-            ////Log.d(LOG_TAG, "LOGIN RESULTS CODE: $it")
-
-            when (it) {
-                200 -> {
                     viewModel.saveToken(token)
-                    (activity as MainActivity).loginCallback()
+                    viewModel.authorize()
                 }
 
-                // FIXME
-                // 404 may also be caused by wrong login data
-                // when token is correct but provided user name doesn't exist on github
-                401, 404 -> {
-                    binding!!.tokenField.error = getString(R.string.error_wrong_data_field)
+            }
+        })
+
+
+        viewModel.getAuthResultLiveData().observe(viewLifecycleOwner, { status ->
+
+            when (status) {
+                AuthStatus.SUCCESS -> {
+                    Toast.makeText(requireContext(), "Success auth", Toast.LENGTH_SHORT).show()
                 }
 
-                else -> {
-                    Toast.makeText(requireActivity(), getString(R.string.error_cant_get_data_remote), Toast.LENGTH_LONG).show()
+                AuthStatus.FAILED_NETWORK -> {
+                    Toast.makeText(requireContext(), "FAILED NETWORK", Toast.LENGTH_SHORT).show()
+                }
+
+                AuthStatus.FAILED_CREDENTIALS -> {
+                    Toast.makeText(requireContext(), "FAILED auth: BAD TOKEN", Toast.LENGTH_SHORT).show()
+                }
+
+                AuthStatus.UNKNOWN_ERROR -> {
+                    Toast.makeText(requireContext(), "FAILED auth: UNKNOWN ERROR. Check net.", Toast.LENGTH_SHORT).show()
                 }
             }
 
         })
+
+
+//        // Login results handling
+//        viewModel.getLoginResponseCodeLiveData().observe(viewLifecycleOwner, {
+//            ////Log.d(LOG_TAG, "LOGIN RESULTS CODE: $it")
+//
+//            when (it) {
+//                200 -> {
+//                    viewModel.saveToken(token)
+//                    (activity as MainActivity).loginCallback()
+//                }
+//
+//                // FIXME
+//                // 404 may also be caused by wrong login data
+//                // when token is correct but provided user name doesn't exist on github
+//                401, 404 -> {
+//                    binding!!.tokenField.error = getString(R.string.error_wrong_data_field)
+//                }
+//
+//                else -> {
+//                    Toast.makeText(requireActivity(), getString(R.string.error_cant_get_data_remote), Toast.LENGTH_LONG).show()
+//                }
+//            }
+//
+//        })
 
 
     }
