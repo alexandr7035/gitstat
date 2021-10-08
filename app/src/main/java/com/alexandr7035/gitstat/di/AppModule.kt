@@ -8,7 +8,7 @@ import com.alexandr7035.gitstat.data.*
 import com.alexandr7035.gitstat.data.local.CacheDB
 import com.alexandr7035.gitstat.data.local.CacheDao
 import com.alexandr7035.gitstat.data.local.mappers.ContributionsDaysToYearsMapper
-import com.alexandr7035.gitstat.data.remote.ApolloInterceptor
+import com.alexandr7035.gitstat.data.remote.AuthInterceptor
 import com.alexandr7035.gitstat.data.remote.ErrorInterceptor
 import com.alexandr7035.gitstat.data.remote.mappers.ContributionDayRemoteToCacheMapper
 import com.alexandr7035.gitstat.data.remote.mappers.ContributionsDaysListRemoteToCacheMapper
@@ -30,7 +30,7 @@ object AppModule {
     @Provides
     @Singleton
     fun provideApollo(appPreferences: AppPreferences): ApolloClient {
-        return ApolloClient(networkTransport = HttpNetworkTransport("https://api.github.com/graphql", interceptors = listOf(ApolloInterceptor(appPreferences), ErrorInterceptor())))
+        return ApolloClient(networkTransport = HttpNetworkTransport("https://api.github.com/graphql", interceptors = listOf(AuthInterceptor(appPreferences), ErrorInterceptor())))
     }
 
 

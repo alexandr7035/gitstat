@@ -7,7 +7,7 @@ import com.apollographql.apollo3.api.http.withHeader
 import com.apollographql.apollo3.network.http.HttpInterceptor
 import com.apollographql.apollo3.network.http.HttpInterceptorChain
 
-class ApolloInterceptor(private val appPreferences: AppPreferences): HttpInterceptor {
+class AuthInterceptor(private val appPreferences: AppPreferences): HttpInterceptor {
     override suspend fun intercept(request: HttpRequest, chain: HttpInterceptorChain): HttpResponse {
         return chain.proceed(request.withHeader("Authorization", "token ${appPreferences.token}"))
     }
