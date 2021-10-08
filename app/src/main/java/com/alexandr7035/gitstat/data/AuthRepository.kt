@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.alexandr7035.gitstat.apollo.ProfileCreationDateQuery
 import com.alexandr7035.gitstat.core.AppError
+import com.alexandr7035.gitstat.core.AppPreferences
 import com.alexandr7035.gitstat.core.AuthStatus
 import com.alexandr7035.gitstat.core.ErrorType
 import com.apollographql.apollo3.ApolloClient
@@ -13,7 +14,9 @@ import java.io.IOException
 import java.lang.Exception
 import javax.inject.Inject
 
-class AuthRepository @Inject constructor(private val apolloClient: ApolloClient) {
+class AuthRepository @Inject constructor(
+    private val apolloClient: ApolloClient,
+    private val appPreferences: AppPreferences) {
 
     suspend fun authorize(authResultLiveData: MutableLiveData<AuthStatus>) {
 
@@ -42,10 +45,14 @@ class AuthRepository @Inject constructor(private val apolloClient: ApolloClient)
             }
         }
 
-//        catch (e: Exception) {
-//            Log.d("DEBUG_TAG", "catch in APOLLO")
-//        }
+    }
 
+    fun saveToken(token: String) {
+        appPreferences.token = token
+    }
+
+    fun clearToken() {
+        appPreferences.token = null
     }
 
 }

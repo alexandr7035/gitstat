@@ -95,14 +95,17 @@ class LoginFragment: Fragment() {
                 }
 
                 AuthStatus.FAILED_NETWORK -> {
+                    viewModel.clearToken()
                     Toast.makeText(requireContext(), "FAILED NETWORK", Toast.LENGTH_SHORT).show()
                 }
 
                 AuthStatus.FAILED_CREDENTIALS -> {
+                    viewModel.clearToken()
                     Toast.makeText(requireContext(), "FAILED auth: BAD TOKEN", Toast.LENGTH_SHORT).show()
                 }
 
                 AuthStatus.UNKNOWN_ERROR -> {
+                    viewModel.clearToken()
                     Toast.makeText(requireContext(), "FAILED auth: UNKNOWN ERROR. Check net.", Toast.LENGTH_SHORT).show()
                 }
             }
