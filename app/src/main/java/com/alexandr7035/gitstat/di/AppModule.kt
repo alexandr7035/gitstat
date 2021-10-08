@@ -45,12 +45,6 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideLoginRepository(appPreferences: AppPreferences, dao: CacheDao): LoginRepository {
-        return LoginRepository(appPreferences, dao)
-    }
-
-    @Provides
-    @Singleton
     fun provideUserRepository(dao: CacheDao): UserRepository {
         return UserRepository(dao)
     }

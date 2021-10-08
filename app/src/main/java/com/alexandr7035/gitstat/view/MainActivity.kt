@@ -11,7 +11,6 @@ import androidx.navigation.ui.setupWithNavController
 import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.core.DataSyncStatus
 import com.alexandr7035.gitstat.databinding.ActivityMainBinding
-import com.alexandr7035.gitstat.view.login.LoginViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
