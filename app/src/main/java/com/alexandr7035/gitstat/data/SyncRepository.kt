@@ -29,6 +29,10 @@ class SyncRepository @Inject constructor(
         return appPreferences.token != null
     }
 
+    fun clearToken() {
+        appPreferences.token = null
+    }
+
     suspend fun syncAllData(syncLiveData: MutableLiveData<DataSyncStatus>) {
 
         val start = System.currentTimeMillis()

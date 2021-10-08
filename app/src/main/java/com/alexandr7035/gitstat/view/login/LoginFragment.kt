@@ -91,7 +91,9 @@ class LoginFragment: Fragment() {
 
             when (status) {
                 AuthStatus.SUCCESS -> {
-                    Toast.makeText(requireContext(), "Success auth", Toast.LENGTH_SHORT).show()
+                    // FIXME Not good. Find better solution
+                    (requireActivity() as MainActivity).startSyncData()
+//                    Toast.makeText(requireContext(), "Success auth", Toast.LENGTH_SHORT).show()
                 }
 
                 AuthStatus.FAILED_NETWORK -> {

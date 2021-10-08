@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
 //        val navGraph = navController.navInflater.inflate(R.navigation.nav_graph)
 
         if (viewModel.checkIfTokenSaved()) {
-            viewModel.syncData()
+            startSyncData()
         }
         else {
             updateStartDestination(R.id.loginFragment)
@@ -124,8 +124,17 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    fun loginCallback() {
+    // FIXME find better solution
+    // than public method accessible from fragments
+    fun startSyncData() {
         viewModel.syncData()
+    }
+
+    // FIXME find better solution
+    // than public method accessible from fragments
+    fun startLogOut() {
+        viewModel.clearToken()
+        navController.navigate(R.id.loginFragment)
     }
 
 }

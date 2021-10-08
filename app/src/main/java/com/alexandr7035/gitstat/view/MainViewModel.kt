@@ -19,6 +19,10 @@ class MainViewModel @Inject constructor(private val syncRepository: SyncReposito
         return syncRepository.checkIfTokenSaved()
     }
 
+    fun clearToken() {
+        syncRepository.clearToken()
+    }
+
     fun getSyncStatusLiveData(): MutableLiveData<DataSyncStatus> {
         return syncStatusLiveData
     }

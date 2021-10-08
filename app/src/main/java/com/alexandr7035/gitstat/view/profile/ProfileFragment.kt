@@ -11,6 +11,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.databinding.FragmentProfileBinding
+import com.alexandr7035.gitstat.view.MainActivity
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -81,8 +82,8 @@ class ProfileFragment : Fragment() {
         }
 
         binding!!.logOutBtn.setOnClickListener {
-//            loginViewModel.logOut()
-            navController.navigate(R.id.loginFragment)
+            // FIXME find better solution
+            (requireActivity() as MainActivity).startLogOut()
         }
 
     }
