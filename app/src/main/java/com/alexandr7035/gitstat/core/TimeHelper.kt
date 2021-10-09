@@ -24,5 +24,10 @@ class TimeHelper {
         return format.format(timestamp).toInt()
     }
 
+    fun getFullFromUnixDate(timestamp: Long): String {
+        val format = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US)
+        return format.format(timestamp)
+    }
+
     data class Iso8601Year(val startDate: String, val endDate: String)
 }
