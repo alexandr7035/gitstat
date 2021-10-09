@@ -30,7 +30,10 @@
     <string name="error_empty_field">This field cannot be empty</string>
     <string name="error_wrong_token_field">Authorization error. Check the token and try again</string>
     <string name="error_cant_get_data_remote">Failed to get data from GitHub. Check your internet connection and try again</string>
+    <string name="error_cant_get_data_remote_with_cache">Failed to get data from GitHub. Load data from cache or check your internet connection and try again.</string>
     <string name="error_unknown_auth">Unknown error. Ensure the data in the token field is correct or try to login later.</string>
+
+    <string name="last_cache">Last cache: %1$s</string>
 
     <string name="repositories_by_language">Repositories by language</string>
     <string name="more_underlined"><u>More</u></string>

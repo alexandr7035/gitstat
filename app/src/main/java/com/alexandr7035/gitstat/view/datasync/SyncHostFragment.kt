@@ -71,7 +71,9 @@ class SyncHostFragment : Fragment() {
                 }
 
                 DataSyncStatus.FAILED_NETWORK_WITH_CACHE -> {
-
+                    requireActivity().supportFragmentManager.beginTransaction()
+                        .replace(R.id.containerView, SyncFailedWithCacheFragment())
+                        .commit()
                 }
             }
 
