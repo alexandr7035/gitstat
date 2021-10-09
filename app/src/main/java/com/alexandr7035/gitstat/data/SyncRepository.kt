@@ -14,6 +14,7 @@ import com.alexandr7035.gitstat.data.remote.mappers.RepositoriesRemoteToCacheMap
 import com.alexandr7035.gitstat.data.remote.mappers.UserRemoteToCacheMapper
 import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.api.Query
+import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 class SyncRepository @Inject constructor(
@@ -39,6 +40,10 @@ class SyncRepository @Inject constructor(
 
         try {
             syncLiveData.postValue(DataSyncStatus.PENDING_PROFILE)
+
+            // FIXME DEBUG only
+            delay(2000)
+
             syncProfileData()
 
             syncLiveData.postValue(DataSyncStatus.PENDING_REPOSITORIES)
