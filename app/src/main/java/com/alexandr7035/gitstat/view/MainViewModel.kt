@@ -32,4 +32,10 @@ class MainViewModel @Inject constructor(private val syncRepository: SyncReposito
             syncRepository.syncAllData(syncStatusLiveData)
         }
     }
+
+    fun clearCache() {
+        viewModelScope.launch(Dispatchers.IO) {
+            syncRepository.clearCache()
+        }
+    }
 }

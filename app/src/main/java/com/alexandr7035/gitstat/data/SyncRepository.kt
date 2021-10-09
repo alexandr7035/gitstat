@@ -73,6 +73,13 @@ class SyncRepository @Inject constructor(
     }
 
 
+    suspend fun clearCache() {
+        dao.clearRepositoriesCache()
+        dao.clearContributionsDaysCache()
+        dao.clearUserCache()
+    }
+
+
     private suspend fun syncAllContributions() {
 
         val profileCreationDate = performApolloRequest(ProfileCreationDateQuery()).viewer.createdAt as String
