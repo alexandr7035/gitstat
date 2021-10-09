@@ -1,7 +1,6 @@
 package com.alexandr7035.gitstat.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -9,7 +8,6 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.alexandr7035.gitstat.R
-import com.alexandr7035.gitstat.core.DataSyncStatus
 import com.alexandr7035.gitstat.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
@@ -53,58 +51,6 @@ class MainActivity : AppCompatActivity() {
         else {
             updateStartDestination(R.id.loginFragment)
         }
-
-
-        viewModel.getSyncStatusLiveData().observe(this, { status ->
-
-            Log.d("DEBUG_TAG", "SYNC status changed $status")
-
-            when (status) {
-                DataSyncStatus.SUCCESS -> {
-                    navController.navigate(R.id.actionLoginToMain)
-                    binding.progressView.visibility = View.GONE
-
-                    updateStartDestination(R.id.profileFragment)
-                }
-
-                DataSyncStatus.PENDING_PROFILE -> {
-                    binding.progressView.visibility = View.VISIBLE
-                    binding.syncStageView.text = getString(R.string.stage_profile)
-                }
-
-                DataSyncStatus.PENDING_REPOSITORIES -> {
-                    binding.progressView.visibility = View.VISIBLE
-                    binding.syncStageView.text = getString(R.string.stage_repositories)
-                }
-
-                DataSyncStatus.PENDING_CONTRIBUTIONS -> {
-                    binding.progressView.visibility = View.VISIBLE
-                    binding.syncStageView.text = getString(R.string.stage_contributions)
-                }
-
-                DataSyncStatus.FAILED_NETWORK_WITH_CACHE -> {
-                    // FIXME
-                    // 2 fail statuses
-                    binding.progressView.visibility = View.VISIBLE
-                    Log.d("DEBUG_TAG", "SYNC failed")
-                }
-
-                DataSyncStatus.FAILED_NETWORK_WITH_NO_CACHE -> {
-                    // FIXME
-                    binding.progressView.visibility = View.VISIBLE
-                    Log.d("DEBUG_TAG", "SYNC failed")
-                }
-
-                DataSyncStatus.AUTHORIZATION_ERROR -> {
-                    // FIXME
-                    binding.progressView.visibility = View.VISIBLE
-                    Log.d("DEBUG_TAG", "SYNC failed")
-                }
-
-            }
-
-        })
-
     }
 
     // To disable back to login fragment
@@ -121,7 +67,7 @@ class MainActivity : AppCompatActivity() {
     // FIXME find better solution
     // than public method accessible from fragments
     fun startSyncData() {
-        viewModel.syncData()
+        navController.navigate(R.id.syncGraph)
     }
 
     // FIXME find better solution
@@ -130,6 +76,11 @@ class MainActivity : AppCompatActivity() {
         viewModel.clearCache()
         viewModel.clearToken()
         navController.navigate(R.id.loginFragment)
+    }
+
+    fun syncFinishedCallback() {
+        updateStartDestination(R.id.profileFragment)
+        navController.navigate(R.id.profileFragment)
     }
 
 }

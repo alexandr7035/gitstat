@@ -13,6 +13,9 @@
         <action
             android:id="@+id/actionLoginToMain"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_syncGraph"
+            app:destination="@id/syncGraph" />
     </fragment>
 
     <fragment
@@ -68,6 +71,28 @@
             android:id="@+id/repositoriesFiltersDialog"
             android:name="com.alexandr7035.gitstat.view.repositories.filters.RepositoriesFiltersDialog"
             android:label="RepositoriesFiltersDialog" />
+    </navigation>
+
+
+    <navigation android:id="@+id/syncGraph"
+        app:startDestination="@id/syncHostFragment">
+
+        <fragment
+            android:id="@+id/syncHostFragment"
+            android:name="com.alexandr7035.gitstat.view.datasync.SyncHostFragment"
+            android:label="fragment_sync_host"
+            tools:layout="@layout/fragment_sync_host" >
+            <action
+                android:id="@+id/action_syncHostFragment_to_syncPendingFragment"
+                app:destination="@id/syncPendingFragment" />
+        </fragment>
+
+        <fragment
+            android:id="@+id/syncPendingFragment"
+            android:name="com.alexandr7035.gitstat.view.datasync.SyncPendingFragment"
+            android:label="fragment_sync_pending"
+            tools:layout="@layout/fragment_sync_pending" />
+
     </navigation>
 
 
