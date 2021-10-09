@@ -172,6 +172,10 @@ class SyncRepository @Inject constructor(
         }
     }
 
+    fun getLastCacheSyncDateText(): String {
+        return timeHelper.getFullFromUnixDate(appPreferences.lastSuccessCacheSyncDate)
+    }
+
     private fun checkForCache(): Boolean {
         return appPreferences.lastSuccessCacheSyncDate != 0L
     }

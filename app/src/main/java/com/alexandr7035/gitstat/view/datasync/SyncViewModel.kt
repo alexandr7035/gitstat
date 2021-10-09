@@ -33,6 +33,10 @@ class SyncViewModel @Inject constructor(private val repository: SyncRepository):
         }
     }
 
+    fun getLastCacheSyncDate(): String {
+        return repository.getLastCacheSyncDateText()
+    }
+
     fun clearCache() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.clearCache()
