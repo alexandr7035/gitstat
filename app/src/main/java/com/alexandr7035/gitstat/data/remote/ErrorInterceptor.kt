@@ -1,6 +1,5 @@
 package com.alexandr7035.gitstat.data.remote
 
-import android.util.Log
 import com.alexandr7035.gitstat.core.AppError
 import com.alexandr7035.gitstat.core.ErrorType
 import com.apollographql.apollo3.api.http.HttpRequest

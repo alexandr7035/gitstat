@@ -47,18 +47,12 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        // Dynamically change initial fragment
-//        val navGraph = navController.navInflater.inflate(R.navigation.nav_graph)
-
         if (viewModel.checkIfTokenSaved()) {
             startSyncData()
         }
         else {
             updateStartDestination(R.id.loginFragment)
-//            navGraph.startDestination = R.id.loginFragment
         }
-
-//        navController.graph = navGraph
 
 
         viewModel.getSyncStatusLiveData().observe(this, { status ->

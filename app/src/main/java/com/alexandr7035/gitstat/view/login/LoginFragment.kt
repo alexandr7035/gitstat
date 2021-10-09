@@ -113,32 +113,6 @@ class LoginFragment: Fragment() {
 
         })
 
-
-//        // Login results handling
-//        viewModel.getLoginResponseCodeLiveData().observe(viewLifecycleOwner, {
-//            ////Log.d(LOG_TAG, "LOGIN RESULTS CODE: $it")
-//
-//            when (it) {
-//                200 -> {
-//                    viewModel.saveToken(token)
-//                    (activity as MainActivity).loginCallback()
-//                }
-//
-//                // FIXME
-//                // 404 may also be caused by wrong login data
-//                // when token is correct but provided user name doesn't exist on github
-//                401, 404 -> {
-//                    binding!!.tokenField.error = getString(R.string.error_wrong_data_field)
-//                }
-//
-//                else -> {
-//                    Toast.makeText(requireActivity(), getString(R.string.error_cant_get_data_remote), Toast.LENGTH_LONG).show()
-//                }
-//            }
-//
-//        })
-
-
     }
 
 

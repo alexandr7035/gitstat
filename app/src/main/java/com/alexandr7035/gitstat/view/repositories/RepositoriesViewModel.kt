@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alexandr7035.gitstat.core.Language
-import com.alexandr7035.gitstat.core.SyncStatus
 import com.alexandr7035.gitstat.data.ReposRepository
 import com.alexandr7035.gitstat.data.local.model.RepositoryEntity
 import com.alexandr7035.gitstat.view.repositories.filters.ReposFilters
@@ -22,22 +21,6 @@ class RepositoriesViewModel @Inject constructor(private val repository: ReposRep
     private val activeReposLiveData = MutableLiveData<List<RepositoryEntity>>()
     private val archivedReposLiveData = MutableLiveData<List<RepositoryEntity>>()
     private val tabRefreshedLiveData = MutableLiveData<Int>()
-
-//    // Sync from remote source to the DB
-//    fun syncRepositoriesData() {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            repository.syncRepositoriesData()
-//
-//            updateAllRepositoriesLiveData()
-//            updateActiveRepositoriesLiveData()
-//            updateArchivedRepositoriesLiveData()
-//        }
-//    }
-//
-//    fun getSyncStatusLiveData(): LiveData<SyncStatus> {
-//        return repository.getSyncStatusLiveData()
-//    }
-
 
     // Repos livedata
     fun getAllRepositoriesListLiveData(): LiveData<List<RepositoryEntity>> {

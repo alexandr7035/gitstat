@@ -2,13 +2,9 @@ package com.alexandr7035.gitstat.view.profile
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.alexandr7035.gitstat.core.SyncStatus
 import com.alexandr7035.gitstat.data.UserRepository
 import com.alexandr7035.gitstat.data.local.model.UserEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel

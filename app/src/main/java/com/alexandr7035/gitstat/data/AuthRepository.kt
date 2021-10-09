@@ -8,10 +8,6 @@ import com.alexandr7035.gitstat.core.AppPreferences
 import com.alexandr7035.gitstat.core.AuthStatus
 import com.alexandr7035.gitstat.core.ErrorType
 import com.apollographql.apollo3.ApolloClient
-import com.apollographql.apollo3.api.Query
-import com.apollographql.apollo3.exception.ApolloException
-import java.io.IOException
-import java.lang.Exception
 import javax.inject.Inject
 
 class AuthRepository @Inject constructor(
