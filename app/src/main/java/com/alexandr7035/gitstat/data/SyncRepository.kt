@@ -49,6 +49,9 @@ class SyncRepository @Inject constructor(
 
             syncLiveData.postValue(DataSyncStatus.SUCCESS)
 
+            // Save sync time to preferences if success
+            saveSyncTime()
+
             val end = System.currentTimeMillis()
 
             Log.d("DEBUG_TAG", "sync finished in ${end-start} ms")
@@ -56,8 +59,12 @@ class SyncRepository @Inject constructor(
         catch (e: AppError) {
             when (e.type) {
                 ErrorType.FAILED_CONNECTION -> {
-                    // FIXME check cache
-                    syncLiveData.postValue(DataSyncStatus.FAILED_NETWORK_WITH_CACHE)
+                    if (checkForCache()) {
+                        syncLiveData.postValue(DataSyncStatus.FAILED_NETWORK_WITH_CACHE)
+                    }
+                    else {
+                        syncLiveData.postValue(DataSyncStatus.FAILED_NETWORK_WITH_NO_CACHE)
+                    }
                 }
 
                 ErrorType.FAILED_AUTHORIZATION -> {
@@ -65,8 +72,12 @@ class SyncRepository @Inject constructor(
                 }
 
                 ErrorType.UNKNOWN_ERROR -> {
-                    // FIXME check cache
-                    syncLiveData.postValue(DataSyncStatus.FAILED_NETWORK_WITH_CACHE)
+                    if (checkForCache()) {
+                        syncLiveData.postValue(DataSyncStatus.FAILED_NETWORK_WITH_CACHE)
+                    }
+                    else {
+                        syncLiveData.postValue(DataSyncStatus.FAILED_NETWORK_WITH_NO_CACHE)
+                    }
                 }
             }
         }
@@ -154,6 +165,19 @@ class SyncRepository @Inject constructor(
                 return response.data!!
             }
         }
+    }
+
+    private fun checkForCache(): Boolean {
+        return appPreferences.lastSuccessCacheSyncDate != 0L
+    }
+
+    private fun saveSyncTime() {
+        // TODO check for timezone
+        appPreferences.lastSuccessCacheSyncDate = System.currentTimeMillis()
+    }
+
+    private fun clearSyncTime() {
+        appPreferences.lastSuccessCacheSyncDate = 0
     }
 
 }
