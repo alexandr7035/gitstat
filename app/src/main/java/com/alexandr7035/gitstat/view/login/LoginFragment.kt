@@ -93,12 +93,11 @@ class LoginFragment: Fragment() {
                 AuthStatus.SUCCESS -> {
                     // FIXME Not good. Find better solution
                     (requireActivity() as MainActivity).startSyncData()
-//                    Toast.makeText(requireContext(), "Success auth", Toast.LENGTH_SHORT).show()
                 }
 
                 AuthStatus.FAILED_NETWORK -> {
                     viewModel.clearToken()
-                    Toast.makeText(requireContext(), "FAILED NETWORK", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireActivity(), getString(R.string.error_cant_get_data_remote), Toast.LENGTH_LONG).show()
                 }
 
                 AuthStatus.FAILED_CREDENTIALS -> {
@@ -108,7 +107,7 @@ class LoginFragment: Fragment() {
 
                 AuthStatus.UNKNOWN_ERROR -> {
                     viewModel.clearToken()
-                    Toast.makeText(requireContext(), "FAILED auth: UNKNOWN ERROR. Check net.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireActivity(), getString(R.string.error_unknown_auth), Toast.LENGTH_LONG).show()
                 }
             }
 
