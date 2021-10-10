@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.databinding.FragmentContributionsBinding
 import com.github.mikephil.charting.formatter.ValueFormatter
+import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
@@ -48,6 +49,10 @@ class ContributionsFragment : Fragment() {
                 binding?.yearsViewPager?.adapter = adapter
                 // Set to last position
                 binding?.yearsViewPager?.setCurrentItem(years.size - 1, false)
+
+                TabLayoutMediator(binding!!.yearsTabLayout, binding!!.yearsViewPager) { tab, position ->
+//            tab.text = "OBJECT ${(position + 1)}"
+                }.attach()
 
             }
         })

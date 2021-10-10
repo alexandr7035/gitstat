@@ -47,7 +47,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="1900"
             tools:text="1900" />
 
 
@@ -89,14 +88,32 @@
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@id/header"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="318dp">
+        app:layout_constraintStart_toStartOf="parent">
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/yearsViewPager"
             android:layout_width="match_parent"
+            android:layout_height="225dp" />
+
+        <com.google.android.material.tabs.TabLayout
+            app:tabGravity="center"
+            android:layout_gravity="center"
+            android:id="@+id/yearsTabLayout"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:layout_height="200dp" />
+            app:tabIndicatorHeight="0dp"
+            app:tabIndicatorGravity="center"
+            app:tabBackground="@drawable/dot_tab_selector">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </com.google.android.material.tabs.TabLayout>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
