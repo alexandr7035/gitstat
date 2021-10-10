@@ -9,7 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.data.YAxisParams
-import com.alexandr7035.gitstat.data.local.model.ContributionsYear
+import com.alexandr7035.gitstat.data.local.model.ContributionsYearWithDays
 import com.alexandr7035.gitstat.databinding.ViewPlotContributionsYearBinding
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
@@ -62,16 +62,16 @@ class YearCardFragment: Fragment() {
         }
 
 
-        val yearData = arguments?.getSerializable("yearData") as ContributionsYear
+        val yearData = arguments?.getSerializable("yearData") as ContributionsYearWithDays
 
         val yAxisParams = YAxisParams.getParamsForContributionYearCard(yearData)
         Log.d("DEBUG_TAG", "axisparams $yAxisParams")
 
         yearData.apply {
-            binding?.contributionsYear?.text = this.year.toString()
+            binding?.contributionsYear?.text = this.year.id.toString()
 
             val entries = ArrayList<Entry>()
-            this.days.forEach { contributionDay ->
+            this.contributionDays.forEach { contributionDay ->
                 entries.add(Entry(contributionDay.date.toFloat(), contributionDay.count.toFloat()))
             }
 
@@ -108,7 +108,7 @@ class YearCardFragment: Fragment() {
             // Update chart
             binding?.contributionsChart?.invalidate()
 
-            val contributionsCount = this.days.sumOf { it.count }
+            val contributionsCount = this.contributionDays.sumOf { it.count }
             binding?.contributionsCountView?.text = contributionsCount.toString()
 
             // Show stub if no contributions for this year

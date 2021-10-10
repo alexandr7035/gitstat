@@ -85,8 +85,8 @@ object AppModule {
     }
 
     @Provides
-    fun provideContributionDayMapper(): ContributionDayRemoteToCacheMapper {
-        return ContributionDayRemoteToCacheMapper()
+    fun provideContributionDayMapper(timeHelper: TimeHelper): ContributionDayRemoteToCacheMapper {
+        return ContributionDayRemoteToCacheMapper(timeHelper)
     }
 
     @Provides

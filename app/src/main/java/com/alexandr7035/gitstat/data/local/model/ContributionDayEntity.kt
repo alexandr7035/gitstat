@@ -8,4 +8,5 @@ class ContributionDayEntity(
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
     var date: Long,
-    var count: Int)
+    var count: Int,
+    var yearId: Int)

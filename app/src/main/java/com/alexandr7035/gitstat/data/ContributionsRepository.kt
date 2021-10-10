@@ -5,6 +5,7 @@ import com.alexandr7035.gitstat.data.local.CacheDao
 import com.alexandr7035.gitstat.data.local.mappers.ContributionsDaysToYearsMapper
 import com.alexandr7035.gitstat.data.local.model.ContributionDayEntity
 import com.alexandr7035.gitstat.data.local.model.ContributionsYear
+import com.alexandr7035.gitstat.data.local.model.ContributionsYearWithDays
 import javax.inject.Inject
 
 // FIXME use interface
@@ -18,6 +19,10 @@ class ContributionsRepository @Inject constructor(
 
     suspend fun getContributionYears(): List<ContributionsYear> {
         return mapper.transform(dao.getContributionsDaysCache())
+    }
+
+    fun getContributionYearsLiveData(): LiveData<List<ContributionsYearWithDays>> {
+        return dao.getContributionYearsCache()
     }
 
 }

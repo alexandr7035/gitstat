@@ -9,6 +9,7 @@ import com.alexandr7035.gitstat.apollo.RepositoriesQuery
 import com.alexandr7035.gitstat.core.*
 import com.alexandr7035.gitstat.data.local.CacheDao
 import com.alexandr7035.gitstat.data.local.model.ContributionDayEntity
+import com.alexandr7035.gitstat.data.local.model.ContributionsYearEntity
 import com.alexandr7035.gitstat.data.remote.mappers.ContributionsDaysListRemoteToCacheMapper
 import com.alexandr7035.gitstat.data.remote.mappers.RepositoriesRemoteToCacheMapper
 import com.alexandr7035.gitstat.data.remote.mappers.UserRemoteToCacheMapper
@@ -88,6 +89,7 @@ class SyncRepository @Inject constructor(
     suspend fun clearCache() {
         dao.clearRepositoriesCache()
         dao.clearContributionsDaysCache()
+        dao.clearContributionsYearsCache()
         dao.clearUserCache()
     }
 
@@ -103,10 +105,14 @@ class SyncRepository @Inject constructor(
         Log.d("DEBUG_TAG", "$creationYear $currentYear")
 
         val contributionDaysCached = ArrayList<ContributionDayEntity>()
+        val contributionYears = ArrayList<ContributionsYearEntity>()
 
         // Date range more than a year is not allowed in this api
         // So we have to deal with multiple requests
         for (year in creationYear..currentYear) {
+
+            contributionYears.add(ContributionsYearEntity(year))
+
             val resData = getContributionsForDateRange(year)
             // Transform apollo result into room cache
             contributionDaysCached.addAll(contributionsMapper.transform(resData))
@@ -114,7 +120,8 @@ class SyncRepository @Inject constructor(
 
         dao.clearContributionsDaysCache()
         dao.insertContributionsDaysCache(contributionDaysCached)
-
+        dao.clearContributionsYearsCache()
+        dao.insertContributionYearsCache(contributionYears)
     }
 
 

@@ -4,13 +4,14 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.alexandr7035.gitstat.data.local.model.ContributionsYear
+import com.alexandr7035.gitstat.data.local.model.ContributionsYearWithDays
 
 
 class YearContributionsAdapter(fragment: Fragment): FragmentStateAdapter(fragment) {
 
-    private var items: List<ContributionsYear> = emptyList()
+    private var items: List<ContributionsYearWithDays> = emptyList()
 
-    fun setItems(years: List<ContributionsYear>) {
+    fun setItems(years: List<ContributionsYearWithDays>) {
         this.items = years
     }
 

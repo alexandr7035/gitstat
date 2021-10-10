@@ -1,7 +1,7 @@
 package com.alexandr7035.gitstat.data
 
 import android.util.Log
-import com.alexandr7035.gitstat.data.local.model.ContributionsYear
+import com.alexandr7035.gitstat.data.local.model.ContributionsYearWithDays
 import kotlin.math.floor
 
 data class YAxisParams(
@@ -12,9 +12,9 @@ data class YAxisParams(
 
     companion object {
         // Need this method as there is no way to set axis step directly
-        fun getParamsForContributionYearCard(year: ContributionsYear): YAxisParams {
+        fun getParamsForContributionYearCard(year: ContributionsYearWithDays): YAxisParams {
             // Find top contribution day
-            val topDay = year.days.maxByOrNull {
+            val topDay = year.contributionDays.maxByOrNull {
                 it.count
             }
 
