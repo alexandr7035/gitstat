@@ -79,14 +79,17 @@ class YearCardFragment: Fragment() {
 
             // Fill only from zero point
             dataset.fillFormatter = IFillFormatter { dataSet, dataProvider -> 0f }
+            val plotFill = PlotFill.getPlotFillForYear(requireContext(), yearData.year.id)
 
             dataset.apply {
                 setDrawFilled(true)
                 setDrawCircles(false)
                 setDrawValues(false)
 
-                color = ContextCompat.getColor(requireContext(), R.color.contributions_color)
-                fillDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.background_contributions_graph)
+//                color = ContextCompat.getColor(requireContext(), R.color.contributions_color)
+//                fillDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.background_contributions_graph)
+                color = plotFill.lineColor
+                fillDrawable = plotFill.fillDrawable
             }
 
             val lineData = LineData(dataset)
