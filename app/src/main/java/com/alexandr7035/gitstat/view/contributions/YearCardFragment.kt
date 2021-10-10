@@ -21,6 +21,7 @@ import com.github.mikephil.charting.formatter.ValueFormatter
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.math.round
 
 class YearCardFragment: Fragment() {
 
@@ -114,15 +115,24 @@ class YearCardFragment: Fragment() {
             val contributionsCount = this.contributionDays.sumOf { it.count }
             binding?.contributionsCountView?.text = contributionsCount.toString()
 
+            val contributionsRate = round((contributionsCount.toFloat() / contributionDays.size.toFloat() * 100)) / 100F
+            val bg = ContextCompat.getDrawable(requireContext(), R.drawable.background_rounded_shape)
+            bg?.setTint(plotFill.lineColor)
+            binding?.contributionsRateView?.background = bg
+            binding?.contributionsRateView?.text = getString(
+                R.string.contributions_rate,
+                contributionsRate
+            )
+
             // Show stub if no contributions for this year
             if (contributionsCount == 0) {
                 binding?.emptyPlotStub?.visibility = View.VISIBLE
                 binding?.contributionsChart?.visibility = View.GONE
+                // Invisible as year position depends on them
+                binding?.contributionsRateView?.visibility = View.INVISIBLE
+                binding?.contributionsCountView?.visibility = View.INVISIBLE
             }
-            else {
-                binding?.emptyPlotStub?.visibility = View.GONE
-                binding?.contributionsChart?.visibility = View.VISIBLE
-            }
+
         }
 
 

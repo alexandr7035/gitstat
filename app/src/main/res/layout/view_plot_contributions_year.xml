@@ -11,24 +11,41 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="Last year"
-        android:textColor="@color/black"
+        android:textColor="@color/gray_500"
         android:textSize="18sp"
         android:textStyle="bold"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/contributionsCountView"
+        app:layout_constraintBottom_toBottomOf="@id/contributionsCountView"
         app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
         android:id="@+id/contributionsCountView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="725 contributions"
-        android:textColor="@color/gray_200"
+        tools:text="725"
+        android:textColor="@color/gray_500"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintTop_toTopOf="@id/contributionsRateView"
+        app:layout_constraintBottom_toBottomOf="@id/contributionsRateView"
+        app:layout_constraintEnd_toStartOf="@id/contributionsRateView"/>
+
+    <TextView
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginTop="5dp"
+        android:id="@+id/contributionsRateView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="0.83 / d"
+        tools:background="@drawable/background_rounded_shape"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -39,7 +56,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/contributionsYear" />
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toBottomOf="@id/contributionsRateView" />
 
     <TextView
         android:id="@+id/emptyPlotStub"
