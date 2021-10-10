@@ -100,7 +100,8 @@
             android:layout_gravity="center"
             android:id="@+id/yearsTabLayout"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="14dp"
+            android:layout_marginBottom="10dp"
             app:tabIndicatorHeight="0dp"
             app:tabIndicatorGravity="center"
             app:tabBackground="@drawable/dot_tab_selector">
