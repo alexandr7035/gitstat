@@ -8,13 +8,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.alexandr7035.gitstat.R
-import com.alexandr7035.gitstat.data.local.model.ContributionsYear
 import com.alexandr7035.gitstat.databinding.FragmentContributionsBinding
 import com.github.mikephil.charting.formatter.ValueFormatter
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.math.round
 
 @AndroidEntryPoint
@@ -40,8 +38,6 @@ class ContributionsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.fetchContributionYears()
-
         // Update data
         viewModel.getContributionYearsLiveData().observe(viewLifecycleOwner, { years ->
 
@@ -57,7 +53,7 @@ class ContributionsFragment : Fragment() {
         })
 
 
-        viewModel.getContributionsLiveData().observe(viewLifecycleOwner, { contributions ->
+        viewModel.getContributionDaysLiveData().observe(viewLifecycleOwner, { contributions ->
 
             val totalContributions = contributions.sumOf { it.count }
 
