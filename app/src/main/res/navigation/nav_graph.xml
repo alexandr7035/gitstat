@@ -81,17 +81,23 @@
             android:id="@+id/syncHostFragment"
             android:name="com.alexandr7035.gitstat.view.datasync.SyncHostFragment"
             android:label="fragment_sync_host"
-            tools:layout="@layout/fragment_sync_host" >
-            <action
-                android:id="@+id/action_syncHostFragment_to_syncPendingFragment"
-                app:destination="@id/syncPendingFragment" />
-        </fragment>
+            tools:layout="@layout/fragment_sync_host" />
 
         <fragment
             android:id="@+id/syncPendingFragment"
             android:name="com.alexandr7035.gitstat.view.datasync.SyncPendingFragment"
             android:label="fragment_sync_pending"
             tools:layout="@layout/fragment_sync_pending" />
+        <fragment
+            android:id="@+id/syncFailedWithCacheFragment"
+            android:name="com.alexandr7035.gitstat.view.datasync.SyncFailedWithCacheFragment"
+            android:label="SyncFailedWithCacheFragment"
+            tools:layout="@layout/fragment_sync_failed_with_cache"/>
+        <fragment
+            android:id="@+id/syncFailedNoCacheFragment"
+            android:name="com.alexandr7035.gitstat.view.datasync.SyncFailedNoCacheFragment"
+            android:label="fragment_sync_failed_no_cache"
+            tools:layout="@layout/fragment_sync_failed_no_cache" />
 
     </navigation>
 
