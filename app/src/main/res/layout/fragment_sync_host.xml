@@ -8,6 +8,8 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:clipToPadding="false"
+        android:clipChildren="false"
+        android:padding="10dp"
         android:id="@+id/containerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
