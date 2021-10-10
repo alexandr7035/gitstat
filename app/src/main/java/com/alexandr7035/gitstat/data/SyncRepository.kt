@@ -40,10 +40,6 @@ class SyncRepository @Inject constructor(
 
         try {
             syncLiveData.postValue(DataSyncStatus.PENDING_PROFILE)
-
-            // FIXME DEBUG only
-            delay(2000)
-
             syncProfileData()
 
             syncLiveData.postValue(DataSyncStatus.PENDING_REPOSITORIES)
