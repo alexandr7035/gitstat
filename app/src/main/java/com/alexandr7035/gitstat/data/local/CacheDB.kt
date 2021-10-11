@@ -2,12 +2,9 @@ package com.alexandr7035.gitstat.data.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.alexandr7035.gitstat.data.local.model.ContributionDayEntity
-import com.alexandr7035.gitstat.data.local.model.ContributionsYearEntity
-import com.alexandr7035.gitstat.data.local.model.RepositoryEntity
-import com.alexandr7035.gitstat.data.local.model.UserEntity
+import com.alexandr7035.gitstat.data.local.model.*
 
-@Database(entities = [UserEntity::class, RepositoryEntity::class, ContributionDayEntity::class, ContributionsYearEntity::class], version = 9)
+@Database(entities = [UserEntity::class, RepositoryEntity::class, ContributionDayEntity::class, ContributionRateEntity::class, ContributionsYearEntity::class], version = 10)
 abstract class CacheDB : RoomDatabase() {
     abstract fun getDao(): CacheDao
 }

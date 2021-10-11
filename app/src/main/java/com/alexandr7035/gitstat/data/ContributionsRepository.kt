@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import com.alexandr7035.gitstat.data.local.CacheDao
 import com.alexandr7035.gitstat.data.local.model.ContributionDayEntity
 import com.alexandr7035.gitstat.data.local.model.ContributionsYearWithDays
+import com.alexandr7035.gitstat.data.local.model.ContributionsYearWithRates
 import javax.inject.Inject
 
 // FIXME use interface
@@ -15,6 +16,10 @@ class ContributionsRepository @Inject constructor(private val dao: CacheDao) {
 
     fun getContributionYearsLiveData(): LiveData<List<ContributionsYearWithDays>> {
         return dao.getContributionYearsCache()
+    }
+
+    fun getContributionYearsWithRatesLiveData(): LiveData<List<ContributionsYearWithRates>> {
+        return dao.getContributionYearsWithRatesCache()
     }
 
 }

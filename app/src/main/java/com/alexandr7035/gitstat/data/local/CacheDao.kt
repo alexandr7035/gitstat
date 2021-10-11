@@ -57,6 +57,19 @@ interface CacheDao {
     @Query("SELECT * FROM contribution_years")
     fun getContributionYearsCache(): LiveData<List<ContributionsYearWithDays>>
 
+    // FIXME
+    @Query("SELECT * FROM contribution_years")
+    suspend fun getContributionYearsList(): List<ContributionsYearWithDays>
+
     @Query("DELETE FROM contribution_years")
     fun clearContributionsYearsCache()
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertContributionRatesCache(rates: ArrayList<ContributionRateEntity>)
+
+    @Query("SELECT * FROM contribution_years")
+    fun getContributionYearsWithRatesCache(): LiveData<List<ContributionsYearWithRates>>
+
+    @Query("DELETE FROM contribution_rates")
+    suspend fun clearContributionsYearsWithRatesCache()
 }

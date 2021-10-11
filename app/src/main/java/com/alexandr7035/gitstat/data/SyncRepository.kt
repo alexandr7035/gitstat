@@ -9,7 +9,9 @@ import com.alexandr7035.gitstat.apollo.RepositoriesQuery
 import com.alexandr7035.gitstat.core.*
 import com.alexandr7035.gitstat.data.local.CacheDao
 import com.alexandr7035.gitstat.data.local.model.ContributionDayEntity
+import com.alexandr7035.gitstat.data.local.model.ContributionRateEntity
 import com.alexandr7035.gitstat.data.local.model.ContributionsYearEntity
+import com.alexandr7035.gitstat.data.local.model.ContributionsYearWithDays
 import com.alexandr7035.gitstat.data.remote.mappers.ContributionsDaysListRemoteToCacheMapper
 import com.alexandr7035.gitstat.data.remote.mappers.RepositoriesRemoteToCacheMapper
 import com.alexandr7035.gitstat.data.remote.mappers.UserRemoteToCacheMapper
@@ -48,6 +50,9 @@ class SyncRepository @Inject constructor(
 
             syncLiveData.postValue(DataSyncStatus.PENDING_CONTRIBUTIONS)
             syncAllContributions()
+
+            // TODO FIXME
+            syncContributionRateData()
 
             syncLiveData.postValue(DataSyncStatus.SUCCESS)
 
@@ -137,6 +142,27 @@ class SyncRepository @Inject constructor(
         val cachedRepositories = repositoriesMapper.transform(data)
         Log.d("DEBUG_TAG", "${cachedRepositories.size}")
         dao.insertRepositoriesCache(cachedRepositories)
+    }
+
+
+    private suspend fun syncContributionRateData() {
+
+        val contributionYears = dao.getContributionYearsList()
+        val rates = ArrayList<ContributionRateEntity>()
+
+        // TODO mapper
+        contributionYears.forEach { yearData ->
+            yearData.contributionDays.forEachIndexed() { position, day ->
+                rates.add(
+                    ContributionRateEntity(
+                        date = day.date,
+                        rate = (0..5).random().toFloat(),
+                        yearId = yearData.year.id
+                ))
+            }
+        }
+
+        dao.insertContributionRatesCache(rates)
     }
 
 
