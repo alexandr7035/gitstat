@@ -102,11 +102,7 @@ class YearCardFragment: Fragment() {
                 // Update axis params
                 axisLeft.axisMinimum = yAxisParams.minValue
                 axisLeft.axisMaximum = yAxisParams.maxValue
-                axisLeft.labelCount = yAxisParams.labelsCount
-
-                axisRight.axisMinimum = yAxisParams.minValue
-                axisRight.axisMaximum = yAxisParams.maxValue
-                axisRight.labelCount = yAxisParams.labelsCount
+                axisLeft.setLabelCount(yAxisParams.labelsCount, true)
             }
 
             // Update chart

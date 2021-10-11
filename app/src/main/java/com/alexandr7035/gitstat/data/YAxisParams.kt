@@ -31,7 +31,7 @@ data class YAxisParams(
 
                 // Show label every 5th contribution
                 // But no less than 2
-                val labelsCount = (maxValue / 5).toInt()
+                val labelsCount = (maxValue / 5).toInt() + 1
 
                 Log.d("DEBUG_TAG", "${topDay.count} max, top value ${maxValue}, labels count $labelsCount")
 
