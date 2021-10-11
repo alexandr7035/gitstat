@@ -15,7 +15,8 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="11dp"
+        app:layout_constraintTop_toTopOf="@id/contributionsRateView"
+        app:layout_constraintBottom_toBottomOf="@id/contributionsRateView"
         tools:text="2021" />
 
     <TextView

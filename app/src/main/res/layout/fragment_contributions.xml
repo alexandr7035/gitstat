@@ -92,7 +92,7 @@
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/rateViewPager"
             android:layout_width="match_parent"
-            android:layout_height="120dp" />
+            android:layout_height="150dp" />
 
         <com.google.android.material.tabs.TabLayout
             app:tabGravity="center"

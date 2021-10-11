@@ -79,14 +79,25 @@ class ContributionsFragment : Fragment() {
         })
 
 
-        // TODO create data layer
-        yearContributionsRateAdapter  = YearContributionsRateAdapter(this)
-        yearContributionsRateAdapter.setItems(listOf("Test 1", "Test 2"))
-        binding?.rateViewPager?.adapter = yearContributionsRateAdapter
+        viewModel.getContributionYearsWithRatesLiveData().observe(viewLifecycleOwner, { rateYears ->
 
-        TabLayoutMediator(binding!!.rateTabLayout, binding!!.rateViewPager) { tab, position ->
-//            tab.text = "OBJECT ${(position + 1)}"
-        }.attach()
+            Log.d("DEBUG_TAG", "rate years count ${rateYears.size}")
+
+            if (rateYears.isNotEmpty()) {
+                yearContributionsRateAdapter  = YearContributionsRateAdapter(this)
+                yearContributionsRateAdapter.setItems(rateYears)
+                binding?.rateViewPager?.adapter = yearContributionsRateAdapter
+
+                TabLayoutMediator(binding!!.rateTabLayout, binding!!.rateViewPager) { tab, position ->
+                }.attach()
+
+                // Set to last position
+                binding?.rateViewPager?.setCurrentItem(rateYears.size - 1, false)
+            }
+        })
+
+
+
         
     }
 
