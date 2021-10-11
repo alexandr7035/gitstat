@@ -15,17 +15,18 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/contributionsRateView"
-        app:layout_constraintBottom_toBottomOf="@id/contributionsRateView"
+        app:layout_constraintTop_toTopOf="@id/lastCRView"
+        app:layout_constraintBottom_toBottomOf="@id/lastCRView"
         tools:text="2021" />
 
     <TextView
+        android:textSize="14sp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
-        android:id="@+id/contributionsRateView"
+        android:id="@+id/lastCRView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="0.83 / d"
+        tools:text="0.83"
         tools:background="@drawable/background_rounded_shape"
         android:textColor="@color/white"
         android:textStyle="bold"
@@ -40,11 +41,54 @@
         android:id="@+id/contributionsChart"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="5dp"
-        app:layout_constraintTop_toBottomOf="@id/contributionsRateView" />
+        app:layout_constraintTop_toBottomOf="@id/lastCRView" />
+
+    <TextView
+        android:id="@+id/peakCRLabel"
+        android:layout_marginEnd="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Peak CR"
+        android:textColor="@color/gray_500"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/peakCRView"
+        app:layout_constraintEnd_toStartOf="@+id/peakCRView"
+        app:layout_constraintTop_toTopOf="@id/peakCRView" />
+
+    <TextView
+        android:layout_marginEnd="10dp"
+        android:id="@+id/peakCRView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="10dp"
+        android:paddingTop="3dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="3dp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/lastCRLabel"
+        app:layout_constraintTop_toTopOf="@id/lastCRLabel"
+        app:layout_constraintEnd_toStartOf="@id/lastCRLabel"
+        tools:background="@drawable/background_rounded_shape"
+        tools:text="0.83" />
+
+    <TextView
+        android:id="@+id/lastCRLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:text="Last CR"
+        android:textColor="@color/gray_500"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/lastCRView"
+        app:layout_constraintTop_toTopOf="@id/lastCRView"
+        app:layout_constraintEnd_toStartOf="@id/lastCRView"/>
 
     <TextView
         android:id="@+id/emptyPlotStub"

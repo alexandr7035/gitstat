@@ -63,18 +63,39 @@ class YearContributionsRateFragment : Fragment() {
         Log.d("DEBUG_TAG", "years data rates $yearData")
 
         yearData.apply {
+            // Set year title
             binding?.year?.text = this.year.id.toString()
 
+            // Get color params for the plot
+            val plotFill = PlotFill.getPlotFillForYear(requireContext(), yearData.year.id)
+
+            // Background for contribution rate views
+            val bg = ContextCompat.getDrawable(requireContext(), R.drawable.background_rounded_shape)
+            bg?.setTint(plotFill.lineColor)
+
+            // Peak contribution rate
+            val maxContributionsRate = contributionRates.maxByOrNull { it.rate }?.rate
+            binding?.peakCRView?.background = bg
+            binding?.peakCRView?.text = maxContributionsRate.toString()
+
+            // Last contribution rate (end of the year)
+            val lastContributionRate = contributionRates[contributionRates.size - 1].rate
+            binding?.lastCRView?.background = bg
+            binding?.lastCRView?.text = lastContributionRate.toString()
+
+            // YAxis params for the plot
+            val yAxisParams = RateYAxisParams.getRateYAxisParams(maxContributionsRate ?: 10f)
+
+            // Plot entries
             val entries = ArrayList<Entry>()
             this.contributionRates.forEach { contributionRate ->
                 entries.add(Entry(contributionRate.date.toFloat(), contributionRate.rate.toFloat()))
             }
 
+            // Prepare plot dataset
             val dataset = LineDataSet(entries, "")
-
             // Fill only from zero point
             dataset.fillFormatter = IFillFormatter { dataSet, dataProvider -> 0f }
-            val plotFill = PlotFill.getPlotFillForYear(requireContext(), yearData.year.id)
 
             dataset.apply {
                 setDrawFilled(true)
@@ -84,12 +105,10 @@ class YearContributionsRateFragment : Fragment() {
                 color = plotFill.lineColor
                 fillDrawable = plotFill.fillDrawable
             }
-
             val lineData = LineData(dataset)
 
-            val maxRateValue = contributionRates.maxByOrNull { it.rate }?.rate
-            val yAxisParams = RateYAxisParams.getRateYAxisParams(maxRateValue ?: 10f)
 
+            // Populate plot with data
             binding!!.contributionsChart.apply {
                 data = lineData
                 data.isHighlightEnabled = false
@@ -104,28 +123,7 @@ class YearContributionsRateFragment : Fragment() {
             // Update chart
             binding?.contributionsChart?.invalidate()
 
-
-            val maxContributionsRate = contributionRates.maxByOrNull { it.rate }
-
-            val bg = ContextCompat.getDrawable(requireContext(), R.drawable.background_rounded_shape)
-            bg?.setTint(plotFill.lineColor)
-            binding?.contributionsRateView?.background = bg
-            binding?.contributionsRateView?.text = getString(
-                R.string.contributions_rate,
-                maxContributionsRate?.rate
-            )
-
-//            // Show stub if no contributions for this year
-//            if (contributionsCount == 0) {
-//                binding?.emptyPlotStub?.visibility = View.VISIBLE
-//                binding?.contributionsChart?.visibility = View.GONE
-//                // Invisible as year position depends on them
-//                binding?.contributionsRateView?.visibility = View.INVISIBLE
-//                binding?.contributionsCountView?.visibility = View.INVISIBLE
-//            }
-
         }
-
 
     }
 
