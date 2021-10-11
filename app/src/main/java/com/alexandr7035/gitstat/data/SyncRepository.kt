@@ -162,6 +162,7 @@ class SyncRepository @Inject constructor(
             }
         }
 
+        dao.clearContributionsYearsWithRatesCache()
         dao.insertContributionRatesCache(rates)
     }
 
