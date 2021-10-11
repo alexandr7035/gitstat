@@ -19,6 +19,7 @@ import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.api.Query
 import kotlinx.coroutines.delay
 import javax.inject.Inject
+import kotlin.math.round
 
 class SyncRepository @Inject constructor(
     private val apolloClient: ApolloClient,
@@ -147,19 +148,21 @@ class SyncRepository @Inject constructor(
 
     private suspend fun syncContributionRateData() {
 
-        val contributionYears = dao.getContributionYearsList()
+        val contributionDays = dao.getContributionsDaysCacheList()
         val rates = ArrayList<ContributionRateEntity>()
 
-        // TODO mapper
-        contributionYears.forEach { yearData ->
-            yearData.contributionDays.forEachIndexed() { position, day ->
-                rates.add(
-                    ContributionRateEntity(
-                        date = day.date,
-                        rate = (0..5).random().toFloat(),
-                        yearId = yearData.year.id
-                ))
-            }
+        contributionDays.forEachIndexed { position, day ->
+            val daysSlice = contributionDays.slice(0..position)
+            val daysSliceContributionsCount = daysSlice.sumOf { it.count }
+
+            val rate = round((daysSliceContributionsCount.toFloat() / daysSlice.size.toFloat() * 100)) / 100F
+            Log.d("DEBUG_TAG", "count ${daysSliceContributionsCount.toFloat()} / ${daysSlice.size.toFloat()} * 100 / 100f")
+
+            rates.add(ContributionRateEntity(
+                date = day.date,
+                rate = rate,
+                yearId = day.yearId
+            ))
         }
 
         dao.clearContributionsYearsWithRatesCache()

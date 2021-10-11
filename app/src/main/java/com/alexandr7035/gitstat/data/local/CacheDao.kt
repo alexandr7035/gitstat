@@ -45,6 +45,9 @@ interface CacheDao {
     @Query("select * from contributions order by date")
     fun getContributionsDaysCacheLiveData(): LiveData<List<ContributionDayEntity>>
 
+    @Query("select * from contributions order by date asc")
+    fun getContributionsDaysCacheList(): List<ContributionDayEntity>
+
     @Query("select * from contributions order by date")
     suspend fun getContributionsDaysCache(): List<ContributionDayEntity>
 
