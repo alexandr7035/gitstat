@@ -75,6 +75,47 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <LinearLayout
+        android:layout_marginTop="16dp"
+        android:id="@+id/ratePagerGroup"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/background_card"
+        android:elevation="5dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/rateViewPager"
+            android:layout_width="match_parent"
+            android:layout_height="120dp" />
+
+        <com.google.android.material.tabs.TabLayout
+            app:tabGravity="center"
+            android:layout_gravity="center"
+            android:id="@+id/rateTabLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="14dp"
+            android:layout_marginBottom="10dp"
+            app:tabIndicatorHeight="0dp"
+            app:tabIndicatorGravity="center"
+            app:tabBackground="@drawable/dot_tab_selector">
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </com.google.android.material.tabs.TabLayout>
+    </LinearLayout>
+
 
     <LinearLayout
         android:layout_marginTop="16dp"
@@ -86,7 +127,7 @@
         android:background="@drawable/background_card"
         android:elevation="5dp"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintTop_toBottomOf="@id/ratePagerGroup"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 

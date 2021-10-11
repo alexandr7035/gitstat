@@ -22,7 +22,8 @@ class ContributionsFragment : Fragment() {
     private var binding: FragmentContributionsBinding? = null
     private val viewModel by viewModels<ContributionsViewModel>()
 
-    private lateinit var adapter: YearContributionsAdapter
+    private lateinit var yearContributionsAdapter: YearContributionsAdapter
+    private lateinit var yearContributionsRateAdapter: YearContributionsRateAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,9 +45,9 @@ class ContributionsFragment : Fragment() {
 
             if (years.isNotEmpty()) {
 
-                adapter = YearContributionsAdapter(this)
-                adapter.setItems(years)
-                binding?.yearsViewPager?.adapter = adapter
+                yearContributionsAdapter = YearContributionsAdapter(this)
+                yearContributionsAdapter.setItems(years)
+                binding?.yearsViewPager?.adapter = yearContributionsAdapter
                 // Set to last position
                 binding?.yearsViewPager?.setCurrentItem(years.size - 1, false)
 
@@ -76,6 +77,16 @@ class ContributionsFragment : Fragment() {
                 contributionsRate
             )
         })
+
+
+        // TODO create data layer
+        yearContributionsRateAdapter  = YearContributionsRateAdapter(this)
+        yearContributionsRateAdapter.setItems(listOf("Test 1", "Test 2"))
+        binding?.rateViewPager?.adapter = yearContributionsRateAdapter
+
+        TabLayoutMediator(binding!!.rateTabLayout, binding!!.rateViewPager) { tab, position ->
+//            tab.text = "OBJECT ${(position + 1)}"
+        }.attach()
         
     }
 
