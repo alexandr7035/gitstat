@@ -72,5 +72,7 @@
     <string name="stage_repositories">2 / 3 Fetching repositories…</string>
     <string name="stage_contributions">3 / 3 Fetching contributions…</string>
     <string name="shared_pref_cache_sync_date">SHARED_PREF_CACHE_SYNC_DATE</string>
+    <string name="contributions_per_year">Contributions per year</string>
+    <string name="contribution_rate_dynamics">Contribution rate dynamics</string>
 
 </resources>

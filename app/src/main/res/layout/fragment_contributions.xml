@@ -89,6 +89,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
+        <TextView
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/gray_500"
+            android:text="@string/contribution_rate_dynamics"/>
+
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/rateViewPager"
             android:layout_width="match_parent"
@@ -130,6 +141,17 @@
         app:layout_constraintTop_toBottomOf="@id/ratePagerGroup"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/gray_500"
+            android:text="@string/contributions_per_year"/>
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/yearsViewPager"
