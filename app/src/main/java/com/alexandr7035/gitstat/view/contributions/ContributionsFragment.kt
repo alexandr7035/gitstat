@@ -72,10 +72,7 @@ class ContributionsFragment : Fragment() {
 
             binding?.totalContributions?.text = totalContributions.toString()
 
-            binding?.contributionsRate?.text = getString(
-                R.string.contributions_rate,
-                contributionsRate
-            )
+            binding?.contributionsRate?.text = contributionsRate.toString()
         })
 
 
