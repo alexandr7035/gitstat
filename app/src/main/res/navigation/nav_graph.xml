@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_loginFragment_to_syncGraph"
             app:destination="@id/syncGraph" />
+        <action
+            android:id="@+id/action_loginFragment_to_webViewFragment"
+            app:destination="@id/webViewFragment" />
     </fragment>
 
     <fragment
@@ -100,6 +103,11 @@
             tools:layout="@layout/fragment_sync_failed_no_cache" />
 
     </navigation>
+    <fragment
+        android:id="@+id/webViewFragment"
+        android:name="com.alexandr7035.gitstat.view.login.HowToObtainTokenFragment"
+        android:label="fragment_web_view"
+        tools:layout="@layout/fragment_how_to_obtain_token" />
 
 
 </navigation>
