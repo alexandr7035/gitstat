@@ -75,9 +75,10 @@ class LoginFragment: Fragment() {
                     return
                 }
                 else {
-                    ////Log.d(LOG_TAG, "do login request")
                     token = binding!!.tokenEditText.text.toString()
-//                    viewModel.doLoginRequest(token)
+
+                    // Show progress stub and do login
+                    binding?.loginProgressView?.visibility = View.VISIBLE
 
                     viewModel.saveToken(token)
                     viewModel.authorize()
@@ -88,6 +89,9 @@ class LoginFragment: Fragment() {
 
 
         viewModel.getAuthResultLiveData().observe(viewLifecycleOwner, { status ->
+
+            // Hide progress
+            binding?.loginProgressView?.visibility = View.GONE
 
             when (status) {
                 AuthStatus.SUCCESS -> {
