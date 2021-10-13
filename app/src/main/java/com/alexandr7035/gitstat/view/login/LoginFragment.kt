@@ -1,13 +1,20 @@
 package com.alexandr7035.gitstat.view.login
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.graphics.Color
+import android.graphics.Typeface
+import android.net.Uri
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextUtils
-import android.text.TextWatcher
+import android.text.*
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
+import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
@@ -117,6 +124,40 @@ class LoginFragment: Fragment() {
 
         })
 
+
+        val obtainTokenFullText = getString(R.string.obtain_token_full_text)
+        val obtainTokenLinkText = getString(R.string.obtain_token_clickable)
+        val obtainTokenSpannable = SpannableString(obtainTokenFullText)
+
+        val obtainTokenClickable = object : ClickableSpan() {
+            override fun onClick(widget: View) {
+                showTokenInstructions()
+            }
+
+            override fun updateDrawState(ds: TextPaint) {
+                super.updateDrawState(ds)
+                ds.isUnderlineText = true
+                ds.color = ContextCompat.getColor(requireContext(), R.color.gray_500)
+            }
+        }
+
+        obtainTokenSpannable.setSpan(
+            obtainTokenClickable,
+            obtainTokenFullText.indexOf(obtainTokenLinkText),
+            obtainTokenFullText.indexOf(obtainTokenLinkText) + obtainTokenLinkText.length,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        obtainTokenSpannable.setSpan(
+            StyleSpan(Typeface.BOLD),
+            obtainTokenFullText.indexOf(obtainTokenLinkText),
+            obtainTokenFullText.indexOf(obtainTokenLinkText) + obtainTokenLinkText.length,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        binding?.obtainTokenView?.apply {
+            text = obtainTokenSpannable
+            movementMethod = LinkMovementMethod.getInstance()
+            highlightColor = Color.TRANSPARENT
+        }
     }
 
 
@@ -130,6 +171,11 @@ class LoginFragment: Fragment() {
         }
 
         return isValid
+    }
+
+    private fun showTokenInstructions() {
+        // TODO
+        Toast.makeText(requireContext(), "TODO", Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroyView() {
