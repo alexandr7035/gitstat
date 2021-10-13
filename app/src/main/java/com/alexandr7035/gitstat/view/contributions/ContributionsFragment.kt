@@ -5,8 +5,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.Px
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.viewpager2.widget.ViewPager2
 import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.databinding.FragmentContributionsBinding
 import com.github.mikephil.charting.formatter.ValueFormatter
@@ -44,15 +46,26 @@ class ContributionsFragment : Fragment() {
         viewModel.getContributionYearsLiveData().observe(viewLifecycleOwner, { years ->
 
             if (years.isNotEmpty()) {
-
                 yearContributionsAdapter = YearContributionsAdapter(this)
                 yearContributionsAdapter.setItems(years)
                 binding?.yearsViewPager?.adapter = yearContributionsAdapter
+
                 // Set to last position
                 binding?.yearsViewPager?.setCurrentItem(years.size - 1, false)
+                binding?.currentYearView?.text = years[years.size-1].year.id.toString()
 
-                TabLayoutMediator(binding!!.yearsTabLayout, binding!!.yearsViewPager) { tab, position ->
-//            tab.text = "OBJECT ${(position + 1)}"
+                // Change year in card title when viewpager item changes
+                binding?.yearsViewPager?.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
+                    override fun onPageSelected(position: Int) {
+                        super.onPageSelected(position)
+                        Log.d("DEBUG_TAG", "Page changed callback")
+                        binding?.currentYearView?.text = years[position].year.id.toString()
+                    }
+                })
+
+                // Attach tablayout
+                TabLayoutMediator(binding!!.yearsTabLayout, binding!!.yearsViewPager) {
+                        tab, position ->
                 }.attach()
 
             }

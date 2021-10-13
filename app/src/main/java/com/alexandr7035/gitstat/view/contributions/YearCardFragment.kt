@@ -69,7 +69,6 @@ class YearCardFragment: Fragment() {
         Log.d("DEBUG_TAG", "axisparams $yAxisParams")
 
         yearData.apply {
-            binding?.contributionsYear?.text = this.year.id.toString()
 
             val entries = ArrayList<Entry>()
             this.contributionDays.forEach { contributionDay ->
@@ -115,10 +114,8 @@ class YearCardFragment: Fragment() {
             val bg = ContextCompat.getDrawable(requireContext(), R.drawable.background_rounded_shape)
             bg?.setTint(plotFill.lineColor)
             binding?.contributionsRateView?.background = bg
-            binding?.contributionsRateView?.text = getString(
-                R.string.contributions_rate,
-                contributionsRate
-            )
+            binding?.contributionsRateView?.text = contributionsRate.toString()
+
 
             // Show stub if no contributions for this year
             if (contributionsCount == 0) {
