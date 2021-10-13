@@ -120,10 +120,11 @@ class YearCardFragment: Fragment() {
             // Show stub if no contributions for this year
             if (contributionsCount == 0) {
                 binding?.emptyPlotStub?.visibility = View.VISIBLE
+
                 binding?.contributionsChart?.visibility = View.GONE
-                // Invisible as year position depends on them
-                binding?.contributionsRateView?.visibility = View.INVISIBLE
-                binding?.contributionsCountView?.visibility = View.INVISIBLE
+                binding?.contributionsRateView?.visibility = View.GONE
+                binding?.contributionsCountView?.visibility = View.GONE
+                binding?.yearCRLabel?.visibility = View.GONE
             }
 
         }
