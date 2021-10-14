@@ -174,8 +174,6 @@ class LoginFragment: Fragment() {
     }
 
     private fun showTokenInstructions() {
-        // TODO
-        Toast.makeText(requireContext(), "TODO", Toast.LENGTH_SHORT).show()
         navController.navigate(R.id.action_loginFragment_to_webViewFragment)
     }
 
