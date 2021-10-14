@@ -17,6 +17,14 @@ class TimeHelper {
         return format.parse(iso8601Date)!!.time
     }
 
+    // Example input date: "2016-01-01"
+    // Used in github contributions
+    fun getUnixDateFrom_yyyyMMdd(stringDate: String): Long {
+        val format = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+        format.timeZone = TimeZone.getTimeZone("GMT")
+        return format.parse(stringDate)!!.time
+    }
+
     fun getYearFromUnixDate(timestamp: Long): Int {
         val format = SimpleDateFormat("yyyy", Locale.US)
         format.timeZone = TimeZone.getTimeZone("GMT")
