@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.alexandr7035.gitstat.data.ContributionsRepository
 import com.alexandr7035.gitstat.data.local.model.ContributionDayEntity
+import com.alexandr7035.gitstat.data.local.model.ContributionsRatioEntity
 import com.alexandr7035.gitstat.data.local.model.ContributionsYearWithDays
 import com.alexandr7035.gitstat.data.local.model.ContributionsYearWithRates
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,5 +23,9 @@ class ContributionsViewModel @Inject constructor(private val repository: Contrib
 
     fun getContributionYearsWithRatesLiveData(): LiveData<List<ContributionsYearWithRates>> {
         return repository.getContributionYearsWithRatesLiveData()
+    }
+
+    fun getContributionsRatioLiveData(): LiveData<List<ContributionsRatioEntity>> {
+        return repository.getContributionsRatioLiveData()
     }
 }

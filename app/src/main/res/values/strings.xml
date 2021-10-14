@@ -82,4 +82,5 @@
     <string name="refresh">Refresh</string>
     <string name="failed_load_page">Failed to load the page. Check your Internet connection and try again.</string>
     <string name="error">Error</string>
+    <string name="total_contributions_ratio">Total contributions ratio</string>
 </resources>
