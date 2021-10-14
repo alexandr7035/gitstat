@@ -33,11 +33,9 @@ class HowToObtainTokenFragment : Fragment() {
             findNavController().navigateUp()
         }
 
-        // FIXME
-        val obtainTokenInstructionsUrl = getString(R.string.obtain_token_url)
 
         binding?.webView?.settings?.javaScriptEnabled = true
-        binding?.webView?.loadUrl(obtainTokenInstructionsUrl)
+        loadPage()
 
         binding?.webView?.webViewClient = object: WebViewClient() {
 
@@ -79,6 +77,16 @@ class HowToObtainTokenFragment : Fragment() {
             }
         }
 
+
+        binding?.reloadButton?.setOnClickListener {
+            loadPage()
+        }
+
+    }
+
+    private fun loadPage() {
+        val obtainTokenInstructionsUrl = getString(R.string.obtain_token_url)
+        binding?.webView?.loadUrl(obtainTokenInstructionsUrl)
     }
 
     override fun onDestroyView() {

@@ -79,4 +79,7 @@
     <string name="obtain_token_clickable">here</string>
     <string name="obtain_token_url">https://github.com/alexandr7035/gitstat#how-to-authorize</string>
     <string name="how_to_obtain_token">How to obtain token</string>
+    <string name="refresh">Refresh</string>
+    <string name="failed_load_page">Failed to load the page. Check your Internet connection and try again.</string>
+    <string name="error">Error</string>
 </resources>
