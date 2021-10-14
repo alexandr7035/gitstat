@@ -2,22 +2,19 @@ package com.alexandr7035.gitstat.data
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.alexandr7035.gitstat.apollo.ContributionsQuery
-import com.alexandr7035.gitstat.apollo.ProfileCreationDateQuery
-import com.alexandr7035.gitstat.apollo.ProfileQuery
-import com.alexandr7035.gitstat.apollo.RepositoriesQuery
+import com.alexandr7035.gitstat.apollo.*
 import com.alexandr7035.gitstat.core.*
 import com.alexandr7035.gitstat.data.local.CacheDao
 import com.alexandr7035.gitstat.data.local.model.ContributionDayEntity
 import com.alexandr7035.gitstat.data.local.model.ContributionRateEntity
+import com.alexandr7035.gitstat.data.local.model.ContributionsRatioEntity
 import com.alexandr7035.gitstat.data.local.model.ContributionsYearEntity
-import com.alexandr7035.gitstat.data.local.model.ContributionsYearWithDays
 import com.alexandr7035.gitstat.data.remote.mappers.ContributionsDaysListRemoteToCacheMapper
+import com.alexandr7035.gitstat.data.remote.mappers.ContributionsRatioRemoteToCacheMapper
 import com.alexandr7035.gitstat.data.remote.mappers.RepositoriesRemoteToCacheMapper
 import com.alexandr7035.gitstat.data.remote.mappers.UserRemoteToCacheMapper
 import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.api.Query
-import kotlinx.coroutines.delay
 import javax.inject.Inject
 import kotlin.math.round
 
@@ -27,6 +24,7 @@ class SyncRepository @Inject constructor(
     private val profileMapper: UserRemoteToCacheMapper,
     private val repositoriesMapper: RepositoriesRemoteToCacheMapper,
     private val contributionsMapper: ContributionsDaysListRemoteToCacheMapper,
+    private val ratioMapper: ContributionsRatioRemoteToCacheMapper,
     private val timeHelper: TimeHelper,
     private val appPreferences: AppPreferences) {
 
@@ -111,6 +109,7 @@ class SyncRepository @Inject constructor(
         Log.d("DEBUG_TAG", "$creationYear $currentYear")
 
         val contributionDaysCached = ArrayList<ContributionDayEntity>()
+        val contributionsRatioCached = ArrayList<ContributionsRatioEntity>()
         val contributionYears = ArrayList<ContributionsYearEntity>()
 
         // Date range more than a year is not allowed in this api
@@ -119,15 +118,23 @@ class SyncRepository @Inject constructor(
 
             contributionYears.add(ContributionsYearEntity(year))
 
-            val resData = getContributionsForDateRange(year)
+            val contributionsData = getContributionsForDateRange(year)
             // Transform apollo result into room cache
-            contributionDaysCached.addAll(contributionsMapper.transform(resData))
+            contributionDaysCached.addAll(contributionsMapper.transform(contributionsData))
+
+            val ratioData = getContributionsRatioForDateRange(year)
+            contributionsRatioCached.add(ratioMapper.transform(ratioData))
         }
+
+//        // Sync ratio of total contributions (commits, PRs, etc.)
+//        val ratioData = performApolloRequest(ContributionsRatioQuery())
 
         dao.clearContributionsDaysCache()
         dao.insertContributionsDaysCache(contributionDaysCached)
         dao.clearContributionsYearsCache()
         dao.insertContributionYearsCache(contributionYears)
+        dao.clearContributionsRatioCache()
+        dao.insertContributionsRatioCache(contributionsRatioCached)
     }
 
 
@@ -183,6 +190,23 @@ class SyncRepository @Inject constructor(
                 date_from = iso8601Year.startDate,
                 date_to = iso8601Year.endDate
             ))
+        }
+    }
+
+
+    // TODO dry
+    private suspend fun getContributionsRatioForDateRange(year: Int?): ContributionsRatioQuery.Data {
+
+        return if (year == null) {
+            performApolloRequest(ContributionsRatioQuery(date_from = null, date_to = null))
+        }
+        else {
+            val iso8601Year = timeHelper.getDatesRangeForYear_iso8601(year)
+            performApolloRequest(
+                ContributionsRatioQuery(
+                    date_from = iso8601Year.startDate,
+                    date_to = iso8601Year.endDate
+                ))
         }
     }
 

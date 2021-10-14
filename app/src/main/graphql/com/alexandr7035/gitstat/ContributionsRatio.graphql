@@ -1,0 +1,18 @@
+query ContributionsRatioQuery($date_from: DateTime, $date_to: DateTime) {
+    viewer {
+        contributionsCollection(from: $date_from, to: $date_to) {
+            totalPullRequestReviewContributions
+            totalIssueContributions
+            totalPullRequestContributions
+            totalRepositoryContributions
+            totalCommitContributions
+
+            # In order to not to pass dates to mapper
+            contributionCalendar {
+                weeks {
+                    firstDay
+                }
+            }
+        }
+    }
+}

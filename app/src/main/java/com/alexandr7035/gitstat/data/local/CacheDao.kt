@@ -75,4 +75,13 @@ interface CacheDao {
 
     @Query("DELETE FROM contribution_rates")
     suspend fun clearContributionsYearsWithRatesCache()
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertContributionsRatioCache(ratioData: List<ContributionsRatioEntity>)
+
+    @Query("select * from contributions_ratio")
+    fun getContributionsRatioLiveData(): LiveData<List<ContributionsRatioEntity>>
+
+    @Query("DELETE FROM contributions_ratio")
+    suspend fun clearContributionsRatioCache()
 }

@@ -9,10 +9,7 @@ import com.alexandr7035.gitstat.data.local.CacheDB
 import com.alexandr7035.gitstat.data.local.CacheDao
 import com.alexandr7035.gitstat.data.remote.AuthInterceptor
 import com.alexandr7035.gitstat.data.remote.ErrorInterceptor
-import com.alexandr7035.gitstat.data.remote.mappers.ContributionDayRemoteToCacheMapper
-import com.alexandr7035.gitstat.data.remote.mappers.ContributionsDaysListRemoteToCacheMapper
-import com.alexandr7035.gitstat.data.remote.mappers.RepositoriesRemoteToCacheMapper
-import com.alexandr7035.gitstat.data.remote.mappers.UserRemoteToCacheMapper
+import com.alexandr7035.gitstat.data.remote.mappers.*
 import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.network.http.HttpNetworkTransport
 import com.google.gson.Gson
@@ -61,9 +58,10 @@ object AppModule {
         profileMapper: UserRemoteToCacheMapper,
         repositoriesMapper: RepositoriesRemoteToCacheMapper,
         contributionsMapper: ContributionsDaysListRemoteToCacheMapper,
+        ratioMapper: ContributionsRatioRemoteToCacheMapper,
         timeHelper: TimeHelper,
         appPreferences: AppPreferences): SyncRepository {
-        return SyncRepository(apolloClient, dao, profileMapper, repositoriesMapper, contributionsMapper, timeHelper, appPreferences)
+        return SyncRepository(apolloClient, dao, profileMapper, repositoriesMapper, contributionsMapper, ratioMapper, timeHelper, appPreferences)
     }
 
     @Provides
@@ -86,6 +84,11 @@ object AppModule {
     @Provides
     fun provideContributionDayMapper(timeHelper: TimeHelper): ContributionDayRemoteToCacheMapper {
         return ContributionDayRemoteToCacheMapper(timeHelper)
+    }
+
+    @Provides
+    fun provideContributionsRatioMapper(timeHelper: TimeHelper): ContributionsRatioRemoteToCacheMapper {
+        return ContributionsRatioRemoteToCacheMapper(timeHelper)
     }
 
     @Provides
