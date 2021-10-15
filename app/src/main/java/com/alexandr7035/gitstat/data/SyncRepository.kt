@@ -42,16 +42,14 @@ class SyncRepository @Inject constructor(
 
         try {
             syncLiveData.postValue(DataSyncStatus.PENDING_PROFILE)
-            syncProfileData()
+//            syncProfileData()
 
             syncLiveData.postValue(DataSyncStatus.PENDING_REPOSITORIES)
-            syncRepositories()
+//            syncRepositories()
 
             syncLiveData.postValue(DataSyncStatus.PENDING_CONTRIBUTIONS)
-            syncAllContributions()
-
-            // TODO FIXME
-            syncContributionRateData()
+//            syncAllContributions()
+//            syncContributionRateData()
 
             syncLiveData.postValue(DataSyncStatus.SUCCESS)
 
@@ -122,12 +120,10 @@ class SyncRepository @Inject constructor(
             // Transform apollo result into room cache
             contributionDaysCached.addAll(contributionsMapper.transform(contributionsData))
 
+            // Sync ratio of total contributions (commits, PRs, etc.)
             val ratioData = getContributionsRatioForDateRange(year)
             contributionsRatioCached.add(ratioMapper.transform(ratioData))
         }
-
-//        // Sync ratio of total contributions (commits, PRs, etc.)
-//        val ratioData = performApolloRequest(ContributionsRatioQuery())
 
         dao.clearContributionsDaysCache()
         dao.insertContributionsDaysCache(contributionDaysCached)
