@@ -11,9 +11,12 @@ import androidx.annotation.Px
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.databinding.FragmentContributionsBinding
+import com.alexandr7035.gitstat.view.contributions.plots.contributions_ratio.RatioLegendAdapter
+import com.alexandr7035.gitstat.view.contributions.plots.contributions_ratio.RatioLegendItem
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
@@ -117,31 +120,24 @@ class ContributionsFragment : Fragment() {
 
         viewModel.getContributionsRatioLiveData().observe(viewLifecycleOwner, { ratios ->
 
-            // Legend settings
-            binding!!.ratioChart.legend.apply {
-                verticalAlignment = Legend.LegendVerticalAlignment.CENTER
-                horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
-                orientation = Legend.LegendOrientation.VERTICAL
-                setDrawInside(false)
-                isWordWrapEnabled = true
-                textSize = 20f
-                xEntrySpace = 20f
-            }
+            Log.d("DEBUG_TAG", "ratios ${ratios}")
 
             // General chart settings
             binding!!.ratioChart.apply {
                 setEntryLabelTextSize(16f)
                 setDrawEntryLabels(false)
                 description.isEnabled = false
-                setCenterTextSize(30f)
+                setCenterTextSize(24f)
+                legend.isEnabled = false
                 setExtraOffsets(0f, 0f, 0f, 0f)
             }
 
             val commits = ratios.sumOf { it.totalCommitContributions }
             val issues = ratios.sumOf { it.totalIssueContributions }
             val pullRequests = ratios.sumOf { it.totalPullRequestContributions }
-            val reviews = ratios.sumOf { it.totalPullRequestContributions }
+            val reviews = ratios.sumOf { it.totalPullRequestReviewContributions }
             val repositories = ratios.sumOf { it.totalRepositoryContributions }
+            val total = commits + issues + pullRequests + reviews + repositories
 
             val entries = ArrayList<PieEntry>()
             entries.add(PieEntry(commits.toFloat(), "Commits"))
@@ -149,6 +145,22 @@ class ContributionsFragment : Fragment() {
             entries.add(PieEntry(pullRequests.toFloat(), "Pull requests"))
             entries.add(PieEntry(reviews.toFloat(), "Reviews"))
             entries.add(PieEntry(repositories.toFloat(), "Repositories"))
+
+            // FIXME
+            val adapter = RatioLegendAdapter()
+            binding?.ratioLegendRecycler?.layoutManager = LinearLayoutManager(requireContext())
+            binding?.ratioLegendRecycler?.adapter = adapter
+            adapter.setItems(listOf(
+                RatioLegendItem(label = "Commits", count = commits, percentage = (commits/total.toFloat() *100)),
+                RatioLegendItem(label = "Issues", count = issues, percentage =  (issues/total.toFloat() *100)),
+                RatioLegendItem(label = "Repositories", count = repositories, percentage = (repositories/total.toFloat() *100)),
+                RatioLegendItem(label = "Pull requests", count = pullRequests, percentage = (pullRequests/total.toFloat() *100)),
+                RatioLegendItem(label = "Reviews", count = reviews, percentage = (reviews/total.toFloat() *100)),
+                // FIXME
+                RatioLegendItem(label = "Unknown", count = 0, percentage = (10/total.toFloat() *100))
+            ))
+
+
 
             // FIXME
             val diagramColors = listOf<Int>(
@@ -172,6 +184,7 @@ class ContributionsFragment : Fragment() {
 
 
             val pieData = PieData(dataSet)
+            pieData.setDrawValues(false)
             // Remove decimal part from value
             pieData.setValueFormatter(object: ValueFormatter() {
                 override fun getFormattedValue(value: Float): String {
@@ -182,7 +195,7 @@ class ContributionsFragment : Fragment() {
 
             // Update data
             binding!!.ratioChart.apply {
-                centerText = 1000.toString()
+                centerText = total.toString()
                 // Should be in the end to display legend correctly
                 data = pieData
             }
