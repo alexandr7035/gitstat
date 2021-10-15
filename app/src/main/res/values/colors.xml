@@ -33,4 +33,14 @@
     <color name="year_8">#FF5722</color>
     <color name="year_9">#673AB7</color>
 
+
+    <color name="color_commits">#4CAF50</color>
+    <color name="color_repositories">#FFEB3B</color>
+    <color name="color_issues">#C25050</color>
+    <color name="color_pull_requests">#B03BEA</color>
+    <color name="color_code_reviews">#BBD88F</color>
+    <color name="color_unknown_contributions">#939393</color>
+
+
+
 </resources>

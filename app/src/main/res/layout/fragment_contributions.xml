@@ -88,47 +88,52 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/ratioCard"
-        android:elevation="5dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:background="@drawable/background_card"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/background_card"
+        android:elevation="5dp"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/header"
+        android:paddingEnd="5dp"
+        android:paddingBottom="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/header">
 
         <TextView
             android:id="@+id/ratioHeader"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/total_contributions_ratio"
+            android:textColor="@color/gray_500"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="@color/gray_500"
-            android:text="@string/total_contributions_ratio"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <com.github.mikephil.charting.charts.PieChart
+        <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/ratioChart"
-            android:layout_width="200dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:minHeight="280dp"
+            app:layout_constraintEnd_toStartOf="@+id/ratioLegendRecycler"
+            app:layout_constraintHorizontal_bias="0.6"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ratioHeader"/>
+            app:layout_constraintTop_toBottomOf="@id/ratioHeader" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/ratioLegendRecycler"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="0dp"
-            app:layout_constraintStart_toEndOf="@id/ratioChart"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ratioHeader"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintHorizontal_bias="0.4"
+            app:layout_constraintStart_toEndOf="@+id/ratioChart"
+            app:layout_constraintTop_toBottomOf="@id/ratioHeader" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

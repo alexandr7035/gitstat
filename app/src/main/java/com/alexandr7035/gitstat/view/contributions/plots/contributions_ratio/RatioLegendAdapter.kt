@@ -1,9 +1,13 @@
 package com.alexandr7035.gitstat.view.contributions.plots.contributions_ratio
 
 import android.annotation.SuppressLint
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.databinding.ViewRatioPlotLegendItemBinding
 
 class RatioLegendAdapter: RecyclerView.Adapter<RatioLegendAdapter.ViewHolder>() {
@@ -22,6 +26,8 @@ class RatioLegendAdapter: RecyclerView.Adapter<RatioLegendAdapter.ViewHolder>() 
         holder.binding.countView.text = items[position].count.toString()
         holder.binding.label.text = items[position].label
         holder.binding.percentageView.text = "${items[position].percentage}%"
+
+        (holder.binding.coloredMark.background as GradientDrawable).setColor(items[position].color)
     }
 
     override fun getItemCount(): Int {

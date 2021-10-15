@@ -15,12 +15,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.databinding.FragmentContributionsBinding
+import com.alexandr7035.gitstat.view.contributions.plots.contributions_ratio.ContributionsRatioPlot
 import com.alexandr7035.gitstat.view.contributions.plots.contributions_ratio.RatioLegendAdapter
 import com.alexandr7035.gitstat.view.contributions.plots.contributions_ratio.RatioLegendItem
 import com.github.mikephil.charting.components.Legend
-import com.github.mikephil.charting.data.PieData
-import com.github.mikephil.charting.data.PieDataSet
-import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
@@ -119,88 +118,18 @@ class ContributionsFragment : Fragment() {
 
 
         viewModel.getContributionsRatioLiveData().observe(viewLifecycleOwner, { ratios ->
-
             Log.d("DEBUG_TAG", "ratios ${ratios}")
-
-            // General chart settings
-            binding!!.ratioChart.apply {
-                setEntryLabelTextSize(16f)
-                setDrawEntryLabels(false)
-                description.isEnabled = false
-                setCenterTextSize(24f)
-                legend.isEnabled = false
-                setExtraOffsets(0f, 0f, 0f, 0f)
-            }
-
-            val commits = ratios.sumOf { it.totalCommitContributions }
-            val issues = ratios.sumOf { it.totalIssueContributions }
-            val pullRequests = ratios.sumOf { it.totalPullRequestContributions }
-            val reviews = ratios.sumOf { it.totalPullRequestReviewContributions }
-            val repositories = ratios.sumOf { it.totalRepositoryContributions }
-            val total = commits + issues + pullRequests + reviews + repositories
-
-            val entries = ArrayList<PieEntry>()
-            entries.add(PieEntry(commits.toFloat(), "Commits"))
-            entries.add(PieEntry(issues.toFloat(), "Issues"))
-            entries.add(PieEntry(pullRequests.toFloat(), "Pull requests"))
-            entries.add(PieEntry(reviews.toFloat(), "Reviews"))
-            entries.add(PieEntry(repositories.toFloat(), "Repositories"))
 
             // FIXME
             val adapter = RatioLegendAdapter()
             binding?.ratioLegendRecycler?.layoutManager = LinearLayoutManager(requireContext())
             binding?.ratioLegendRecycler?.adapter = adapter
-            adapter.setItems(listOf(
-                RatioLegendItem(label = "Commits", count = commits, percentage = (commits/total.toFloat() *100)),
-                RatioLegendItem(label = "Issues", count = issues, percentage =  (issues/total.toFloat() *100)),
-                RatioLegendItem(label = "Repositories", count = repositories, percentage = (repositories/total.toFloat() *100)),
-                RatioLegendItem(label = "Pull requests", count = pullRequests, percentage = (pullRequests/total.toFloat() *100)),
-                RatioLegendItem(label = "Reviews", count = reviews, percentage = (reviews/total.toFloat() *100)),
-                // FIXME
-                RatioLegendItem(label = "Unknown", count = 0, percentage = (10/total.toFloat() *100))
-            ))
 
-
-
-            // FIXME
-            val diagramColors = listOf<Int>(
-                ContextCompat.getColor(requireContext(), R.color.contributions_color),
-                ContextCompat.getColor(requireContext(), R.color.year_8),
-                ContextCompat.getColor(requireContext(), R.color.year_4),
-                ContextCompat.getColor(requireContext(), R.color.year_9),
-                ContextCompat.getColor(requireContext(), R.color.year_5),
-            )
-
-            binding!!.ratioChart.invalidate()
-
-            val dataSet = PieDataSet(entries, "")
-            dataSet.apply {
-                colors = diagramColors
-                valueTextSize = 20f
-//                sliceSpace = 5f
-                valueTextColor = Color.WHITE
-                valueTypeface = Typeface.defaultFromStyle(Typeface.BOLD)
+            if (binding?.ratioChart != null) {
+                val plot = ContributionsRatioPlot()
+                plot.setupPlot(binding!!.ratioChart, ratios)
+                adapter.setItems(plot.getRatioLegendItems(binding!!.ratioChart, ratios))
             }
-
-
-            val pieData = PieData(dataSet)
-            pieData.setDrawValues(false)
-            // Remove decimal part from value
-            pieData.setValueFormatter(object: ValueFormatter() {
-                override fun getFormattedValue(value: Float): String {
-                    return "" + value.toInt()
-                }
-            })
-
-
-            // Update data
-            binding!!.ratioChart.apply {
-                centerText = total.toString()
-                // Should be in the end to display legend correctly
-                data = pieData
-            }
-
-
         })
     }
 
