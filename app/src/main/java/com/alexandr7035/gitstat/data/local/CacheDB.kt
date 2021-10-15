@@ -9,7 +9,7 @@ import com.alexandr7035.gitstat.data.local.model.*
     ContributionDayEntity::class,
     ContributionRateEntity::class,
     ContributionsYearEntity::class,
-    ContributionsRatioEntity::class], version = 13)
+    ContributionsRatioEntity::class], version = 15)
 
 abstract class CacheDB : RoomDatabase() {
     abstract fun getDao(): CacheDao

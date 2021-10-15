@@ -118,11 +118,13 @@ class SyncRepository @Inject constructor(
 
             val contributionsData = getContributionsForDateRange(year)
             // Transform apollo result into room cache
-            contributionDaysCached.addAll(contributionsMapper.transform(contributionsData))
+            val cachedContributionsData = contributionsMapper.transform(contributionsData)
+            contributionDaysCached.addAll(cachedContributionsData)
 
             // Sync ratio of total contributions (commits, PRs, etc.)
             val ratioData = getContributionsRatioForDateRange(year)
-            contributionsRatioCached.add(ratioMapper.transform(ratioData))
+            val totalContributions = cachedContributionsData.sumOf { it.count }
+            contributionsRatioCached.add(ratioMapper.transform(ratioData, totalContributions))
         }
 
         dao.clearContributionsDaysCache()
