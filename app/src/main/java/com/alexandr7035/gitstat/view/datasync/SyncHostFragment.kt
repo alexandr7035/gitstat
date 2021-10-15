@@ -30,11 +30,14 @@ class SyncHostFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Log.d("DEBUG_TAG", "show sync stub")
 
-        viewModel.syncData()
-
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.containerView, SyncPendingFragment())
-            .commit()
+        if (viewModel.checkForCache()) {
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.containerView, SyncSuggestionFragment())
+                .commit()
+        }
+        else {
+            viewModel.syncData()
+        }
 
         viewModel.getSyncStatusLiveData().observe(viewLifecycleOwner, { status ->
             Log.d("DEBUG_TAG", "sync status updated $status")

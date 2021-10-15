@@ -83,4 +83,9 @@
     <string name="failed_load_page">Failed to load the page. Check your Internet connection and try again.</string>
     <string name="error">Error</string>
     <string name="total_contributions_ratio">Total contributions ratio</string>
+
+    <string name="sync_cache_suggestion">The cache contains data from one of the previous runs. Do you want to sync the cache or load the old one?</string>
+    <string name="sync_data">Sync data</string>
+    <string name="load_from_cache">Load from cache</string>
+    <string name="sync_the_data_now">Sync the data now?</string>
 </resources>

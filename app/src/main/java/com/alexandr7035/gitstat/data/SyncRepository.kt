@@ -93,6 +93,7 @@ class SyncRepository @Inject constructor(
         dao.clearContributionsDaysCache()
         dao.clearContributionsYearsCache()
         dao.clearUserCache()
+        appPreferences.lastSuccessCacheSyncDate = 0
     }
 
 
@@ -231,7 +232,7 @@ class SyncRepository @Inject constructor(
         return timeHelper.getFullFromUnixDate(appPreferences.lastSuccessCacheSyncDate)
     }
 
-    private fun checkForCache(): Boolean {
+    fun checkForCache(): Boolean {
         return appPreferences.lastSuccessCacheSyncDate != 0L
     }
 

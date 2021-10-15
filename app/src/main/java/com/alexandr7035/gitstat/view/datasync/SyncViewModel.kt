@@ -42,4 +42,8 @@ class SyncViewModel @Inject constructor(private val repository: SyncRepository):
             repository.clearCache()
         }
     }
+
+    fun checkForCache(): Boolean {
+        return repository.checkForCache()
+    }
 }
