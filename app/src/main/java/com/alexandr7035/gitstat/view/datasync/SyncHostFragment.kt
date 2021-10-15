@@ -38,7 +38,7 @@ class SyncHostFragment : Fragment() {
 
         viewModel.getSyncStatusLiveData().observe(viewLifecycleOwner, { status ->
             Log.d("DEBUG_TAG", "sync status updated $status")
-            Toast.makeText(requireContext(), "$status", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(requireContext(), "$status", Toast.LENGTH_SHORT).show()
 
 
             when (status) {

@@ -42,14 +42,14 @@ class SyncRepository @Inject constructor(
 
         try {
             syncLiveData.postValue(DataSyncStatus.PENDING_PROFILE)
-//            syncProfileData()
+            syncProfileData()
 
             syncLiveData.postValue(DataSyncStatus.PENDING_REPOSITORIES)
-//            syncRepositories()
+            syncRepositories()
 
             syncLiveData.postValue(DataSyncStatus.PENDING_CONTRIBUTIONS)
-//            syncAllContributions()
-//            syncContributionRateData()
+            syncAllContributions()
+            syncContributionRateData()
 
             syncLiveData.postValue(DataSyncStatus.SUCCESS)
 
