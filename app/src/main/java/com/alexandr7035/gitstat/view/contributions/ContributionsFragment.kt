@@ -21,6 +21,7 @@ import com.alexandr7035.gitstat.view.contributions.plots.contributions_ratio.Rat
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.ValueFormatter
+import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
@@ -122,7 +123,7 @@ class ContributionsFragment : Fragment() {
 
             // FIXME
             val adapter = RatioLegendAdapter()
-            binding?.ratioLegendRecycler?.layoutManager = LinearLayoutManager(requireContext())
+            binding?.ratioLegendRecycler?.layoutManager = FlexboxLayoutManager(requireContext())
             binding?.ratioLegendRecycler?.adapter = adapter
 
             if (binding?.ratioChart != null) {
