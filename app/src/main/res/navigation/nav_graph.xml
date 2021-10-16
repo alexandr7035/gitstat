@@ -25,7 +25,11 @@
         android:id="@+id/profileFragment"
         android:name="com.alexandr7035.gitstat.view.profile.ProfileFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_logoutConfirmationDialog"
+            app:destination="@id/logoutConfirmationDialog" />
+    </fragment>
 
     <fragment
         android:id="@+id/reposOverviewFragment"
@@ -108,6 +112,10 @@
         android:name="com.alexandr7035.gitstat.view.login.HowToObtainTokenFragment"
         android:label="fragment_web_view"
         tools:layout="@layout/fragment_how_to_obtain_token" />
+    <dialog
+        android:id="@+id/logoutConfirmationDialog"
+        android:name="com.alexandr7035.gitstat.view.login.LogoutConfirmationDialog"
+        android:label="LogoutConfirmationDialog" />
 
 
 </navigation>

@@ -83,7 +83,8 @@ class ProfileFragment : Fragment() {
 
         binding!!.logOutBtn.setOnClickListener {
             // FIXME find better solution
-            (requireActivity() as MainActivity).startLogOut()
+//            (requireActivity() as MainActivity).startLogOut()
+            navController.navigate(R.id.action_profileFragment_to_logoutConfirmationDialog)
         }
 
     }
