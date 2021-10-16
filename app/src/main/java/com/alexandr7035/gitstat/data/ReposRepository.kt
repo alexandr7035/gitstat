@@ -2,27 +2,27 @@ package com.alexandr7035.gitstat.data
 
 import com.alexandr7035.gitstat.core.AppPreferences
 import com.alexandr7035.gitstat.core.Language
-import com.alexandr7035.gitstat.data.local.CacheDao
+import com.alexandr7035.gitstat.data.local.dao.RepositoriesDao
 import com.alexandr7035.gitstat.data.local.model.RepositoryEntity
 import com.alexandr7035.gitstat.view.repositories.filters.ReposFilters
 import com.google.gson.Gson
 import javax.inject.Inject
 
 class ReposRepository @Inject constructor(
-    private val dao: CacheDao,
+    private val dao: RepositoriesDao,
     private val appPreferences: AppPreferences,
     private val gson: Gson) {
 
     suspend fun fetchAllRepositoriesFromDb(): List<RepositoryEntity> {
-        return dao.getRepositoriesCache()
+        return dao.getRepositories()
     }
 
     suspend fun fetchActiveRepositoriesFromDb(): List<RepositoryEntity> {
-        return dao.getActiveRepositoriesCache()
+        return dao.getActiveRepositories()
     }
 
     suspend fun fetchArchivedRepositoriesFromDb(): List<RepositoryEntity> {
-        return dao.getArchivedRepositoriesCache()
+        return dao.getArchivedRepositories()
     }
 
 

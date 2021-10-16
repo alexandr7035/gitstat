@@ -4,7 +4,9 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.alexandr7035.gitstat.apollo.*
 import com.alexandr7035.gitstat.core.*
-import com.alexandr7035.gitstat.data.local.CacheDao
+import com.alexandr7035.gitstat.data.local.dao.ContributionsDao
+import com.alexandr7035.gitstat.data.local.dao.RepositoriesDao
+import com.alexandr7035.gitstat.data.local.dao.UserDao
 import com.alexandr7035.gitstat.data.local.model.ContributionDayEntity
 import com.alexandr7035.gitstat.data.local.model.ContributionRateEntity
 import com.alexandr7035.gitstat.data.local.model.ContributionsRatioEntity
@@ -20,11 +22,16 @@ import kotlin.math.round
 
 class SyncRepository @Inject constructor(
     private val apolloClient: ApolloClient,
-    private val dao: CacheDao,
+
+    private val userDao: UserDao,
+    private val reposDao: RepositoriesDao,
+    private val contributionsDao: ContributionsDao,
+
     private val profileMapper: UserRemoteToCacheMapper,
     private val repositoriesMapper: RepositoriesRemoteToCacheMapper,
     private val contributionsMapper: ContributionsDaysListRemoteToCacheMapper,
     private val ratioMapper: ContributionsRatioRemoteToCacheMapper,
+
     private val timeHelper: TimeHelper,
     private val appPreferences: AppPreferences) {
 
@@ -89,10 +96,10 @@ class SyncRepository @Inject constructor(
 
 
     suspend fun clearCache() {
-        dao.clearRepositoriesCache()
-        dao.clearContributionsDaysCache()
-        dao.clearContributionsYearsCache()
-        dao.clearUserCache()
+        reposDao.clearRepositories()
+        contributionsDao.clearContributionDays()
+        contributionsDao.clearContributionYears()
+        userDao.clearUser()
         appPreferences.lastSuccessCacheSyncDate = 0
     }
 
@@ -128,33 +135,33 @@ class SyncRepository @Inject constructor(
             contributionsRatioCached.add(ratioMapper.transform(ratioData, totalContributions))
         }
 
-        dao.clearContributionsDaysCache()
-        dao.insertContributionsDaysCache(contributionDaysCached)
-        dao.clearContributionsYearsCache()
-        dao.insertContributionYearsCache(contributionYears)
-        dao.clearContributionsRatioCache()
-        dao.insertContributionsRatioCache(contributionsRatioCached)
+        contributionsDao.clearContributionDays()
+        contributionsDao.insertContributionDays(contributionDaysCached)
+        contributionsDao.clearContributionYears()
+        contributionsDao.insertContributionYearsCache(contributionYears)
+        contributionsDao.clearContributionsRatios()
+        contributionsDao.insertContributionsRatios(contributionsRatioCached)
     }
 
 
     private suspend fun syncProfileData() {
         val data = performApolloRequest(ProfileQuery())
         val cachedProfile = profileMapper.transform(data)
-        dao.clearUserCache()
-        dao.insertUserCache(cachedProfile)
+        userDao.clearUser()
+        userDao.insertUser(cachedProfile)
     }
 
     private suspend fun syncRepositories() {
         val data = performApolloRequest(RepositoriesQuery())
         val cachedRepositories = repositoriesMapper.transform(data)
         Log.d("DEBUG_TAG", "${cachedRepositories.size}")
-        dao.insertRepositoriesCache(cachedRepositories)
+        reposDao.insertRepositories(cachedRepositories)
     }
 
 
     private suspend fun syncContributionRateData() {
 
-        val contributionDays = dao.getContributionsDaysCacheList()
+        val contributionDays = contributionsDao.getContributionDaysList()
         val rates = ArrayList<ContributionRateEntity>()
 
         contributionDays.forEachIndexed { position, day ->
@@ -171,8 +178,8 @@ class SyncRepository @Inject constructor(
             ))
         }
 
-        dao.clearContributionsYearsWithRatesCache()
-        dao.insertContributionRatesCache(rates)
+        contributionsDao.clearContributionsYearsWithRatesCache()
+        contributionsDao.insertContributionRatesCache(rates)
     }
 
 
