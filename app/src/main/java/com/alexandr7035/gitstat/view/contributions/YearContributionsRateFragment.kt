@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.data.local.model.ContributionsYearWithRates
 import com.alexandr7035.gitstat.databinding.FragmentYearContributionsRateBinding
+import com.alexandr7035.gitstat.view.contributions.plots.LinePlotFill
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
@@ -67,7 +68,7 @@ class YearContributionsRateFragment : Fragment() {
             binding?.year?.text = this.year.id.toString()
 
             // Get color params for the plot
-            val plotFill = PlotFill.getPlotFillForYear(requireContext(), yearData.year.id)
+            val plotFill = LinePlotFill.getPlotFillForYear(requireContext(), yearData.year.id)
 
             // Background for contribution rate views
             val bg = ContextCompat.getDrawable(requireContext(), R.drawable.background_rounded_shape)
