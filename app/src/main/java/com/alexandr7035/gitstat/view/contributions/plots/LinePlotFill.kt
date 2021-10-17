@@ -1,23 +1,23 @@
-package com.alexandr7035.gitstat.view.contributions
+package com.alexandr7035.gitstat.view.contributions.plots
 
 import android.content.Context
 import android.graphics.drawable.Drawable
 import androidx.core.content.ContextCompat
 import com.alexandr7035.gitstat.R
 
-data class PlotFill(
+data class LinePlotFill(
     val lineColor: Int,
     val fillDrawable: Drawable?) {
 
     companion object {
-        fun getPlotFillForYear(context: Context, year: Int): PlotFill {
+        fun getPlotFillForYear(context: Context, year: Int): LinePlotFill {
 
             val color = getColorForYear(context, year)
             val drawable = ContextCompat.getDrawable(context, R.drawable.background_contributions_graph)
             drawable?.setTint(color)
 
 //            return PlotFill(ContextCompat.getColor(context, R.color.contributions_color), ContextCompat.getDrawable(context, R.drawable.background_contributions_graph))
-            return PlotFill(color, drawable)
+            return LinePlotFill(color, drawable)
         }
 
         private fun getColorForYear(context: Context, year: Int): Int {
