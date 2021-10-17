@@ -1,8 +1,6 @@
 package com.alexandr7035.gitstat.view.contributions.plots.contributions_rate
 
-import com.alexandr7035.gitstat.data.local.model.ContributionsYearWithDays
 import com.alexandr7035.gitstat.data.local.model.ContributionsYearWithRates
-import com.alexandr7035.gitstat.view.contributions.RateYAxisParams
 import com.alexandr7035.gitstat.view.contributions.plots.DateMonthsValueFormatter
 import com.alexandr7035.gitstat.view.contributions.plots.LinePlotFill
 import com.github.mikephil.charting.charts.LineChart
