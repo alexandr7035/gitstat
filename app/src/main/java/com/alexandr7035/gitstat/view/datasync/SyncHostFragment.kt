@@ -1,19 +1,17 @@
 package com.alexandr7035.gitstat.view.datasync
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.navGraphViewModels
 import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.core.DataSyncStatus
 import com.alexandr7035.gitstat.databinding.FragmentSyncHostBinding
 import com.alexandr7035.gitstat.view.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class SyncHostFragment : Fragment() {
@@ -28,19 +26,18 @@ class SyncHostFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("DEBUG_TAG", "show sync stub")
+        Timber.d("show sync stub")
 
         if (viewModel.checkForCache()) {
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.containerView, SyncSuggestionFragment())
                 .commit()
-        }
-        else {
+        } else {
             viewModel.syncData()
         }
 
         viewModel.getSyncStatusLiveData().observe(viewLifecycleOwner, { status ->
-            Log.d("DEBUG_TAG", "sync status updated $status")
+            Timber.d("sync status updated $status")
 //            Toast.makeText(requireContext(), "$status", Toast.LENGTH_SHORT).show()
 
 

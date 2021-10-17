@@ -12,7 +12,6 @@ class ContributionsDaysListRemoteToCacheMapper @Inject constructor(private val m
 
         for (week in data.viewer.contributionsCollection.contributionCalendar.weeks) {
             for (day in week.contributionDays) {
-//                Log.d("DEBUG_APOLLO", "$day")
                 contributions.add(mapper.transform(day))
             }
         }

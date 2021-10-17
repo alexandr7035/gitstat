@@ -5,7 +5,6 @@ import com.alexandr7035.gitstat.data.local.model.RepositoryEntity
 object RepositoriesListFiltersHelper {
 
     fun getFilteredRepositoriesList(unfilteredList: List<RepositoryEntity>, filters: ReposFilters): List<RepositoryEntity> {
-        //Log.d("DEBUG_TAG", "apply $filters")
 
         val filteredList = ArrayList<RepositoryEntity>()
 

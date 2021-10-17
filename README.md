@@ -30,12 +30,13 @@ GitStat is a simple android app designed to aggregate Github profile data into i
 used to implement languages filter (see third screenshot).
 - [CircleImageView](https://github.com/hdodenhof/CircleImageView) and [Picasso](https://github.com/square/picasso) libs are involved to obtain and display user profile image.
 - [MPAndroidChart](https://github.com/PhilJay/MPAndroidChart) library is used for plots and diagrams in the application.
+- Use [Timber](https://github.com/JakeWharton/timber) logging in order to prevent log calls removal before every release building.
 
 
 ## How to authorize
 - Download APK from the [releases](https://github.com/alexandr7035/gitstat/releases) page and install it.
 - Go to [Personal access tokens](https://github.com/settings/tokens) section in your Github profile settings.
 - Create personal access token with ```read:user``` and ```repo``` access scopes. (**Note**: full ```repo``` scope is used only to have access to your private repos data. No malicious write operations are performed by the app).
-- Use the obtained token as auth credetial in the application login form.
+- Use the obtained token as auth credential in the application login form.
 
 More user-friendly **OAuth** method may be implemented later.

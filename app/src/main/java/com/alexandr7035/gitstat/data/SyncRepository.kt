@@ -1,6 +1,5 @@
 package com.alexandr7035.gitstat.data
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.alexandr7035.gitstat.apollo.*
 import com.alexandr7035.gitstat.core.*
@@ -17,6 +16,7 @@ import com.alexandr7035.gitstat.data.remote.mappers.RepositoriesRemoteToCacheMap
 import com.alexandr7035.gitstat.data.remote.mappers.UserRemoteToCacheMapper
 import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.api.Query
+import timber.log.Timber
 import javax.inject.Inject
 import kotlin.math.round
 
@@ -65,7 +65,7 @@ class SyncRepository @Inject constructor(
 
             val end = System.currentTimeMillis()
 
-            Log.d("DEBUG_TAG", "sync finished in ${end-start} ms")
+            Timber.d("sync finished in ${end-start} ms")
         }
         catch (e: AppError) {
             when (e.type) {
@@ -112,7 +112,7 @@ class SyncRepository @Inject constructor(
         val creationYear = timeHelper.getYearFromUnixDate(unixCreationDate)
         val currentYear = timeHelper.getYearFromUnixDate(System.currentTimeMillis())
 
-        Log.d("DEBUG_TAG", "$creationYear $currentYear")
+        Timber.d("$creationYear $currentYear")
 
         val contributionDaysCached = ArrayList<ContributionDayEntity>()
         val contributionsRatioCached = ArrayList<ContributionsRatioEntity>()
@@ -154,7 +154,6 @@ class SyncRepository @Inject constructor(
     private suspend fun syncRepositories() {
         val data = performApolloRequest(RepositoriesQuery())
         val cachedRepositories = repositoriesMapper.transform(data)
-        Log.d("DEBUG_TAG", "${cachedRepositories.size}")
         reposDao.insertRepositories(cachedRepositories)
     }
 
@@ -169,13 +168,15 @@ class SyncRepository @Inject constructor(
             val daysSliceContributionsCount = daysSlice.sumOf { it.count }
 
             val rate = round((daysSliceContributionsCount.toFloat() / daysSlice.size.toFloat() * 100)) / 100F
-            Log.d("DEBUG_TAG", "count ${daysSliceContributionsCount.toFloat()} / ${daysSlice.size.toFloat()} * 100 / 100f")
+            Timber.d("count " + daysSliceContributionsCount.toFloat() + " / " + daysSlice.size.toFloat() + " * 100 / 100f")
 
-            rates.add(ContributionRateEntity(
-                date = day.date,
-                rate = rate,
-                yearId = day.yearId
-            ))
+            rates.add(
+                ContributionRateEntity(
+                    date = day.date,
+                    rate = rate,
+                    yearId = day.yearId
+                )
+            )
         }
 
         contributionsDao.clearContributionsYearsWithRatesCache()

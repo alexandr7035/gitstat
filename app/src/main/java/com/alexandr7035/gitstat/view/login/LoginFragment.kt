@@ -25,6 +25,7 @@ import com.alexandr7035.gitstat.core.AuthStatus
 import com.alexandr7035.gitstat.databinding.FragmentLoginBinding
 import com.alexandr7035.gitstat.view.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class LoginFragment: Fragment() {
@@ -76,12 +77,12 @@ class LoginFragment: Fragment() {
 
         binding!!.signInBtn.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View) {
-                ////Log.d(LOG_TAG, "Login btn pressed")
 
                 if (! checkLoginFormIfValid()) {
-                    ////Log.d(LOG_TAG, "form no valid")
+                    Timber.d("form is not valid")
                     return
                 }
+
                 else {
                     token = binding!!.tokenEditText.text.toString()
 

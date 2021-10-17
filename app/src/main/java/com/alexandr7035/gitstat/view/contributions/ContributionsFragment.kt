@@ -24,6 +24,7 @@ import com.github.mikephil.charting.formatter.ValueFormatter
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -69,7 +70,7 @@ class ContributionsFragment : Fragment() {
                 binding?.yearsViewPager?.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
                     override fun onPageSelected(position: Int) {
                         super.onPageSelected(position)
-                        Log.d("DEBUG_TAG", "Page changed callback")
+                        Timber.d("Page changed callback")
                         binding?.currentYearView?.text = years[position].year.id.toString()
                     }
                 })
@@ -84,28 +85,18 @@ class ContributionsFragment : Fragment() {
 
 
         viewModel.getContributionDaysLiveData().observe(viewLifecycleOwner, { contributions ->
-
             val totalContributions = contributions.sumOf { it.count }
-
-            Log.d("DEBUG_TAG", "total $totalContributions ${contributions.size}")
-
             val contributionsRate = round((totalContributions.toFloat() / contributions.size.toFloat() * 100)) / 100F
 
-            Log.d("DEBUG_TAG", "rate ${totalContributions / contributions.size}")
-            Log.d("DEBUG_TAG", "rate $contributionsRate")
-
             binding?.totalContributions?.text = totalContributions.toString()
-
             binding?.contributionsRate?.text = contributionsRate.toString()
         })
 
 
         viewModel.getContributionYearsWithRatesLiveData().observe(viewLifecycleOwner, { rateYears ->
 
-            Log.d("DEBUG_TAG", "rate years count ${rateYears.size}")
-
             if (rateYears.isNotEmpty()) {
-                yearContributionsRateAdapter  = YearContributionsRateAdapter(this)
+                yearContributionsRateAdapter = YearContributionsRateAdapter(this)
                 yearContributionsRateAdapter.setItems(rateYears)
                 binding?.rateViewPager?.adapter = yearContributionsRateAdapter
 
@@ -119,7 +110,7 @@ class ContributionsFragment : Fragment() {
 
 
         viewModel.getContributionsRatioLiveData().observe(viewLifecycleOwner, { ratios ->
-            Log.d("DEBUG_TAG", "ratios ${ratios}")
+            Timber.d("ratios $ratios")
 
             // FIXME
             val adapter = RatioLegendAdapter()

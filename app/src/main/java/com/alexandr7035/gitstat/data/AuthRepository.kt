@@ -1,6 +1,5 @@
 package com.alexandr7035.gitstat.data
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.alexandr7035.gitstat.apollo.ProfileCreationDateQuery
 import com.alexandr7035.gitstat.core.AppError
@@ -8,6 +7,7 @@ import com.alexandr7035.gitstat.core.AppPreferences
 import com.alexandr7035.gitstat.core.AuthStatus
 import com.alexandr7035.gitstat.core.ErrorType
 import com.apollographql.apollo3.ApolloClient
+import timber.log.Timber
 import javax.inject.Inject
 
 class AuthRepository @Inject constructor(
@@ -16,7 +16,7 @@ class AuthRepository @Inject constructor(
 
     suspend fun authorize(authResultLiveData: MutableLiveData<AuthStatus>) {
 
-        Log.d("DEBUG_TAG", "auth request")
+        Timber.d("auth request")
 
         try {
 
@@ -31,9 +31,8 @@ class AuthRepository @Inject constructor(
                     authResultLiveData.postValue(AuthStatus.SUCCESS)
                 }
             }
-        }
-        catch (e: AppError) {
-            Log.d("DEBUG_TAG", "handle AppError")
+        } catch (e: AppError) {
+            Timber.d("handle AppError ${e.type}")
             when (e.type) {
                 ErrorType.FAILED_AUTHORIZATION -> authResultLiveData.postValue(AuthStatus.FAILED_CREDENTIALS)
                 ErrorType.FAILED_CONNECTION -> authResultLiveData.postValue(AuthStatus.FAILED_NETWORK)

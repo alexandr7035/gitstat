@@ -2,6 +2,7 @@ package com.alexandr7035.gitstat.data
 
 import android.util.Log
 import com.alexandr7035.gitstat.data.local.model.ContributionsYearWithDays
+import timber.log.Timber
 import kotlin.math.floor
 
 data class YAxisParams(
@@ -23,8 +24,7 @@ data class YAxisParams(
 
                 val maxValue = if (topDay.count % 5 == 0) {
                     topDay.count.toFloat()
-                }
-                else {
+                } else {
                     (floor(topDay.count / 5F) + 1) * 5
                 }
 
@@ -33,7 +33,7 @@ data class YAxisParams(
                 // But no less than 2
                 val labelsCount = (maxValue / 5).toInt() + 1
 
-                Log.d("DEBUG_TAG", "${topDay.count} max, top value ${maxValue}, labels count $labelsCount")
+                Timber.d("${topDay.count} max, top value $maxValue, labels count $labelsCount")
 
                 YAxisParams(maxValue = maxValue, labelsCount = labelsCount)
             } else {

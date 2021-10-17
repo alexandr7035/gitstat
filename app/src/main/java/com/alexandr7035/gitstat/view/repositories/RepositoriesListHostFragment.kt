@@ -59,7 +59,6 @@ class RepositoriesListHostFragment : Fragment() {
             }
 
             override fun onTabReselected(tab: TabLayout.Tab) {
-               //Log.d("DEBUG_TAG", "reselect tab")
                 viewModel.refreshTabRecycler(tab.position)
             }
 
@@ -115,7 +114,6 @@ class RepositoriesListHostFragment : Fragment() {
 
 
     private fun showFiltersDialog() {
-       //Log.d("DEBUG_TAG", "show filters")
         findNavController().navigate(R.id.action_repositoriesListHostFragment_to_repositoriesFiltersDialog)
     }
 
