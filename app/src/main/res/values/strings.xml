@@ -61,9 +61,6 @@
     <string name="active">Active</string>
     <string name="archived">Archived</string>
 
-    <string name="contributions_count">%1$s (%2$s)</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="total_contributions">total contributions</string>
     <string name="contributions_rate">contributions rate</string>
     <string name="no_contributions_for_period">No contributions for this period of time :(</string>
@@ -90,4 +87,6 @@
     <string name="sync_the_data_now">Sync the data now?</string>
 
     <string name="log_out_message">Press "log out" to clear cache and token. You will be taken to the login page.</string>
+    <string name="last_cr">Last CR</string>
+    <string name="peak_cr">Peak CR</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.alexandr7035.gitstat.view.contributions
+package com.alexandr7035.gitstat.view.contributions.plots.contributions_rate
 
 import com.github.mikephil.charting.formatter.ValueFormatter
 
