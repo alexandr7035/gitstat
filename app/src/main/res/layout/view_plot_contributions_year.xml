@@ -41,7 +41,7 @@
         android:layout_marginEnd="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Year CR"
+        android:text="@string/year_cr"
         android:textColor="@color/gray_500"
         android:textSize="14sp"
         android:textStyle="bold"

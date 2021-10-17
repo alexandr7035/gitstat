@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
-        android:text="Failed to sync data"
+        android:text="@string/failed_to_sync_data"
         android:textColor="@color/gray_500"
         android:textSize="18sp" />
 
@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:textSize="12sp"
         android:textColor="@color/white"
-        android:text="Retry"
+        android:text="@string/retry"
         android:gravity="center"
         android:background="@drawable/background_primary_button"/>
 
@@ -56,7 +56,7 @@
         android:layout_height="wrap_content"
         android:textSize="12sp"
         android:textColor="@color/white"
-        android:text="Load from cache"
+        android:text="@string/load_from_cache"
         android:gravity="center"
         android:background="@drawable/background_primary_button"/>
 

@@ -89,4 +89,11 @@
     <string name="log_out_message">Press "log out" to clear cache and token. You will be taken to the login page.</string>
     <string name="last_cr">Last CR</string>
     <string name="peak_cr">Peak CR</string>
+    <string name="do_you_really_want_to_log_out">Do you really want to log out?</string>
+    <string name="log_out">Log out</string>
+    <string name="cancel">Cancel</string>
+    <string name="failed_to_sync_data">Failed to sync data</string>
+    <string name="retry">Retry</string>
+    <string name="updating_data_cache">Updating data cache…</string>
+    <string name="year_cr">Year CR</string>
 </resources>

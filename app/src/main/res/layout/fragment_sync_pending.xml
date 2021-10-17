@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
-        android:text="Updating data cache..."
+        android:text="@string/updating_data_cache"
         android:textColor="@color/gray_500"
         android:textSize="18sp" />
 
