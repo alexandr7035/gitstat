@@ -96,6 +96,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/version"
+        android:textColor="@color/gray_400"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="GitStat v3.0.debug"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <!-- Do not remove clickable -->
     <FrameLayout

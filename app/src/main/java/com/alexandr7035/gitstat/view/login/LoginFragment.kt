@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import com.alexandr7035.gitstat.BuildConfig
 import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.core.AuthStatus
 import com.alexandr7035.gitstat.databinding.FragmentLoginBinding
@@ -158,6 +159,9 @@ class LoginFragment: Fragment() {
             movementMethod = LinkMovementMethod.getInstance()
             highlightColor = Color.TRANSPARENT
         }
+
+
+        binding?.version?.text = getString(R.string.app_name_with_version, BuildConfig.VERSION_NAME)
     }
 
 
