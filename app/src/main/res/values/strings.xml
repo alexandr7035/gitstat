@@ -61,9 +61,6 @@
     <string name="active">Active</string>
     <string name="archived">Archived</string>
 
-    <string name="contributions_count">%1$s (%2$s)</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="total_contributions">total contributions</string>
     <string name="contributions_rate">contributions rate</string>
     <string name="no_contributions_for_period">No contributions for this period of time :(</string>
