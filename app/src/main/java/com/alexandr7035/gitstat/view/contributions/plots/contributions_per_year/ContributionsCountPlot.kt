@@ -1,7 +1,5 @@
 package com.alexandr7035.gitstat.view.contributions.plots.contributions_per_year
 
-import android.content.Context
-import com.alexandr7035.gitstat.data.YAxisParams
 import com.alexandr7035.gitstat.data.local.model.ContributionsYearWithDays
 import com.alexandr7035.gitstat.view.contributions.plots.DateMonthsValueFormatter
 import com.alexandr7035.gitstat.view.contributions.plots.LinePlotFill
@@ -42,7 +40,7 @@ class ContributionsCountPlot {
     }
 
     fun setYearData(chart: LineChart, yearData: ContributionsYearWithDays) {
-        val yAxisParams = YAxisParams.getParamsForContributionYearCard(yearData)
+        val yAxisParams = ContributionsCountYAxisParams.getParamsForContributionYearCard(yearData)
 
         val entries = ArrayList<Entry>()
 

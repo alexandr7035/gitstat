@@ -1,11 +1,10 @@
-package com.alexandr7035.gitstat.data
+package com.alexandr7035.gitstat.view.contributions.plots.contributions_per_year
 
-import android.util.Log
 import com.alexandr7035.gitstat.data.local.model.ContributionsYearWithDays
 import timber.log.Timber
 import kotlin.math.floor
 
-data class YAxisParams(
+data class ContributionsCountYAxisParams(
     var minValue: Float = 0f,
     var maxValue: Float,
     var labelsCount: Int)
@@ -13,7 +12,7 @@ data class YAxisParams(
 
     companion object {
         // Need this method as there is no way to set axis step directly
-        fun getParamsForContributionYearCard(year: ContributionsYearWithDays): YAxisParams {
+        fun getParamsForContributionYearCard(year: ContributionsYearWithDays): ContributionsCountYAxisParams {
             // Find top contribution day
             val topDay = year.contributionDays.maxByOrNull {
                 it.count
@@ -35,10 +34,10 @@ data class YAxisParams(
 
                 Timber.d("${topDay.count} max, top value $maxValue, labels count $labelsCount")
 
-                YAxisParams(maxValue = maxValue, labelsCount = labelsCount)
+                ContributionsCountYAxisParams(maxValue = maxValue, labelsCount = labelsCount)
             } else {
                 // TODO check it on empty lists
-                YAxisParams(minValue = 0f, maxValue = 0f, labelsCount = 0)
+                ContributionsCountYAxisParams(minValue = 0f, maxValue = 0f, labelsCount = 0)
             }
         }
     }
