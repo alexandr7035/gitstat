@@ -9,17 +9,6 @@
     android:paddingBottom="20dp"
     tools:context="com.alexandr7035.gitstat.view.profile.ProfileFragment">
 
-    <View
-        android:id="@+id/syncStatusView"
-        android:layout_width="12dp"
-        android:layout_height="12dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:background="@color/gray_200"
-        app:layout_constraintTop_toTopOf="@id/fragmentTitle"
-        app:layout_constraintStart_toEndOf="@id/fragmentTitle"
-        app:layout_constraintBottom_toBottomOf="@id/fragmentTitle"/>
-
     <LinearLayout
         android:id="@+id/reposSummaryCard"
         android:layout_width="0dp"

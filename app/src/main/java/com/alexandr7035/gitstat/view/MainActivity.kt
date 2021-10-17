@@ -8,7 +8,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.alexandr7035.gitstat.R
-import com.alexandr7035.gitstat.view.login.LoginViewModel
+import com.alexandr7035.gitstat.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -16,12 +16,14 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
-
-    private val viewModel by viewModels<LoginViewModel>()
+    private lateinit var binding: ActivityMainBinding
+    private val viewModel by viewModels<MainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         // NavController
         val hf: NavHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
@@ -37,23 +39,48 @@ class MainActivity : AppCompatActivity() {
             when (destination.id) {
                 R.id.profileFragment -> bottomNavigationView.visibility = View.VISIBLE
                 R.id.reposOverviewFragment -> bottomNavigationView.visibility = View.VISIBLE
+                R.id.contributionsFragment -> bottomNavigationView.visibility = View.VISIBLE
                 else -> bottomNavigationView.visibility = View.GONE
             }
         }
 
 
+        if (viewModel.checkIfTokenSaved()) {
+            startSyncData()
+        }
+        else {
+            updateStartDestination(R.id.loginFragment)
+        }
+    }
+
+    // To disable back to login fragment
+    private fun updateStartDestination(fragmentID: Int) {
         // Dynamically change initial fragment
         val navGraph = navController.navInflater.inflate(R.navigation.nav_graph)
 
-        if (viewModel.checkIfLoggedIn()) {
-            navGraph.startDestination = R.id.profileFragment
-        }
-        else {
-            navGraph.startDestination = R.id.loginFragment
-        }
+        navGraph.startDestination = fragmentID
 
         navController.graph = navGraph
+    }
 
+
+    // FIXME find better solution
+    // than public method accessible from fragments
+    fun startSyncData() {
+        navController.navigate(R.id.syncGraph)
+    }
+
+    // FIXME find better solution
+    // than public method accessible from fragments
+    fun startLogOut() {
+        viewModel.clearCache()
+        viewModel.clearToken()
+        navController.navigate(R.id.loginFragment)
+    }
+
+    fun syncFinishedCallback() {
+        updateStartDestination(R.id.profileFragment)
+        navController.navigate(R.id.profileFragment)
     }
 
 }

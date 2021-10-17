@@ -1,103 +1,114 @@
 package com.alexandr7035.gitstat.di
 
 import android.app.Application
+import androidx.room.Room
 import com.alexandr7035.gitstat.core.AppPreferences
-import com.alexandr7035.gitstat.core.ProgLangManager
-import com.alexandr7035.gitstat.data.LoginRepository
-import com.alexandr7035.gitstat.data.ReposRepository
-import com.alexandr7035.gitstat.data.UserRepository
+import com.alexandr7035.gitstat.core.TimeHelper
+import com.alexandr7035.gitstat.data.*
 import com.alexandr7035.gitstat.data.local.CacheDB
-import com.alexandr7035.gitstat.data.local.CacheDao
-import com.alexandr7035.gitstat.data.remote.GitHubApi
-import com.alexandr7035.gitstat.data.remote.NetworkModule
-import com.alexandr7035.gitstat.data.remote.mappers.RepositoryRemoteToCacheMapper
-import com.alexandr7035.gitstat.data.remote.mappers.UserRemoteToCacheMapper
+import com.alexandr7035.gitstat.data.local.dao.ContributionsDao
+import com.alexandr7035.gitstat.data.local.dao.RepositoriesDao
+import com.alexandr7035.gitstat.data.local.dao.UserDao
+import com.alexandr7035.gitstat.data.remote.AuthInterceptor
+import com.alexandr7035.gitstat.data.remote.ErrorInterceptor
+import com.alexandr7035.gitstat.data.remote.mappers.*
+import com.apollographql.apollo3.ApolloClient
+import com.apollographql.apollo3.network.http.HttpNetworkTransport
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import okhttp3.OkHttpClient
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
-    @Provides
-    @Singleton
-    fun provideHttpClient(): OkHttpClient {
-        return  OkHttpClient.Builder()
-            .connectTimeout(5, TimeUnit.SECONDS)
-            .readTimeout(5, TimeUnit.SECONDS)
-            .writeTimeout(5, TimeUnit.SECONDS)
-//            .addInterceptor(HttpLoggingInterceptor().apply {
-//                level = HttpLoggingInterceptor.Level.BODY
-//            })
-            .retryOnConnectionFailure(false)
-            .build()
-    }
-
+    /////////////////////////////////////
+    // Network
+    /////////////////////////////////////
 
     @Provides
     @Singleton
-    fun provideRetrofit(client: OkHttpClient): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl("https://api.github.com/")
-            .client(client)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+    fun provideApollo(appPreferences: AppPreferences): ApolloClient {
+        return ApolloClient(networkTransport = HttpNetworkTransport("https://api.github.com/graphql", interceptors = listOf(AuthInterceptor(appPreferences), ErrorInterceptor())))
     }
 
-
-    @Provides
-    @Singleton
-    fun provideApi(retrofit: Retrofit): GitHubApi {
-        return retrofit.create(GitHubApi::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun provideNetworkModule(appPreferences: AppPreferences, gitHubApi: GitHubApi): NetworkModule {
-        return NetworkModule(appPreferences, gitHubApi)
-    }
+    /////////////////////////////////////
+    // Repositories
+    /////////////////////////////////////
 
     @Provides
     @Singleton
     fun provideReposRepository(
-        networkModule: NetworkModule,
-        dao: CacheDao,
-        repositoryMapper: RepositoryRemoteToCacheMapper,
+        dao: RepositoriesDao,
         appPreferences: AppPreferences,
-        progLangManager: ProgLangManager,
         gson: Gson): ReposRepository {
-        return ReposRepository(networkModule, dao, repositoryMapper, appPreferences, gson, progLangManager)
+        return ReposRepository(dao, appPreferences, gson)
     }
 
     @Provides
     @Singleton
-    fun provideLoginRepository(appPreferences: AppPreferences, networkModule: NetworkModule, dao: CacheDao): LoginRepository {
-        return LoginRepository(appPreferences, networkModule, dao)
+    fun provideUserRepository(dao: UserDao): UserRepository {
+        return UserRepository(dao)
     }
 
     @Provides
     @Singleton
-    fun provideUserRepository(api: NetworkModule, dao: CacheDao, userMapper: UserRemoteToCacheMapper): UserRepository {
-        return UserRepository(api, dao, userMapper)
+    fun provideSyncRepository(
+        apolloClient: ApolloClient,
+        userDao: UserDao,
+        contributionsDao: ContributionsDao,
+        repositoriesDao: RepositoriesDao,
+        profileMapper: UserRemoteToCacheMapper,
+        repositoriesMapper: RepositoriesRemoteToCacheMapper,
+        contributionsMapper: ContributionsDaysListRemoteToCacheMapper,
+        ratioMapper: ContributionsRatioRemoteToCacheMapper,
+        timeHelper: TimeHelper,
+        appPreferences: AppPreferences): SyncRepository {
+        return SyncRepository(apolloClient, userDao, repositoriesDao, contributionsDao, profileMapper, repositoriesMapper, contributionsMapper, ratioMapper, timeHelper, appPreferences)
     }
 
     @Provides
-    fun provideUserMapper(): UserRemoteToCacheMapper {
-        return UserRemoteToCacheMapper()
+    @Singleton
+    fun provideAuthRepository(apolloClient: ApolloClient, appPreferences: AppPreferences): AuthRepository {
+        return AuthRepository(apolloClient, appPreferences)
     }
 
     @Provides
-    fun provideReposMapper(): RepositoryRemoteToCacheMapper {
-        return RepositoryRemoteToCacheMapper()
+    @Singleton
+    fun provideContributionsRepository(dao: ContributionsDao): ContributionsRepository{
+        return ContributionsRepository(dao)
     }
+
+    /////////////////////////////////////
+    // Mappers
+    /////////////////////////////////////
+
+    @Provides
+    fun provideUserMapper(timeHelper: TimeHelper): UserRemoteToCacheMapper {
+        return UserRemoteToCacheMapper(timeHelper)
+    }
+
+    @Provides
+    fun provideReposMapper(timeHelper: TimeHelper): RepositoriesRemoteToCacheMapper {
+        return RepositoriesRemoteToCacheMapper(timeHelper)
+    }
+
+    @Provides
+    fun provideContributionDayMapper(timeHelper: TimeHelper): ContributionDayRemoteToCacheMapper {
+        return ContributionDayRemoteToCacheMapper(timeHelper)
+    }
+
+    @Provides
+    fun provideContributionsRatioMapper(timeHelper: TimeHelper): ContributionsRatioRemoteToCacheMapper {
+        return ContributionsRatioRemoteToCacheMapper(timeHelper)
+    }
+
+    /////////////////////////////////////
+    // Preferences
+    /////////////////////////////////////
 
     @Provides
     @Singleton
@@ -105,27 +116,50 @@ object AppModule {
         return AppPreferences(application)
     }
 
+    /////////////////////////////////////
+    // Database
+    /////////////////////////////////////
+
     @Provides
     @Singleton
     fun provideRoomDb(application: Application): CacheDB {
-        return CacheDB.getInstance(application)
+        return Room
+            .databaseBuilder(application.applicationContext, CacheDB::class.java, "cache.db")
+            .fallbackToDestructiveMigration()
+            .build()
     }
 
     @Provides
     @Singleton
-    fun provideRoomDao(db: CacheDB): CacheDao {
-        return db.getDao()
+    fun provideUserDao(db: CacheDB): UserDao {
+        return db.getUserDao()
     }
 
     @Provides
     @Singleton
-    fun provideLanguagesManager(application: Application): ProgLangManager{
-        return ProgLangManager(application)
+    fun provideRepositoriesDao(db: CacheDB): RepositoriesDao {
+        return db.getRepositoriesDao()
     }
+
+    @Provides
+    @Singleton
+    fun provideContributionsDao(db: CacheDB): ContributionsDao {
+        return db.getContributionsDao()
+    }
+
+    /////////////////////////////////////
+    // Helpers
+    /////////////////////////////////////
 
     @Provides
     @Singleton
     fun provideGson(): Gson {
         return Gson()
+    }
+
+    @Provides
+    @Singleton
+    fun provideTimeHelper(): TimeHelper {
+        return TimeHelper()
     }
 }

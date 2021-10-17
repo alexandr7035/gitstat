@@ -18,4 +18,29 @@
     <color name="gray_100">#B1B1B1</color>
 
     <color name="yellow_400">#FFC107</color>
+
+    <!--  FIXME use themes -->
+    <color name="contributions_color">#4CAF50</color>
+
+    <color name="year_0">#009688</color>
+    <color name="year_1">#4CAF50</color>
+    <color name="year_2">#9C27B0</color>
+    <color name="year_3">#8BC34A</color>
+    <color name="year_4">#F44336</color>
+    <color name="year_5">#FFEB3B</color>
+    <color name="year_6">#3F51B5</color>
+    <color name="year_7">#E91E63</color>
+    <color name="year_8">#FF5722</color>
+    <color name="year_9">#673AB7</color>
+
+
+    <color name="color_commits">#4CAF50</color>
+    <color name="color_repositories">#FFEB3B</color>
+    <color name="color_issues">#C25050</color>
+    <color name="color_pull_requests">#B03BEA</color>
+    <color name="color_code_reviews">#BBD88F</color>
+    <color name="color_unknown_contributions">#939393</color>
+
+
+
 </resources>

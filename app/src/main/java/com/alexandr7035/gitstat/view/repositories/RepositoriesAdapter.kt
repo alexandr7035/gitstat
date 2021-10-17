@@ -10,11 +10,10 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.alexandr7035.gitstat.R
-import com.alexandr7035.gitstat.core.ProgLangManager
 import com.alexandr7035.gitstat.data.local.model.RepositoryEntity
 import com.alexandr7035.gitstat.databinding.ViewRepositoryBinding
 
-class RepositoriesAdapter(private val langManager: ProgLangManager): RecyclerView.Adapter<RepositoriesAdapter.ViewHolder>() {
+class RepositoriesAdapter(): RecyclerView.Adapter<RepositoriesAdapter.ViewHolder>() {
 
     private var items: List<RepositoryEntity> = ArrayList()
     private val createdDateFormat = "yyyy-MM-dd"
@@ -64,13 +63,12 @@ class RepositoriesAdapter(private val langManager: ProgLangManager): RecyclerVie
 
         // Show corresponding label if repo is fork
         // Hide otherwise
-        when (items[position].fork) {
+        when (items[position].isFork) {
             true -> holder.binding.repoIsForkView.visibility = View.VISIBLE
             false -> holder.binding.repoIsForkView.visibility = View.INVISIBLE
         }
 
-        val color = langManager.getLanguageColor(language = holder.binding.language.text as String)
-        (holder.binding.languageColorView.background as GradientDrawable).setColor(Color.parseColor(color))
+        (holder.binding.languageColorView.background as GradientDrawable).setColor(Color.parseColor(items[position].languageColor))
     }
 
     class ViewHolder(val binding: ViewRepositoryBinding): RecyclerView.ViewHolder(binding.root)

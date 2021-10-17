@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/loginFragment">
+
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.alexandr7035.gitstat.view.login.LoginFragment"
@@ -12,13 +13,23 @@
         <action
             android:id="@+id/actionLoginToMain"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_syncGraph"
+            app:destination="@id/syncGraph" />
+        <action
+            android:id="@+id/action_loginFragment_to_webViewFragment"
+            app:destination="@id/webViewFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.alexandr7035.gitstat.view.profile.ProfileFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_logoutConfirmationDialog"
+            app:destination="@id/logoutConfirmationDialog" />
+    </fragment>
 
     <fragment
         android:id="@+id/reposOverviewFragment"
@@ -29,6 +40,13 @@
             android:id="@+id/action_reposFragment_to_repositoriesListHostFragment"
             app:destination="@id/repositoriesListGraph" />
     </fragment>
+
+    <fragment
+        android:id="@+id/contributionsFragment"
+        android:name="com.alexandr7035.gitstat.view.contributions.ContributionsFragment"
+        android:label="fragment_contributions"
+        tools:layout="@layout/fragment_contributions" />
+
     <navigation android:id="@+id/repositoriesListGraph"
         app:startDestination="@id/repositoriesListHostFragment">
         <fragment
@@ -55,9 +73,49 @@
                 android:id="@+id/action_repositoriesListHostFragment_to_repositoriesFiltersDialog"
                 app:destination="@id/repositoriesFiltersDialog" />
         </fragment>
+
         <dialog
             android:id="@+id/repositoriesFiltersDialog"
             android:name="com.alexandr7035.gitstat.view.repositories.filters.RepositoriesFiltersDialog"
             android:label="RepositoriesFiltersDialog" />
     </navigation>
+
+
+    <navigation android:id="@+id/syncGraph"
+        app:startDestination="@id/syncHostFragment">
+
+        <fragment
+            android:id="@+id/syncHostFragment"
+            android:name="com.alexandr7035.gitstat.view.datasync.SyncHostFragment"
+            android:label="fragment_sync_host"
+            tools:layout="@layout/fragment_sync_host" />
+
+        <fragment
+            android:id="@+id/syncPendingFragment"
+            android:name="com.alexandr7035.gitstat.view.datasync.SyncPendingFragment"
+            android:label="fragment_sync_pending"
+            tools:layout="@layout/fragment_sync_pending" />
+        <fragment
+            android:id="@+id/syncFailedWithCacheFragment"
+            android:name="com.alexandr7035.gitstat.view.datasync.SyncFailedWithCacheFragment"
+            android:label="SyncFailedWithCacheFragment"
+            tools:layout="@layout/fragment_sync_failed_with_cache"/>
+        <fragment
+            android:id="@+id/syncFailedNoCacheFragment"
+            android:name="com.alexandr7035.gitstat.view.datasync.SyncFailedNoCacheFragment"
+            android:label="fragment_sync_failed_no_cache"
+            tools:layout="@layout/fragment_sync_failed_no_cache" />
+
+    </navigation>
+    <fragment
+        android:id="@+id/webViewFragment"
+        android:name="com.alexandr7035.gitstat.view.login.HowToObtainTokenFragment"
+        android:label="fragment_web_view"
+        tools:layout="@layout/fragment_how_to_obtain_token" />
+    <dialog
+        android:id="@+id/logoutConfirmationDialog"
+        android:name="com.alexandr7035.gitstat.view.login.LogoutConfirmationDialog"
+        android:label="LogoutConfirmationDialog" />
+
+
 </navigation>

@@ -16,4 +16,8 @@ class AppPreferences @Inject constructor(private val application: Application) {
     var repositoriesFilters: String?
         get() = prefs.getString(application.getString(R.string.shared_prefs_filters), null)
         set(value) = prefs.edit().putString(application.getString(R.string.shared_prefs_filters), value).apply()
+
+    var lastSuccessCacheSyncDate: Long
+        get() = prefs.getLong(application.getString(R.string.shared_pref_cache_sync_date), 0)
+        set(value) = prefs.edit().putLong(application.getString(R.string.shared_pref_cache_sync_date), value).apply()
 }

@@ -1,35 +1,52 @@
 package com.alexandr7035.gitstat.data.remote.mappers
 
+import android.util.Log
+import com.alexandr7035.gitstat.apollo.ProfileQuery
 import com.alexandr7035.gitstat.core.Mapper
+import com.alexandr7035.gitstat.core.TimeHelper
 import com.alexandr7035.gitstat.data.local.model.UserEntity
-import com.alexandr7035.gitstat.data.remote.model.UserModel
-import java.text.SimpleDateFormat
-import java.util.*
+import javax.inject.Inject
+import kotlin.math.log
 
-class UserRemoteToCacheMapper: Mapper<UserModel, UserEntity> {
-    override fun transform(data: UserModel): UserEntity {
+class UserRemoteToCacheMapper @Inject constructor(private val timeHelper: TimeHelper): Mapper<ProfileQuery.Data, UserEntity> {
+    override fun transform(data: ProfileQuery.Data): UserEntity {
 
-        // Convert string dates to timestamp
-        val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US)
-        format.timeZone = TimeZone.getTimeZone("GMT")
+        // FIXME research later
+        val id = data.viewer.databaseId!!
 
-        val createdDate = format.parse(data.created_at)!!.time
-        val updatedDate = format.parse(data.updated_at)!!.time
+        val login = data.viewer.login
+        val avatarUrl = data.viewer.avatarUrl.toString()
+
+        val name = data.viewer.name ?: ""
+        val location = data.viewer.location ?: ""
+
+        val publicReposCount = data.viewer.publicRepositories.totalCount
+        val privateReposCount = data.viewer.privateRepositories.totalCount
+        val totalReposCount = data.viewer.allRepositories.totalCount
+
+        val followersCount = data.viewer.followers.totalCount
+        val followingCount = data.viewer.following.totalCount
+
+        val createdDate = timeHelper.getUnixDateFromISO8601(data.viewer.createdAt as String)
+        val updatedDate = timeHelper.getUnixDateFromISO8601(data.viewer.updatedAt as String)
+
 
         return UserEntity(
-            id = data.id,
-            name = data.name,
-            location = data.location,
-            login = data.login,
-            avatar_url = data.avatar_url,
-            public_repos = data.public_repos,
-            total_private_repos = data.total_private_repos,
-            followers = data.followers,
-            following = data.following,
+            id = id,
+            name = name,
+            location = location,
+            login = login,
+            avatar_url = avatarUrl,
+
+            public_repos_count = publicReposCount,
+            private_repos_count = privateReposCount,
+            total_repos_count = totalReposCount,
+
+            followers = followersCount,
+            following = followingCount,
+
             created_at = createdDate,
             updated_at = updatedDate,
-
-            cache_updated_at = System.currentTimeMillis()
         )
     }
 }

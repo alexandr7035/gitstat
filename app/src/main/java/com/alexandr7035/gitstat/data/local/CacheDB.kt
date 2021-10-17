@@ -1,33 +1,24 @@
 package com.alexandr7035.gitstat.data.local
 
-import android.content.Context
 import androidx.room.Database
-import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.alexandr7035.gitstat.data.local.model.RepositoryEntity
-import com.alexandr7035.gitstat.data.local.model.UserEntity
+import com.alexandr7035.gitstat.data.local.dao.ContributionsDao
+import com.alexandr7035.gitstat.data.local.dao.RepositoriesDao
+import com.alexandr7035.gitstat.data.local.dao.UserDao
+import com.alexandr7035.gitstat.data.local.model.*
 
-@Database(entities = [UserEntity::class, RepositoryEntity::class], version = 4)
+@Database(entities = [UserEntity::class,
+    RepositoryEntity::class,
+    ContributionDayEntity::class,
+    ContributionRateEntity::class,
+    ContributionsYearEntity::class,
+    ContributionsRatioEntity::class], version = 15)
+
 abstract class CacheDB : RoomDatabase() {
 
-    abstract fun getDao(): CacheDao
+    abstract fun getUserDao(): UserDao
 
-    companion object {
+    abstract fun getRepositoriesDao(): RepositoriesDao
 
-        @Volatile
-        private var sInstance: CacheDB? = null
-        private const val dbName: String = "cache.db"
-
-        @Synchronized
-        fun getInstance(context: Context): CacheDB {
-            if (sInstance == null) {
-                sInstance = Room
-                    .databaseBuilder(context.applicationContext, CacheDB::class.java, dbName)
-                    .fallbackToDestructiveMigration()
-                    .build()
-            }
-            return sInstance!!
-        }
-    }
-
+    abstract fun getContributionsDao(): ContributionsDao
 }

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:elevation="5dp"
+    android:background="@drawable/background_card_sync"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:orientation="vertical"
+    tools:context=".view.datasync.SyncFailedNoCacheFragment">
+
+    <TextView
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:text="@string/failed_to_sync_data"
+        android:textColor="@color/gray_500"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/errorText"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/gray_400"
+        android:textSize="16sp"
+        android:text="@string/error_cant_get_data_remote"
+        tools:text="@string/error_cant_get_data_remote" />
+
+    <TextView
+        android:id="@+id/retryBtn"
+        android:clickable="true"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="@color/white"
+        android:text="@string/retry"
+        android:gravity="center"
+        android:background="@drawable/background_primary_button"/>
+
+</LinearLayout>

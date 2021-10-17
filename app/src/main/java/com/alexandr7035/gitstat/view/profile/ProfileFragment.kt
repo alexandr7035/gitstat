@@ -10,9 +10,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.alexandr7035.gitstat.R
-import com.alexandr7035.gitstat.core.SyncStatus
 import com.alexandr7035.gitstat.databinding.FragmentProfileBinding
-import com.alexandr7035.gitstat.view.login.LoginViewModel
+import com.alexandr7035.gitstat.view.MainActivity
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,8 +23,6 @@ class ProfileFragment : Fragment() {
     private lateinit var navController: NavController
 
     private val viewModel by viewModels<ProfileViewModel>()
-    // FIXME find better solution than having two viewmodels
-    private val loginViewModel by viewModels<LoginViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -68,9 +65,9 @@ class ProfileFragment : Fragment() {
                 binding!!.followersView.text = it.followers.toString()
                 binding!!.locationView.text = it.location
 
-                binding!!.totalReposView.text = (it.total_private_repos + it.public_repos).toString()
-                binding!!.privateReposView.text = it.total_private_repos.toString()
-                binding!!.publicReposView.text = it.public_repos.toString()
+                binding!!.totalReposView.text = it.total_repos_count.toString()
+                binding!!.privateReposView.text = it.private_repos_count.toString()
+                binding!!.publicReposView.text = it.public_repos_count.toString()
             }
 
             // Cache db is empty
@@ -80,34 +77,15 @@ class ProfileFragment : Fragment() {
 
         })
 
-
-        // Update synchronization status view
-        viewModel.getSyncStatusLiveData().observe(viewLifecycleOwner, {
-            when (it!!) {
-                SyncStatus.PENDING -> {
-                    binding!!.syncStatusView.setBackgroundResource(R.drawable.background_sync_button_pending)
-                }
-                SyncStatus.SUCCESS -> {
-//                    binding.swipeRefreshLayout.isRefreshing = false
-                    binding!!.syncStatusView.setBackgroundResource(R.drawable.background_sync_button_synced)
-                }
-                SyncStatus.FAILED -> {
-//                    binding.swipeRefreshLayout.isRefreshing = false
-                    binding!!.syncStatusView.setBackgroundResource(R.drawable.background_sync_button_failed)
-                }
-            }
-        })
-
         binding!!.reposStatDetailedBtn.setOnClickListener {
             navController.navigate(R.id.reposOverviewFragment)
         }
 
         binding!!.logOutBtn.setOnClickListener {
-            loginViewModel.logOut()
-            navController.navigate(R.id.loginFragment)
+            // FIXME find better solution
+//            (requireActivity() as MainActivity).startLogOut()
+            navController.navigate(R.id.action_profileFragment_to_logoutConfirmationDialog)
         }
-
-        viewModel.syncUserDta()
 
     }
 

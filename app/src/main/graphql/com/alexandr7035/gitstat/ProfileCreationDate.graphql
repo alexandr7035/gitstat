@@ -1,0 +1,5 @@
+query ProfileCreationDate {
+    viewer {
+        createdAt
+    }
+}

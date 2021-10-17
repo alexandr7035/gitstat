@@ -1,0 +1,17 @@
+# Note: period from date_from to date_to must not be more that 1 years
+# Pass null do get last year
+query Contributions($date_from: DateTime, $date_to: DateTime) {
+    viewer {
+        contributionsCollection(from: $date_from, to: $date_to) {
+            contributionCalendar {
+                totalContributions
+                weeks {
+                    contributionDays {
+                        contributionCount
+                        date
+                    }
+                }
+            }
+        }
+    }
+}

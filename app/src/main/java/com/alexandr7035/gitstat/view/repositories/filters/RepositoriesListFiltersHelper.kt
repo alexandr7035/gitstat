@@ -5,7 +5,6 @@ import com.alexandr7035.gitstat.data.local.model.RepositoryEntity
 object RepositoriesListFiltersHelper {
 
     fun getFilteredRepositoriesList(unfilteredList: List<RepositoryEntity>, filters: ReposFilters): List<RepositoryEntity> {
-        //Log.d("DEBUG_TAG", "apply $filters")
 
         val filteredList = ArrayList<RepositoryEntity>()
 
@@ -30,13 +29,13 @@ object RepositoriesListFiltersHelper {
         // Forks
         when (filters.filterForks) {
             ReposFilters.FilterForks.FORKS_ONLY -> unfilteredList.forEach {
-                if (! it.fork) {
+                if (! it.isFork) {
                     filteredList.remove(it)
                 }
             }
 
             ReposFilters.FilterForks.EXCLUDE_FORKS -> unfilteredList.forEach {
-                if (it.fork) {
+                if (it.isFork) {
                     filteredList.remove(it)
                 }
             }

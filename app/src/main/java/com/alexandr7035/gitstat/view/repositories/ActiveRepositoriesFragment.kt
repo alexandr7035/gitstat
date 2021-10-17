@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alexandr7035.gitstat.R
-import com.alexandr7035.gitstat.core.App
 import com.alexandr7035.gitstat.databinding.FragmentActiveRepositoriesBinding
 import com.alexandr7035.gitstat.view.repositories.filters.RepositoriesListFiltersHelper
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,7 +29,7 @@ class ActiveRepositoriesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Setup adapter
-        adapter = RepositoriesAdapter((requireActivity().application as App).progLangManager)
+        adapter = RepositoriesAdapter()
         binding!!.root.adapter = adapter
         binding!!.root.layoutManager = LinearLayoutManager(context)
 

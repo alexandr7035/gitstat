@@ -1,20 +1,31 @@
 package com.alexandr7035.gitstat.view.login
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.graphics.Color
+import android.graphics.Typeface
+import android.net.Uri
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextUtils
-import android.text.TextWatcher
+import android.text.*
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
+import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import com.alexandr7035.gitstat.BuildConfig
 import com.alexandr7035.gitstat.R
+import com.alexandr7035.gitstat.core.AuthStatus
 import com.alexandr7035.gitstat.databinding.FragmentLoginBinding
+import com.alexandr7035.gitstat.view.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class LoginFragment: Fragment() {
@@ -22,7 +33,7 @@ class LoginFragment: Fragment() {
     private lateinit var navController: NavController
     private var binding: FragmentLoginBinding? = null
 
-    private val viewModel by viewModels<LoginViewModel>()
+    private val viewModel by viewModels<AuthViewModel>()
 
     private lateinit var token: String
 
@@ -66,47 +77,92 @@ class LoginFragment: Fragment() {
 
         binding!!.signInBtn.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View) {
-                ////Log.d(LOG_TAG, "Login btn pressed")
 
                 if (! checkLoginFormIfValid()) {
-                    ////Log.d(LOG_TAG, "form no valid")
+                    Timber.d("form is not valid")
                     return
                 }
+
                 else {
-                    ////Log.d(LOG_TAG, "do login request")
                     token = binding!!.tokenEditText.text.toString()
-                    viewModel.doLoginRequest(token)
+
+                    // Show progress stub and do login
+                    binding?.loginProgressView?.visibility = View.VISIBLE
+
+                    viewModel.saveToken(token)
+                    viewModel.authorize()
                 }
 
             }
         })
 
 
-        // Login results handling
-        viewModel.getLoginResponseCodeLiveData().observe(viewLifecycleOwner, {
-            ////Log.d(LOG_TAG, "LOGIN RESULTS CODE: $it")
+        viewModel.getAuthResultLiveData().observe(viewLifecycleOwner, { status ->
 
-            when (it) {
-                200 -> {
-                    viewModel.saveToken(token)
-                    navController.navigate(R.id.actionLoginToMain)
+            // Hide progress
+            binding?.loginProgressView?.visibility = View.GONE
+
+            when (status) {
+                AuthStatus.SUCCESS -> {
+                    // FIXME Not good. Find better solution
+                    (requireActivity() as MainActivity).startSyncData()
                 }
 
-                // FIXME
-                // 404 may also be caused by wrong login data
-                // when token is correct but provided user name doesn't exist on github
-                401, 404 -> {
-                    binding!!.tokenField.error = getString(R.string.error_wrong_data_field)
-                }
-
-                else -> {
+                AuthStatus.FAILED_NETWORK -> {
+                    viewModel.clearToken()
                     Toast.makeText(requireActivity(), getString(R.string.error_cant_get_data_remote), Toast.LENGTH_LONG).show()
                 }
+
+                AuthStatus.FAILED_CREDENTIALS -> {
+                    viewModel.clearToken()
+                    binding!!.tokenField.error = getString(R.string.error_wrong_token_field)
+                }
+
+                AuthStatus.UNKNOWN_ERROR -> {
+                    viewModel.clearToken()
+                    Toast.makeText(requireActivity(), getString(R.string.error_unknown_auth), Toast.LENGTH_LONG).show()
+                }
             }
 
         })
 
 
+        val obtainTokenFullText = getString(R.string.obtain_token_full_text)
+        val obtainTokenLinkText = getString(R.string.obtain_token_clickable)
+        val obtainTokenSpannable = SpannableString(obtainTokenFullText)
+
+        val obtainTokenClickable = object : ClickableSpan() {
+            override fun onClick(widget: View) {
+                showTokenInstructions()
+            }
+
+            override fun updateDrawState(ds: TextPaint) {
+                super.updateDrawState(ds)
+                ds.isUnderlineText = true
+                ds.color = ContextCompat.getColor(requireContext(), R.color.gray_500)
+            }
+        }
+
+        obtainTokenSpannable.setSpan(
+            obtainTokenClickable,
+            obtainTokenFullText.indexOf(obtainTokenLinkText),
+            obtainTokenFullText.indexOf(obtainTokenLinkText) + obtainTokenLinkText.length,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        obtainTokenSpannable.setSpan(
+            StyleSpan(Typeface.BOLD),
+            obtainTokenFullText.indexOf(obtainTokenLinkText),
+            obtainTokenFullText.indexOf(obtainTokenLinkText) + obtainTokenLinkText.length,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        binding?.obtainTokenView?.apply {
+            text = obtainTokenSpannable
+            movementMethod = LinkMovementMethod.getInstance()
+            highlightColor = Color.TRANSPARENT
+        }
+
+
+        binding?.version?.text = getString(R.string.app_name_with_version, BuildConfig.VERSION_NAME)
     }
 
 
@@ -120,6 +176,10 @@ class LoginFragment: Fragment() {
         }
 
         return isValid
+    }
+
+    private fun showTokenInstructions() {
+        navController.navigate(R.id.action_loginFragment_to_webViewFragment)
     }
 
     override fun onDestroyView() {

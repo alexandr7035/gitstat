@@ -1,15 +1,17 @@
 package com.alexandr7035.gitstat.core
 
 import android.app.Application
+import com.alexandr7035.gitstat.BuildConfig
 import dagger.hilt.android.HiltAndroidApp
+import timber.log.Timber
 
 @HiltAndroidApp
-class App: Application() {
-
-    lateinit var progLangManager: ProgLangManager
-
+class App(): Application() {
     override fun onCreate() {
         super.onCreate()
-        progLangManager = ProgLangManager(context = applicationContext)
+
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
     }
 }
