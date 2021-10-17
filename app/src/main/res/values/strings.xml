@@ -90,4 +90,6 @@
     <string name="sync_the_data_now">Sync the data now?</string>
 
     <string name="log_out_message">Press "log out" to clear cache and token. You will be taken to the login page.</string>
+    <string name="last_cr">Last CR</string>
+    <string name="peak_cr">Peak CR</string>
 </resources>

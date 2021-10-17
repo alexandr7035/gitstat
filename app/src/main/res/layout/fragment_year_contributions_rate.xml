@@ -38,7 +38,7 @@
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/contributionsChart"
+        android:id="@+id/rateChart"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="5dp"
@@ -52,7 +52,7 @@
         android:layout_marginEnd="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Peak CR"
+        android:text="@string/peak_cr"
         android:textColor="@color/gray_500"
         android:textSize="14sp"
         android:textStyle="bold"
@@ -82,7 +82,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="5dp"
-        android:text="Last CR"
+        android:text="@string/last_cr"
         android:textColor="@color/gray_500"
         android:textSize="14sp"
         android:textStyle="bold"
