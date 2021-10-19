@@ -167,7 +167,14 @@ class SyncRepository @Inject constructor(
             val daysSlice = contributionDays.slice(0..position)
             val daysSliceContributionsCount = daysSlice.sumOf { it.count }
 
-            val rate = round((daysSliceContributionsCount.toFloat() / daysSlice.size.toFloat() * 100)) / 100F
+            // Don't count rate for the future :)
+            // Set 0 by default
+            // TODO check with changing timezones
+            var rate = 0F
+            if (day.date <= timeHelper.getBeginningOfDayForUnixDate(System.currentTimeMillis())) {
+                rate = round((daysSliceContributionsCount.toFloat() / daysSlice.size.toFloat() * 100)) / 100F
+            }
+
             Timber.d("count " + daysSliceContributionsCount.toFloat() + " / " + daysSlice.size.toFloat() + " * 100 / 100f")
 
             rates.add(
