@@ -60,7 +60,7 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginEnd="10dp"
-                app:srcCompat="@drawable/ic_repo" />
+                app:srcCompat="@drawable/ic_cloud_filled" />
 
             <TextView
                 android:layout_width="0dp"
@@ -94,7 +94,7 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginEnd="10dp"
-                app:srcCompat="@drawable/ic_repo" />
+                app:srcCompat="@drawable/ic_cloud_filled" />
 
             <TextView
                 android:layout_width="0dp"
@@ -127,7 +127,7 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginEnd="10dp"
-                app:srcCompat="@drawable/ic_repo" />
+                app:srcCompat="@drawable/ic_cloud_filled" />
 
             <TextView
                 android:layout_width="0dp"
@@ -347,7 +347,7 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginEnd="10dp"
-                app:srcCompat="@drawable/ic_profile" />
+                app:srcCompat="@drawable/ic_profile_filled" />
 
             <TextView
                 android:layout_width="0dp"
