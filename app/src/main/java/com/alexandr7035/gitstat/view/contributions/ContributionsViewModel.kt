@@ -28,4 +28,12 @@ class ContributionsViewModel @Inject constructor(private val repository: Contrib
     fun getContributionsRatioLiveData(): LiveData<List<ContributionsRatioEntity>> {
         return repository.getContributionsRatioLiveData()
     }
+
+    fun getMaxContributionRateForYear(yearData: ContributionsYearWithRates): Float {
+        return repository.getMaxContributionRateForYear(yearData)
+    }
+
+    fun getLastContributionRateForYear(yearData: ContributionsYearWithRates): Float {
+        return repository.getLastContributionRateForYear(yearData)
+    }
 }

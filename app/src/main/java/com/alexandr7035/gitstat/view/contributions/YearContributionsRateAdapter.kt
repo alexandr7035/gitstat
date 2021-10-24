@@ -19,14 +19,13 @@ class YearContributionsRateAdapter(fragment: Fragment) : FragmentStateAdapter(fr
     }
 
     override fun createFragment(position: Int): Fragment {
-
         val fragment = YearContributionsRateFragment()
 
-        val yearData = this.items[position]
+        // FIXME find better way to pass year
+        val year = this.items[position].year.id
 
-        // FIXME may cause NPE
         fragment.arguments = Bundle().apply {
-            putSerializable("yearData", yearData)
+            putInt("year", year)
         }
 
         return fragment

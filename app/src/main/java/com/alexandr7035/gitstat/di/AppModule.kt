@@ -78,8 +78,8 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideContributionsRepository(dao: ContributionsDao): ContributionsRepository{
-        return ContributionsRepository(dao)
+    fun provideContributionsRepository(dao: ContributionsDao, timeHelper: TimeHelper): ContributionsRepository{
+        return ContributionsRepository(dao, timeHelper)
     }
 
     /////////////////////////////////////

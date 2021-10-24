@@ -56,6 +56,9 @@ interface ContributionsDao {
     @Query("DELETE FROM contribution_rates")
     suspend fun clearContributionsYearsWithRatesCache()
 
+    @Query("SELECT * FROM contribution_rates")
+    suspend fun getContributionYearWithRates(): ContributionsYearWithRates
+
     /////////////////////////////////////
     // Contribution ratio (issues, created repos, PRs, commits, code reviews, unknown)
     /////////////////////////////////////

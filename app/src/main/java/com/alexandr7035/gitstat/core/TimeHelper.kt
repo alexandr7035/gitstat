@@ -45,5 +45,13 @@ class TimeHelper {
         return getUnixDateFrom_yyyyMMdd(beginningStr)
     }
 
+    fun getCurrentYearForUnixDate(currentDate: Long): Int {
+        val format = SimpleDateFormat("yyyy", Locale.US)
+        format.timeZone = TimeZone.getTimeZone("GMT")
+        val yearStr = format.format(currentDate)
+
+        return yearStr.toInt()
+    }
+
     data class Iso8601Year(val startDate: String, val endDate: String)
 }
