@@ -33,7 +33,11 @@ class ContributionsViewModel @Inject constructor(private val repository: Contrib
         return repository.getMaxContributionRateForYear(yearData)
     }
 
-    fun getLastContributionRateForYear(yearData: ContributionsYearWithRates): Float {
-        return repository.getLastContributionRateForYear(yearData)
+    fun getLastTotalContributionRateForYear(yearData: ContributionsYearWithRates): Float {
+        return repository.getLastTotalContributionRateForYear(yearData)
+    }
+
+    fun getContributionRateForYear(yearContributions: ContributionsYearWithDays): Float {
+        return repository.getContributionRateForYear(yearContributions)
     }
 }

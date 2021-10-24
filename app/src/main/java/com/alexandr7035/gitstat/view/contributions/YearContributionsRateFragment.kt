@@ -59,7 +59,7 @@ class YearContributionsRateFragment : Fragment() {
             binding?.peakCRView?.text = maxContributionsRate.toString()
 
             // Last contribution rate (end of the year)
-            val lastContributionRate = viewModel.getLastContributionRateForYear(yearData)
+            val lastContributionRate = viewModel.getLastTotalContributionRateForYear(yearData)
             binding?.lastCRView?.background = bg
             binding?.lastCRView?.text = lastContributionRate.toString()
 
