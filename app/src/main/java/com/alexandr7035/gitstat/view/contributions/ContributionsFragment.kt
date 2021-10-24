@@ -86,10 +86,7 @@ class ContributionsFragment : Fragment() {
 
         viewModel.getContributionDaysLiveData().observe(viewLifecycleOwner, { contributions ->
             val totalContributions = contributions.sumOf { it.count }
-            val contributionsRate = round((totalContributions.toFloat() / contributions.size.toFloat() * 100)) / 100F
-
             binding?.totalContributions?.text = totalContributions.toString()
-            binding?.contributionsRate?.text = contributionsRate.toString()
         })
 
 
@@ -105,6 +102,9 @@ class ContributionsFragment : Fragment() {
 
                 // Set to last position
                 binding?.rateViewPager?.setCurrentItem(rateYears.size - 1, false)
+
+                // Set total contribution rate in header
+                binding?.contributionsRate?.text = viewModel.getLastContributionRateForYear(rateYears[rateYears.size - 1]).toString()
             }
         })
 
