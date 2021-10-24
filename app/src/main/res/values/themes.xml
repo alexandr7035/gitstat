@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.GitStat" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.GitStat" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/gray_400</item>
         <item name="colorPrimaryVariant">@color/gray_500</item>
