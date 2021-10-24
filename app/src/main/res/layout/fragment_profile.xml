@@ -313,7 +313,7 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginEnd="10dp"
-                app:srcCompat="@drawable/ic_updated" />
+                app:srcCompat="@drawable/ic_update" />
 
             <TextView
                 android:layout_width="0dp"
