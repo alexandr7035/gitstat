@@ -23,4 +23,43 @@
     <style name="bottomSheetBackground">
         <item name="android:background">@drawable/background_bottom_dialog</item>
     </style>
+
+    <style name="ProfileFieldIconsStyle">
+        <item name="android:tint">@color/gray_300</item>
+        <item name="android:layout_width">20sp</item>
+        <item name="android:layout_height">20sp</item>
+    </style>
+
+    <style name="ProfileTextFieldsCardTheme">
+        <item name="android:textSize">18sp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">@color/gray_500</item>
+    </style>
+
+    <style name="ShowMoreButtonStyle">
+        <item name="android:textSize">18sp</item>
+        <item name="maxLines">1</item>
+        <item name="android:includeFontPadding">false</item>
+        <!-- FIXME color name -->
+        <item name="android:textColor">@color/color_gray_underlined_button</item>
+    </style>
+
+    <style name="NameTextViewStyle">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="UserIDTextViewStyle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/gray_200</item>
+    </style>
+
+    <style name="LogOutButtonStyle">
+        <item name="android:textColor">@color/color_red_underlined_button</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>
