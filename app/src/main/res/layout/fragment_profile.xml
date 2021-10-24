@@ -245,7 +245,7 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginEnd="10dp"
-                app:srcCompat="@drawable/ic_id" />
+                app:srcCompat="@drawable/ic_id_card" />
 
             <TextView
                 android:layout_width="0dp"
