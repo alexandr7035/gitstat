@@ -24,6 +24,12 @@
         <item name="android:background">@drawable/background_bottom_dialog</item>
     </style>
 
+    <style name="FragmentTitle">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
     <style name="ProfileFieldIconsStyle">
         <item name="android:tint">@color/gray_300</item>
         <item name="android:layout_width">20sp</item>

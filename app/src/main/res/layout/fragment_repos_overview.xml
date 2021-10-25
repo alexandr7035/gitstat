@@ -10,13 +10,11 @@
     tools:context=".view.repositories.ReposOverviewFragment">
 
     <TextView
+            style="@style/FragmentTitle"
             android:id="@+id/fragmentTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/repos"
-            android:textColor="@color/black"
-            android:textSize="24sp"
-            android:textStyle="bold"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
