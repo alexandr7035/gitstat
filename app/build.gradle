@@ -24,7 +24,7 @@ android {
     }
 
     defaultConfig {
-        applicationId 'com.alexandr7035.gitstat'
+        applicationId 'by.alexandr7035.gitstat'
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 600
@@ -113,6 +113,6 @@ kapt {
 
 // Apollo GraphQL
 apollo {
-    packageName.set("com.alexandr7035.gitstat.apollo")
+    packageName.set("by.alexandr7035.gitstat.apollo")
     generateKotlinModels.set(true)
 }

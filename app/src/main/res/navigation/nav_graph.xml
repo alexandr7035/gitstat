@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.alexandr7035.gitstat.view.login.LoginFragment"
+        android:name="by.alexandr7035.gitstat.view.login.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.alexandr7035.gitstat.view.profile.ProfileFragment"
+        android:name="by.alexandr7035.gitstat.view.profile.ProfileFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_profile" >
         <action
@@ -33,7 +33,7 @@
 
     <fragment
         android:id="@+id/reposOverviewFragment"
-        android:name="com.alexandr7035.gitstat.view.repositories.ReposOverviewFragment"
+        android:name="by.alexandr7035.gitstat.view.repositories.ReposOverviewFragment"
         android:label="fragment_repos"
         tools:layout="@layout/fragment_repos_overview" >
         <action
@@ -43,7 +43,7 @@
 
     <fragment
         android:id="@+id/contributionsFragment"
-        android:name="com.alexandr7035.gitstat.view.contributions.ContributionsFragment"
+        android:name="by.alexandr7035.gitstat.view.contributions.ContributionsFragment"
         android:label="fragment_contributions"
         tools:layout="@layout/fragment_contributions" />
 
@@ -51,17 +51,17 @@
         app:startDestination="@id/repositoriesListHostFragment">
         <fragment
             android:id="@+id/archivedRepositoriesFragment"
-            android:name="com.alexandr7035.gitstat.view.repositories.ArchivedRepositoriesFragment"
+            android:name="by.alexandr7035.gitstat.view.repositories.ArchivedRepositoriesFragment"
             android:label="fragment_archived_repositories"
             tools:layout="@layout/fragment_archived_repositories" />
         <fragment
             android:id="@+id/activeRepositoriesFragment"
-            android:name="com.alexandr7035.gitstat.view.repositories.ActiveRepositoriesFragment"
+            android:name="by.alexandr7035.gitstat.view.repositories.ActiveRepositoriesFragment"
             android:label="fragment_repositories_list"
             tools:layout="@layout/fragment_active_repositories" />
         <fragment
             android:id="@+id/repositoriesListHostFragment"
-            android:name="com.alexandr7035.gitstat.view.repositories.RepositoriesListHostFragment"
+            android:name="by.alexandr7035.gitstat.view.repositories.RepositoriesListHostFragment"
             android:label="RepositoriesListHostFragment" >
             <action
                 android:id="@+id/action_repositoriesListHostFragment_to_activeRepositoriesFragment"
@@ -76,7 +76,7 @@
 
         <dialog
             android:id="@+id/repositoriesFiltersDialog"
-            android:name="com.alexandr7035.gitstat.view.repositories.filters.RepositoriesFiltersDialog"
+            android:name="by.alexandr7035.gitstat.view.repositories.filters.RepositoriesFiltersDialog"
             android:label="RepositoriesFiltersDialog" />
     </navigation>
 
@@ -86,35 +86,35 @@
 
         <fragment
             android:id="@+id/syncHostFragment"
-            android:name="com.alexandr7035.gitstat.view.datasync.SyncHostFragment"
+            android:name="by.alexandr7035.gitstat.view.datasync.SyncHostFragment"
             android:label="fragment_sync_host"
             tools:layout="@layout/fragment_sync_host" />
 
         <fragment
             android:id="@+id/syncPendingFragment"
-            android:name="com.alexandr7035.gitstat.view.datasync.SyncPendingFragment"
+            android:name="by.alexandr7035.gitstat.view.datasync.SyncPendingFragment"
             android:label="fragment_sync_pending"
             tools:layout="@layout/fragment_sync_pending" />
         <fragment
             android:id="@+id/syncFailedWithCacheFragment"
-            android:name="com.alexandr7035.gitstat.view.datasync.SyncFailedWithCacheFragment"
+            android:name="by.alexandr7035.gitstat.view.datasync.SyncFailedWithCacheFragment"
             android:label="SyncFailedWithCacheFragment"
             tools:layout="@layout/fragment_sync_failed_with_cache"/>
         <fragment
             android:id="@+id/syncFailedNoCacheFragment"
-            android:name="com.alexandr7035.gitstat.view.datasync.SyncFailedNoCacheFragment"
+            android:name="by.alexandr7035.gitstat.view.datasync.SyncFailedNoCacheFragment"
             android:label="fragment_sync_failed_no_cache"
             tools:layout="@layout/fragment_sync_failed_no_cache" />
 
     </navigation>
     <fragment
         android:id="@+id/webViewFragment"
-        android:name="com.alexandr7035.gitstat.view.login.HowToObtainTokenFragment"
+        android:name="by.alexandr7035.gitstat.view.login.HowToObtainTokenFragment"
         android:label="fragment_web_view"
         tools:layout="@layout/fragment_how_to_obtain_token" />
     <dialog
         android:id="@+id/logoutConfirmationDialog"
-        android:name="com.alexandr7035.gitstat.view.login.LogoutConfirmationDialog"
+        android:name="by.alexandr7035.gitstat.view.login.LogoutConfirmationDialog"
         android:label="LogoutConfirmationDialog" />
 
 
