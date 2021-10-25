@@ -29,27 +29,19 @@
 
 
     <TextView
+        style="@style/PrimaryButton"
         android:id="@+id/logOutBtn"
-        android:clickable="true"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="12sp"
-        android:textColor="@color/white"
-        android:text="@string/log_out"
-        android:gravity="center"
-        android:background="@drawable/background_primary_button"/>
+        android:text="@string/log_out"/>
 
     <TextView
+        style="@style/PrimaryButton"
         android:id="@+id/cancelBtn"
-        android:clickable="true"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="12sp"
-        android:textColor="@color/white"
-        android:text="@string/cancel"
-        android:gravity="center"
-        android:background="@drawable/background_primary_button"/>
+        android:text="@string/cancel"/>
 
 </LinearLayout>

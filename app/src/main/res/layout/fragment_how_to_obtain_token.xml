@@ -87,15 +87,11 @@
             android:layout_height="wrap_content"/>
 
         <TextView
+            style="@style/PrimaryButton"
             android:id="@+id/reloadButton"
-            android:clickable="true"
             android:layout_width="match_parent"
-            android:textColor="@color/white"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:textAlignment="center"
-            android:text="@string/refresh"
-            android:background="@drawable/background_primary_button"/>
+            android:text="@string/refresh"/>
 
 
 
