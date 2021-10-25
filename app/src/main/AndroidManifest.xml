@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.alexandr7035.gitstat">
+    package="by.alexandr7035.gitstat">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -13,7 +13,7 @@
         android:theme="@style/Theme.GitStat">
 
         <activity
-            android:name="com.alexandr7035.gitstat.view.MainActivity"
+            android:name="by.alexandr7035.gitstat.view.MainActivity"
             android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
