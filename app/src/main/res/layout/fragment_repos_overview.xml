@@ -23,12 +23,11 @@
             app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
+        style="@style/ShowMoreButtonStyle"
         android:id="@+id/toReposListBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/more_underlined"
-        android:textSize="18sp"
-        android:textColor="@color/color_gray_underlined_button"
         app:layout_constraintTop_toTopOf="@id/fragmentTitle"
         app:layout_constraintBottom_toBottomOf="@id/fragmentTitle"
         app:layout_constraintEnd_toEndOf="parent"
@@ -61,17 +60,15 @@
             android:orientation="vertical">
 
             <TextView
+                style="@style/HeaderNumberStyle"
                 android:id="@+id/totalReposCountView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="45sp"
-                android:textStyle="bold"
                 tools:text="0" />
 
             <TextView
-                android:id="@+id/textView7"
+                style="@style/HeaderLabelStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/total"
@@ -85,16 +82,15 @@
             android:orientation="vertical">
 
             <TextView
+                style="@style/HeaderNumberStyle"
                 android:id="@+id/publicReposCountView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="45sp"
-                android:textStyle="bold"
                 tools:text="0" />
 
             <TextView
+                style="@style/HeaderLabelStyle"
                 android:id="@+id/textView8"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -110,17 +106,15 @@
             android:orientation="vertical">
 
             <TextView
+                style="@style/HeaderNumberStyle"
                 android:id="@+id/privateReposCountView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="45sp"
-                android:textStyle="bold"
                 tools:text="0" />
 
             <TextView
-                android:id="@+id/textView9"
+                style="@style/HeaderLabelStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/private_"
@@ -146,14 +140,12 @@
         app:layout_constraintTop_toBottomOf="@+id/reposCountCard">
 
         <TextView
+            style="@style/CardHeaderStyle"
             android:id="@+id/chartTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:text="@string/repositories_by_language"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:text="@string/repositories_by_language"/>
 
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/languagesChart"
