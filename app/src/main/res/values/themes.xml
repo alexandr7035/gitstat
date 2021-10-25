@@ -75,12 +75,12 @@
 
     <style name="HeaderNumberStyle">
         <item name="android:textColor">@color/gray_500</item>
-        <item name="android:textSize">45sp</item>
+        <item name="android:textSize">35sp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="CardHeaderStyle">
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/gray_500</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
     </style>
