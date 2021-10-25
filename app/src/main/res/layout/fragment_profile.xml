@@ -10,16 +10,15 @@
     tools:context="com.alexandr7035.gitstat.view.profile.ProfileFragment">
 
     <LinearLayout
+        style="@style/PrimaryCardStyle"
+        android:theme="@style/ProfileTextFieldsCardTheme"
         android:id="@+id/reposSummaryCard"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/background_card"
-        android:elevation="5dp"
         android:orientation="vertical"
-        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profileSummaryCard">
@@ -36,16 +35,13 @@
 
             <TextView
                 android:id="@+id/reposStatDetailedBtn"
+                style="@style/ShowMoreButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:gravity="end"
-                android:includeFontPadding="false"
-                android:maxLines="1"
-                android:textColor="@color/color_gray_underlined_button"
                 android:text="@string/show_more_underlined"
-                android:textAlignment="viewEnd"
-                android:textSize="18sp" />
+                android:textAlignment="viewEnd" />
         </LinearLayout>
 
         <LinearLayout
@@ -57,18 +53,15 @@
             android:weightSum="2">
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
                 android:layout_marginEnd="10dp"
-                app:srcCompat="@drawable/ic_repo" />
+                style="@style/ProfileFieldIconsStyle"
+                app:srcCompat="@drawable/ic_cloud_filled" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:maxLines="1"
                 android:text="@string/total_repos"
-                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -76,8 +69,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:maxLines="1"
-                android:textSize="18sp"
                 tools:text="25" />
 
         </LinearLayout>
@@ -91,18 +82,15 @@
             android:weightSum="2">
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
                 android:layout_marginEnd="10dp"
-                app:srcCompat="@drawable/ic_repo" />
+                style="@style/ProfileFieldIconsStyle"
+                app:srcCompat="@drawable/ic_cloud_filled" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:maxLines="1"
                 android:text="@string/public_repos"
-                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -110,8 +98,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:maxLines="1"
-                android:textSize="18sp"
                 tools:text="10" />
 
         </LinearLayout>
@@ -124,18 +110,15 @@
             android:weightSum="2">
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
                 android:layout_marginEnd="10dp"
-                app:srcCompat="@drawable/ic_repo" />
+                style="@style/ProfileFieldIconsStyle"
+                app:srcCompat="@drawable/ic_cloud_filled" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:maxLines="1"
                 android:text="@string/private_repos"
-                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -143,8 +126,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:maxLines="1"
-                android:textSize="18sp"
                 tools:text="15" />
 
         </LinearLayout>
@@ -153,18 +134,15 @@
     </LinearLayout>
 
     <LinearLayout
+        style="@style/PrimaryCardStyle"
         android:id="@+id/headerCard"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="12dp"
         android:layout_marginRight="16dp"
-        android:background="@drawable/background_card"
-        android:elevation="5dp"
         android:orientation="vertical"
-        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.842"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fragmentTitle">
 
@@ -177,8 +155,6 @@
                 android:id="@+id/profileImageView"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                app:civ_border_color="@color/black"
-                app:civ_border_width="1dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -190,25 +166,20 @@
                 android:orientation="vertical">
 
                 <TextView
+                    style="@style/NameTextViewStyle"
                     android:id="@+id/nameView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
                     tools:text="Name Name" />
 
                 <TextView
+                    style="@style/UserIDTextViewStyle"
                     android:id="@+id/loginView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/gray_200"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.582"
                     app:layout_constraintStart_toStartOf="parent"
-                    tools:layout_editor_absoluteY="71dp"
                     tools:text="\@userId" />
 
             </LinearLayout>
@@ -218,16 +189,15 @@
     </LinearLayout>
 
     <LinearLayout
+        style="@style/PrimaryCardStyle"
+        android:theme="@style/ProfileTextFieldsCardTheme"
         android:id="@+id/profileSummaryCard"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/background_card"
-        android:elevation="5dp"
         android:orientation="vertical"
-        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/headerCard">
@@ -242,18 +212,16 @@
             android:weightSum="2">
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+
                 android:layout_marginEnd="10dp"
-                app:srcCompat="@drawable/ic_id" />
+                style="@style/ProfileFieldIconsStyle"
+                app:srcCompat="@drawable/ic_id_card" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:maxLines="1"
                 android:text="@string/id"
-                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -261,8 +229,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:maxLines="1"
-                android:textSize="18sp"
                 tools:text="100" />
 
         </LinearLayout>
@@ -276,18 +242,15 @@
             android:weightSum="2">
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
                 android:layout_marginEnd="10dp"
+                style="@style/ProfileFieldIconsStyle"
                 app:srcCompat="@drawable/ic_clock" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:maxLines="1"
                 android:text="@string/created"
-                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -295,8 +258,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:maxLines="1"
-                android:textSize="18sp"
                 tools:text="2016-03-07 12:11" />
 
         </LinearLayout>
@@ -310,18 +271,15 @@
             android:weightSum="2">
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
                 android:layout_marginEnd="10dp"
-                app:srcCompat="@drawable/ic_updated" />
+                style="@style/ProfileFieldIconsStyle"
+                app:srcCompat="@drawable/ic_update" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:maxLines="1"
                 android:text="@string/updated"
-                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -329,8 +287,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:maxLines="1"
-                android:textSize="18sp"
                 tools:text="2020-05-09 12:11" />
 
         </LinearLayout>
@@ -344,18 +300,15 @@
             android:weightSum="2">
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
                 android:layout_marginEnd="10dp"
-                app:srcCompat="@drawable/ic_profile" />
+                style="@style/ProfileFieldIconsStyle"
+                app:srcCompat="@drawable/ic_person_filled" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:maxLines="1"
                 android:text="@string/followers"
-                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -363,8 +316,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:maxLines="1"
-                android:textSize="18sp"
                 tools:text="10" />
 
         </LinearLayout>
@@ -377,18 +328,15 @@
             android:weightSum="2">
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
                 android:layout_marginEnd="10dp"
+                style="@style/ProfileFieldIconsStyle"
                 app:srcCompat="@drawable/ic_location" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:maxLines="1"
                 android:text="@string/location"
-                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -396,8 +344,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:maxLines="1"
-                android:textSize="18sp"
                 tools:text="Belarus" />
 
         </LinearLayout>
@@ -406,20 +352,18 @@
     </LinearLayout>
 
     <TextView
+        style="@style/FragmentTitle"
         android:id="@+id/fragmentTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/profile"
-        android:textColor="@color/black"
-        android:textSize="24sp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-
-        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
+        style="@style/LogOutButtonStyle"
         android:id="@+id/logOutBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -427,9 +371,6 @@
         android:clickable="true"
         android:longClickable="false"
         android:text="@string/logout_underlined"
-        android:textColor="@color/color_red_underlined_button"
-        android:textSize="18sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/fragmentTitle"
         app:layout_constraintTop_toTopOf="@id/fragmentTitle"/>

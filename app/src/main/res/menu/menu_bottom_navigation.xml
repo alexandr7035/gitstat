@@ -3,11 +3,11 @@
 
     <item android:id="@+id/profileFragment"
         android:title="@string/profile"
-        android:icon="@drawable/ic_profile_filled" />
+        android:icon="@drawable/ic_person_filled" />
 
     <item android:id="@+id/reposOverviewFragment"
         android:title="@string/repos"
-        android:icon="@drawable/ic_repo_filled" />
+        android:icon="@drawable/ic_cloud_filled" />
 
         <item android:id="@+id/contributionsFragment"
             android:title="@string/contributions"

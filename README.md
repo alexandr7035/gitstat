@@ -32,6 +32,8 @@ used to implement languages filter (see third screenshot).
 - [MPAndroidChart](https://github.com/PhilJay/MPAndroidChart) library is used for plots and diagrams in the application.
 - Use [Timber](https://github.com/JakeWharton/timber) logging in order to prevent log calls removal before every release building.
 
+## Used tools
+- Used [Avocado](https://github.com/alexjlockwood/avocado) to optimize vector drawables drawn in Figma.
 
 ## How to authorize
 - Download APK from the [releases](https://github.com/alexandr7035/gitstat/releases) page and install it.

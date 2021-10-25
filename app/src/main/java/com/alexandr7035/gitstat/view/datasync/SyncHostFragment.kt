@@ -75,6 +75,12 @@ class SyncHostFragment : Fragment() {
                         .replace(R.id.containerView, SyncFailedWithCacheFragment())
                         .commit()
                 }
+
+                DataSyncStatus.AUTHORIZATION_ERROR -> {
+                    requireActivity().supportFragmentManager.beginTransaction()
+                        .replace(R.id.containerView, SyncFailedAuthorizationError())
+                        .commit()
+                }
             }
 
         })

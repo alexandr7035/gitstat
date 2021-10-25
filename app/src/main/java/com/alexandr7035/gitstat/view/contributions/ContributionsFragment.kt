@@ -1,34 +1,19 @@
 package com.alexandr7035.gitstat.view.contributions
 
-import android.graphics.Color
-import android.graphics.Typeface
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.Px
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
-import com.alexandr7035.gitstat.R
 import com.alexandr7035.gitstat.databinding.FragmentContributionsBinding
 import com.alexandr7035.gitstat.view.contributions.plots.contributions_ratio.ContributionsRatioPlot
 import com.alexandr7035.gitstat.view.contributions.plots.contributions_ratio.RatioLegendAdapter
-import com.alexandr7035.gitstat.view.contributions.plots.contributions_ratio.RatioLegendItem
-import com.github.mikephil.charting.components.Legend
-import com.github.mikephil.charting.data.*
-import com.github.mikephil.charting.formatter.ValueFormatter
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
-import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.math.round
 
 @AndroidEntryPoint
 class ContributionsFragment : Fragment() {
@@ -86,10 +71,7 @@ class ContributionsFragment : Fragment() {
 
         viewModel.getContributionDaysLiveData().observe(viewLifecycleOwner, { contributions ->
             val totalContributions = contributions.sumOf { it.count }
-            val contributionsRate = round((totalContributions.toFloat() / contributions.size.toFloat() * 100)) / 100F
-
             binding?.totalContributions?.text = totalContributions.toString()
-            binding?.contributionsRate?.text = contributionsRate.toString()
         })
 
 
@@ -105,6 +87,9 @@ class ContributionsFragment : Fragment() {
 
                 // Set to last position
                 binding?.rateViewPager?.setCurrentItem(rateYears.size - 1, false)
+
+                // Set total contribution rate in header
+                binding?.contributionsRate?.text = viewModel.getLastTotalContributionRateForYear(rateYears[rateYears.size - 1]).toString()
             }
         })
 

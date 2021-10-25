@@ -9,16 +9,13 @@
     tools:context=".view.contributions.ContributionsFragment">
 
     <TextView
+        style="@style/FragmentTitle"
         android:id="@+id/fragmentTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/contributions"
-        android:textColor="@color/black"
-        android:textSize="24sp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-
-        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
@@ -38,12 +35,10 @@
 
 
         <TextView
+            style="@style/HeaderNumberStyle"
             android:id="@+id/contributionsRate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/gray_500"
-            android:textSize="40sp"
-            android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -52,23 +47,20 @@
 
 
         <TextView
+            style="@style/HeaderLabelStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/contributionsRate"
             app:layout_constraintStart_toStartOf="@id/contributionsRate"
             app:layout_constraintEnd_toEndOf="@id/contributionsRate"
-            android:textSize="14sp"
-            android:textColor="@color/gray_300"
             android:text="@string/contributions_rate"/>
 
         <TextView
+            style="@style/HeaderNumberStyle"
             android:id="@+id/totalContributions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="50dp"
-            android:textColor="@color/gray_500"
-            android:textSize="40sp"
-            android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/contributionsRate"
             app:layout_constraintHorizontal_bias="0.5"
@@ -76,13 +68,12 @@
             tools:text="1900" />
 
         <TextView
+            style="@style/HeaderLabelStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/totalContributions"
             app:layout_constraintStart_toStartOf="@id/totalContributions"
             app:layout_constraintEnd_toEndOf="@id/totalContributions"
-            android:textSize="14sp"
-            android:textColor="@color/gray_300"
             android:text="@string/total_contributions"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -103,15 +94,13 @@
         app:layout_constraintTop_toBottomOf="@id/header">
 
         <TextView
+            style="@style/CardHeaderStyle"
             android:id="@+id/ratioHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:text="@string/total_contributions_ratio"
-            android:textColor="@color/gray_500"
-            android:textSize="18sp"
-            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -154,14 +143,12 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <TextView
+            style="@style/CardHeaderStyle"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/gray_500"
             android:text="@string/contribution_rate_dynamics"/>
 
         <androidx.viewpager2.widget.ViewPager2
@@ -207,20 +194,19 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <TextView
+            style="@style/CardHeaderStyle"
             android:id="@+id/yearContributionsLabel"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/gray_500"
             android:text="@string/contributions_per_year"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toTopOf="@id/yearsViewPager"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
+            style="@style/CardHeaderStyle"
             android:id="@+id/currentYearView"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"

@@ -61,16 +61,13 @@
 
 
         <TextView
+            style="@style/PrimaryButton"
+            android:textSize="16sp"
             android:id="@+id/signInBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:background="@drawable/background_primary_button"
-            android:clickable="true"
             android:text="@string/sign_in"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 

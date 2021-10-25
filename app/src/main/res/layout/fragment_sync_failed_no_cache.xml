@@ -29,15 +29,11 @@
         tools:text="@string/error_cant_get_data_remote" />
 
     <TextView
+        style="@style/PrimaryButton"
         android:id="@+id/retryBtn"
-        android:clickable="true"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="12sp"
-        android:textColor="@color/white"
-        android:text="@string/retry"
-        android:gravity="center"
-        android:background="@drawable/background_primary_button"/>
+        android:text="@string/retry"/>
 
 </LinearLayout>

@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
-        android:text="@string/do_you_really_want_to_log_out"
+        android:text="@string/authorization_error"
         android:textColor="@color/gray_500"
         android:textSize="18sp" />
 
@@ -25,8 +25,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/gray_400"
         android:textSize="16sp"
-        android:text="@string/log_out_message" />
-
+        android:text="@string/error_sync_authorization" />
 
     <TextView
         style="@style/PrimaryButton"
@@ -34,14 +33,6 @@
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/log_out"/>
-
-    <TextView
-        style="@style/PrimaryButton"
-        android:id="@+id/cancelBtn"
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/cancel"/>
+        android:text="Go to login screen"/>
 
 </LinearLayout>
