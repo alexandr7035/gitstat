@@ -10,6 +10,7 @@
     tools:context="com.alexandr7035.gitstat.view.profile.ProfileFragment">
 
     <LinearLayout
+        style="@style/PrimaryCardStyle"
         android:theme="@style/ProfileTextFieldsCardTheme"
         android:id="@+id/reposSummaryCard"
         android:layout_width="0dp"
@@ -17,10 +18,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/background_card"
-        android:elevation="5dp"
         android:orientation="vertical"
-        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profileSummaryCard">
@@ -136,18 +134,15 @@
     </LinearLayout>
 
     <LinearLayout
+        style="@style/PrimaryCardStyle"
         android:id="@+id/headerCard"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="12dp"
         android:layout_marginRight="16dp"
-        android:background="@drawable/background_card"
-        android:elevation="5dp"
         android:orientation="vertical"
-        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.842"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fragmentTitle">
 
@@ -194,6 +189,7 @@
     </LinearLayout>
 
     <LinearLayout
+        style="@style/PrimaryCardStyle"
         android:theme="@style/ProfileTextFieldsCardTheme"
         android:id="@+id/profileSummaryCard"
         android:layout_width="0dp"
@@ -201,10 +197,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/background_card"
-        android:elevation="5dp"
         android:orientation="vertical"
-        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/headerCard">

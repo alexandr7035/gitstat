@@ -38,6 +38,12 @@
         <item name="android:elevation">5dp</item>
     </style>
 
+    <style name="PrimaryCardStyle">
+        <item name="android:elevation">5dp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:background">@drawable/background_card</item>
+    </style>
+
     <style name="PrimaryButton">
         <item name="android:clickable">true</item>
         <item name="android:background">@drawable/background_primary_button</item>
