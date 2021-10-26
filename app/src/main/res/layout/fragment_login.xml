@@ -94,8 +94,8 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        style="@style/AppVersionStyle"
         android:id="@+id/version"
-        android:textColor="@color/gray_400"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="GitStat v3.0.debug"

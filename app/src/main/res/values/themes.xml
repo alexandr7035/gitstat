@@ -106,4 +106,9 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="AppVersionStyle">
+        <item name="android:textColor">@color/gray_400</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
 </resources>
