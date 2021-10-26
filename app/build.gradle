@@ -34,9 +34,15 @@ android {
     }
 
     buildTypes {
+
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            manifestPlaceholders = [
+                    appIcon: "@drawable/ic_app",
+                    roundIcon: "@drawable/ic_app_rounded"
+            ]
         }
 
         debug {
@@ -44,6 +50,11 @@ android {
             applicationIdSuffix ".debug"
             debuggable true
             versionNameSuffix ".debug"
+
+            manifestPlaceholders = [
+                    appIcon: "@drawable/ic_app_debug",
+                    roundIcon: "@drawable/ic_app_rounded_debug"
+            ]
         }
 
     }
