@@ -162,7 +162,7 @@ class LoginFragment: Fragment() {
         }
 
 
-        binding?.version?.text = getString(R.string.app_name_with_version, by.alexandr7035.gitstat.BuildConfig.VERSION_NAME)
+        binding?.version?.text = getString(R.string.app_name_with_version, BuildConfig.VERSION_NAME)
     }
 
 

@@ -376,4 +376,16 @@
         app:layout_constraintTop_toTopOf="@id/fragmentTitle"/>
 
 
+    <TextView
+        style="@style/AppVersionStyle"
+        android:id="@+id/version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reposSummaryCard"
+        tools:text="GitStat v3.0.debug" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
