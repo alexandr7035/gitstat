@@ -27,15 +27,15 @@ android {
         applicationId 'by.alexandr7035.gitstat'
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 600
-        versionName "3.2"
+        versionCode 700
+        versionName "3.3"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
 
