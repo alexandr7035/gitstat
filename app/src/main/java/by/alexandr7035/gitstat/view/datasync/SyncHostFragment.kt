@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.navGraphViewModels
+import by.alexandr7035.gitstat.BuildConfig
 import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.core.DataSyncStatus
 import by.alexandr7035.gitstat.databinding.FragmentSyncHostBinding
@@ -84,6 +85,8 @@ class SyncHostFragment : Fragment() {
             }
 
         })
+
+        binding?.version?.text = getString(R.string.app_name_with_version, BuildConfig.VERSION_NAME)
     }
 
     override fun onDestroyView() {
