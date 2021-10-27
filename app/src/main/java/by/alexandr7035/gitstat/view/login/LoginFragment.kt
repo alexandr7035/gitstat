@@ -64,8 +64,9 @@ class LoginFragment: Fragment() {
 
         val auth = Firebase.auth
         // Sign out from previous session preliminarily (if any)
+        Timber.tag("DEBUG_AUTH").d("clear token")
         auth.signOut()
-        viewModel.clearToken()
+//        viewModel.clearToken()
 
         binding!!.signInBtn.setOnClickListener {
 

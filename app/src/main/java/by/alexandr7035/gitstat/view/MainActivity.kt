@@ -75,6 +75,7 @@ class MainActivity : AppCompatActivity() {
     // than public method accessible from fragments
     fun startLogOut() {
         viewModel.clearCache()
+        viewModel.clearToken()
         navController.navigate(R.id.loginFragment)
     }
 

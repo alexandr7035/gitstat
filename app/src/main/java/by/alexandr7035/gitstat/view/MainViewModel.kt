@@ -20,4 +20,8 @@ class MainViewModel @Inject constructor(private val syncRepository: SyncReposito
             syncRepository.clearCache()
         }
     }
+
+    fun clearToken() {
+        syncRepository.clearToken()
+    }
 }
