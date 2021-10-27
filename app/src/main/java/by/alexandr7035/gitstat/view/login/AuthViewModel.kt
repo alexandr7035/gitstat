@@ -14,23 +14,11 @@ import javax.inject.Inject
 class AuthViewModel @Inject constructor(
     private val authRepository: AuthRepository): ViewModel() {
 
-    private val authResultLiveData = MutableLiveData<AuthStatus>()
-
-    fun authorize() {
-        viewModelScope.launch(Dispatchers.IO) {
-            authRepository.authorize(authResultLiveData)
-        }
-    }
-
     fun saveToken(token: String) {
         authRepository.saveToken(token)
     }
 
     fun clearToken() {
         authRepository.clearToken()
-    }
-
-    fun getAuthResultLiveData(): MutableLiveData<AuthStatus> {
-        return authResultLiveData
     }
 }

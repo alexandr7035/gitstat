@@ -3,7 +3,9 @@ package by.alexandr7035.gitstat.view.login
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
-import android.text.*
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.StyleSpan
@@ -18,7 +20,6 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import by.alexandr7035.gitstat.BuildConfig
 import by.alexandr7035.gitstat.R
-import by.alexandr7035.gitstat.core.AuthStatus
 import by.alexandr7035.gitstat.databinding.FragmentLoginBinding
 import by.alexandr7035.gitstat.view.MainActivity
 import com.google.firebase.auth.OAuthCredential
@@ -35,8 +36,6 @@ class LoginFragment: Fragment() {
     private var binding: FragmentLoginBinding? = null
 
     private val viewModel by viewModels<AuthViewModel>()
-
-    private lateinit var token: String
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
@@ -55,40 +54,18 @@ class LoginFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-
-//        binding!!.tokenEditText.addTextChangedListener(object : TextWatcher {
-//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-//
-//            }
-//
-//            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-//                if (s.isNotEmpty()) {
-//                    if (!TextUtils.isEmpty(binding!!.tokenField.error)) {
-//                        binding!!.tokenField.error = null
-//                        binding!!.tokenField.isErrorEnabled = false
-//                    }
-//                }
-//            }
-//
-//            override fun afterTextChanged(s: Editable?) {
-//
-//            }
-//
-//        })
-
+        // TODO move to stings
         val provider = OAuthProvider.newBuilder("github.com")
         val scopes: List<String> = listOf(
             "read:user",
             "repo"
         )
-
         provider.scopes = scopes
 
         val auth = Firebase.auth
-
+        // Sign out from previous session preliminarily (if any)
         auth.signOut()
-
+        viewModel.clearToken()
 
         binding!!.signInBtn.setOnClickListener {
 
@@ -105,10 +82,10 @@ class LoginFragment: Fragment() {
                         val token = (authResult.credential as OAuthCredential).accessToken
                         Timber.tag("DEBUG_AUTH").d("token $token")
 
-//                        // FIXME test
-//                        viewModel.saveToken(token!!)
-//                        viewModel.authorize()
+                        viewModel.saveToken(token!!)
+                        (requireActivity() as MainActivity).startSyncData()
                     }
+
                     .addOnFailureListener {
                         binding?.loginProgressView?.visibility = View.GONE
                         Timber.tag("DEBUG_AUTH").d("failure $it")
@@ -116,37 +93,6 @@ class LoginFragment: Fragment() {
                     }
             }
         }
-
-
-        viewModel.getAuthResultLiveData().observe(viewLifecycleOwner, { status ->
-
-            // Hide progress
-            binding?.loginProgressView?.visibility = View.GONE
-
-            when (status) {
-                AuthStatus.SUCCESS -> {
-                    // FIXME Not good. Find better solution
-                    (requireActivity() as MainActivity).startSyncData()
-                }
-
-                AuthStatus.FAILED_NETWORK -> {
-                    viewModel.clearToken()
-                    Toast.makeText(requireActivity(), getString(R.string.error_cant_get_data_remote), Toast.LENGTH_LONG).show()
-                }
-
-                AuthStatus.FAILED_CREDENTIALS -> {
-                    viewModel.clearToken()
-//                    binding!!.tokenField.error = getString(R.string.error_wrong_token_field)
-                }
-
-                AuthStatus.UNKNOWN_ERROR -> {
-                    viewModel.clearToken()
-                    Toast.makeText(requireActivity(), getString(R.string.error_unknown_auth), Toast.LENGTH_LONG).show()
-                }
-            }
-
-        })
-
 
         val privacyPolicyFullText = getString(R.string.privacy_policy_text)
         val linkText = getString(R.string.privacy_policy_clickable)
@@ -185,19 +131,6 @@ class LoginFragment: Fragment() {
 
         binding?.version?.text = getString(R.string.app_name_with_version, BuildConfig.VERSION_NAME)
     }
-
-
-//    private fun checkLoginFormIfValid(): Boolean {
-//
-//        var isValid = true
-//
-//        if (binding!!.tokenEditText.text.isNullOrBlank()) {
-//            binding!!.tokenField.error = getString(R.string.error_empty_field)
-//            isValid = false
-//        }
-//
-//        return isValid
-//    }
 
     private fun showTokenInstructions() {
         navController.navigate(R.id.action_loginFragment_to_webViewFragment)

@@ -73,7 +73,7 @@ object AppModule {
     @Provides
     @Singleton
     fun provideAuthRepository(apolloClient: ApolloClient, appPreferences: AppPreferences): AuthRepository {
-        return AuthRepository(apolloClient, appPreferences)
+        return AuthRepository(appPreferences)
     }
 
     @Provides
