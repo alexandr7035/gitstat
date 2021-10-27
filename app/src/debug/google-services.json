@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1042992271742",
+    "project_id": "gitstat-alexandr7035",
+    "storage_bucket": "gitstat-alexandr7035.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1042992271742:android:d39143dbae47438b4b632f",
+        "android_client_info": {
+          "package_name": "by.alexandr7035.gitstat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1042992271742-6lcccv4b4gopb2n7h7akso18tuhejhbu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgWd3OssnLfh3oCq4j6S4FmwIzZZLASyI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1042992271742-6lcccv4b4gopb2n7h7akso18tuhejhbu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
