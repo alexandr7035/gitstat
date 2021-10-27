@@ -24,6 +24,10 @@ import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.core.AuthStatus
 import by.alexandr7035.gitstat.databinding.FragmentLoginBinding
 import by.alexandr7035.gitstat.view.MainActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.OAuthProvider
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -53,6 +57,28 @@ class LoginFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val provider = OAuthProvider.newBuilder("github.com")
+        val scopes: List<String> = listOf(
+            "read:user"
+        )
+
+        provider.scopes = scopes
+
+        val auth = Firebase.auth
+
+        val result = auth.pendingAuthResult
+
+        if (result == null) {
+            Timber.tag("DEBUG_AUTH").d("$result")
+            auth.startActivityForSignInWithProvider(requireActivity(), provider.build())
+                .addOnSuccessListener {
+                    Timber.tag("DEBUG_AUTH").d("success $it")
+                }
+                .addOnFailureListener {
+                    Timber.tag("DEBUG_AUTH").d("failure $it")
+                }
+        }
 
         binding!!.tokenEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
