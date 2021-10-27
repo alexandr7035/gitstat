@@ -109,9 +109,9 @@
     </navigation>
     <fragment
         android:id="@+id/webViewFragment"
-        android:name="by.alexandr7035.gitstat.view.login.HowToObtainTokenFragment"
+        android:name="by.alexandr7035.gitstat.view.login.PrivacyPolicyFragment"
         android:label="fragment_web_view"
-        tools:layout="@layout/fragment_how_to_obtain_token" />
+        tools:layout="@layout/fragment_privacy_policy" />
     <dialog
         android:id="@+id/logoutConfirmationDialog"
         android:name="by.alexandr7035.gitstat.view.login.LogoutConfirmationDialog"

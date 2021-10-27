@@ -3,7 +3,6 @@ package by.alexandr7035.gitstat.view.login
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,14 +13,14 @@ import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import by.alexandr7035.gitstat.R
-import by.alexandr7035.gitstat.databinding.FragmentHowToObtainTokenBinding
+import by.alexandr7035.gitstat.databinding.FragmentPrivacyPolicyBinding
 
-class HowToObtainTokenFragment : Fragment() {
+class PrivacyPolicyFragment : Fragment() {
 
-    private var binding: FragmentHowToObtainTokenBinding? = null
+    private var binding: FragmentPrivacyPolicyBinding? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = FragmentHowToObtainTokenBinding.inflate(inflater, container, false)
+        binding = FragmentPrivacyPolicyBinding.inflate(inflater, container, false)
         return binding?.root
     }
 
@@ -85,7 +84,7 @@ class HowToObtainTokenFragment : Fragment() {
     }
 
     private fun loadPage() {
-        val obtainTokenInstructionsUrl = getString(R.string.obtain_token_url)
+        val obtainTokenInstructionsUrl = getString(R.string.privacy_policy_url)
         binding?.webView?.loadUrl(obtainTokenInstructionsUrl)
     }
 
