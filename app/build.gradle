@@ -5,7 +5,9 @@ plugins {
     id 'kotlin-kapt'
     id("dagger.hilt.android.plugin")
     id("com.apollographql.apollo3").version("3.0.0-alpha06")
+
     id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 def keystorePropertiesFile = rootProject.file("keystore.properties")
@@ -122,6 +124,7 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:28.4.2')
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-auth-ktx'
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
 }
 
 // Allow references to generated code
