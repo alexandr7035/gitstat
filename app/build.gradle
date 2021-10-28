@@ -49,7 +49,7 @@ android {
 
         debug {
             signingConfig signingConfigs.config
-//            applicationIdSuffix ".debug"
+            applicationIdSuffix ".debug"
             debuggable true
             versionNameSuffix ".debug"
 

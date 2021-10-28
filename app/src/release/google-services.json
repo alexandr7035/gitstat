@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1042992271742",
+    "project_id": "gitstat-alexandr7035",
+    "storage_bucket": "gitstat-alexandr7035.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1042992271742:android:d39143dbae47438b4b632f",
+        "android_client_info": {
+          "package_name": "by.alexandr7035.gitstat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1042992271742-r6sero4661fcl0feafuu8digd02voh04.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "by.alexandr7035.gitstat",
+            "certificate_hash": "3b4e38b4492d4b20d757577624c7774acfc6d93c"
+          }
+        },
+        {
+          "client_id": "1042992271742-um8vfhabcmkm6d054j0sb3fu9dqg9v5q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "by.alexandr7035.gitstat",
+            "certificate_hash": "d79eb39fe5e0e19767a33bc3d77ad4d38b7d6435"
+          }
+        },
+        {
+          "client_id": "1042992271742-6lcccv4b4gopb2n7h7akso18tuhejhbu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgWd3OssnLfh3oCq4j6S4FmwIzZZLASyI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1042992271742-6lcccv4b4gopb2n7h7akso18tuhejhbu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
