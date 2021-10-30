@@ -101,7 +101,7 @@ class LoginFragment: Fragment() {
 
         val privacyPolicyClickable = object : ClickableSpan() {
             override fun onClick(widget: View) {
-                showTokenInstructions()
+                showPrivacyPolicy()
             }
 
             override fun updateDrawState(ds: TextPaint) {
@@ -133,8 +133,11 @@ class LoginFragment: Fragment() {
         binding?.version?.text = getString(R.string.app_name_with_version, BuildConfig.VERSION_NAME)
     }
 
-    private fun showTokenInstructions() {
-        navController.navigate(R.id.action_loginFragment_to_webViewFragment)
+    private fun showPrivacyPolicy() {
+        navController.navigate(R.id.action_loginFragment_to_webViewFragment,  Bundle().apply {
+            putString("toolbar_title", getString(R.string.privacy_policy))
+            putString("url", getString(R.string.privacy_policy_url))
+        })
     }
 
     override fun onDestroyView() {

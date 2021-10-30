@@ -89,9 +89,6 @@
             android:layout_height="wrap_content"
             android:text="@string/refresh"/>
 
-
-
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
