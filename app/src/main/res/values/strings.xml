@@ -76,8 +76,8 @@
     <string name="contributions_per_year">Contributions per year</string>
     <string name="contribution_rate_dynamics">Contribution rate dynamics</string>
 
-    <string name="privacy_policy_text">Check how do we manage your data here.</string>
-    <string name="privacy_policy_clickable">here</string>
+    <string name="privacy_policy_text">Check how do we manage your data in the Privacy Policy.</string>
+    <string name="privacy_policy_clickable">Privacy Policy</string>
     <!--    FIXME change url-->
     <string name="privacy_policy_url">https://github.com/alexandr7035/gitstat/tree/master#privacy-policy</string>
     <string name="privacy_policy">Privacy policy</string>
@@ -103,6 +103,6 @@
     <string name="updating_data_cache">Updating data cache…</string>
     <string name="year_cr">Year CR</string>
 
-    <string name="auth_explanation">Please, press \"Sign in\" button. Enter your login and password anв give our application the requested rights.</string>
+    <string name="auth_explanation">Please, press the button bellow to sign in. Your will be redirected to the browser.</string>
 
 </resources>

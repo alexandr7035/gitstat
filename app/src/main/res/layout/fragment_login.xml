@@ -40,7 +40,7 @@
             android:text="@string/auth_explanation"
             android:textAlignment="center"
             android:textColor="@color/gray_400"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <TextView
             style="@style/PrimaryButton"
