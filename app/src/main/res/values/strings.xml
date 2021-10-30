@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">GitStat</string>
-
     <string name="app_name_with_version">GitStat v%1$s</string>
+    <string name="OAUTH_PROVIDER">github.com</string>
+
 
     <string name="token">Token</string>
     <string name="sign_in">Sign in</string>
@@ -104,5 +105,6 @@
     <string name="year_cr">Year CR</string>
 
     <string name="auth_explanation">Please, press the button bellow to sign in. Your will be redirected to the browser.</string>
+    <string name="oauth_error_generic">Authorization error. Check your Internet connection and try again. Also make sure you don\'t close the browser until authorization is complete.</string>
 
 </resources>

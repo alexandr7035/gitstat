@@ -20,6 +20,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import by.alexandr7035.gitstat.BuildConfig
 import by.alexandr7035.gitstat.R
+import by.alexandr7035.gitstat.core.GithubAccessScopes
 import by.alexandr7035.gitstat.databinding.FragmentLoginBinding
 import by.alexandr7035.gitstat.view.MainActivity
 import com.google.firebase.auth.OAuthCredential
@@ -54,19 +55,9 @@ class LoginFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // TODO move to stings
-        val provider = OAuthProvider.newBuilder("github.com")
-        val scopes: List<String> = listOf(
-            "read:user",
-            "repo"
-        )
-        provider.scopes = scopes
-
+        val provider = OAuthProvider.newBuilder(getString(R.string.OAUTH_PROVIDER))
+        provider.scopes = GithubAccessScopes.getScopes()
         val auth = Firebase.auth
-        // Sign out from previous session preliminarily (if any)
-        Timber.tag("DEBUG_AUTH").d("clear token")
-        auth.signOut()
-//        viewModel.clearToken()
 
         binding!!.signInBtn.setOnClickListener {
 
@@ -75,22 +66,21 @@ class LoginFragment: Fragment() {
             val result = auth.pendingAuthResult
 
             if (result == null) {
-                Timber.tag("DEBUG_AUTH").d("$result")
                 auth.startActivityForSignInWithProvider(requireActivity(), provider.build())
                     .addOnSuccessListener { authResult ->
-                        Timber.tag("DEBUG_AUTH").d("success")
+                        Timber.tag("DEBUG_AUTH").d("success auth")
 
                         val token = (authResult.credential as OAuthCredential).accessToken
                         Timber.tag("DEBUG_AUTH").d("token $token")
-
                         viewModel.saveToken(token!!)
                         (requireActivity() as MainActivity).startSyncData()
                     }
 
+                        // TODO handle error types
                     .addOnFailureListener {
                         binding?.loginProgressView?.visibility = View.GONE
                         Timber.tag("DEBUG_AUTH").d("failure $it")
-                        Toast.makeText(requireActivity(), getString(R.string.error_cant_get_data_remote), Toast.LENGTH_LONG).show()
+                        Toast.makeText(requireActivity(), getString(R.string.oauth_error_generic), Toast.LENGTH_LONG).show()
                     }
             }
         }
