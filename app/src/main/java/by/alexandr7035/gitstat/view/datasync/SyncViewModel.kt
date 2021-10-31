@@ -7,7 +7,6 @@ import by.alexandr7035.gitstat.core.DataSyncStatus
 import by.alexandr7035.gitstat.data.SyncRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

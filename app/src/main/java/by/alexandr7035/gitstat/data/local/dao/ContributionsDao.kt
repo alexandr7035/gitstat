@@ -36,10 +36,6 @@ interface ContributionsDao {
     @Query("SELECT * FROM contribution_years")
     fun getContributionYearsWithDaysLiveData(): LiveData<List<ContributionsYearWithDays>>
 
-    // FIXME
-    @Query("SELECT * FROM contribution_years")
-    suspend fun getContributionYearsWithDays(): List<ContributionsYearWithDays>
-
     @Query("DELETE FROM contribution_years")
     fun clearContributionYears()
 

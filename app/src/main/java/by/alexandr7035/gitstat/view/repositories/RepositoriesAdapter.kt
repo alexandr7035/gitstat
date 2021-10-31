@@ -13,7 +13,7 @@ import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.data.local.model.RepositoryEntity
 import by.alexandr7035.gitstat.databinding.ViewRepositoryBinding
 
-class RepositoriesAdapter(): RecyclerView.Adapter<RepositoriesAdapter.ViewHolder>() {
+class RepositoriesAdapter : RecyclerView.Adapter<RepositoriesAdapter.ViewHolder>() {
 
     private var items: List<RepositoryEntity> = ArrayList()
     private val createdDateFormat = "yyyy-MM-dd"

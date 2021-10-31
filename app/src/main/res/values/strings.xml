@@ -77,7 +77,7 @@
     <string name="privacy_policy_clickable">Privacy Policy</string>
     <!--    FIXME change url-->
     <string name="privacy_policy_url">https://github.com/alexandr7035/gitstat/tree/master#privacy-policy</string>
-    <string name="privacy_policy">Privacy policy</string>
+    <string name="privacy_policy">Privacy Policy</string>
 
     <string name="refresh">Refresh</string>
     <string name="failed_load_page">Failed to load the page. Check your Internet connection and try again.</string>
@@ -102,5 +102,6 @@
 
     <string name="auth_explanation">Please, press the button bellow to sign in. Your will be redirected to the browser.</string>
     <string name="oauth_error_generic">Authorization error. Check your Internet connection and try again. Also make sure you don\'t close the browser until authorization is complete.</string>
+    <string name="go_to_login_screen">Go to login screen</string>
 
 </resources>

@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.alexandr7035.gitstat.R
-import by.alexandr7035.gitstat.core.App
 import by.alexandr7035.gitstat.databinding.FragmentArchivedRepositoriesBinding
 import by.alexandr7035.gitstat.view.repositories.filters.RepositoriesListFiltersHelper
 import dagger.hilt.android.AndroidEntryPoint

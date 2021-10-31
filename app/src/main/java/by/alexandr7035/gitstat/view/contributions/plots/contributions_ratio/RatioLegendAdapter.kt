@@ -1,13 +1,10 @@
 package by.alexandr7035.gitstat.view.contributions.plots.contributions_ratio
 
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.databinding.ViewRatioPlotLegendItemBinding
 
 class RatioLegendAdapter: RecyclerView.Adapter<RatioLegendAdapter.ViewHolder>() {
