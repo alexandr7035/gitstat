@@ -32,6 +32,7 @@
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="150dp"
+            android:padding="20dp"
             app:srcCompat="@drawable/ic_app" />
 
         <TextView
