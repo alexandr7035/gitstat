@@ -34,6 +34,8 @@ class ContributionsRatePlot {
             axisLeft.axisMinimum = 0f
             axisLeft.textSize = 16f
 
+            setExtraOffsets(10f,0f,10f,0f)
+
             description.isEnabled = false
         }
     }

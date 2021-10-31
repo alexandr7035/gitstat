@@ -73,13 +73,17 @@ object AppModule {
     @Provides
     @Singleton
     fun provideAuthRepository(apolloClient: ApolloClient, appPreferences: AppPreferences): AuthRepository {
-        return AuthRepository(apolloClient, appPreferences)
+        return AuthRepository(appPreferences)
     }
 
     @Provides
     @Singleton
-    fun provideContributionsRepository(dao: ContributionsDao, timeHelper: TimeHelper): ContributionsRepository{
-        return ContributionsRepository(dao, timeHelper)
+    fun provideContributionsRepository(
+        dao: ContributionsDao,
+        timeHelper: TimeHelper,
+        appPreferences: AppPreferences
+    ): ContributionsRepository{
+        return ContributionsRepository(dao, timeHelper, appPreferences)
     }
 
     /////////////////////////////////////

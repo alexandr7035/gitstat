@@ -1,12 +1,11 @@
 package by.alexandr7035.gitstat.view.login
 
-import android.content.ActivityNotFoundException
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
-import android.net.Uri
 import android.os.Bundle
-import android.text.*
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.StyleSpan
@@ -21,9 +20,13 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import by.alexandr7035.gitstat.BuildConfig
 import by.alexandr7035.gitstat.R
-import by.alexandr7035.gitstat.core.AuthStatus
+import by.alexandr7035.gitstat.core.GithubAccessScopes
 import by.alexandr7035.gitstat.databinding.FragmentLoginBinding
 import by.alexandr7035.gitstat.view.MainActivity
+import com.google.firebase.auth.OAuthCredential
+import com.google.firebase.auth.OAuthProvider
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -34,8 +37,6 @@ class LoginFragment: Fragment() {
     private var binding: FragmentLoginBinding? = null
 
     private val viewModel by viewModels<AuthViewModel>()
-
-    private lateinit var token: String
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
@@ -54,86 +55,43 @@ class LoginFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding!!.tokenEditText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        val provider = OAuthProvider.newBuilder(getString(R.string.OAUTH_PROVIDER))
+        provider.scopes = GithubAccessScopes.getScopes()
+        val auth = Firebase.auth
 
-            }
+        binding!!.signInBtn.setOnClickListener {
 
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                if (s.isNotEmpty()) {
-                    if (!TextUtils.isEmpty(binding!!.tokenField.error)) {
-                        binding!!.tokenField.error = null
-                        binding!!.tokenField.isErrorEnabled = false
+            binding?.loginProgressView?.visibility = View.VISIBLE
+
+            val result = auth.pendingAuthResult
+
+            if (result == null) {
+                auth.startActivityForSignInWithProvider(requireActivity(), provider.build())
+                    .addOnSuccessListener { authResult ->
+                        Timber.tag("DEBUG_AUTH").d("success auth")
+
+                        val token = (authResult.credential as OAuthCredential).accessToken
+                        Timber.tag("DEBUG_AUTH").d("token $token")
+                        viewModel.saveToken(token!!)
+                        (requireActivity() as MainActivity).startSyncData()
                     }
-                }
+
+                        // TODO handle error types
+                    .addOnFailureListener {
+                        binding?.loginProgressView?.visibility = View.GONE
+                        Timber.tag("DEBUG_AUTH").d("failure $it")
+                        Toast.makeText(requireActivity(), getString(R.string.oauth_error_generic), Toast.LENGTH_LONG).show()
+                    }
             }
+        }
 
-            override fun afterTextChanged(s: Editable?) {
+        val privacyPolicyFullText = getString(R.string.privacy_policy_text)
+        val linkText = getString(R.string.privacy_policy_clickable)
+        val privacyPolicySpannable = SpannableString(privacyPolicyFullText)
 
-            }
-
-        })
-
-
-        binding!!.signInBtn.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View) {
-
-                if (! checkLoginFormIfValid()) {
-                    Timber.d("form is not valid")
-                    return
-                }
-
-                else {
-                    token = binding!!.tokenEditText.text.toString()
-
-                    // Show progress stub and do login
-                    binding?.loginProgressView?.visibility = View.VISIBLE
-
-                    viewModel.saveToken(token)
-                    viewModel.authorize()
-                }
-
-            }
-        })
-
-
-        viewModel.getAuthResultLiveData().observe(viewLifecycleOwner, { status ->
-
-            // Hide progress
-            binding?.loginProgressView?.visibility = View.GONE
-
-            when (status) {
-                AuthStatus.SUCCESS -> {
-                    // FIXME Not good. Find better solution
-                    (requireActivity() as MainActivity).startSyncData()
-                }
-
-                AuthStatus.FAILED_NETWORK -> {
-                    viewModel.clearToken()
-                    Toast.makeText(requireActivity(), getString(R.string.error_cant_get_data_remote), Toast.LENGTH_LONG).show()
-                }
-
-                AuthStatus.FAILED_CREDENTIALS -> {
-                    viewModel.clearToken()
-                    binding!!.tokenField.error = getString(R.string.error_wrong_token_field)
-                }
-
-                AuthStatus.UNKNOWN_ERROR -> {
-                    viewModel.clearToken()
-                    Toast.makeText(requireActivity(), getString(R.string.error_unknown_auth), Toast.LENGTH_LONG).show()
-                }
-            }
-
-        })
-
-
-        val obtainTokenFullText = getString(R.string.obtain_token_full_text)
-        val obtainTokenLinkText = getString(R.string.obtain_token_clickable)
-        val obtainTokenSpannable = SpannableString(obtainTokenFullText)
-
-        val obtainTokenClickable = object : ClickableSpan() {
+        val privacyPolicyClickable = object : ClickableSpan() {
             override fun onClick(widget: View) {
-                showTokenInstructions()
+                showPrivacyPolicy()
             }
 
             override fun updateDrawState(ds: TextPaint) {
@@ -143,20 +101,20 @@ class LoginFragment: Fragment() {
             }
         }
 
-        obtainTokenSpannable.setSpan(
-            obtainTokenClickable,
-            obtainTokenFullText.indexOf(obtainTokenLinkText),
-            obtainTokenFullText.indexOf(obtainTokenLinkText) + obtainTokenLinkText.length,
+        privacyPolicySpannable.setSpan(
+            privacyPolicyClickable,
+            privacyPolicyFullText.indexOf(linkText),
+            privacyPolicyFullText.indexOf(linkText) + linkText.length,
             Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
 
-        obtainTokenSpannable.setSpan(
+        privacyPolicySpannable.setSpan(
             StyleSpan(Typeface.BOLD),
-            obtainTokenFullText.indexOf(obtainTokenLinkText),
-            obtainTokenFullText.indexOf(obtainTokenLinkText) + obtainTokenLinkText.length,
+            privacyPolicyFullText.indexOf(linkText),
+            privacyPolicyFullText.indexOf(linkText) + linkText.length,
             Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
 
-        binding?.obtainTokenView?.apply {
-            text = obtainTokenSpannable
+        binding?.privacyPolicyView?.apply {
+            text = privacyPolicySpannable
             movementMethod = LinkMovementMethod.getInstance()
             highlightColor = Color.TRANSPARENT
         }
@@ -165,21 +123,11 @@ class LoginFragment: Fragment() {
         binding?.version?.text = getString(R.string.app_name_with_version, BuildConfig.VERSION_NAME)
     }
 
-
-    private fun checkLoginFormIfValid(): Boolean {
-
-        var isValid = true
-
-        if (binding!!.tokenEditText.text.isNullOrBlank()) {
-            binding!!.tokenField.error = getString(R.string.error_empty_field)
-            isValid = false
-        }
-
-        return isValid
-    }
-
-    private fun showTokenInstructions() {
-        navController.navigate(R.id.action_loginFragment_to_webViewFragment)
+    private fun showPrivacyPolicy() {
+        navController.navigate(R.id.action_loginFragment_to_webViewFragment,  Bundle().apply {
+            putString("toolbar_title", getString(R.string.privacy_policy))
+            putString("url", getString(R.string.privacy_policy_url))
+        })
     }
 
     override fun onDestroyView() {

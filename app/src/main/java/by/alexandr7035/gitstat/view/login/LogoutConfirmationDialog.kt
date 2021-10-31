@@ -16,7 +16,6 @@ import by.alexandr7035.gitstat.view.MainActivity
 
 class LogoutConfirmationDialog : DialogFragment() {
 
-    private val viewModel by viewModels<AuthViewModel>()
     private var binding: FragmentLogoutConfirmationDialogBinding? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

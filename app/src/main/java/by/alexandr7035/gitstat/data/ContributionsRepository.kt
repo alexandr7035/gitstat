@@ -1,17 +1,23 @@
 package by.alexandr7035.gitstat.data
 
 import androidx.lifecycle.LiveData
+import by.alexandr7035.gitstat.core.AppPreferences
 import by.alexandr7035.gitstat.core.TimeHelper
 import by.alexandr7035.gitstat.data.local.dao.ContributionsDao
 import by.alexandr7035.gitstat.data.local.model.ContributionDayEntity
 import by.alexandr7035.gitstat.data.local.model.ContributionsRatioEntity
 import by.alexandr7035.gitstat.data.local.model.ContributionsYearWithDays
 import by.alexandr7035.gitstat.data.local.model.ContributionsYearWithRates
+import timber.log.Timber
 import javax.inject.Inject
 import kotlin.math.round
 
 
-class ContributionsRepository @Inject constructor(private val dao: ContributionsDao, private val timeHelper: TimeHelper) {
+class ContributionsRepository @Inject constructor(
+    private val dao: ContributionsDao,
+    private val timeHelper: TimeHelper,
+    private val appPreferences: AppPreferences
+) {
 
     fun getAllContributionsLiveData(): LiveData<List<ContributionDayEntity>> {
         return dao.getContributionDaysLiveData()
@@ -31,10 +37,11 @@ class ContributionsRepository @Inject constructor(private val dao: Contributions
 
 
     // Simply calculate for previous years
-    // For the current year need to detect current date
+    // For the current year need to detect last contribution year
     fun getLastTotalContributionRateForYear(yearData: ContributionsYearWithRates): Float {
         return if (yearData.year.id == timeHelper.getCurrentYearForUnixDate(System.currentTimeMillis())) {
-            yearData.contributionRates.findLast { it.date == timeHelper.getBeginningOfDayForUnixDate(System.currentTimeMillis()) }?.rate ?: 0F
+            val lastCacheSyncDate = appPreferences.lastSuccessCacheSyncDate
+            yearData.contributionRates.findLast { it.date == timeHelper.getBeginningOfDayForUnixDate(lastCacheSyncDate) }?.rate ?: 0F
         } else {
             yearData.contributionRates[yearData.contributionRates.size - 1].rate
         }
@@ -45,12 +52,13 @@ class ContributionsRepository @Inject constructor(private val dao: Contributions
         val contributionsCount = yearData.contributionDays.sumOf { it.count }
 
         return if (yearData.year.id == timeHelper.getCurrentYearForUnixDate(System.currentTimeMillis())) {
-            // Get last contribution day (current day)
+            // Get last contribution day
+            val lastCacheSyncDate = appPreferences.lastSuccessCacheSyncDate
             val lastContributedDay = yearData.contributionDays.findLast {
-                it.date == timeHelper.getBeginningOfDayForUnixDate(System.currentTimeMillis())
+                it.date == timeHelper.getBeginningOfDayForUnixDate(lastCacheSyncDate)
             }
             val lastContributedDayPosition = yearData.contributionDays.lastIndexOf(lastContributedDay)
-            // Slice of days from the beginning of the year to current day
+            // Slice of days from the beginning of the year to last contribution date
             val contributionDays = yearData.contributionDays.slice(0..lastContributedDayPosition)
 
             round(contributionsCount.toFloat() / contributionDays.size.toFloat() * 100) / 100F

@@ -107,15 +107,16 @@
             tools:layout="@layout/fragment_sync_failed_no_cache" />
 
     </navigation>
-    <fragment
-        android:id="@+id/webViewFragment"
-        android:name="by.alexandr7035.gitstat.view.login.HowToObtainTokenFragment"
-        android:label="fragment_web_view"
-        tools:layout="@layout/fragment_how_to_obtain_token" />
+
     <dialog
         android:id="@+id/logoutConfirmationDialog"
         android:name="by.alexandr7035.gitstat.view.login.LogoutConfirmationDialog"
         android:label="LogoutConfirmationDialog" />
+    <fragment
+        android:id="@+id/webViewFragment"
+        android:name="by.alexandr7035.gitstat.view.core.WebViewFragment"
+        android:label="WebViewFragment"
+        tools:layout="@layout/fragment_web_view"/>
 
 
 </navigation>

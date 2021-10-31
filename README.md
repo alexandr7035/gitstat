@@ -31,14 +31,14 @@ used to implement languages filter (see third screenshot).
 - [CircleImageView](https://github.com/hdodenhof/CircleImageView) and [Picasso](https://github.com/square/picasso) libs are involved to obtain and display user profile image.
 - [MPAndroidChart](https://github.com/PhilJay/MPAndroidChart) library is used for plots and diagrams in the application.
 - Use [Timber](https://github.com/JakeWharton/timber) logging in order to prevent log calls removal before every release building.
+- Use [Firebase Crashlytics](https://firebase.google.com/products/crashlytics) to catch and fix crashes.
+- Use [Firebase Authentication](https://firebase.google.com/products/auth) to implement Github Oauth authorization.
 
 ## Used tools
 - Used [Avocado](https://github.com/alexjlockwood/avocado) to optimize vector drawables drawn in Figma.
 
-## How to authorize
-- Download APK from the [releases](https://github.com/alexandr7035/gitstat/releases) page and install it.
-- Go to [Personal access tokens](https://github.com/settings/tokens) section in your Github profile settings.
-- Create personal access token with ```read:user``` and ```repo``` access scopes. (**Note**: full ```repo``` scope is used only to have access to your private repos data. No malicious write operations are performed by the app).
-- Use the obtained token as auth credential in the application login form.
-
-More user-friendly **OAuth** method may be implemented later.
+## Privacy Policy
+- We use **Github Oauth** (Firebase) for user authentication. As soon as you click the login button, system opens the browser.  You have to enter the login and password from your **Github account**.
+- As **Oauth** method is used for authentication, even if you log out, you may be able log in again without entering your Github login and password. If this is wrong behavior for you, clear your browser cache after logging out.
+- We get access to ```read:user``` and ```repo``` access scopes. We **do not perform any write operations** on your github account. Full ```repo``` scope is used only to have access to your private repos data and not to perform malicious write operations.
+- We do not store your account data anywhere outside the device local storage.

@@ -15,13 +15,13 @@ class MainViewModel @Inject constructor(private val syncRepository: SyncReposito
         return syncRepository.checkIfTokenSaved()
     }
 
-    fun clearToken() {
-        syncRepository.clearToken()
-    }
-
     fun clearCache() {
         viewModelScope.launch(Dispatchers.IO) {
             syncRepository.clearCache()
         }
+    }
+
+    fun clearToken() {
+        syncRepository.clearToken()
     }
 }
