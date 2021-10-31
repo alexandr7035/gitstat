@@ -52,7 +52,7 @@ class ContributionsRatePlot {
         // Plot entries
         val entries = ArrayList<Entry>()
         yearData.contributionRates.forEach { contributionRate ->
-            entries.add(Entry(contributionRate.date.toFloat(), contributionRate.rate.toFloat()))
+            entries.add(Entry(contributionRate.date.toFloat(), contributionRate.rate))
         }
 
         // Prepare plot dataset

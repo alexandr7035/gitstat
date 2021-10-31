@@ -8,7 +8,6 @@ import by.alexandr7035.gitstat.data.local.model.ContributionDayEntity
 import by.alexandr7035.gitstat.data.local.model.ContributionsRatioEntity
 import by.alexandr7035.gitstat.data.local.model.ContributionsYearWithDays
 import by.alexandr7035.gitstat.data.local.model.ContributionsYearWithRates
-import timber.log.Timber
 import javax.inject.Inject
 import kotlin.math.round
 

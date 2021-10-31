@@ -12,7 +12,6 @@ import androidx.navigation.fragment.NavHostFragment
 import by.alexandr7035.gitstat.BuildConfig
 import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.databinding.FragmentProfileBinding
-import by.alexandr7035.gitstat.view.MainActivity
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 
