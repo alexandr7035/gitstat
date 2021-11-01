@@ -3,6 +3,7 @@ package by.alexandr7035.gitstat.data
 import androidx.lifecycle.MutableLiveData
 import by.alexandr7035.gitstat.apollo.*
 import by.alexandr7035.gitstat.core.*
+import by.alexandr7035.gitstat.data.local.CacheDB
 import by.alexandr7035.gitstat.data.local.dao.ContributionsDao
 import by.alexandr7035.gitstat.data.local.dao.RepositoriesDao
 import by.alexandr7035.gitstat.data.local.dao.UserDao
@@ -23,6 +24,7 @@ import kotlin.math.round
 class SyncRepository @Inject constructor(
     private val apolloClient: ApolloClient,
 
+    private val db: CacheDB,
     private val userDao: UserDao,
     private val reposDao: RepositoriesDao,
     private val contributionsDao: ContributionsDao,
@@ -96,10 +98,7 @@ class SyncRepository @Inject constructor(
 
 
     suspend fun clearCache() {
-        reposDao.clearRepositories()
-        contributionsDao.clearContributionDays()
-        contributionsDao.clearContributionYears()
-        userDao.clearUser()
+        db.clearAllTables()
         appPreferences.lastSuccessCacheSyncDate = 0
     }
 
