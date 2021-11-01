@@ -10,11 +10,11 @@
         android:name="by.alexandr7035.gitstat.view.login.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
-        <action
-            android:id="@+id/actionLoginToMain"
-            app:destination="@id/profileFragment" />
+
         <action
             android:id="@+id/action_loginFragment_to_syncGraph"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true"
             app:destination="@id/syncGraph" />
         <action
             android:id="@+id/action_loginFragment_to_webViewFragment"
