@@ -114,9 +114,17 @@
     </navigation>
 
     <dialog
+        tools:layout="@layout/fragment_logout_confirmation_dialog"
         android:id="@+id/logoutConfirmationDialog"
         android:name="by.alexandr7035.gitstat.view.login.LogoutConfirmationDialog"
-        android:label="LogoutConfirmationDialog" />
+        android:label="LogoutConfirmationDialog" >
+        <action
+            android:id="@+id/action_logoutConfirmationDialog_to_loginFragment"
+            app:popUpTo="@id/profileFragment"
+            app:popUpToInclusive="true"
+            app:destination="@id/loginFragment" />
+    </dialog>
+
     <fragment
         android:id="@+id/webViewFragment"
         android:name="by.alexandr7035.gitstat.view.core.WebViewFragment"

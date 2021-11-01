@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
     fun startLogOut() {
         viewModel.clearCache()
         viewModel.clearToken()
-        navController.navigate(R.id.loginFragment)
+        navController.navigate(R.id.action_logoutConfirmationDialog_to_loginFragment)
     }
 
     fun syncFinishedCallback() {
