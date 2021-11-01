@@ -50,25 +50,15 @@ class MainActivity : AppCompatActivity() {
             startSyncData()
         }
         else {
-            updateStartDestination(R.id.loginFragment)
+            // TODO
         }
-    }
-
-    // To disable back to login fragment
-    private fun updateStartDestination(fragmentID: Int) {
-        // Dynamically change initial fragment
-        val navGraph = navController.navInflater.inflate(R.navigation.nav_graph)
-
-        navGraph.startDestination = fragmentID
-
-        navController.graph = navGraph
     }
 
 
     // FIXME find better solution
     // than public method accessible from fragments
     fun startSyncData() {
-        navController.navigate(R.id.syncGraph)
+        navController.navigate(R.id.action_loginFragment_to_syncGraph)
     }
 
     // FIXME find better solution
@@ -80,7 +70,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun syncFinishedCallback() {
-        updateStartDestination(R.id.profileFragment)
         navController.navigate(R.id.profileFragment)
     }
 
