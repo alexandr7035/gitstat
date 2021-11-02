@@ -21,11 +21,11 @@ class YearContributionsAdapter(fragment: Fragment): FragmentStateAdapter(fragmen
     override fun createFragment(position: Int): Fragment {
         val fragment = YearContributionsFragment()
 
-        val yearData = this.items[position]
+        // FIXME find better way to pass year
+        val year = this.items[position].year.id
 
-        // FIXME may cause NPE
         fragment.arguments = Bundle().apply {
-            putSerializable("yearData", yearData)
+            putInt("year", year)
         }
 
         return fragment

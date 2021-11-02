@@ -8,7 +8,6 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import by.alexandr7035.gitstat.R
-import by.alexandr7035.gitstat.data.local.model.ContributionsYearWithDays
 import by.alexandr7035.gitstat.databinding.ViewPlotContributionsYearBinding
 import by.alexandr7035.gitstat.view.contributions.ContributionsViewModel
 import by.alexandr7035.gitstat.view.contributions.plots.LinePlotFill
@@ -28,40 +27,46 @@ class YearContributionsFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val yearData = arguments?.getSerializable("yearData") as ContributionsYearWithDays
+        val year = arguments?.getInt("year")
 
-        // Set plot data
-        val contributionsCountPlot = ContributionsCountPlot()
-        if (binding?.contributionsChart != null) {
-            contributionsCountPlot.setupPLot(binding!!.contributionsChart)
-            contributionsCountPlot.setYearData(binding!!.contributionsChart, yearData)
-        }
+        viewModel.getContributionYearsWithDaysLiveData().observe(viewLifecycleOwner, { yearsData ->
 
-        // Set contributions count to cart title
-        val contributionsCount = yearData.contributionDays.sumOf { it.count }
-        binding?.contributionsCountView?.text = contributionsCount.toString()
+            // FIXME find better solution (obtain certain year from data layer)
+            val yearData = yearsData.findLast {
+                it.year.id == year
+            }!!
 
-        // Count contributions rate (for the year) and apply to the view
-//        val contributionsRate = round((contributionsCount.toFloat() / yearData.contributionDays.size.toFloat() * 100)) / 100F
-        val contributionsRate = viewModel.getContributionRateForYear(yearData)
-        // Set same color to the rate view as for the plot
-        val bg = ContextCompat.getDrawable(requireContext(), R.drawable.background_rounded_shape)
-        val plotFill = LinePlotFill.getPlotFillForYear(requireContext(), yearData.year.id)
-        bg?.setTint(plotFill.lineColor)
-        binding?.contributionsRateView?.background = bg
-        binding?.contributionsRateView?.text = contributionsRate.toString()
+            // Set contributions count to cart title
+            val contributionsCount = yearData.contributionDays.sumOf { it.count }
+            binding?.contributionsCountView?.text = contributionsCount.toString()
 
+            // Get contributions rate (for the year) and apply to the view
+            val contributionsRate = viewModel.getContributionRateForYear(yearData)
+            // Set same color to the rate view as for the plot
+            val bg = ContextCompat.getDrawable(requireContext(), R.drawable.background_rounded_shape)
+            val plotFill = LinePlotFill.getPlotFillForYear(requireContext(), yearData.year.id)
+            bg?.setTint(plotFill.lineColor)
+            binding?.contributionsRateView?.background = bg
+            binding?.contributionsRateView?.text = contributionsRate.toString()
 
 
-        // Show stub if no contributions for this year
-        if (contributionsCount == 0) {
-            binding?.emptyPlotStub?.visibility = View.VISIBLE
+            // Show stub if no contributions for this year
+            if (contributionsCount == 0) {
+                binding?.emptyPlotStub?.visibility = View.VISIBLE
 
-            binding?.contributionsChart?.visibility = View.GONE
-            binding?.contributionsRateView?.visibility = View.GONE
-            binding?.contributionsCountView?.visibility = View.GONE
-            binding?.yearCRLabel?.visibility = View.GONE
-        }
+                binding?.contributionsChart?.visibility = View.GONE
+                binding?.contributionsRateView?.visibility = View.GONE
+                binding?.contributionsCountView?.visibility = View.GONE
+                binding?.yearCRLabel?.visibility = View.GONE
+            }
+
+            // Set plot data
+            val contributionsCountPlot = ContributionsCountPlot()
+            if (binding?.contributionsChart != null) {
+                contributionsCountPlot.setupPLot(binding!!.contributionsChart)
+                contributionsCountPlot.setYearData(binding!!.contributionsChart, yearData)
+            }
+        })
 
     }
 
