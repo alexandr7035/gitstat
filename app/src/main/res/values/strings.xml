@@ -104,4 +104,13 @@
     <string name="oauth_error_generic">Authorization error. Check your Internet connection and try again. Also make sure you don\'t close the browser until authorization is complete.</string>
     <string name="go_to_login_screen">Go to login screen</string>
 
+    <string name="ok">OK</string>
+
+
+    <string name="what_is_contribution_rate_title">What is contribution rate?</string>
+    <string name="what_is_contribution_rate_text">Contribution rate is total contributions count for the given period divided by the day count of this period.</string>
+
+    <string name="contribution_rate_dynamics_help_title">What\'s on these charts?</string>
+    <string name="contribution_rate_dynamics_help_text">On all of the years charts the total contribution rate dynamics is presented (for the period from registration date).</string>
+
 </resources>
