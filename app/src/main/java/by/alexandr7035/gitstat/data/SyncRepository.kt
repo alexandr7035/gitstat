@@ -11,10 +11,7 @@ import by.alexandr7035.gitstat.data.local.model.ContributionDayEntity
 import by.alexandr7035.gitstat.data.local.model.ContributionRateEntity
 import by.alexandr7035.gitstat.data.local.model.ContributionsRatioEntity
 import by.alexandr7035.gitstat.data.local.model.ContributionsYearEntity
-import by.alexandr7035.gitstat.data.remote.mappers.ContributionsDaysListRemoteToCacheMapper
-import by.alexandr7035.gitstat.data.remote.mappers.ContributionsRatioRemoteToCacheMapper
-import by.alexandr7035.gitstat.data.remote.mappers.RepositoriesRemoteToCacheMapper
-import by.alexandr7035.gitstat.data.remote.mappers.UserRemoteToCacheMapper
+import by.alexandr7035.gitstat.data.remote.mappers.*
 import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.api.Query
 import timber.log.Timber
@@ -33,6 +30,7 @@ class SyncRepository @Inject constructor(
     private val repositoriesMapper: RepositoriesRemoteToCacheMapper,
     private val contributionsMapper: ContributionsDaysListRemoteToCacheMapper,
     private val ratioMapper: ContributionsRatioRemoteToCacheMapper,
+    private val daysToRatesMapper: ContributionDaysToRatesMapper,
 
     private val timeHelper: TimeHelper,
     private val appPreferences: AppPreferences) {
@@ -160,30 +158,7 @@ class SyncRepository @Inject constructor(
     private suspend fun syncContributionRateData() {
 
         val contributionDays = contributionsDao.getContributionDaysList()
-        val rates = ArrayList<ContributionRateEntity>()
-
-        contributionDays.forEachIndexed { position, day ->
-            val daysSlice = contributionDays.slice(0..position)
-            val daysSliceContributionsCount = daysSlice.sumOf { it.count }
-
-            // Don't count rate for the future :)
-            // Set 0 by default
-            // TODO check with changing timezones
-            var rate = 0F
-            if (day.date <= timeHelper.getBeginningOfDayForUnixDate(System.currentTimeMillis())) {
-                rate = round((daysSliceContributionsCount.toFloat() / daysSlice.size.toFloat() * 100)) / 100F
-            }
-
-            Timber.d("count " + daysSliceContributionsCount.toFloat() + " / " + daysSlice.size.toFloat() + " * 100 / 100f")
-
-            rates.add(
-                ContributionRateEntity(
-                    date = day.date,
-                    rate = rate,
-                    yearId = day.yearId
-                )
-            )
-        }
+        val rates = daysToRatesMapper.transform(contributionDays)
 
         contributionsDao.clearContributionsYearsWithRatesCache()
         contributionsDao.insertContributionRatesCache(rates)

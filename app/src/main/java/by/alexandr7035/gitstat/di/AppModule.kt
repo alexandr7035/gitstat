@@ -65,10 +65,11 @@ object AppModule {
         profileMapper: UserRemoteToCacheMapper,
         repositoriesMapper: RepositoriesRemoteToCacheMapper,
         contributionsMapper: ContributionsDaysListRemoteToCacheMapper,
+        daysToRatesMapper: ContributionDaysToRatesMapper,
         ratioMapper: ContributionsRatioRemoteToCacheMapper,
         timeHelper: TimeHelper,
         appPreferences: AppPreferences): SyncRepository {
-        return SyncRepository(apolloClient, db, userDao, repositoriesDao, contributionsDao, profileMapper, repositoriesMapper, contributionsMapper, ratioMapper, timeHelper, appPreferences)
+        return SyncRepository(apolloClient, db, userDao, repositoriesDao, contributionsDao, profileMapper, repositoriesMapper, contributionsMapper, ratioMapper, daysToRatesMapper, timeHelper, appPreferences)
     }
 
     @Provides
@@ -109,6 +110,11 @@ object AppModule {
     @Provides
     fun provideContributionsRatioMapper(timeHelper: TimeHelper): ContributionsRatioRemoteToCacheMapper {
         return ContributionsRatioRemoteToCacheMapper(timeHelper)
+    }
+
+    @Provides
+    fun provideContributionDaysToRatesMapper(timeHelper: TimeHelper): ContributionDaysToRatesMapper {
+        return ContributionDaysToRatesMapper(timeHelper)
     }
 
     /////////////////////////////////////
