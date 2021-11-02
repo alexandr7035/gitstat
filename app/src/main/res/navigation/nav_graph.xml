@@ -134,5 +134,39 @@
         android:label="WebViewFragment"
         tools:layout="@layout/fragment_web_view"/>
 
+    <dialog
+        android:id="@+id/infoDialogFragment"
+        android:name="by.alexandr7035.gitstat.view.core.info_dialog.InfoDialogFragment"
+        android:label="fragment_info_dialog"
+        tools:layout="@layout/fragment_info_dialog">
+
+        <argument
+            android:name="dialogTitle"
+            app:argType="string"
+            app:nullable="false"/>
+
+        <argument
+            android:name="dialogText"
+            app:argType="string"
+            app:nullable="false"/>
+
+    </dialog>
+
+    <action android:id="@+id/action_global_infoDialogFragment"
+        app:destination="@id/infoDialogFragment">
+
+        <argument
+            android:name="dialogTitle"
+            app:argType="string"
+            app:nullable="false"/>
+
+        <argument
+            android:name="dialogText"
+            app:argType="string"
+            app:nullable="false"/>
+
+    </action>
+
+
 
 </navigation>
