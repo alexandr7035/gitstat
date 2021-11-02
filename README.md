@@ -20,7 +20,7 @@ GitStat is a simple android app designed to aggregate Github profile data into i
 
 ## Technology (some notes)
 
-- Used single activity approach and [Navigation component](https://developer.android.com/guide/navigation) to navigate across fragments.
+- Used single activity approach and [Navigation component](https://developer.android.com/guide/navigation) (with SafeArgs) to navigate across fragments.
 - Used [Hilt](https://dagger.dev/hilt/) for dependency injection.
 - [View binding](https://developer.android.com/topic/libraries/view-binding) is used to interact with views within fragments and recyclerview adapters.
 - Kotlin coroutines are used for asynchronous operations.

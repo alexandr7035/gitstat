@@ -44,7 +44,7 @@ interface ContributionsDao {
     /////////////////////////////////////
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertContributionRatesCache(rates: ArrayList<ContributionRateEntity>)
+    suspend fun insertContributionRatesCache(rates: List<ContributionRateEntity>)
 
     @Query("SELECT * FROM contribution_years")
     fun getContributionYearsWithRatesCache(): LiveData<List<ContributionsYearWithRates>>

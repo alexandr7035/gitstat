@@ -3,7 +3,7 @@ package by.alexandr7035.gitstat.view.contributions.plots.contributions_rate
 import com.github.mikephil.charting.formatter.ValueFormatter
 
 
-data class RateYAxisParams(
+data class ContributionRatesYAxisParams(
     val minValue: Float,
     val maxValue: Float,
     val labelCount: Int,
@@ -14,8 +14,8 @@ data class RateYAxisParams(
         private const val minValue = 0f
         private const val labelCount = 2
 
-        fun getRateYAxisParams(maxValue: Float): RateYAxisParams {
-            return RateYAxisParams(minValue, maxValue, labelCount, YValueFormatter(minValue, maxValue))
+        fun getRateYAxisParams(maxValue: Float): ContributionRatesYAxisParams {
+            return ContributionRatesYAxisParams(minValue, maxValue, labelCount, YValueFormatter(minValue, maxValue))
         }
     }
 

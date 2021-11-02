@@ -10,11 +10,11 @@
         android:name="by.alexandr7035.gitstat.view.login.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
-        <action
-            android:id="@+id/actionLoginToMain"
-            app:destination="@id/profileFragment" />
+
         <action
             android:id="@+id/action_loginFragment_to_syncGraph"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true"
             app:destination="@id/syncGraph" />
         <action
             android:id="@+id/action_loginFragment_to_webViewFragment"
@@ -29,6 +29,9 @@
         <action
             android:id="@+id/action_profileFragment_to_logoutConfirmationDialog"
             app:destination="@id/logoutConfirmationDialog" />
+        <action
+            android:id="@+id/action_profileFragment_to_reposOverviewFragment"
+            app:destination="@id/reposOverviewFragment" />
     </fragment>
 
     <fragment
@@ -105,18 +108,65 @@
             android:name="by.alexandr7035.gitstat.view.datasync.SyncFailedNoCacheFragment"
             android:label="fragment_sync_failed_no_cache"
             tools:layout="@layout/fragment_sync_failed_no_cache" />
+        <action
+            android:id="@+id/action_global_profileFragment"
+            app:popUpTo="@id/syncGraph"
+            app:popUpToInclusive="true"
+            app:destination="@id/profileFragment" />
 
     </navigation>
 
     <dialog
+        tools:layout="@layout/fragment_logout_confirmation_dialog"
         android:id="@+id/logoutConfirmationDialog"
         android:name="by.alexandr7035.gitstat.view.login.LogoutConfirmationDialog"
-        android:label="LogoutConfirmationDialog" />
+        android:label="LogoutConfirmationDialog" >
+        <action
+            android:id="@+id/action_logoutConfirmationDialog_to_loginFragment"
+            app:popUpTo="@id/profileFragment"
+            app:popUpToInclusive="true"
+            app:destination="@id/loginFragment" />
+    </dialog>
+
     <fragment
         android:id="@+id/webViewFragment"
         android:name="by.alexandr7035.gitstat.view.core.WebViewFragment"
         android:label="WebViewFragment"
         tools:layout="@layout/fragment_web_view"/>
+
+    <dialog
+        android:id="@+id/infoDialogFragment"
+        android:name="by.alexandr7035.gitstat.view.core.info_dialog.InfoDialogFragment"
+        android:label="fragment_info_dialog"
+        tools:layout="@layout/fragment_info_dialog">
+
+        <argument
+            android:name="dialogTitle"
+            app:argType="string"
+            app:nullable="false"/>
+
+        <argument
+            android:name="dialogText"
+            app:argType="string"
+            app:nullable="false"/>
+
+    </dialog>
+
+    <action android:id="@+id/action_global_infoDialogFragment"
+        app:destination="@id/infoDialogFragment">
+
+        <argument
+            android:name="dialogTitle"
+            app:argType="string"
+            app:nullable="false"/>
+
+        <argument
+            android:name="dialogText"
+            app:argType="string"
+            app:nullable="false"/>
+
+    </action>
+
 
 
 </navigation>

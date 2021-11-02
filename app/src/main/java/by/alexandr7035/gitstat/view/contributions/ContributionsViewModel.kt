@@ -25,6 +25,10 @@ class ContributionsViewModel @Inject constructor(private val repository: Contrib
         return repository.getContributionYearsWithRatesLiveData()
     }
 
+    fun getContributionYearsWithDaysLiveData(): LiveData<List<ContributionsYearWithDays>> {
+        return repository.getContributionYearsWithDaysLiveData()
+    }
+
     fun getContributionsRatioLiveData(): LiveData<List<ContributionsRatioEntity>> {
         return repository.getContributionsRatioLiveData()
     }

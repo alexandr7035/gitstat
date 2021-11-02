@@ -1,4 +1,4 @@
-package by.alexandr7035.gitstat.view.contributions
+package by.alexandr7035.gitstat.view.contributions.plots.contributions_per_year
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -19,13 +19,13 @@ class YearContributionsAdapter(fragment: Fragment): FragmentStateAdapter(fragmen
     }
 
     override fun createFragment(position: Int): Fragment {
-        val fragment = YearCardFragment()
+        val fragment = YearContributionsFragment()
 
-        val yearData = this.items[position]
+        // FIXME find better way to pass year
+        val year = this.items[position].year.id
 
-        // FIXME may cause NPE
         fragment.arguments = Bundle().apply {
-            putSerializable("yearData", yearData)
+            putInt("year", year)
         }
 
         return fragment

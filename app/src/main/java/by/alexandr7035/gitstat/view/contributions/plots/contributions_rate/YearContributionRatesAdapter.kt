@@ -1,11 +1,11 @@
-package by.alexandr7035.gitstat.view.contributions
+package by.alexandr7035.gitstat.view.contributions.plots.contributions_rate
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import by.alexandr7035.gitstat.data.local.model.ContributionsYearWithRates
 
-class YearContributionsRateAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
+class YearContributionRatesAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 
     // FIXME
     private var items: List<ContributionsYearWithRates> = emptyList()
@@ -19,7 +19,7 @@ class YearContributionsRateAdapter(fragment: Fragment) : FragmentStateAdapter(fr
     }
 
     override fun createFragment(position: Int): Fragment {
-        val fragment = YearContributionsRateFragment()
+        val fragment = YearContributionRatesFragment()
 
         // FIXME find better way to pass year
         val year = this.items[position].year.id

@@ -6,8 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
+import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.databinding.FragmentContributionsBinding
+import by.alexandr7035.gitstat.view.contributions.plots.contributions_per_year.YearContributionsAdapter
+import by.alexandr7035.gitstat.view.contributions.plots.contributions_rate.YearContributionRatesAdapter
 import by.alexandr7035.gitstat.view.contributions.plots.contributions_ratio.ContributionsRatioPlot
 import by.alexandr7035.gitstat.view.contributions.plots.contributions_ratio.RatioLegendAdapter
 import com.google.android.flexbox.FlexboxLayoutManager
@@ -22,7 +26,7 @@ class ContributionsFragment : Fragment() {
     private val viewModel by viewModels<ContributionsViewModel>()
 
     private lateinit var yearContributionsAdapter: YearContributionsAdapter
-    private lateinit var yearContributionsRateAdapter: YearContributionsRateAdapter
+    private lateinit var yearContributionsRateAdapter: YearContributionRatesAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -78,7 +82,7 @@ class ContributionsFragment : Fragment() {
         viewModel.getContributionYearsWithRatesLiveData().observe(viewLifecycleOwner, { rateYears ->
 
             if (rateYears.isNotEmpty()) {
-                yearContributionsRateAdapter = YearContributionsRateAdapter(this)
+                yearContributionsRateAdapter = YearContributionRatesAdapter(this)
                 yearContributionsRateAdapter.setItems(rateYears)
                 binding?.rateViewPager?.adapter = yearContributionsRateAdapter
 
@@ -108,6 +112,23 @@ class ContributionsFragment : Fragment() {
                 adapter.setItems(plot.getRatioLegendItems(binding!!.ratioChart, ratios))
             }
         })
+
+
+        // Help icon for contribution rate
+        binding?.contributionRateHelpIcon?.setOnClickListener {
+            findNavController().navigate(ContributionsFragmentDirections.actionGlobalInfoDialogFragment(
+                getString(R.string.what_is_contribution_rate_title),
+                getString(R.string.what_is_contribution_rate_text)
+            ))
+        }
+
+        // Help icon for contribution rate
+        binding?.contributionRateDynamicsHelpIcon?.setOnClickListener {
+            findNavController().navigate(ContributionsFragmentDirections.actionGlobalInfoDialogFragment(
+                getString(R.string.contribution_rate_dynamics_help_title),
+                getString(R.string.contribution_rate_dynamics_help_text)
+            ))
+        }
     }
 
 }

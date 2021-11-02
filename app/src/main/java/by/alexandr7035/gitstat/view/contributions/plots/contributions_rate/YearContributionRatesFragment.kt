@@ -1,4 +1,4 @@
-package by.alexandr7035.gitstat.view.contributions
+package by.alexandr7035.gitstat.view.contributions.plots.contributions_rate
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,12 +9,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.databinding.FragmentYearContributionsRateBinding
+import by.alexandr7035.gitstat.view.contributions.ContributionsViewModel
 import by.alexandr7035.gitstat.view.contributions.plots.LinePlotFill
-import by.alexandr7035.gitstat.view.contributions.plots.contributions_rate.ContributionsRatePlot
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class YearContributionsRateFragment : Fragment() {
+class YearContributionRatesFragment : Fragment() {
 
     private var binding: FragmentYearContributionsRateBinding? = null
     private val viewModel by viewModels<ContributionsViewModel>()
@@ -39,7 +39,7 @@ class YearContributionsRateFragment : Fragment() {
 
             // Setup plot
             if (binding?.rateChart != null) {
-                val plot = ContributionsRatePlot()
+                val plot = ContributionRatePlot()
                 plot.setupPLot(binding!!.rateChart)
                 plot.setYearData(binding!!.rateChart, yearData)
             }

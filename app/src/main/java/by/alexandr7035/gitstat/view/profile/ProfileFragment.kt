@@ -78,12 +78,10 @@ class ProfileFragment : Fragment() {
         })
 
         binding!!.reposStatDetailedBtn.setOnClickListener {
-            navController.navigate(R.id.reposOverviewFragment)
+            navController.navigate(R.id.action_profileFragment_to_reposOverviewFragment)
         }
 
         binding!!.logOutBtn.setOnClickListener {
-            // FIXME find better solution
-//            (requireActivity() as MainActivity).startLogOut()
             navController.navigate(R.id.action_profileFragment_to_logoutConfirmationDialog)
         }
 
