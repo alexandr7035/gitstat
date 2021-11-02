@@ -1,4 +1,4 @@
-package by.alexandr7035.gitstat.view.contributions
+package by.alexandr7035.gitstat.view.contributions.plots.contributions_per_year
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,12 +10,12 @@ import androidx.fragment.app.viewModels
 import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.data.local.model.ContributionsYearWithDays
 import by.alexandr7035.gitstat.databinding.ViewPlotContributionsYearBinding
+import by.alexandr7035.gitstat.view.contributions.ContributionsViewModel
 import by.alexandr7035.gitstat.view.contributions.plots.LinePlotFill
-import by.alexandr7035.gitstat.view.contributions.plots.contributions_per_year.ContributionsCountPlot
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class YearCardFragment: Fragment() {
+class YearContributionsFragment: Fragment() {
 
     private var binding: ViewPlotContributionsYearBinding? = null
     private val viewModel by viewModels<ContributionsViewModel>()

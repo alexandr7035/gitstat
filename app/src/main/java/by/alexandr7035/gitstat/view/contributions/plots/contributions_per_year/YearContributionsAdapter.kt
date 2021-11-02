@@ -1,4 +1,4 @@
-package by.alexandr7035.gitstat.view.contributions
+package by.alexandr7035.gitstat.view.contributions.plots.contributions_per_year
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -19,7 +19,7 @@ class YearContributionsAdapter(fragment: Fragment): FragmentStateAdapter(fragmen
     }
 
     override fun createFragment(position: Int): Fragment {
-        val fragment = YearCardFragment()
+        val fragment = YearContributionsFragment()
 
         val yearData = this.items[position]
 

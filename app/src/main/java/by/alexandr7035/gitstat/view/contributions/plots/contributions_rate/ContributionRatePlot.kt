@@ -11,7 +11,7 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IFillFormatter
 
-class ContributionsRatePlot {
+class ContributionRatePlot {
     fun setupPLot(chart: LineChart) {
         chart.apply {
 
@@ -44,7 +44,7 @@ class ContributionsRatePlot {
     fun setYearData(chart: LineChart, yearData: ContributionsYearWithRates) {
         // YAxis params for the plot
         val maxContributionsRate = yearData.contributionRates.maxByOrNull { it.rate }?.rate
-        val yAxisParams = RateYAxisParams.getRateYAxisParams(maxContributionsRate ?: 10f)
+        val yAxisParams = ContributionRatesYAxisParams.getRateYAxisParams(maxContributionsRate ?: 10f)
 
         // Get color params for the plot
         val plotFill = LinePlotFill.getPlotFillForYear(chart.context, yearData.year.id)
