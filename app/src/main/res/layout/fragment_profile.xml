@@ -168,6 +168,8 @@
                 <TextView
                     style="@style/NameTextViewStyle"
                     android:id="@+id/nameView"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="Name Name" />
@@ -175,6 +177,8 @@
                 <TextView
                     style="@style/UserIDTextViewStyle"
                     android:id="@+id/loginView"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -294,7 +298,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:weightSum="2">
@@ -321,6 +324,8 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/locationContainer"
+            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
