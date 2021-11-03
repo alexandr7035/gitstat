@@ -35,17 +35,27 @@ class ReposOverviewFragment : Fragment() {
 
         viewModel.getAllRepositoriesListLiveData().observe(viewLifecycleOwner, { repos ->
 
-            // Populate chart with data
-            plot.setLanguagesData(
-                chart = binding!!.languagesChart,
-                languages = viewModel.getLanguagesForReposList(repos),
-                totalReposCount = repos.size
-            )
-
             binding!!.totalReposCountView.text = repos.size.toString()
             binding!!.privateReposCountView.text = repos.filter { it.isPrivate }.size.toString()
-            binding!!.publicReposCountView.text = repos.filter { ! it.isPrivate }.size.toString()
+            binding!!.publicReposCountView.text = repos.filter { !it.isPrivate }.size.toString()
 
+            // Show stup instead of plot if list is empty
+            if (repos.isNullOrEmpty()) {
+                binding?.languagesChart?.visibility = View.GONE
+                binding?.noReposStub?.visibility = View.VISIBLE
+            }
+            else {
+                binding?.languagesChart?.visibility = View.VISIBLE
+                binding?.noReposStub?.visibility = View.GONE
+
+                // Populate chart with data
+                plot.setLanguagesData(
+                    chart = binding!!.languagesChart,
+                    languages = viewModel.getLanguagesForReposList(repos),
+                    totalReposCount = repos.size
+                )
+
+            }
         })
 
 
