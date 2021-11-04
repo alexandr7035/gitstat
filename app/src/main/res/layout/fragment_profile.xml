@@ -356,6 +356,16 @@
 
     </LinearLayout>
 
+    <ImageView
+        android:id="@+id/drawerBtn"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/fragmentTitle"
+        app:layout_constraintBottom_toBottomOf="@id/fragmentTitle"
+        android:src="@drawable/ic_filters"/>
+
     <TextView
         style="@style/FragmentTitle"
         android:id="@+id/fragmentTitle"
@@ -364,7 +374,7 @@
         android:text="@string/profile"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/drawerBtn"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView

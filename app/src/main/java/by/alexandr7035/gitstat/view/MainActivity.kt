@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -71,6 +72,10 @@ class MainActivity : AppCompatActivity() {
 
     fun syncFinishedCallback() {
         navController.navigate(R.id.action_global_profileFragment)
+    }
+
+    fun openDrawerMenu() {
+        binding?.drawerLayout.openDrawer(GravityCompat.START)
     }
 
 }
