@@ -29,13 +29,13 @@
             android:src="@drawable/ic_empty"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            app:tint="@color/gray_500" />
+            app:tint="@color/gray_200" />
 
         <TextView
             android:id="@+id/noReposStubText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/gray_500"
+            android:textColor="@color/gray_200"
             android:textAlignment="center"
             android:textSize="20sp"
             android:textStyle="bold"
