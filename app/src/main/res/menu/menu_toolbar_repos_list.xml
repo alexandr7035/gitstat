@@ -6,5 +6,5 @@
         android:id="@+id/item_filters"
         android:title="@string/filters"
         app:showAsAction="always"
-        android:icon="@drawable/ic_filters"/>
+        android:icon="@drawable/ic_filters_2_states"/>
 </menu>

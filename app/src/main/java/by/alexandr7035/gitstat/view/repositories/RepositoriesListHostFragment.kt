@@ -92,14 +92,17 @@ class RepositoriesListHostFragment : Fragment() {
             (binding!!.tabLayout.getTabAt(1) as TabLayout.Tab).text = "Archived (${repos.size})"
         })
 
-        viewModel.getAllRepositoriesListLiveData().observe(viewLifecycleOwner, {
+        viewModel.getAllRepositoriesListLiveData().observe(viewLifecycleOwner, { unfilteredRepos ->
 
-            val repos = viewModel.getFilteredRepositoriesList(it)
+            val filteredRepos = viewModel.getFilteredRepositoriesList(unfilteredRepos)
 
             // When unfiltered and filtered lists differ in length
             // Means some filters are applied
             // Show or hide badge
-            badge.isVisible = it.size != repos.size
+            badge.isVisible = unfilteredRepos.size != filteredRepos.size
+
+            // Disable filters when no repos at all
+            binding?.toolbar?.menu?.findItem(R.id.item_filters)?.isEnabled = unfilteredRepos.isNotEmpty()
         })
     }
 

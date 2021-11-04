@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.alexandr7035.gitstat.R
-import by.alexandr7035.gitstat.databinding.FragmentActiveRepositoriesBinding
+import by.alexandr7035.gitstat.databinding.FragmentRepositoriesRecyclerBinding
 import by.alexandr7035.gitstat.view.repositories.filters.RepositoriesListFiltersHelper
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -16,12 +16,12 @@ import dagger.hilt.android.AndroidEntryPoint
 class ActiveRepositoriesFragment : Fragment() {
 
     private val viewModel by navGraphViewModels<RepositoriesViewModel>(R.id.repositoriesListGraph) { defaultViewModelProviderFactory }
-    private var binding: FragmentActiveRepositoriesBinding? = null
+    private var binding: FragmentRepositoriesRecyclerBinding? = null
     private var adapter: RepositoriesAdapter? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
-        binding = FragmentActiveRepositoriesBinding.inflate(inflater, container, false)
+        binding = FragmentRepositoriesRecyclerBinding.inflate(inflater, container, false)
         return binding!!.root
     }
 
@@ -30,15 +30,15 @@ class ActiveRepositoriesFragment : Fragment() {
 
         // Setup adapter
         adapter = RepositoriesAdapter()
-        binding!!.root.adapter = adapter
-        binding!!.root.layoutManager = LinearLayoutManager(context)
+        binding!!.recycler.adapter = adapter
+        binding!!.recycler.layoutManager = LinearLayoutManager(context)
 
         viewModel.getTabRefreshedLiveData().observe(viewLifecycleOwner, {
             // If current fragment
             // FIXME find better solution
             if (it == 0) {
                 //binding!!.root.smoothScrollToPosition(0)
-                binding!!.root.layoutManager!!.scrollToPosition(0)
+                binding!!.recycler.layoutManager!!.scrollToPosition(0)
             }
         })
     }
@@ -51,7 +51,24 @@ class ActiveRepositoriesFragment : Fragment() {
                 repos,
                 viewModel.getRepositoriesFilters()
             )
-            adapter!!.setItems(filteredList)
+
+            // When there are no repos at all
+            if (repos.isEmpty()) {
+                binding?.recycler?.visibility = View.GONE
+                binding?.noReposStub?.visibility = View.VISIBLE
+                binding?.noReposStubText?.text = getString(R.string.no_active_repos_list)
+            }
+            // When there are repos but list is empty because of filters
+            else if (repos.isNotEmpty() && filteredList.isEmpty()) {
+                binding?.recycler?.visibility = View.GONE
+                binding?.noReposStub?.visibility = View.VISIBLE
+                binding?.noReposStubText?.text = getString(R.string.no_active_repos_list_check_filters)
+            }
+            else {
+                binding?.recycler?.visibility = View.VISIBLE
+                binding?.noReposStub?.visibility = View.GONE
+                adapter!!.setItems(filteredList)
+            }
         })
     }
 

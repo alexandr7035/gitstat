@@ -24,20 +24,18 @@ class ContributionsRatioPlot {
         setData(chartView, ratioData)
     }
 
+    // This plot is rotated on 90 degrees
+    // So that when apply the settings to left we mean the top
     private fun setupUI(chartView: BarChart) {
         chartView.description.isEnabled = false
         chartView.legend.isEnabled = false
-        chartView.setExtraOffsets(0f, 0f, 0f, 0f)
 
         chartView.setScaleEnabled(false)
 
         chartView.xAxis.isEnabled = false
         chartView.axisRight.isEnabled = false
-//
-        chartView.axisLeft.setDrawGridLines(false)
-//        chartView.axisLeft.textSize = 12f
 
-//        chartView.ax
+        chartView.axisLeft.setDrawGridLines(false)
 
         chartView.xAxis.position = XAxis.XAxisPosition.BOTTOM
         chartView.xAxis.textSize = 16f
@@ -49,7 +47,7 @@ class ContributionsRatioPlot {
         // Space between axis and plot
         chartView.axisLeft.yOffset = 10f
 
-        chartView.setExtraOffsets(0f, 0f, 0f, 0f)
+        chartView.setExtraOffsets(10f,0f,30f,0f)
     }
 
     private fun setData(chartView: BarChart, ratioData: List<ContributionsRatioEntity>) {
@@ -61,6 +59,19 @@ class ContributionsRatioPlot {
         val repositories = ratioData.sumOf { it.repositoryContributions }
         val unknown = ratioData.sumOf { it.unknownContributions }
         val total = ratioData.sumOf { it.totalContributions }
+
+        // FIXME refactoring
+        val max = listOf(
+            commits,
+            issues,
+            pullRequests,
+            reviews,
+            repositories,
+            unknown
+        ).maxByOrNull {
+            it
+        } ?: 10
+
 
         val entries = ArrayList<BarEntry>()
         entries.add(BarEntry(0f, commits.toFloat()))
@@ -87,6 +98,14 @@ class ContributionsRatioPlot {
         chartData.setDrawValues(false)
 
         // Update data
+        val leftAxisParams = ContributionsRatioLeftAxisParams.getParamsForContributionYearCard(max)
+        chartView.apply {
+            data = chartData
+            axisLeft.axisMinimum = leftAxisParams.minValue
+            axisLeft.axisMaximum = leftAxisParams.maxValue
+            axisLeft.setLabelCount(leftAxisParams.labelsCount, true)
+            axisLeft.valueFormatter = RemoveThousandsSepFormatter()
+        }
         chartView.data = chartData
 
         chartView.invalidate()

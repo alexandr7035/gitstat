@@ -1,5 +1,6 @@
 package by.alexandr7035.gitstat.view.profile
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.format.DateFormat
 import android.view.LayoutInflater
@@ -47,33 +48,38 @@ class ProfileFragment : Fragment() {
         // Update profile data
         viewModel.getUserLiveData().observe(viewLifecycleOwner, {
 
-            if (it != null) {
+            Picasso.get().load(it.avatar_url).into(binding!!.profileImageView)
 
-                // Show if were hidden previously
-                showProfileViews()
-
-                Picasso.get().load(it.avatar_url).into(binding!!.profileImageView)
-
-                binding!!.nameView.text = it.name
-                binding!!.loginView.text = it.login
-
-                binding!!.idView.text = it.id.toString()
-
-                binding!!.createdView.text = DateFormat.format("dd.MM.yyyy HH:mm", it.created_at)
-                binding!!.updatedView.text = DateFormat.format("dd.MM.yyyy HH:mm", it.updated_at)
-
-                binding!!.followersView.text = it.followers.toString()
-                binding!!.locationView.text = it.location
-
-                binding!!.totalReposView.text = it.total_repos_count.toString()
-                binding!!.privateReposView.text = it.private_repos_count.toString()
-                binding!!.publicReposView.text = it.public_repos_count.toString()
+            // This field can be empty
+            if (it.name.isEmpty()) {
+                binding?.nameView?.visibility = View.GONE
             }
-
-            // Cache db is empty
             else {
-                hideProfileViews()
+                binding?.nameView?.visibility = View.VISIBLE
+                binding?.nameView?.text = it.name
             }
+
+            binding!!.loginView.text = "@${it.login}"
+
+            binding!!.idView.text = it.id.toString()
+
+            binding!!.createdView.text = DateFormat.format("dd.MM.yyyy HH:mm", it.created_at)
+            binding!!.updatedView.text = DateFormat.format("dd.MM.yyyy HH:mm", it.updated_at)
+
+            binding!!.followersView.text = it.followers.toString()
+
+            // This field can be empty
+            if (it.location.isEmpty()) {
+                binding!!.locationContainer.visibility = View.GONE
+            }
+            else {
+                binding!!.locationContainer.visibility = View.VISIBLE
+                binding!!.locationView.text = it.location
+            }
+
+            binding!!.totalReposView.text = it.total_repos_count.toString()
+            binding!!.privateReposView.text = it.private_repos_count.toString()
+            binding!!.publicReposView.text = it.public_repos_count.toString()
 
         })
 
@@ -88,18 +94,6 @@ class ProfileFragment : Fragment() {
         binding?.version?.text = getString(R.string.app_name_with_version, BuildConfig.VERSION_NAME)
     }
 
-
-    private fun hideProfileViews() {
-        binding!!.headerCard.visibility = View.GONE
-        binding!!.profileSummaryCard.visibility = View.GONE
-        binding!!.reposSummaryCard.visibility = View.GONE
-    }
-
-    private fun showProfileViews() {
-        binding!!.headerCard.visibility = View.VISIBLE
-        binding!!.profileSummaryCard.visibility = View.VISIBLE
-        binding!!.reposSummaryCard.visibility = View.VISIBLE
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()
