@@ -107,7 +107,10 @@ class MainActivity : AppCompatActivity() {
         binding.drawerNavigationView.setNavigationItemSelectedListener { menuItem ->
 
             when (menuItem.itemId) {
-                R.id.item_logout -> navController.navigate(R.id.action_global_logoutConfirmationDialog)
+                R.id.item_logout ->  {
+                    navController.navigate(R.id.action_global_logoutConfirmationDialog)
+                    binding.drawerLayout.closeDrawer(GravityCompat.START)
+                }
 
                 R.id.item_privacy_policy -> navController.navigate(MainActivityDirections.actionGlobalWebViewFragment(
                     getString(R.string.privacy_policy),
