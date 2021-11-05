@@ -108,7 +108,10 @@ class MainActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.item_logout -> navController.navigate(R.id.action_global_logoutConfirmationDialog)
 
-
+                R.id.item_privacy_policy -> navController.navigate(MainActivityDirections.actionGlobalWebViewFragment(
+                    getString(R.string.privacy_policy),
+                    getString(R.string.privacy_policy_url)
+                ))
             }
 
             true
