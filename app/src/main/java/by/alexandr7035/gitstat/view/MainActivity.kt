@@ -102,6 +102,17 @@ class MainActivity : AppCompatActivity() {
                 drawerLoginView.text = "@${it.login}"
             }
         })
+
+        binding.drawerNavigationView.setNavigationItemSelectedListener { menuItem ->
+
+            when (menuItem.itemId) {
+                R.id.item_logout -> navController.navigate(R.id.action_global_logoutConfirmationDialog)
+
+
+            }
+
+            true
+        }
     }
 
 

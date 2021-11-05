@@ -378,19 +378,6 @@
         app:layout_constraintStart_toEndOf="@id/drawerBtn"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <TextView
-        style="@style/LogOutButtonStyle"
-        android:id="@+id/logOutBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:clickable="true"
-        android:longClickable="false"
-        android:text="@string/logout_underlined"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/fragmentTitle"
-        app:layout_constraintTop_toTopOf="@id/fragmentTitle"/>
-
 
     <TextView
         style="@style/AppVersionStyle"

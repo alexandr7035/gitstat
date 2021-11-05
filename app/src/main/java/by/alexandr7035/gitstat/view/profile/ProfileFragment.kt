@@ -88,10 +88,6 @@ class ProfileFragment : Fragment() {
             navController.navigate(R.id.action_profileFragment_to_reposOverviewFragment)
         }
 
-        binding!!.logOutBtn.setOnClickListener {
-            navController.navigate(R.id.action_profileFragment_to_logoutConfirmationDialog)
-        }
-
         binding?.version?.text = getString(R.string.app_name_with_version, BuildConfig.VERSION_NAME)
 
         binding?.drawerBtn?.setOnClickListener {
