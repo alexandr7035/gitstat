@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/top_destinations">
+
+        <item android:id="@+id/profileFragment"
+            android:icon="@drawable/ic_person_filled"
+            android:title="@string/profile"/>
+
+        <item android:id="@+id/reposOverviewFragment"
+            android:icon="@drawable/ic_cloud_filled"
+            android:title="@string/repos"/>
+
+        <item android:id="@+id/contributionsFragment"
+            android:icon="@drawable/ic_branch"
+            android:title="@string/contributions"/>
+    </group>
+
+    <group android:id="@+id/other">
+
+        <item android:id="@+id/item_privacy_policy"
+            android:icon="@drawable/ic_cloud_filled"
+            android:title="@string/privacy_policy"/>
+
+        <item android:id="@+id/about_app"
+            android:icon="@drawable/ic_question"
+            android:title="@string/about_app"/>
+
+    </group>
+</menu>
