@@ -356,7 +356,8 @@
 
     </LinearLayout>
 
-    <ImageView
+    <ImageButton
+        android:background="?android:attr/actionBarItemBackground"
         android:id="@+id/drawerBtn"
         android:layout_width="24dp"
         android:layout_height="24dp"
@@ -372,7 +373,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/profile"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toEndOf="@id/drawerBtn"
         app:layout_constraintTop_toTopOf="parent"/>
