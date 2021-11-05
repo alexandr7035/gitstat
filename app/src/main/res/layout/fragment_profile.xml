@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:gravity="end"
-                android:text="@string/show_more_underlined"
+                android:text="@string/more_underlined"
                 android:textAlignment="viewEnd" />
         </LinearLayout>
 
@@ -377,18 +377,5 @@
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toEndOf="@id/drawerBtn"
         app:layout_constraintTop_toTopOf="parent"/>
-
-
-    <TextView
-        style="@style/AppVersionStyle"
-        android:id="@+id/version"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reposSummaryCard"
-        tools:text="GitStat v3.0.debug" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
