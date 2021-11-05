@@ -150,6 +150,9 @@ class MainActivity : AppCompatActivity() {
 
     fun syncFinishedCallback() {
         navController.navigate(R.id.action_global_profileFragment)
+
+        val syncDateView = binding.drawerNavigationView.getHeaderView(0).findViewById<TextView>(R.id.syncDate)
+        syncDateView.text = viewModel.getCacheSyncDate().replace(" ", "\n")
     }
 
     fun openDrawerMenu() {
