@@ -49,13 +49,14 @@ class MainActivity : AppCompatActivity() {
             R.id.logoutConfirmationDialog
         )
 
-        val bottomNavVisibleDialogsDestinations = listOf() {
-            R.id.logoutConfirmationDialog
-        }
+        val bottomNavVisibleDialogsDestinations = listOf(
+            R.id.logoutConfirmationDialog,
+            R.id.infoDialogFragment
+        )
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             // Show bottom nav on primary fragments and their dialogs
-            if (bottomNavVisiblePrimaryDestinations.contains(destination.id)  ) {
+            if (bottomNavVisiblePrimaryDestinations.contains(destination.id) ||  bottomNavVisibleDialogsDestinations.contains(destination.id)) {
                 binding.bottomNavigationView.visibility = View.VISIBLE
             }
             else {
