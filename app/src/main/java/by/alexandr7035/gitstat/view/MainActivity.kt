@@ -2,6 +2,7 @@ package by.alexandr7035.gitstat.view
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -85,6 +86,8 @@ class MainActivity : AppCompatActivity() {
         val drawerPictureView = binding.drawerNavigationView.getHeaderView(0).findViewById<CircleImageView>(R.id.drawerProfileImage)
         val drawerLoginView = binding.drawerNavigationView.getHeaderView(0).findViewById<TextView>(R.id.drawerLoginView)
         val drawerNameView = binding.drawerNavigationView.getHeaderView(0).findViewById<TextView>(R.id.drawerNameView)
+        val syncDateView = binding.drawerNavigationView.getHeaderView(0).findViewById<TextView>(R.id.syncDate)
+        val resyncBtn = binding.drawerNavigationView.getHeaderView(0).findViewById<ImageView>(R.id.resyncBtn)
 
         profileViewModel.getUserLiveData().observe(this, {
 
@@ -121,6 +124,12 @@ class MainActivity : AppCompatActivity() {
             }
 
             true
+        }
+
+        syncDateView.text = viewModel.getCacheSyncDate().replace(" ", "\n")
+
+        resyncBtn.setOnClickListener {
+            navController.navigate(R.id.action_global_syncGraph)
         }
     }
 

@@ -21,6 +21,10 @@ class MainViewModel @Inject constructor(private val syncRepository: SyncReposito
         }
     }
 
+    fun getCacheSyncDate(): String {
+        return syncRepository.getLastCacheSyncDateText()
+    }
+
     fun clearToken() {
         syncRepository.clearToken()
     }

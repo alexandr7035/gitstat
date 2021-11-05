@@ -40,5 +40,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/drawerNameView"/>
 
+    <TextView
+        android:id="@+id/syncDate"
+        android:layout_marginEnd="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textColor="@color/gray_200"
+        tools:text="19.12.2020\n18:03"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/resyncBtn"/>
+
+    <ImageView
+        android:id="@+id/resyncBtn"
+        android:clickable="true"
+        android:background="?android:attr/actionBarItemBackground"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/ic_refresh"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/syncDate"
+        app:layout_constraintBottom_toBottomOf="@id/syncDate"
+        app:tint="@color/gray_300" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
