@@ -130,7 +130,19 @@
         android:id="@+id/webViewFragment"
         android:name="by.alexandr7035.gitstat.view.core.WebViewFragment"
         android:label="WebViewFragment"
-        tools:layout="@layout/fragment_web_view"/>
+        tools:layout="@layout/fragment_web_view">
+
+        <argument
+            android:name="toolbarTitle"
+            app:argType="string"
+            app:nullable="false"/>
+
+        <argument
+            android:name="url"
+            app:argType="string"
+            app:nullable="false"/>
+
+    </fragment>
 
     <dialog
         android:id="@+id/infoDialogFragment"
@@ -166,8 +178,24 @@
     </action>
 
 
-    <action android:id="@+id/action_global_logoutConfirmationDialog" app:destination="@id/logoutConfirmationDialog"/>
+    <action android:id="@+id/action_global_logoutConfirmationDialog" app:destination="@id/logoutConfirmationDialog" />
 
+
+    <action android:id="@+id/action_global_webViewFragment" app:destination="@id/webViewFragment">
+        <argument
+            android:name="toolbarTitle"
+            app:argType="string"
+            app:nullable="false"/>
+
+        <argument
+            android:name="url"
+            app:argType="string"
+            app:nullable="false"/>
+    </action>
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="by.alexandr7035.gitstat.view.MainActivity"
+        android:label="MainActivity" />
 
 
 </navigation>

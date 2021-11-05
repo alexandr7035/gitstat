@@ -12,6 +12,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import by.alexandr7035.gitstat.databinding.FragmentWebViewBinding
 
 
@@ -20,15 +21,8 @@ class WebViewFragment : Fragment() {
     private var binding: FragmentWebViewBinding? = null
 
     private var toolbarTitle: String? = null
-    private var url: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            toolbarTitle = it.getString("toolbar_title")
-            url = it.getString("url")
-        }
-    }
+    private val safeArgs by navArgs<WebViewFragmentArgs>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentWebViewBinding.inflate(inflater, container, false)
@@ -39,7 +33,8 @@ class WebViewFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding!!.toolbar.setNavigationOnClickListener {
+        binding?.toolbar?.title = safeArgs.toolbarTitle
+        binding?.toolbar?.setNavigationOnClickListener {
             findNavController().navigateUp()
         }
 
@@ -94,7 +89,7 @@ class WebViewFragment : Fragment() {
     }
 
     private fun loadPage() {
-        binding?.webView?.loadUrl(url ?: "")
+        binding?.webView?.loadUrl(safeArgs.url)
     }
 
     override fun onDestroyView() {
@@ -102,14 +97,4 @@ class WebViewFragment : Fragment() {
         binding = null
     }
 
-    companion object {
-        @JvmStatic
-        fun newInstance(toolbarTitle: String, url: String) =
-            WebViewFragment().apply {
-                arguments = Bundle().apply {
-                    putString("toolbar_title", toolbarTitle)
-                    putString("url", url)
-                }
-            }
-    }
 }
