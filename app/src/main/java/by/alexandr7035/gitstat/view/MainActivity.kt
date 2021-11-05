@@ -112,6 +112,8 @@ class MainActivity : AppCompatActivity() {
                     getString(R.string.privacy_policy),
                     getString(R.string.privacy_policy_url)
                 ))
+
+                R.id.item_about_app -> navController.navigate(R.id.action_global_aboutAppFragment)
             }
 
             true

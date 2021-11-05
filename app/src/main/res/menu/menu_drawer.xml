@@ -7,7 +7,7 @@
             android:icon="@drawable/ic_cloud_filled"
             android:title="@string/privacy_policy"/>
 
-        <item android:id="@+id/about_app"
+        <item android:id="@+id/item_about_app"
             android:icon="@drawable/ic_question"
             android:title="@string/about_app"/>
 
