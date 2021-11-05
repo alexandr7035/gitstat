@@ -118,5 +118,6 @@
     <string name="no_active_repos_list_check_filters">No active repositories found. Consider checking your filters settings</string>
     <string name="no_archived_repos_list">You have no archived repositories</string>
     <string name="no_archived_repos_list_check_filters">No archived repositories found. Consider checking your filters settings</string>
+    <string name="about_app">About the app</string>
 
 </resources>

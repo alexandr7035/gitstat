@@ -26,9 +26,7 @@
         android:name="by.alexandr7035.gitstat.view.profile.ProfileFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_profile" >
-        <action
-            android:id="@+id/action_profileFragment_to_logoutConfirmationDialog"
-            app:destination="@id/logoutConfirmationDialog" />
+
         <action
             android:id="@+id/action_profileFragment_to_reposOverviewFragment"
             app:destination="@id/reposOverviewFragment" />
@@ -166,6 +164,9 @@
             app:nullable="false"/>
 
     </action>
+
+
+    <action android:id="@+id/action_global_logoutConfirmationDialog" app:destination="@id/logoutConfirmationDialog"/>
 
 
 
