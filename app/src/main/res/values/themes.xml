@@ -111,4 +111,15 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="DrawerItemTextStyle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/gray_300</item>
+    </style>
+
+    <style name="DrawerSyncDateStyle">
+        <item name="android:textAlignment">center</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/gray_300</item>
+    </style>
+
 </resources>

@@ -8,15 +8,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.contributions.ContributionsFragment">
 
+    <ImageButton
+        android:background="?android:attr/actionBarItemBackground"
+        android:id="@+id/drawerBtn"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/fragmentTitle"
+        app:layout_constraintBottom_toBottomOf="@id/fragmentTitle"
+        android:src="@drawable/ic_filters"/>
+
     <TextView
         style="@style/FragmentTitle"
         android:id="@+id/fragmentTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/contributions"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/drawerBtn"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -46,6 +57,7 @@
             tools:text="0.74" />
 
         <ImageView
+            android:background="?android:attr/actionBarItemBackground"
             android:id="@+id/contributionRateHelpIcon"
             android:clickable="true"
             android:layout_margin="3dp"
@@ -172,6 +184,7 @@
             app:layout_constraintBottom_toTopOf="@id/rateViewPager"/>
 
         <ImageView
+            android:background="?android:attr/actionBarItemBackground"
             android:id="@+id/contributionRateDynamicsHelpIcon"
             android:layout_marginTop="3sp"
             android:clickable="true"

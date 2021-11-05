@@ -1,6 +1,22 @@
 <resources>
     <string name="app_name">GitStat</string>
     <string name="app_name_with_version">GitStat v%1$s</string>
+    <string name="app_description"><![CDATA[
+        <b>GitStat</b> is a simple android app designed to aggregate Github profile data into informative cards and graphs.
+        <br/>
+        <br/>
+        The application is built using <b>Github GraphQL API</b> and <b>apollo-android</b> client for API calls.
+        <br/>
+        <br/>
+        <b>Major features:</b>
+        <br/>
+        - Github profile summary <br/>
+        - Plot with your repositories languages <br/>
+        - Your repositories list with filters <br/>
+        - Contributions summary <br/>
+        - Contributions plots (contributions per day, contribution rate). <br/>
+    ]]>
+    </string>
     <string name="OAUTH_PROVIDER">github.com</string>
 
 
@@ -118,5 +134,8 @@
     <string name="no_active_repos_list_check_filters">No active repositories found. Consider checking your filters settings</string>
     <string name="no_archived_repos_list">You have no archived repositories</string>
     <string name="no_archived_repos_list_check_filters">No archived repositories found. Consider checking your filters settings</string>
+    <string name="about_app">About the app</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

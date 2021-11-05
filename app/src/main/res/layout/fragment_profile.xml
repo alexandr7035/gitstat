@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:gravity="end"
-                android:text="@string/show_more_underlined"
+                android:text="@string/more_underlined"
                 android:textAlignment="viewEnd" />
         </LinearLayout>
 
@@ -356,41 +356,26 @@
 
     </LinearLayout>
 
+    <ImageButton
+        android:background="?android:attr/actionBarItemBackground"
+        android:id="@+id/drawerBtn"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/fragmentTitle"
+        app:layout_constraintBottom_toBottomOf="@id/fragmentTitle"
+        android:src="@drawable/ic_filters"/>
+
     <TextView
         style="@style/FragmentTitle"
         android:id="@+id/fragmentTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/profile"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/drawerBtn"
         app:layout_constraintTop_toTopOf="parent"/>
-
-    <TextView
-        style="@style/LogOutButtonStyle"
-        android:id="@+id/logOutBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:clickable="true"
-        android:longClickable="false"
-        android:text="@string/logout_underlined"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/fragmentTitle"
-        app:layout_constraintTop_toTopOf="@id/fragmentTitle"/>
-
-
-    <TextView
-        style="@style/AppVersionStyle"
-        android:id="@+id/version"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reposSummaryCard"
-        tools:text="GitStat v3.0.debug" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

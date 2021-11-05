@@ -23,6 +23,7 @@ import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.core.GithubAccessScopes
 import by.alexandr7035.gitstat.databinding.FragmentLoginBinding
 import by.alexandr7035.gitstat.view.MainActivity
+import by.alexandr7035.gitstat.view.MainActivityDirections
 import com.google.firebase.auth.OAuthCredential
 import com.google.firebase.auth.OAuthProvider
 import com.google.firebase.auth.ktx.auth
@@ -124,10 +125,11 @@ class LoginFragment: Fragment() {
     }
 
     private fun showPrivacyPolicy() {
-        navController.navigate(R.id.action_loginFragment_to_webViewFragment,  Bundle().apply {
-            putString("toolbar_title", getString(R.string.privacy_policy))
-            putString("url", getString(R.string.privacy_policy_url))
-        })
+        navController.navigate(
+            LoginFragmentDirections.actionLoginFragmentToWebViewFragment(
+            getString(R.string.privacy_policy),
+            getString(R.string.privacy_policy_url)
+        ))
     }
 
     override fun onDestroyView() {

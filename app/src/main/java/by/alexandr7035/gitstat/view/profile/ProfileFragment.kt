@@ -13,6 +13,7 @@ import androidx.navigation.fragment.NavHostFragment
 import by.alexandr7035.gitstat.BuildConfig
 import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.databinding.FragmentProfileBinding
+import by.alexandr7035.gitstat.view.MainActivity
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -87,11 +88,9 @@ class ProfileFragment : Fragment() {
             navController.navigate(R.id.action_profileFragment_to_reposOverviewFragment)
         }
 
-        binding!!.logOutBtn.setOnClickListener {
-            navController.navigate(R.id.action_profileFragment_to_logoutConfirmationDialog)
+        binding?.drawerBtn?.setOnClickListener {
+            (requireActivity() as MainActivity).openDrawerMenu()
         }
-
-        binding?.version?.text = getString(R.string.app_name_with_version, BuildConfig.VERSION_NAME)
     }
 
 

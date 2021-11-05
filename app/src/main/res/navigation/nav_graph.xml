@@ -26,9 +26,7 @@
         android:name="by.alexandr7035.gitstat.view.profile.ProfileFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_profile" >
-        <action
-            android:id="@+id/action_profileFragment_to_logoutConfirmationDialog"
-            app:destination="@id/logoutConfirmationDialog" />
+
         <action
             android:id="@+id/action_profileFragment_to_reposOverviewFragment"
             app:destination="@id/reposOverviewFragment" />
@@ -132,7 +130,19 @@
         android:id="@+id/webViewFragment"
         android:name="by.alexandr7035.gitstat.view.core.WebViewFragment"
         android:label="WebViewFragment"
-        tools:layout="@layout/fragment_web_view"/>
+        tools:layout="@layout/fragment_web_view">
+
+        <argument
+            android:name="toolbarTitle"
+            app:argType="string"
+            app:nullable="false"/>
+
+        <argument
+            android:name="url"
+            app:argType="string"
+            app:nullable="false"/>
+
+    </fragment>
 
     <dialog
         android:id="@+id/infoDialogFragment"
@@ -168,5 +178,37 @@
     </action>
 
 
+    <action android:id="@+id/action_global_logoutConfirmationDialog" app:destination="@id/logoutConfirmationDialog" />
+
+
+    <action android:id="@+id/action_global_webViewFragment" app:destination="@id/webViewFragment">
+        <argument
+            android:name="toolbarTitle"
+            app:argType="string"
+            app:nullable="false"/>
+
+        <argument
+            android:name="url"
+            app:argType="string"
+            app:nullable="false"/>
+    </action>
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="by.alexandr7035.gitstat.view.MainActivity"
+        android:label="MainActivity"
+        tools:layout="@layout/activity_main"/>
+    <fragment
+        android:id="@+id/aboutAppFragment"
+        android:name="by.alexandr7035.gitstat.view.info.AboutAppFragment"
+        android:label="AboutAppFragment"
+        tools:layout="@layout/fragment_about_app"/>
+
+    <action android:id="@+id/action_global_aboutAppFragment" app:destination="@id/aboutAppFragment" />
+
+    <action android:id="@+id/action_global_syncGraph"
+        app:destination="@id/syncGraph"
+        app:popUpTo="@id/nav_graph"
+        app:popUpToInclusive="true"
+        />
 
 </navigation>
