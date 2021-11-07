@@ -88,6 +88,24 @@ object AppModule {
         return ContributionsRepository(dao, timeHelper, appPreferences)
     }
 
+
+    @Provides
+    @Singleton
+    fun provideDataSyncRepository(
+        apolloClient: ApolloClient,
+        db: CacheDB,
+        timeHelper: TimeHelper,
+        appPreferences: AppPreferences,
+
+        profileMapper: UserRemoteToCacheMapper,
+        repositoriesMapper: RepositoriesRemoteToCacheMapper,
+        contributionsMapper: ContributionsDaysListRemoteToCacheMapper,
+        ratioMapper: ContributionsRatioRemoteToCacheMapper,
+        daysToRatesMapper: ContributionDaysToRatesMapper
+    ): DataSyncRepository {
+        return DataSyncRepository(apolloClient, db, timeHelper, appPreferences, profileMapper, repositoriesMapper, contributionsMapper, ratioMapper, daysToRatesMapper)
+    }
+
     /////////////////////////////////////
     // Mappers
     /////////////////////////////////////
