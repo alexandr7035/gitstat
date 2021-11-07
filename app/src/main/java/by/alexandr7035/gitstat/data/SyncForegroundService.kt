@@ -11,10 +11,7 @@ import androidx.core.app.NotificationCompat
 import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.view.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -33,7 +30,8 @@ class SyncForegroundService: Service() {
         startForeground(System.currentTimeMillis().toInt(), getNotification())
 
         job = CoroutineScope(Dispatchers.IO).launch {
-            syncRepository.test()
+            syncRepository.syncData()
+            stopSelf()
         }
 
         return START_NOT_STICKY
@@ -54,6 +52,8 @@ class SyncForegroundService: Service() {
 
 
     override fun onDestroy() {
+        Timber.tag("DEBUG_SERVICE").d("service onDestroy()")
+
         job?.cancel()
         job = null
         super.onDestroy()
