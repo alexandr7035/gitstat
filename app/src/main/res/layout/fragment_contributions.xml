@@ -9,6 +9,7 @@
     tools:context=".view.contributions.ContributionsFragment">
 
     <ImageButton
+        android:scaleType="fitXY"
         android:background="?android:attr/actionBarItemBackground"
         android:id="@+id/drawerBtn"
         android:layout_width="24dp"
@@ -17,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/fragmentTitle"
         app:layout_constraintBottom_toBottomOf="@id/fragmentTitle"
-        android:src="@drawable/ic_filters"/>
+        android:src="@drawable/ic_menu"/>
 
     <TextView
         style="@style/FragmentTitle"
