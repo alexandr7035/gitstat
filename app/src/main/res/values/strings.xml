@@ -137,5 +137,9 @@
     <string name="about_app">About the app</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="fg_notification_channel">GitStat service notification</string>
+    <string name="NOTIFICATION_CHANNEL_ID">GITSTAT_NOTIFICATION_CHANNEL_ID</string>
+    <string name="sync_notification_title">Sync data</string>
+    <string name="sync_notification_text">Fetching your profile data from Github.com...</string>
 
 </resources>
