@@ -25,10 +25,11 @@ class App : Application() {
             // Create the NotificationChannel
             val name = getString(R.string.fg_notification_channel)
             val importance = NotificationManager.IMPORTANCE_HIGH
-            val mChannel = NotificationChannel(getString(R.string.NOTIFICATION_CHANNEL_ID), name, importance)
+            val channel = NotificationChannel(getString(R.string.NOTIFICATION_CHANNEL_ID), name, importance)
+            channel.setSound(null, null)
 
             val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(mChannel)
+            notificationManager.createNotificationChannel(channel)
         }
     }
 }
