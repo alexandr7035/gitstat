@@ -6,7 +6,6 @@ import by.alexandr7035.gitstat.core.*
 import by.alexandr7035.gitstat.data.local.CacheDB
 import by.alexandr7035.gitstat.data.local.model.*
 import by.alexandr7035.gitstat.data.remote.mappers.*
-import by.alexandr7035.gitstat.extensions.debug
 import by.alexandr7035.gitstat.extensions.performRequestWithDataResult
 import com.apollographql.apollo3.ApolloClient
 import timber.log.Timber
@@ -21,7 +20,7 @@ class DataSyncRepository @Inject constructor(
     private val profileMapper: UserRemoteToCacheMapper,
     private val repositoriesMapper: RepositoriesRemoteToCacheMapper,
     private val contributionsMapper: ContributionsDaysListRemoteToCacheMapper,
-    private val ratioMapper: ContributionsRatioRemoteToCacheMapper,
+    private val contributionTypesMapper: ContributionTypesRemoteToCacheMapper,
     private val daysToRatesMapper: ContributionDaysToRatesMapper,
     )
 {
@@ -47,7 +46,7 @@ class DataSyncRepository @Inject constructor(
             syncStatusLiveData?.postValue(DataSyncStatus.PENDING_CONTRIBUTIONS)
             val contributionYears = fetchContributionYears(accountCreationYear, currentYear)
             val contributionDays = fetchContributionDays(accountCreationYear, currentYear)
-            val contributionTypes = fetchContributionTypes(accountCreationYear, currentYear)
+            val contributionTypes = fetchContributionTypes(accountCreationYear, currentYear, contributionDays)
             val contributionRates = fetchContributionRates(contributionDays)
 
             // Write cache
@@ -60,7 +59,7 @@ class DataSyncRepository @Inject constructor(
             db.getContributionsDao().apply {
                 insertContributionDays(contributionDays)
                 insertContributionYearsCache(contributionYears)
-                insertContributionsRatios(contributionTypes)
+                insertContributionTypes(contributionTypes)
                 insertContributionRatesCache(contributionRates)
             }
 
@@ -131,9 +130,9 @@ class DataSyncRepository @Inject constructor(
 
 
     // TODO try to find better solution later
-    private suspend fun fetchContributionTypes(profileCreationYear: Int, currentYear: Int): ArrayList<ContributionsRatioEntity> {
+    private suspend fun fetchContributionTypes(profileCreationYear: Int, currentYear: Int, cachedContributions: List<ContributionDayEntity>): ArrayList<ContributionTypesEntity> {
 
-        val contributionsRatioCached = ArrayList<ContributionsRatioEntity>()
+        val contributionTypesCached = ArrayList<ContributionTypesEntity>()
 
         // Date range more than a year is not allowed in this api
         // So we have to deal with multiple requests
@@ -142,14 +141,13 @@ class DataSyncRepository @Inject constructor(
             // We need to get totalContributions here and pass them to mapper
             // Some of contributions do not belong to 5 groups (commits, issues, PRs, code reviews, repositories)
             // that Github API provides. We mark them as "Unknown" in mapper
-            val yearContributions = db.getContributionsDao().getContributionYearWithDays(year)
-            val totalContributionsCount = yearContributions.contributionDays.sumOf { it.count }
+            val totalContributionsCount = cachedContributions.filter { it.yearId == year }.sumOf { it.count }
 
-            val ratioData = getContributionsRatioForDateRange(year)
-            contributionsRatioCached.add(ratioMapper.transform(ratioData, totalContributionsCount))
+            val typesData = getContributionTypesForDateRange(year)
+            contributionTypesCached.add(contributionTypesMapper.transform(typesData, totalContributionsCount))
         }
 
-        return contributionsRatioCached
+        return contributionTypesCached
     }
 
 
@@ -177,15 +175,15 @@ class DataSyncRepository @Inject constructor(
     }
 
 
-    private suspend fun getContributionsRatioForDateRange(year: Int?): ContributionsRatioQuery.Data {
+    private suspend fun getContributionTypesForDateRange(year: Int?): ContributionTypesQuery.Data {
 
         return if (year == null) {
-            apolloClient.performRequestWithDataResult(ContributionsRatioQuery(date_from = null, date_to = null))
+            apolloClient.performRequestWithDataResult(ContributionTypesQuery(date_from = null, date_to = null))
         }
         else {
             val iso8601Year = timeHelper.getDatesRangeForYear_iso8601(year)
             apolloClient.performRequestWithDataResult(
-                ContributionsRatioQuery(
+                ContributionTypesQuery(
                     date_from = iso8601Year.startDate,
                     date_to = iso8601Year.endDate
                 )

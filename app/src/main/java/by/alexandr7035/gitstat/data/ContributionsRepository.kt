@@ -5,7 +5,7 @@ import by.alexandr7035.gitstat.core.AppPreferences
 import by.alexandr7035.gitstat.core.TimeHelper
 import by.alexandr7035.gitstat.data.local.dao.ContributionsDao
 import by.alexandr7035.gitstat.data.local.model.ContributionDayEntity
-import by.alexandr7035.gitstat.data.local.model.ContributionsRatioEntity
+import by.alexandr7035.gitstat.data.local.model.ContributionTypesEntity
 import by.alexandr7035.gitstat.data.local.model.ContributionsYearWithDays
 import by.alexandr7035.gitstat.data.local.model.ContributionsYearWithRates
 import javax.inject.Inject
@@ -30,8 +30,8 @@ class ContributionsRepository @Inject constructor(
         return dao.getContributionYearsWithRatesCache()
     }
 
-    fun getContributionsRatioLiveData(): LiveData<List<ContributionsRatioEntity>> {
-        return dao.getContributionRatiosLiveData()
+    fun getContributionTypesLiveData(): LiveData<List<ContributionTypesEntity>> {
+        return dao.getContributionTypesLiveData()
     }
 
 

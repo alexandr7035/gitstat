@@ -1,8 +1,8 @@
-package by.alexandr7035.gitstat.view.contributions.plots.contributions_ratio
+package by.alexandr7035.gitstat.view.contributions.plots.contributions_types
 
 import kotlin.math.floor
 
-data class ContributionsRatioLeftAxisParams(
+data class ContributionTypesLeftAxisParams(
     var minValue: Float = 0f,
     var maxValue: Float,
     var labelsCount: Int)
@@ -10,7 +10,7 @@ data class ContributionsRatioLeftAxisParams(
 
     companion object {
         // Need this method as there is no way to set axis step directly
-        fun getParamsForContributionYearCard(maxContributionsValue: Int): ContributionsRatioLeftAxisParams {
+        fun getParamsForContributionYearCard(maxContributionsValue: Int): ContributionTypesLeftAxisParams {
 
             val maxPlotValue = if (maxContributionsValue % 100 == 0) {
                 maxContributionsValue.toFloat()
@@ -20,7 +20,7 @@ data class ContributionsRatioLeftAxisParams(
 
             val labelCount = 5
 
-            return ContributionsRatioLeftAxisParams(minValue = 0f, maxValue = maxPlotValue, labelsCount = labelCount)
+            return ContributionTypesLeftAxisParams(minValue = 0f, maxValue = maxPlotValue, labelsCount = labelCount)
 
         }
 

@@ -1,11 +1,11 @@
-package by.alexandr7035.gitstat.view.contributions.plots.contributions_ratio
+package by.alexandr7035.gitstat.view.contributions.plots.contributions_types
 
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Typeface
 import androidx.core.content.ContextCompat
 import by.alexandr7035.gitstat.R
-import by.alexandr7035.gitstat.data.local.model.ContributionsRatioEntity
+import by.alexandr7035.gitstat.data.local.model.ContributionTypesEntity
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
@@ -13,15 +13,15 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import kotlin.math.ceil
 
-class ContributionsRatioPlot {
+class ContributionTypesPlot {
 
     // Use linked to save original order in derived diagramColors list
     private val colors = LinkedHashMap<String, Int>()
 
-    fun setupPlot(chartView: BarChart, ratioData: List<ContributionsRatioEntity>) {
+    fun setupPlot(chartView: BarChart, typesData: List<ContributionTypesEntity>) {
         initColors(chartView.context)
         setupUI(chartView)
-        setData(chartView, ratioData)
+        setData(chartView, typesData)
     }
 
     // This plot is rotated on 90 degrees
@@ -50,15 +50,15 @@ class ContributionsRatioPlot {
         chartView.setExtraOffsets(10f,0f,30f,0f)
     }
 
-    private fun setData(chartView: BarChart, ratioData: List<ContributionsRatioEntity>) {
+    private fun setData(chartView: BarChart, typesData: List<ContributionTypesEntity>) {
 
-        val commits = ratioData.sumOf { it.commitContributions }
-        val issues = ratioData.sumOf { it.issueContributions }
-        val pullRequests = ratioData.sumOf { it.pullRequestContributions }
-        val reviews = ratioData.sumOf { it.pullRequestReviewContributions }
-        val repositories = ratioData.sumOf { it.repositoryContributions }
-        val unknown = ratioData.sumOf { it.unknownContributions }
-        val total = ratioData.sumOf { it.totalContributions }
+        val commits = typesData.sumOf { it.commitContributions }
+        val issues = typesData.sumOf { it.issueContributions }
+        val pullRequests = typesData.sumOf { it.pullRequestContributions }
+        val reviews = typesData.sumOf { it.pullRequestReviewContributions }
+        val repositories = typesData.sumOf { it.repositoryContributions }
+        val unknown = typesData.sumOf { it.unknownContributions }
+        val total = typesData.sumOf { it.totalContributions }
 
         // FIXME refactoring
         val max = listOf(
@@ -98,7 +98,7 @@ class ContributionsRatioPlot {
         chartData.setDrawValues(false)
 
         // Update data
-        val leftAxisParams = ContributionsRatioLeftAxisParams.getParamsForContributionYearCard(max)
+        val leftAxisParams = ContributionTypesLeftAxisParams.getParamsForContributionYearCard(max)
         chartView.apply {
             data = chartData
             axisLeft.axisMinimum = leftAxisParams.minValue
@@ -112,44 +112,44 @@ class ContributionsRatioPlot {
     }
 
 
-    fun getRatioLegendItems(chartView: BarChart, ratioData: List<ContributionsRatioEntity>): List<RatioLegendItem> {
+    fun getContributionTypesLegendItems(chartView: BarChart, typesData: List<ContributionTypesEntity>): List<TypesLegendItem> {
 
         // FIXME dry
-        val commits = ratioData.sumOf { it.commitContributions }
-        val issues = ratioData.sumOf { it.issueContributions }
-        val pullRequests = ratioData.sumOf { it.pullRequestContributions }
-        val reviews = ratioData.sumOf { it.pullRequestReviewContributions }
-        val repositories = ratioData.sumOf { it.repositoryContributions }
-        val unknown = ratioData.sumOf { it.unknownContributions }
-        val total = ratioData.sumOf { it.totalContributions }
+        val commits = typesData.sumOf { it.commitContributions }
+        val issues = typesData.sumOf { it.issueContributions }
+        val pullRequests = typesData.sumOf { it.pullRequestContributions }
+        val reviews = typesData.sumOf { it.pullRequestReviewContributions }
+        val repositories = typesData.sumOf { it.repositoryContributions }
+        val unknown = typesData.sumOf { it.unknownContributions }
+        val total = typesData.sumOf { it.totalContributions }
 
 
         return listOf(
-            RatioLegendItem(
+            TypesLegendItem(
                 label = "Commits",
                 count = commits,
                 percentage = getPercentage(commits / total.toFloat() * 100),
                 color = colors["Commits"]!!
             ),
-            RatioLegendItem(
+            TypesLegendItem(
                 label = "Repositories",
                 count = repositories,
                 percentage = getPercentage(repositories / total.toFloat() * 100),
                 color = colors["Repositories"]!!
             ),
-            RatioLegendItem(
+            TypesLegendItem(
                 label = "Issues",
                 count = issues,
                 percentage = getPercentage(issues / total.toFloat() * 100),
                 color = colors["Issues"]!!
             ),
-            RatioLegendItem(
+            TypesLegendItem(
                 label = "Pull requests",
                 count = pullRequests,
                 percentage = getPercentage(pullRequests / total.toFloat() * 100),
                 color = colors["Pull requests"]!!
             ),
-            RatioLegendItem(
+            TypesLegendItem(
                 label = "Code reviews",
                 count = reviews,
                 percentage = getPercentage(reviews / total.toFloat() * 100),
@@ -158,7 +158,7 @@ class ContributionsRatioPlot {
 
             // FIXME
             // Needs total count
-            RatioLegendItem(
+            TypesLegendItem(
                 label = "Unknown",
                 count = unknown,
                 percentage = getPercentage(unknown / total.toFloat() * 100),

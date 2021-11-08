@@ -100,7 +100,7 @@
     <string name="refresh">Refresh</string>
     <string name="failed_load_page">Failed to load the page. Check your Internet connection and try again.</string>
     <string name="error">Error</string>
-    <string name="total_contributions_ratio">Total contributions ratio</string>
+    <string name="contribution_types">Contribution types</string>
 
     <string name="sync_data">Sync data</string>
     <string name="sync_the_data_now">Sync the data now?</string>

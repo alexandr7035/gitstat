@@ -13,8 +13,8 @@ import by.alexandr7035.gitstat.databinding.FragmentContributionsBinding
 import by.alexandr7035.gitstat.view.MainActivity
 import by.alexandr7035.gitstat.view.contributions.plots.contributions_per_year.YearContributionsAdapter
 import by.alexandr7035.gitstat.view.contributions.plots.contributions_rate.YearContributionRatesAdapter
-import by.alexandr7035.gitstat.view.contributions.plots.contributions_ratio.ContributionsRatioPlot
-import by.alexandr7035.gitstat.view.contributions.plots.contributions_ratio.RatioLegendAdapter
+import by.alexandr7035.gitstat.view.contributions.plots.contributions_types.ContributionTypesPlot
+import by.alexandr7035.gitstat.view.contributions.plots.contributions_types.TypesLegendAdapter
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
@@ -107,21 +107,19 @@ class ContributionsFragment : Fragment() {
         })
 
 
-        viewModel.getContributionsRatioLiveData().observe(viewLifecycleOwner, { ratios ->
+        viewModel.getContributionTypesLiveData().observe(viewLifecycleOwner, { types ->
 
-            if (ratios != null) {
-
-                Timber.d("ratios $ratios")
+            if (types != null) {
 
                 // FIXME
-                val adapter = RatioLegendAdapter()
-                binding?.ratioLegendRecycler?.layoutManager = FlexboxLayoutManager(requireContext())
-                binding?.ratioLegendRecycler?.adapter = adapter
+                val adapter = TypesLegendAdapter()
+                binding?.contributionTypesLegendRecycler?.layoutManager = FlexboxLayoutManager(requireContext())
+                binding?.contributionTypesLegendRecycler?.adapter = adapter
 
-                if (binding?.ratioChart != null) {
-                    val plot = ContributionsRatioPlot()
-                    plot.setupPlot(binding!!.ratioChart, ratios)
-                    adapter.setItems(plot.getRatioLegendItems(binding!!.ratioChart, ratios))
+                if (binding?.contributionTypesChart != null) {
+                    val plot = ContributionTypesPlot()
+                    plot.setupPlot(binding!!.contributionTypesChart, types)
+                    adapter.setItems(plot.getContributionTypesLegendItems(binding!!.contributionTypesChart, types))
                 }
             }
         })
