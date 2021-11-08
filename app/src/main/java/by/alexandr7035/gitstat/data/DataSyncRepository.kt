@@ -15,7 +15,7 @@ class DataSyncRepository @Inject constructor(
     private val apolloClient: ApolloClient,
     private val db: CacheDB,
     private val timeHelper: TimeHelper,
-    private val appPreferences: AppPreferences,
+    private val keyValueStorage: KeyValueStorage,
 
     private val profileMapper: UserRemoteToCacheMapper,
     private val repositoriesMapper: RepositoriesRemoteToCacheMapper,
@@ -63,7 +63,7 @@ class DataSyncRepository @Inject constructor(
                 insertContributionRatesCache(contributionRates)
             }
 
-            appPreferences.lastSuccessCacheSyncDate = System.currentTimeMillis()
+            keyValueStorage.saveLastCacheSyncDate(System.currentTimeMillis())
 
             syncStatusLiveData?.postValue(DataSyncStatus.SUCCESS)
         }
@@ -192,26 +192,26 @@ class DataSyncRepository @Inject constructor(
     }
 
     fun checkIfCacheExists(): Boolean {
-        return appPreferences.lastSuccessCacheSyncDate != 0L
+        return keyValueStorage.getLastCacheSyncDate() != 0L
     }
 
     fun checkIfTokenSaved(): Boolean {
-        return appPreferences.token != null
+        return keyValueStorage.getToken() != null
     }
 
     fun clearCache() {
         // Be patient with livedata. This call causes updates with null
         // So wrap code in observers with null check
         db.clearAllTables()
-        appPreferences.lastSuccessCacheSyncDate = 0
+        keyValueStorage.saveLastCacheSyncDate(0)
     }
 
     fun clearToken() {
-        appPreferences.token = null
+        keyValueStorage.saveToken(null)
     }
 
     fun getLastCacheSyncDateText(): String {
-        return timeHelper.getFullFromUnixDate(appPreferences.lastSuccessCacheSyncDate)
+        return timeHelper.getFullFromUnixDate(keyValueStorage.getLastCacheSyncDate())
     }
 
 }

@@ -13,7 +13,4 @@ class AuthViewModel @Inject constructor(
         authRepository.saveToken(token)
     }
 
-    fun clearToken() {
-        authRepository.clearToken()
-    }
 }
