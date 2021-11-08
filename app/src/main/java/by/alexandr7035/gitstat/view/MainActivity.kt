@@ -135,12 +135,12 @@ class MainActivity : AppCompatActivity() {
         syncDateView.text = viewModel.getCacheSyncDate().replace(" ", "\n")
 
         resyncBtn.setOnClickListener {
-//            navController.navigate(R.id.action_global_syncGraph)
-
             Timber.tag("DEBUG_SERVICE").d("start clicked")
-
             val intent = Intent(this, SyncForegroundService::class.java)
             startService(intent)
+
+            // Close drawer
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
         }
     }
 
