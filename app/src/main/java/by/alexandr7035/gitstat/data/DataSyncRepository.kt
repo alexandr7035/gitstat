@@ -9,6 +9,7 @@ import by.alexandr7035.gitstat.core.TimeHelper
 import by.alexandr7035.gitstat.data.local.CacheDB
 import by.alexandr7035.gitstat.data.local.model.*
 import by.alexandr7035.gitstat.data.remote.mappers.*
+import by.alexandr7035.gitstat.extensions.debug
 import by.alexandr7035.gitstat.extensions.performRequestWithDataResult
 import com.apollographql.apollo3.ApolloClient
 import timber.log.Timber
@@ -47,7 +48,7 @@ class DataSyncRepository @Inject constructor(
             val contributionDays = fetchContributionDays(accountCreationYear, currentYear)
 
             val totalContributions = contributionDays.sumOf { it.count }
-            val contributionTypes = fetchContributionTypes(accountCreationYear, currentYear, totalContributions)
+            val contributionTypes = fetchContributionTypes(accountCreationYear, currentYear)
             val contributionRates = fetchContributionRates(contributionDays)
 
             // Write cache
@@ -115,11 +116,8 @@ class DataSyncRepository @Inject constructor(
     }
 
 
-    // We need to get totalContributions here and pass them to mapper
-    // Some of contributions do not belong to 5 groups (commits, issues, PRs, code reviews, repositories)
-    // that Github API provides. We mark them as "Unknown" in mapper
     // TODO try to find better solution later
-    private suspend fun fetchContributionTypes(profileCreationYear: Int, currentYear: Int, totalContributionsCount: Int): ArrayList<ContributionsRatioEntity> {
+    private suspend fun fetchContributionTypes(profileCreationYear: Int, currentYear: Int): ArrayList<ContributionsRatioEntity> {
 
         val contributionsRatioCached = ArrayList<ContributionsRatioEntity>()
 
@@ -127,7 +125,12 @@ class DataSyncRepository @Inject constructor(
         // So we have to deal with multiple requests
         for (year in profileCreationYear..currentYear) {
 
-            // Sync ratio of total contributions (commits, PRs, etc.)
+            // We need to get totalContributions here and pass them to mapper
+            // Some of contributions do not belong to 5 groups (commits, issues, PRs, code reviews, repositories)
+            // that Github API provides. We mark them as "Unknown" in mapper
+            val yearContributions = db.getContributionsDao().getContributionYearWithDays(year)
+            val totalContributionsCount = yearContributions.contributionDays.sumOf { it.count }
+
             val ratioData = getContributionsRatioForDateRange(year)
             contributionsRatioCached.add(ratioMapper.transform(ratioData, totalContributionsCount))
         }
