@@ -51,10 +51,7 @@ class DataSyncRepository @Inject constructor(
             val contributionRates = fetchContributionRates(contributionDays)
 
             // Write cache
-            appPreferences.lastSuccessCacheSyncDate = 0
-            // Be patient with livedata. This call causes updates with null
-            // So wrap code in observers wuth null check
-            db.clearAllTables()
+            clearCache()
 
             Timber.tag("DEBUG_TAG").d("profile $profile")
             db.getUserDao().insertUser(profile)
@@ -198,6 +195,25 @@ class DataSyncRepository @Inject constructor(
 
     fun checkIfCacheExists(): Boolean {
         return appPreferences.lastSuccessCacheSyncDate != 0L
+    }
+
+    fun checkIfTokenSaved(): Boolean {
+        return appPreferences.token != null
+    }
+
+    fun clearCache() {
+        // Be patient with livedata. This call causes updates with null
+        // So wrap code in observers with null check
+        db.clearAllTables()
+        appPreferences.lastSuccessCacheSyncDate = 0
+    }
+
+    fun clearToken() {
+        appPreferences.token = null
+    }
+
+    fun getLastCacheSyncDateText(): String {
+        return timeHelper.getFullFromUnixDate(appPreferences.lastSuccessCacheSyncDate)
     }
 
 }

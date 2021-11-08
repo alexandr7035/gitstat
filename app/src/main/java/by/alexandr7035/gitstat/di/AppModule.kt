@@ -56,24 +56,6 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideSyncRepository(
-        apolloClient: ApolloClient,
-        db: CacheDB,
-        userDao: UserDao,
-        contributionsDao: ContributionsDao,
-        repositoriesDao: RepositoriesDao,
-        profileMapper: UserRemoteToCacheMapper,
-        repositoriesMapper: RepositoriesRemoteToCacheMapper,
-        contributionsMapper: ContributionsDaysListRemoteToCacheMapper,
-        daysToRatesMapper: ContributionDaysToRatesMapper,
-        ratioMapper: ContributionsRatioRemoteToCacheMapper,
-        timeHelper: TimeHelper,
-        appPreferences: AppPreferences): SyncRepository {
-        return SyncRepository(apolloClient, db, userDao, repositoriesDao, contributionsDao, profileMapper, repositoriesMapper, contributionsMapper, ratioMapper, daysToRatesMapper, timeHelper, appPreferences)
-    }
-
-    @Provides
-    @Singleton
     fun provideAuthRepository(apolloClient: ApolloClient, appPreferences: AppPreferences): AuthRepository {
         return AuthRepository(appPreferences)
     }

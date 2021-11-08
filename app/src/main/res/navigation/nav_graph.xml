@@ -105,9 +105,9 @@
 
         <fragment
             android:id="@+id/syncFailedNoCacheFragment"
-            android:name="by.alexandr7035.gitstat.view.datasync.SyncFailedNoCacheFragment"
+            android:name="by.alexandr7035.gitstat.view.datasync.SyncFailedNetworkFragment"
             android:label="fragment_sync_failed_no_cache"
-            tools:layout="@layout/fragment_sync_failed_no_cache" />
+            tools:layout="@layout/fragment_sync_failed_network" />
 
         <action
             android:id="@+id/action_global_profileFragment"
