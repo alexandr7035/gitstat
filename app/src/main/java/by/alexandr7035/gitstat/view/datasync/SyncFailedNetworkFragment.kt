@@ -7,33 +7,26 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.navGraphViewModels
 import by.alexandr7035.gitstat.R
-import by.alexandr7035.gitstat.databinding.FragmentSyncFailedWithCacheBinding
-import by.alexandr7035.gitstat.view.MainActivity
+import by.alexandr7035.gitstat.databinding.FragmentSyncFailedNetworkBinding
 
-class SyncFailedWithCacheFragment : Fragment() {
+class SyncFailedNetworkFragment : Fragment() {
 
-    private var binding: FragmentSyncFailedWithCacheBinding? = null
+    private var binding: FragmentSyncFailedNetworkBinding? = null
     private val viewModel by navGraphViewModels<SyncViewModel>(R.id.syncGraph) { defaultViewModelProviderFactory }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
-        binding = FragmentSyncFailedWithCacheBinding.inflate(inflater, container, false)
+        binding = FragmentSyncFailedNetworkBinding.inflate(inflater, container, false)
         return binding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding?.cacheSyncDateView?.text = getString(R.string.last_cache, viewModel.getLastCacheSyncDate())
-
         binding?.retryBtn?.setOnClickListener {
             viewModel.syncData()
-        }
-
-        binding?.loadCacheBtn?.setOnClickListener {
-            (requireActivity() as MainActivity).syncFinishedCallback()
         }
     }
 

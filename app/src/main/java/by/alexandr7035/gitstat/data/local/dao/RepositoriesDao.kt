@@ -1,5 +1,6 @@
 package by.alexandr7035.gitstat.data.local.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -10,6 +11,9 @@ import by.alexandr7035.gitstat.data.local.model.RepositoryEntity
 interface RepositoriesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertRepositories(repos: List<RepositoryEntity>)
+
+    @Query("select * from repositories")
+    fun getRepositoriesLiveData(): LiveData<List<RepositoryEntity>>
 
     @Query("select * from repositories")
     suspend fun getRepositories(): List<RepositoryEntity>

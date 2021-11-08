@@ -16,6 +16,7 @@ import by.alexandr7035.gitstat.databinding.FragmentProfileBinding
 import by.alexandr7035.gitstat.view.MainActivity
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 
 @AndroidEntryPoint
@@ -49,39 +50,42 @@ class ProfileFragment : Fragment() {
         // Update profile data
         viewModel.getUserLiveData().observe(viewLifecycleOwner, {
 
-            Picasso.get().load(it.avatar_url).into(binding!!.profileImageView)
+            Timber.tag("DEBUG_TAG").d("livedata updated $it")
 
-            // This field can be empty
-            if (it.name.isEmpty()) {
-                binding?.nameView?.visibility = View.GONE
+            if (it != null) {
+
+                Picasso.get().load(it.avatar_url).into(binding!!.profileImageView)
+
+                // This field can be empty
+                if (it.name.isEmpty()) {
+                    binding?.nameView?.visibility = View.GONE
+                } else {
+                    binding?.nameView?.visibility = View.VISIBLE
+                    binding?.nameView?.text = it.name
+                }
+
+                binding!!.loginView.text = "@${it.login}"
+
+                binding!!.idView.text = it.id.toString()
+
+                binding!!.createdView.text = DateFormat.format("dd.MM.yyyy HH:mm", it.created_at)
+                binding!!.updatedView.text = DateFormat.format("dd.MM.yyyy HH:mm", it.updated_at)
+
+                binding!!.followersView.text = it.followers.toString()
+
+                // This field can be empty
+                if (it.location.isEmpty()) {
+                    binding!!.locationContainer.visibility = View.GONE
+                } else {
+                    binding!!.locationContainer.visibility = View.VISIBLE
+                    binding!!.locationView.text = it.location
+                }
+
+                binding!!.totalReposView.text = it.total_repos_count.toString()
+                binding!!.privateReposView.text = it.private_repos_count.toString()
+                binding!!.publicReposView.text = it.public_repos_count.toString()
+
             }
-            else {
-                binding?.nameView?.visibility = View.VISIBLE
-                binding?.nameView?.text = it.name
-            }
-
-            binding!!.loginView.text = "@${it.login}"
-
-            binding!!.idView.text = it.id.toString()
-
-            binding!!.createdView.text = DateFormat.format("dd.MM.yyyy HH:mm", it.created_at)
-            binding!!.updatedView.text = DateFormat.format("dd.MM.yyyy HH:mm", it.updated_at)
-
-            binding!!.followersView.text = it.followers.toString()
-
-            // This field can be empty
-            if (it.location.isEmpty()) {
-                binding!!.locationContainer.visibility = View.GONE
-            }
-            else {
-                binding!!.locationContainer.visibility = View.VISIBLE
-                binding!!.locationView.text = it.location
-            }
-
-            binding!!.totalReposView.text = it.total_repos_count.toString()
-            binding!!.privateReposView.text = it.private_repos_count.toString()
-            binding!!.publicReposView.text = it.public_repos_count.toString()
-
         })
 
         binding!!.reposStatDetailedBtn.setOnClickListener {
@@ -91,6 +95,7 @@ class ProfileFragment : Fragment() {
         binding?.drawerBtn?.setOnClickListener {
             (requireActivity() as MainActivity).openDrawerMenu()
         }
+
     }
 
 

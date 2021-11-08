@@ -32,37 +32,40 @@ class YearContributionRatesFragment : Fragment() {
         // Observe the result
         viewModel.getContributionYearsWithRatesLiveData().observe(viewLifecycleOwner, { yearsData ->
 
-            // FIXME find better solution (obtain certain year from data layer)
-            val yearData = yearsData.findLast {
-                it.year.id == year
-            }!!
+            if (! yearsData.isNullOrEmpty()) {
 
-            // Setup plot
-            if (binding?.rateChart != null) {
-                val plot = ContributionRatePlot()
-                plot.setupPLot(binding!!.rateChart)
-                plot.setYearData(binding!!.rateChart, yearData)
+                // FIXME find better solution (obtain certain year from data layer)
+                val yearData = yearsData.findLast {
+                    it.year.id == year
+                }!!
+
+                // Setup plot
+                if (binding?.rateChart != null) {
+                    val plot = ContributionRatePlot()
+                    plot.setupPLot(binding!!.rateChart)
+                    plot.setYearData(binding!!.rateChart, yearData)
+                }
+
+                // Set year title
+                binding?.year?.text = yearData.year.id.toString()
+
+                // Background for contribution rate views
+                // Set same color as for the plot
+                val plotFill = LinePlotFill.getPlotFillForYear(requireContext(), yearData.year.id)
+                val bg = ContextCompat.getDrawable(requireContext(), R.drawable.background_rounded_shape)
+                bg?.setTint(plotFill.lineColor)
+
+                // Peak contribution rate
+                val maxContributionsRate = viewModel.getMaxContributionRateForYear(yearData)
+                binding?.peakCRView?.background = bg
+                binding?.peakCRView?.text = maxContributionsRate.toString()
+
+                // Last contribution rate (end of the year)
+                val lastContributionRate = viewModel.getLastTotalContributionRateForYear(yearData)
+                binding?.lastCRView?.background = bg
+                binding?.lastCRView?.text = lastContributionRate.toString()
+
             }
-
-            // Set year title
-            binding?.year?.text = yearData.year.id.toString()
-
-            // Background for contribution rate views
-            // Set same color as for the plot
-            val plotFill = LinePlotFill.getPlotFillForYear(requireContext(), yearData.year.id)
-            val bg = ContextCompat.getDrawable(requireContext(), R.drawable.background_rounded_shape)
-            bg?.setTint(plotFill.lineColor)
-
-            // Peak contribution rate
-            val maxContributionsRate = viewModel.getMaxContributionRateForYear(yearData)
-            binding?.peakCRView?.background = bg
-            binding?.peakCRView?.text = maxContributionsRate.toString()
-
-            // Last contribution rate (end of the year)
-            val lastContributionRate = viewModel.getLastTotalContributionRateForYear(yearData)
-            binding?.lastCRView?.background = bg
-            binding?.lastCRView?.text = lastContributionRate.toString()
-
         })
 
     }

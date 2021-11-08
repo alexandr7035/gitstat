@@ -108,7 +108,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/ratioCard"
+        android:id="@+id/contributionTypesCard"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -124,34 +124,35 @@
 
         <TextView
             style="@style/CardHeaderStyle"
-            android:id="@+id/ratioHeader"
+            android:id="@+id/contributionTypesHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
-            android:text="@string/total_contributions_ratio"
+            android:text="@string/contribution_types"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.github.mikephil.charting.charts.HorizontalBarChart
-            android:id="@+id/ratioChart"
+            android:id="@+id/contributionTypesChart"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:minHeight="170dp"
             android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ratioHeader" />
+            app:layout_constraintTop_toBottomOf="@id/contributionTypesHeader" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/ratioLegendRecycler"
+            android:id="@+id/contributionTypesLegendRecycler"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             android:overScrollMode="never"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ratioChart"
+            app:layout_constraintTop_toBottomOf="@id/contributionTypesChart"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -167,7 +168,7 @@
         android:background="@drawable/background_card"
         android:elevation="5dp"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/ratioCard"
+        app:layout_constraintTop_toBottomOf="@id/contributionTypesCard"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 

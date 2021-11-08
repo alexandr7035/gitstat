@@ -56,24 +56,6 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideSyncRepository(
-        apolloClient: ApolloClient,
-        db: CacheDB,
-        userDao: UserDao,
-        contributionsDao: ContributionsDao,
-        repositoriesDao: RepositoriesDao,
-        profileMapper: UserRemoteToCacheMapper,
-        repositoriesMapper: RepositoriesRemoteToCacheMapper,
-        contributionsMapper: ContributionsDaysListRemoteToCacheMapper,
-        daysToRatesMapper: ContributionDaysToRatesMapper,
-        ratioMapper: ContributionsRatioRemoteToCacheMapper,
-        timeHelper: TimeHelper,
-        appPreferences: AppPreferences): SyncRepository {
-        return SyncRepository(apolloClient, db, userDao, repositoriesDao, contributionsDao, profileMapper, repositoriesMapper, contributionsMapper, ratioMapper, daysToRatesMapper, timeHelper, appPreferences)
-    }
-
-    @Provides
-    @Singleton
     fun provideAuthRepository(apolloClient: ApolloClient, appPreferences: AppPreferences): AuthRepository {
         return AuthRepository(appPreferences)
     }
@@ -86,6 +68,24 @@ object AppModule {
         appPreferences: AppPreferences
     ): ContributionsRepository{
         return ContributionsRepository(dao, timeHelper, appPreferences)
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideDataSyncRepository(
+        apolloClient: ApolloClient,
+        db: CacheDB,
+        timeHelper: TimeHelper,
+        appPreferences: AppPreferences,
+
+        profileMapper: UserRemoteToCacheMapper,
+        repositoriesMapper: RepositoriesRemoteToCacheMapper,
+        contributionsMapper: ContributionsDaysListRemoteToCacheMapper,
+        contributionTypesMapper: ContributionTypesRemoteToCacheMapper,
+        daysToRatesMapper: ContributionDaysToRatesMapper
+    ): DataSyncRepository {
+        return DataSyncRepository(apolloClient, db, timeHelper, appPreferences, profileMapper, repositoriesMapper, contributionsMapper, contributionTypesMapper, daysToRatesMapper)
     }
 
     /////////////////////////////////////
@@ -108,8 +108,8 @@ object AppModule {
     }
 
     @Provides
-    fun provideContributionsRatioMapper(timeHelper: TimeHelper): ContributionsRatioRemoteToCacheMapper {
-        return ContributionsRatioRemoteToCacheMapper(timeHelper)
+    fun provideContributionTypesMapper(timeHelper: TimeHelper): ContributionTypesRemoteToCacheMapper {
+        return ContributionTypesRemoteToCacheMapper(timeHelper)
     }
 
     @Provides

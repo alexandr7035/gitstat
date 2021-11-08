@@ -1,14 +1,8 @@
 package by.alexandr7035.gitstat.view.login
 
 import android.graphics.Color
-import android.graphics.Typeface
 import android.os.Bundle
-import android.text.SpannableString
-import android.text.Spanned
-import android.text.TextPaint
 import android.text.method.LinkMovementMethod
-import android.text.style.ClickableSpan
-import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,8 +16,8 @@ import by.alexandr7035.gitstat.BuildConfig
 import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.core.GithubAccessScopes
 import by.alexandr7035.gitstat.databinding.FragmentLoginBinding
+import by.alexandr7035.gitstat.extensions.getClickableSpannable
 import by.alexandr7035.gitstat.view.MainActivity
-import by.alexandr7035.gitstat.view.MainActivityDirections
 import com.google.firebase.auth.OAuthCredential
 import com.google.firebase.auth.OAuthProvider
 import com.google.firebase.auth.ktx.auth
@@ -86,36 +80,18 @@ class LoginFragment: Fragment() {
             }
         }
 
-        val privacyPolicyFullText = getString(R.string.privacy_policy_text)
-        val linkText = getString(R.string.privacy_policy_clickable)
-        val privacyPolicySpannable = SpannableString(privacyPolicyFullText)
 
-        val privacyPolicyClickable = object : ClickableSpan() {
-            override fun onClick(widget: View) {
+        val privacyPolicyText = getString(R.string.privacy_policy_text).getClickableSpannable(
+            clickListener = View.OnClickListener {
                 showPrivacyPolicy()
-            }
-
-            override fun updateDrawState(ds: TextPaint) {
-                super.updateDrawState(ds)
-                ds.isUnderlineText = true
-                ds.color = ContextCompat.getColor(requireContext(), R.color.gray_500)
-            }
-        }
-
-        privacyPolicySpannable.setSpan(
-            privacyPolicyClickable,
-            privacyPolicyFullText.indexOf(linkText),
-            privacyPolicyFullText.indexOf(linkText) + linkText.length,
-            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-
-        privacyPolicySpannable.setSpan(
-            StyleSpan(Typeface.BOLD),
-            privacyPolicyFullText.indexOf(linkText),
-            privacyPolicyFullText.indexOf(linkText) + linkText.length,
-            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            },
+            clickableText = getString(R.string.privacy_policy_clickable),
+            isBold = true,
+            spannableColor = ContextCompat.getColor(requireContext(), R.color.gray_500)
+        )
 
         binding?.privacyPolicyView?.apply {
-            text = privacyPolicySpannable
+            text = privacyPolicyText
             movementMethod = LinkMovementMethod.getInstance()
             highlightColor = Color.TRANSPARENT
         }

@@ -29,13 +29,7 @@ class SyncHostFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Timber.d("show sync stub")
 
-        if (viewModel.checkForCache()) {
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.containerView, SyncSuggestionFragment())
-                .commit()
-        } else {
-            viewModel.syncData()
-        }
+        viewModel.syncData()
 
         viewModel.getSyncStatusLiveData().observe(viewLifecycleOwner, { status ->
             Timber.d("sync status updated $status")
@@ -65,15 +59,9 @@ class SyncHostFragment : Fragment() {
                         .commit()
                 }
 
-                DataSyncStatus.FAILED_NETWORK_WITH_NO_CACHE -> {
+                DataSyncStatus.FAILED_NETWORK -> {
                     requireActivity().supportFragmentManager.beginTransaction()
-                        .replace(R.id.containerView, SyncFailedNoCacheFragment())
-                        .commit()
-                }
-
-                DataSyncStatus.FAILED_NETWORK_WITH_CACHE -> {
-                    requireActivity().supportFragmentManager.beginTransaction()
-                        .replace(R.id.containerView, SyncFailedWithCacheFragment())
+                        .replace(R.id.containerView, SyncFailedNetworkFragment())
                         .commit()
                 }
 

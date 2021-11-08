@@ -13,8 +13,8 @@ import by.alexandr7035.gitstat.databinding.FragmentContributionsBinding
 import by.alexandr7035.gitstat.view.MainActivity
 import by.alexandr7035.gitstat.view.contributions.plots.contributions_per_year.YearContributionsAdapter
 import by.alexandr7035.gitstat.view.contributions.plots.contributions_rate.YearContributionRatesAdapter
-import by.alexandr7035.gitstat.view.contributions.plots.contributions_ratio.ContributionsRatioPlot
-import by.alexandr7035.gitstat.view.contributions.plots.contributions_ratio.RatioLegendAdapter
+import by.alexandr7035.gitstat.view.contributions.plots.contributions_types.ContributionTypesPlot
+import by.alexandr7035.gitstat.view.contributions.plots.contributions_types.TypesLegendAdapter
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
@@ -47,70 +47,80 @@ class ContributionsFragment : Fragment() {
         // Update data
         viewModel.getContributionYearsLiveData().observe(viewLifecycleOwner, { years ->
 
-            if (years.isNotEmpty()) {
-                yearContributionsAdapter = YearContributionsAdapter(this)
-                yearContributionsAdapter.setItems(years)
-                binding?.yearsViewPager?.adapter = yearContributionsAdapter
+            if (years != null) {
 
-                // Set to last position
-                binding?.yearsViewPager?.setCurrentItem(years.size - 1, false)
-                binding?.currentYearView?.text = years[years.size-1].year.id.toString()
+                if (years.isNotEmpty()) {
+                    yearContributionsAdapter = YearContributionsAdapter(this)
+                    yearContributionsAdapter.setItems(years)
+                    binding?.yearsViewPager?.adapter = yearContributionsAdapter
 
-                // Change year in card title when viewpager item changes
-                binding?.yearsViewPager?.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
-                    override fun onPageSelected(position: Int) {
-                        super.onPageSelected(position)
-                        Timber.d("Page changed callback")
-                        binding?.currentYearView?.text = years[position].year.id.toString()
-                    }
-                })
+                    // Set to last position
+                    binding?.yearsViewPager?.setCurrentItem(years.size - 1, false)
+                    binding?.currentYearView?.text = years[years.size - 1].year.id.toString()
 
-                // Attach tablayout
-                TabLayoutMediator(binding!!.yearsTabLayout, binding!!.yearsViewPager) {
-                        tab, position ->
-                }.attach()
+                    // Change year in card title when viewpager item changes
+                    binding?.yearsViewPager?.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                        override fun onPageSelected(position: Int) {
+                            super.onPageSelected(position)
+                            Timber.d("Page changed callback")
+                            binding?.currentYearView?.text = years[position].year.id.toString()
+                        }
+                    })
 
+                    // Attach tablayout
+                    TabLayoutMediator(binding!!.yearsTabLayout, binding!!.yearsViewPager) { tab, position ->
+                    }.attach()
+
+                }
             }
         })
 
 
         viewModel.getContributionDaysLiveData().observe(viewLifecycleOwner, { contributions ->
-            val totalContributions = contributions.sumOf { it.count }
-            binding?.totalContributions?.text = totalContributions.toString()
+            if (contributions != null) {
+                val totalContributions = contributions.sumOf { it.count }
+                binding?.totalContributions?.text = totalContributions.toString()
+            }
         })
 
 
         viewModel.getContributionYearsWithRatesLiveData().observe(viewLifecycleOwner, { rateYears ->
 
-            if (rateYears.isNotEmpty()) {
-                yearContributionsRateAdapter = YearContributionRatesAdapter(this)
-                yearContributionsRateAdapter.setItems(rateYears)
-                binding?.rateViewPager?.adapter = yearContributionsRateAdapter
+            if (rateYears != null) {
 
-                TabLayoutMediator(binding!!.rateTabLayout, binding!!.rateViewPager) { tab, position ->
-                }.attach()
+                if (rateYears.isNotEmpty()) {
+                    yearContributionsRateAdapter = YearContributionRatesAdapter(this)
+                    yearContributionsRateAdapter.setItems(rateYears)
+                    binding?.rateViewPager?.adapter = yearContributionsRateAdapter
 
-                // Set to last position
-                binding?.rateViewPager?.setCurrentItem(rateYears.size - 1, false)
+                    TabLayoutMediator(binding!!.rateTabLayout, binding!!.rateViewPager) { tab, position ->
+                    }.attach()
 
-                // Set total contribution rate in header
-                binding?.contributionsRate?.text = viewModel.getLastTotalContributionRateForYear(rateYears[rateYears.size - 1]).toString()
+                    // Set to last position
+                    binding?.rateViewPager?.setCurrentItem(rateYears.size - 1, false)
+
+                    // Set total contribution rate in header
+                    binding?.contributionsRate?.text =
+                        viewModel.getLastTotalContributionRateForYear(rateYears[rateYears.size - 1]).toString()
+                }
             }
         })
 
 
-        viewModel.getContributionsRatioLiveData().observe(viewLifecycleOwner, { ratios ->
-            Timber.d("ratios $ratios")
+        viewModel.getContributionTypesLiveData().observe(viewLifecycleOwner, { types ->
 
-            // FIXME
-            val adapter = RatioLegendAdapter()
-            binding?.ratioLegendRecycler?.layoutManager = FlexboxLayoutManager(requireContext())
-            binding?.ratioLegendRecycler?.adapter = adapter
+            if (types != null) {
 
-            if (binding?.ratioChart != null) {
-                val plot = ContributionsRatioPlot()
-                plot.setupPlot(binding!!.ratioChart, ratios)
-                adapter.setItems(plot.getRatioLegendItems(binding!!.ratioChart, ratios))
+                // FIXME
+                val adapter = TypesLegendAdapter()
+                binding?.contributionTypesLegendRecycler?.layoutManager = FlexboxLayoutManager(requireContext())
+                binding?.contributionTypesLegendRecycler?.adapter = adapter
+
+                if (binding?.contributionTypesChart != null) {
+                    val plot = ContributionTypesPlot()
+                    plot.setupPlot(binding!!.contributionTypesChart, types)
+                    adapter.setItems(plot.getContributionTypesLegendItems(binding!!.contributionTypesChart, types))
+                }
             }
         })
 

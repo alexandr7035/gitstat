@@ -1,22 +1,28 @@
 package by.alexandr7035.gitstat.view
 
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import by.alexandr7035.gitstat.R
+import by.alexandr7035.gitstat.data.SyncForegroundService
 import by.alexandr7035.gitstat.databinding.ActivityMainBinding
 import by.alexandr7035.gitstat.view.profile.ProfileViewModel
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import de.hdodenhof.circleimageview.CircleImageView
+import timber.log.Timber
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -75,12 +81,14 @@ class MainActivity : AppCompatActivity() {
 
 
         if (viewModel.checkIfTokenSaved()) {
-            startSyncData()
+            if (viewModel.checkIfCacheExists()) {
+                // FIXME
+                navController.navigate(R.id.action_loginFragment_to_profileFragment)
+            }
+            else {
+                startSyncData()
+            }
         }
-        else {
-            // TODO
-        }
-
 
         // Drawer settings
         val drawerPictureView = binding.drawerNavigationView.getHeaderView(0).findViewById<CircleImageView>(R.id.drawerProfileImage)
@@ -129,7 +137,12 @@ class MainActivity : AppCompatActivity() {
         syncDateView.text = viewModel.getCacheSyncDate().replace(" ", "\n")
 
         resyncBtn.setOnClickListener {
-            navController.navigate(R.id.action_global_syncGraph)
+            Timber.tag("DEBUG_SERVICE").d("start clicked")
+            val intent = Intent(this, SyncForegroundService::class.java)
+            startService(intent)
+
+            // Close drawer
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
         }
     }
 

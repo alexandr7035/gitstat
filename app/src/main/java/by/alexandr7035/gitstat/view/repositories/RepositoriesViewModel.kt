@@ -22,6 +22,10 @@ class RepositoriesViewModel @Inject constructor(private val repository: ReposRep
     private val archivedReposLiveData = MutableLiveData<List<RepositoryEntity>>()
     private val tabRefreshedLiveData = MutableLiveData<Int>()
 
+    fun getRepositoriesLiveData(): LiveData<List<RepositoryEntity>> {
+        return repository.getRepositoriesLiveData()
+    }
+
     // Repos livedata
     fun getAllRepositoriesListLiveData(): LiveData<List<RepositoryEntity>> {
         return allRepositoriesLiveData
