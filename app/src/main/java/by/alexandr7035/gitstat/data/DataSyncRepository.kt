@@ -2,10 +2,7 @@ package by.alexandr7035.gitstat.data
 
 import androidx.lifecycle.MutableLiveData
 import by.alexandr7035.gitstat.apollo.*
-import by.alexandr7035.gitstat.core.AppError
-import by.alexandr7035.gitstat.core.AppPreferences
-import by.alexandr7035.gitstat.core.DataSyncStatus
-import by.alexandr7035.gitstat.core.TimeHelper
+import by.alexandr7035.gitstat.core.*
 import by.alexandr7035.gitstat.data.local.CacheDB
 import by.alexandr7035.gitstat.data.local.model.*
 import by.alexandr7035.gitstat.data.remote.mappers.*
@@ -41,13 +38,15 @@ class DataSyncRepository @Inject constructor(
             val accountCreationYear = timeHelper.getYearFromUnixDate(unixCreationDate)
             val currentYear = timeHelper.getYearFromUnixDate(System.currentTimeMillis())
 
+            syncStatusLiveData?.postValue(DataSyncStatus.PENDING_PROFILE)
             val profile = fetchProfile()
+
+            syncStatusLiveData?.postValue(DataSyncStatus.PENDING_REPOSITORIES)
             val repositories = fetchRepositories()
 
+            syncStatusLiveData?.postValue(DataSyncStatus.PENDING_CONTRIBUTIONS)
             val contributionYears = fetchContributionYears(accountCreationYear, currentYear)
             val contributionDays = fetchContributionDays(accountCreationYear, currentYear)
-
-            val totalContributions = contributionDays.sumOf { it.count }
             val contributionTypes = fetchContributionTypes(accountCreationYear, currentYear)
             val contributionRates = fetchContributionRates(contributionDays)
 
@@ -69,12 +68,30 @@ class DataSyncRepository @Inject constructor(
             }
 
             appPreferences.lastSuccessCacheSyncDate = System.currentTimeMillis()
+
+            syncStatusLiveData?.postValue(DataSyncStatus.SUCCESS)
         }
 
         catch (e: AppError) {
-            // TODO handle error types
-            Timber.tag("DEBUG_SYNC").e("Catch exception during data sync")
+
+            Timber.tag("DEBUG_SYNC").e("Catch exception during data sync ${e.type.name}")
+
+            when (e.type) {
+                ErrorType.FAILED_CONNECTION -> {
+                    syncStatusLiveData?.postValue(DataSyncStatus.FAILED_NETWORK)
+                }
+
+                ErrorType.FAILED_AUTHORIZATION -> {
+                    syncStatusLiveData?.postValue(DataSyncStatus.AUTHORIZATION_ERROR)
+                }
+
+                ErrorType.UNKNOWN_ERROR -> {
+                    // TODO new status
+                    syncStatusLiveData?.postValue(DataSyncStatus.FAILED_NETWORK)
+                }
+            }
         }
+
     }
 
 
