@@ -196,4 +196,8 @@ class DataSyncRepository @Inject constructor(
         }
     }
 
+    fun checkIfCacheExists(): Boolean {
+        return appPreferences.lastSuccessCacheSyncDate != 0L
+    }
+
 }

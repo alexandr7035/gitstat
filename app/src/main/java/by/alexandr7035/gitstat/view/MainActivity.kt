@@ -81,12 +81,14 @@ class MainActivity : AppCompatActivity() {
 
 
         if (viewModel.checkIfTokenSaved()) {
-            startSyncData()
+            if (viewModel.checkIfCacheExists()) {
+                // FIXME
+                navController.navigate(R.id.action_loginFragment_to_profileFragment)
+            }
+            else {
+                startSyncData()
+            }
         }
-        else {
-            // TODO
-        }
-
 
         // Drawer settings
         val drawerPictureView = binding.drawerNavigationView.getHeaderView(0).findViewById<CircleImageView>(R.id.drawerProfileImage)

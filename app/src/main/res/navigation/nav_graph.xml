@@ -19,6 +19,12 @@
         <action
             android:id="@+id/action_loginFragment_to_webViewFragment"
             app:destination="@id/webViewFragment" />
+
+        <action
+            android:id="@+id/action_loginFragment_to_profileFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true"
+            app:destination="@id/profileFragment" />
     </fragment>
 
     <fragment
