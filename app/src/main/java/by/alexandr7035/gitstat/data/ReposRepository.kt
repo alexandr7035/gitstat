@@ -1,5 +1,6 @@
 package by.alexandr7035.gitstat.data
 
+import androidx.lifecycle.LiveData
 import by.alexandr7035.gitstat.core.AppPreferences
 import by.alexandr7035.gitstat.core.Language
 import by.alexandr7035.gitstat.data.local.dao.RepositoriesDao
@@ -12,6 +13,10 @@ class ReposRepository @Inject constructor(
     private val dao: RepositoriesDao,
     private val appPreferences: AppPreferences,
     private val gson: Gson) {
+
+    fun getRepositoriesLiveData(): LiveData<List<RepositoryEntity>>{
+        return dao.getRepositoriesLiveData()
+    }
 
     suspend fun fetchAllRepositoriesFromDb(): List<RepositoryEntity> {
         return dao.getRepositories()

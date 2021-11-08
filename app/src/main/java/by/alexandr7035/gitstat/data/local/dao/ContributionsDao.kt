@@ -33,8 +33,12 @@ interface ContributionsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertContributionYearsCache(years: List<ContributionsYearEntity>)
 
+
     @Query("SELECT * FROM contribution_years")
     fun getContributionYearsWithDaysLiveData(): LiveData<List<ContributionsYearWithDays>>
+
+    @Query("SELECT * FROM contribution_years where id = (:yearId)")
+    suspend fun getContributionYearWithDays(yearId: Int): ContributionsYearWithDays
 
     @Query("DELETE FROM contribution_years")
     fun clearContributionYears()
