@@ -41,7 +41,6 @@ class ContributionsCountPlot {
     }
 
     fun setYearData(chart: LineChart, yearData: ContributionsYearWithDays) {
-        val yAxisParams = ContributionsCountYAxisParams.getParamsForContributionYearCard(yearData)
 
         val entries = ArrayList<Entry>()
 

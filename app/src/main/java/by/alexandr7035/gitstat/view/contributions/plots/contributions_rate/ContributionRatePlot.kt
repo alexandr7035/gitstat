@@ -43,9 +43,7 @@ class ContributionRatePlot {
 
 
     fun setYearData(chart: LineChart, yearData: ContributionsYearWithRates) {
-        // YAxis params for the plot
         val maxContributionsRate = yearData.contributionRates.maxByOrNull { it.rate }?.rate
-        val yAxisParams = ContributionRatesYAxisParams.getRateYAxisParams(maxContributionsRate ?: 10f)
 
         // Get color params for the plot
         val plotFill = LinePlotFill.getPlotFillForYear(chart.context, yearData.year.id)
@@ -78,12 +76,8 @@ class ContributionRatePlot {
             data.isHighlightEnabled = false
 
             // Update axis params
-            axisLeft.valueFormatter = yAxisParams.yAxisValueFormatter
-//            axisLeft.axisMinimum = yAxisParams.minValue
-//            axisLeft.axisMaximum = yAxisParams.maxValue
-//            axisLeft.setLabelCount(yAxisParams.labelCount, true)
-
             axisLeft.setupYAxisValuesForContributionRate(maxContributionsRate ?: 0f)
+            axisLeft.valueFormatter = YValueFormatter(axisLeft.axisMinimum, axisLeft.axisMaximum)
         }
 
         // Update chart
