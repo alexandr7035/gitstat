@@ -10,7 +10,10 @@ import androidx.fragment.app.viewModels
 import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.databinding.ViewPlotContributionsYearBinding
 import by.alexandr7035.gitstat.extensions.debug
+import by.alexandr7035.gitstat.extensions.setupContributionsChartData
+import by.alexandr7035.gitstat.extensions.setupYearLineChartView
 import by.alexandr7035.gitstat.view.contributions.ContributionsViewModel
+import by.alexandr7035.gitstat.view.contributions.plots.DateMonthsValueFormatter
 import by.alexandr7035.gitstat.view.contributions.plots.LinePlotFill
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -66,12 +69,15 @@ class YearContributionsFragment: Fragment() {
                     binding?.yearCRLabel?.visibility = View.GONE
                 }
 
-                // Set plot data
-                val contributionsCountPlot = ContributionsCountPlot()
-                if (binding?.contributionsChart != null) {
-                    contributionsCountPlot.setupPLot(binding!!.contributionsChart)
-                    contributionsCountPlot.setYearData(binding!!.contributionsChart, yearData)
-                }
+                // Setup plot
+                binding?.contributionsChart?.setupYearLineChartView(DateMonthsValueFormatter())
+                // Populate plot with data
+                binding?.contributionsChart?.setupContributionsChartData(
+                    yearData,
+                    LinePlotFill.getPlotFillForYear(requireContext(), yearData.year.id)
+                )
+                // Update plot
+                binding?.contributionsChart?.invalidate()
             }
         })
 
