@@ -20,3 +20,11 @@ fun YAxis.setupYAxisValuesForContributions(topValue: Int) {
 }
 
 
+fun YAxis.setupYAxisValuesForContributionRate(topValue: Float) {
+    axisMinimum = 0f
+    axisMaximum = topValue
+
+    // Show only 2 labels (min and max values)
+    setLabelCount(2, true)
+}
+

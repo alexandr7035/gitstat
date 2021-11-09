@@ -1,6 +1,7 @@
 package by.alexandr7035.gitstat.view.contributions.plots.contributions_rate
 
 import by.alexandr7035.gitstat.data.local.model.ContributionsYearWithRates
+import by.alexandr7035.gitstat.extensions.setupYAxisValuesForContributionRate
 import by.alexandr7035.gitstat.view.contributions.plots.DateMonthsValueFormatter
 import by.alexandr7035.gitstat.view.contributions.plots.LinePlotFill
 import com.github.mikephil.charting.charts.LineChart
@@ -78,9 +79,11 @@ class ContributionRatePlot {
 
             // Update axis params
             axisLeft.valueFormatter = yAxisParams.yAxisValueFormatter
-            axisLeft.axisMinimum = yAxisParams.minValue
-            axisLeft.axisMaximum = yAxisParams.maxValue
-            axisLeft.setLabelCount(yAxisParams.labelCount, true)
+//            axisLeft.axisMinimum = yAxisParams.minValue
+//            axisLeft.axisMaximum = yAxisParams.maxValue
+//            axisLeft.setLabelCount(yAxisParams.labelCount, true)
+
+            axisLeft.setupYAxisValuesForContributionRate(maxContributionsRate ?: 0f)
         }
 
         // Update chart
