@@ -1,6 +1,7 @@
 package by.alexandr7035.gitstat.view.contributions.plots.contributions_per_year
 
 import by.alexandr7035.gitstat.data.local.model.ContributionsYearWithDays
+import by.alexandr7035.gitstat.extensions.setupYAxisValuesForContributions
 import by.alexandr7035.gitstat.view.contributions.plots.DateMonthsValueFormatter
 import by.alexandr7035.gitstat.view.contributions.plots.LinePlotFill
 import com.github.mikephil.charting.charts.LineChart
@@ -64,14 +65,15 @@ class ContributionsCountPlot {
 
         val lineData = LineData(dataset)
 
+        val topDay = yearData.contributionDays.maxByOrNull {
+            it.count
+        }
+
         chart.apply {
             data = lineData
             data.isHighlightEnabled = false
 
-            // Update axis params
-            axisLeft.axisMinimum = yAxisParams.minValue
-            axisLeft.axisMaximum = yAxisParams.maxValue
-            axisLeft.setLabelCount(yAxisParams.labelsCount, true)
+            axisLeft.setupYAxisValuesForContributions(topValue = topDay!!.count)
         }
 
         // Update chart
