@@ -1,17 +1,15 @@
 package by.alexandr7035.gitstat.extensions
 
-import by.alexandr7035.gitstat.data.local.model.ContributionsYearWithDays
 import by.alexandr7035.gitstat.view.contributions.plots.LinePlotFill
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IFillFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 
-fun LineChart.setupYearLineChartView(xValueFormatter: ValueFormatter) {
+fun LineChart.setupYearLineChartView(xValueFormatter: ValueFormatter?, yValueFormatter: ValueFormatter?) {
     // Disable legend
     legend.form = Legend.LegendForm.NONE
 
@@ -28,6 +26,7 @@ fun LineChart.setupYearLineChartView(xValueFormatter: ValueFormatter) {
     axisLeft.setDrawGridLines(false)
     axisLeft.axisMinimum = 0f
     axisLeft.textSize = 16f
+    axisLeft.valueFormatter = yValueFormatter
 
     // Setup X axis
     xAxis.position = XAxis.XAxisPosition.BOTTOM
@@ -37,14 +36,7 @@ fun LineChart.setupYearLineChartView(xValueFormatter: ValueFormatter) {
 }
 
 
-fun LineChart.setupContributionsChartData(yearData: ContributionsYearWithDays, linePlotFill: LinePlotFill) {
-    val entries = ArrayList<Entry>()
-
-    yearData.contributionDays.forEach { contributionDay ->
-        entries.add(Entry(contributionDay.date.toFloat(), contributionDay.count.toFloat()))
-    }
-
-    val dataset = LineDataSet(entries, "")
+fun LineChart.setChartData(dataset: LineDataSet, linePlotFill: LinePlotFill) {
 
     // Fill only from zero point
     dataset.fillFormatter = IFillFormatter { dataSet, dataProvider -> 0f }

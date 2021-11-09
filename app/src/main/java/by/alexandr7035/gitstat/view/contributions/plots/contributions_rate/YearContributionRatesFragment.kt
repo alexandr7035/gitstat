@@ -9,8 +9,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.databinding.FragmentYearContributionsRateBinding
+import by.alexandr7035.gitstat.extensions.setChartData
+import by.alexandr7035.gitstat.extensions.setupYAxisValuesForContributionRate
+import by.alexandr7035.gitstat.extensions.setupYearLineChartView
 import by.alexandr7035.gitstat.view.contributions.ContributionsViewModel
+import by.alexandr7035.gitstat.view.contributions.plots.DateMonthsValueFormatter
 import by.alexandr7035.gitstat.view.contributions.plots.LinePlotFill
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineDataSet
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -39,13 +45,6 @@ class YearContributionRatesFragment : Fragment() {
                     it.year.id == year
                 }!!
 
-                // Setup plot
-                if (binding?.rateChart != null) {
-                    val plot = ContributionRatePlot()
-                    plot.setupPLot(binding!!.rateChart)
-                    plot.setYearData(binding!!.rateChart, yearData)
-                }
-
                 // Set year title
                 binding?.year?.text = yearData.year.id.toString()
 
@@ -65,6 +64,32 @@ class YearContributionRatesFragment : Fragment() {
                 binding?.lastCRView?.background = bg
                 binding?.lastCRView?.text = lastContributionRate.toString()
 
+
+                // Prepare plot dataset
+                // TODO move out of fragment
+                val entries = ArrayList<Entry>()
+                yearData.contributionRates.forEach { contributionRate ->
+                    entries.add(Entry(contributionRate.date.toFloat(), contributionRate.rate))
+                }
+                val dataset = LineDataSet(entries, "")
+
+                // Setup plot
+                binding?.rateChart?.setupYearLineChartView(
+                    xValueFormatter = DateMonthsValueFormatter(),
+                    yValueFormatter = ContributionRateYValueFormatter(0f, maxContributionsRate)
+                )
+                binding?.rateChart?.setExtraOffsets(10f,0f,10f,0f)
+
+                // Populate plot with data
+                binding?.rateChart?.setChartData(
+                    dataset,
+                    LinePlotFill.getPlotFillForYear(requireContext(), yearData.year.id)
+                )
+
+                // Setup left axis
+                binding?.rateChart?.axisLeft?.setupYAxisValuesForContributionRate(topValue = maxContributionsRate)
+                // Update data
+                binding?.rateChart?.invalidate()
             }
         })
 

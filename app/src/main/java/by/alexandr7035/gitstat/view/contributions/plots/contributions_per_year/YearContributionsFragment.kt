@@ -10,11 +10,14 @@ import androidx.fragment.app.viewModels
 import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.databinding.ViewPlotContributionsYearBinding
 import by.alexandr7035.gitstat.extensions.debug
-import by.alexandr7035.gitstat.extensions.setupContributionsChartData
+import by.alexandr7035.gitstat.extensions.setChartData
+import by.alexandr7035.gitstat.extensions.setupYAxisValuesForContributions
 import by.alexandr7035.gitstat.extensions.setupYearLineChartView
 import by.alexandr7035.gitstat.view.contributions.ContributionsViewModel
 import by.alexandr7035.gitstat.view.contributions.plots.DateMonthsValueFormatter
 import by.alexandr7035.gitstat.view.contributions.plots.LinePlotFill
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineDataSet
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -69,12 +72,29 @@ class YearContributionsFragment: Fragment() {
                     binding?.yearCRLabel?.visibility = View.GONE
                 }
 
+                // Prepare data for plot
+                // TODO move out of fragment
+                val entries = ArrayList<Entry>()
+                yearData.contributionDays.forEach { contributionDay ->
+                    entries.add(Entry(contributionDay.date.toFloat(), contributionDay.count.toFloat()))
+                }
+                val dataset = LineDataSet(entries, "")
+
                 // Setup plot
-                binding?.contributionsChart?.setupYearLineChartView(DateMonthsValueFormatter())
+                binding?.contributionsChart?.setupYearLineChartView(
+                    xValueFormatter = DateMonthsValueFormatter(),
+                    yValueFormatter = null
+                )
+
                 // Populate plot with data
-                binding?.contributionsChart?.setupContributionsChartData(
-                    yearData,
+                binding?.contributionsChart?.setChartData(
+                    dataset,
                     LinePlotFill.getPlotFillForYear(requireContext(), yearData.year.id)
+                )
+
+                // Setup left axis
+                binding?.contributionsChart?.axisLeft?.setupYAxisValuesForContributions(
+                    yearData.contributionDays.maxByOrNull { it.count }?.count ?: 0
                 )
                 // Update plot
                 binding?.contributionsChart?.invalidate()
