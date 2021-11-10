@@ -2,12 +2,12 @@ package by.alexandr7035.gitstat.extensions
 
 import android.graphics.Color
 import android.graphics.Typeface
-import android.service.autofill.Dataset
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.formatter.ValueFormatter
 
-fun BarChart.setupHorizontalBarChart() {
+fun BarChart.setupHorizontalBarChart(valueFormatter: ValueFormatter?) {
    // Disable legend and description
    // Use custom legend based on RecyclerView
    description.isEnabled = false
@@ -25,15 +25,17 @@ fun BarChart.setupHorizontalBarChart() {
     // Setup left axis
     axisLeft.textSize = 16f
     axisLeft.setDrawAxisLine(false)
+    axisLeft.setDrawGridLines(false)
+    axisLeft.valueFormatter = valueFormatter
     // Space between axis and labels
     axisLeft.yOffset = 10f
 }
 
 
-fun BarChart.setChartData(dataset: BarDataSet, chartColors: List<Int>) {
+fun BarChart.setChartData(dataset: BarDataSet) {
 
     dataset.apply {
-        colors = chartColors
+        setTouchEnabled(false)
         valueTextSize = 20f
         valueTextColor = Color.WHITE
         valueTypeface = Typeface.defaultFromStyle(Typeface.BOLD)
