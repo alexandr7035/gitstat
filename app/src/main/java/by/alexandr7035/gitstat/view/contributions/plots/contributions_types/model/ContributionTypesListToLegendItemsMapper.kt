@@ -67,7 +67,7 @@ class ContributionTypesListToLegendItemsMapper private constructor() {
 
         private fun getPercentage(value: Float): String {
             val percentage = ceil(value * 100) / 100
-            return "$percentage"
+            return "$percentage%"
         }
 
     }

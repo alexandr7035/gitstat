@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import by.alexandr7035.gitstat.databinding.ViewContributionTypesPlotLegendItemBinding
+import by.alexandr7035.gitstat.view.contributions.plots.contributions_types.model.TypesLegendItem
 
 class TypesLegendAdapter: RecyclerView.Adapter<TypesLegendAdapter.ViewHolder>() {
 
@@ -22,7 +23,7 @@ class TypesLegendAdapter: RecyclerView.Adapter<TypesLegendAdapter.ViewHolder>() 
         // FIXME test
         holder.binding.countView.text = items[position].count.toString()
         holder.binding.label.text = items[position].label
-        holder.binding.percentageView.text = "${items[position].percentage}%"
+        holder.binding.percentageView.text = items[position].percentage
 
         (holder.binding.coloredMark.background as GradientDrawable).setColor(items[position].color)
     }
