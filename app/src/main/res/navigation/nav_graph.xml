@@ -60,12 +60,12 @@
             android:id="@+id/archivedRepositoriesFragment"
             android:name="by.alexandr7035.gitstat.view.repositories.ArchivedRepositoriesFragment"
             android:label="fragment_archived_repositories"
-            tools:layout="@layout/fragment_archived_repositories" />
+            tools:layout="@layout/fragment_repositories_recycler" />
         <fragment
             android:id="@+id/activeRepositoriesFragment"
             android:name="by.alexandr7035.gitstat.view.repositories.ActiveRepositoriesFragment"
             android:label="fragment_repositories_list"
-            tools:layout="@layout/fragment_active_repositories" />
+            tools:layout="@layout/fragment_repositories_recycler" />
         <fragment
             android:id="@+id/repositoriesListHostFragment"
             android:name="by.alexandr7035.gitstat.view.repositories.RepositoriesListHostFragment"

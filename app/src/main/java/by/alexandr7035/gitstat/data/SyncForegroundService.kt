@@ -3,7 +3,7 @@ package by.alexandr7035.gitstat.data
 import android.app.Notification
 import android.app.PendingIntent
 import android.content.Intent
-import android.os.IBinder
+import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.LifecycleService
@@ -77,7 +77,15 @@ class SyncForegroundService: LifecycleService() {
     private fun getNotification(title: String, message: String): Notification {
 
         val notificationIntent = Intent(this, MainActivity::class.java)
-        val pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0)
+
+        val mutabilityFlag = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            PendingIntent.FLAG_IMMUTABLE
+        }
+        else {
+            PendingIntent.FLAG_UPDATE_CURRENT
+        }
+
+        val pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, mutabilityFlag)
 
         return NotificationCompat.Builder(this, getString(R.string.NOTIFICATION_CHANNEL_ID))
             .setContentTitle(title)

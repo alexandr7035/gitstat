@@ -27,7 +27,6 @@
     <string name="repos">Repositories</string>
 
     <string name="profile">Profile</string>
-    <string name="show_more_underlined"><u>Show more</u></string>
     <string name="total_repos">Total repos</string>
     <string name="public_repos">Public repos</string>
     <string name="private_repos">Private repos</string>
@@ -45,13 +44,9 @@
     <string name="private_start_capital">Private</string>
     <string name="public_start_capital">Public</string>
 
-    <string name="logout_underlined"><u>Log out</u></string>
-
     <string name="error_cant_get_data_remote">Failed to get data from GitHub. Check your internet connection and try again</string>
     <string name="error_sync_authorization">Something is wrong with your authorization token. It may have expired or was revoked. Try to login again.</string>
     <string name="authorization_error">Authorization error</string>
-
-    <string name="last_cache">Last cache: %1$s</string>
 
     <string name="repositories_by_language">Repositories by language</string>
     <string name="more_underlined"><u>More</u></string>
@@ -103,9 +98,6 @@
     <string name="failed_load_page">Failed to load the page. Check your Internet connection and try again.</string>
     <string name="error">Error</string>
     <string name="contribution_types">Contribution types</string>
-
-    <string name="sync_data">Sync data</string>
-    <string name="sync_the_data_now">Sync the data now?</string>
 
     <string name="log_out_message">Press "log out" to clear cache and token. You will be taken to the login page.</string>
     <string name="last_cr">Last CR</string>

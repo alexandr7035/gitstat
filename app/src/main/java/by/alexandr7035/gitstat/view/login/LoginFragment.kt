@@ -82,7 +82,7 @@ class LoginFragment: Fragment() {
 
 
         val privacyPolicyText = getString(R.string.privacy_policy_text).getClickableSpannable(
-            clickListener = View.OnClickListener {
+            clickListener = {
                 showPrivacyPolicy()
             },
             clickableText = getString(R.string.privacy_policy_clickable),

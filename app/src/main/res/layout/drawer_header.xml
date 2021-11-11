@@ -3,7 +3,6 @@
     android:id="@+id/drawerHeader"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/white"
     android:layout_width="match_parent"
     android:padding="20dp"
     android:layout_height="wrap_content">
@@ -24,7 +23,7 @@
         android:layout_marginTop="10dp"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="Name Name"
+        tools:text="Name Lastname"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/drawerProfileImage"/>
 
@@ -36,7 +35,7 @@
         android:layout_marginTop="5dp"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="\@userId"
+        tools:text="\@userId"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/drawerNameView"/>
 
