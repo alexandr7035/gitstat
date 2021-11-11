@@ -10,11 +10,16 @@ import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.databinding.FragmentContributionsBinding
+import by.alexandr7035.gitstat.extensions.setChartData
+import by.alexandr7035.gitstat.extensions.setupHorizontalBarChart
+import by.alexandr7035.gitstat.extensions.setupYAxisValuesForContributionTypes
 import by.alexandr7035.gitstat.view.MainActivity
 import by.alexandr7035.gitstat.view.contributions.plots.contributions_per_year.YearContributionsAdapter
 import by.alexandr7035.gitstat.view.contributions.plots.contributions_rate.YearContributionRatesAdapter
-import by.alexandr7035.gitstat.view.contributions.plots.contributions_ratio.ContributionsRatioPlot
-import by.alexandr7035.gitstat.view.contributions.plots.contributions_ratio.RatioLegendAdapter
+import by.alexandr7035.gitstat.view.contributions.plots.contributions_types.RemoveThousandsSepFormatter
+import by.alexandr7035.gitstat.view.contributions.plots.contributions_types.TypesLegendAdapter
+import by.alexandr7035.gitstat.view.contributions.plots.contributions_types.model.ContributionTypesListToBarDataSetMapper
+import by.alexandr7035.gitstat.view.contributions.plots.contributions_types.model.ContributionTypesListToLegendItemsMapper
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,91 +31,134 @@ class ContributionsFragment : Fragment() {
     private var binding: FragmentContributionsBinding? = null
     private val viewModel by viewModels<ContributionsViewModel>()
 
-    private lateinit var yearContributionsAdapter: YearContributionsAdapter
-    private lateinit var yearContributionsRateAdapter: YearContributionRatesAdapter
+//    private lateinit var yearContributionsAdapter: YearContributionsAdapter
+//    private lateinit var yearContributionsRateAdapter: YearContributionRatesAdapter
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentContributionsBinding.inflate(inflater, container, false)
-
-        // Inflate the layout for this fragment
         return binding!!.root
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Adapter for contributions count plot
+        val yearContributionsAdapter = YearContributionsAdapter(this)
+        binding?.yearsViewPager?.adapter = yearContributionsAdapter
+
+        // Adapter for contribution rate plot
+        val yearContributionsRateAdapter = YearContributionRatesAdapter(this)
+        binding?.rateViewPager?.adapter = yearContributionsRateAdapter
+
+        // Adapter for legend on contribution types plot
+        val typesLegendAdapter = TypesLegendAdapter()
+        binding?.contributionTypesLegendRecycler?.layoutManager = FlexboxLayoutManager(requireContext())
+        binding?.contributionTypesLegendRecycler?.adapter = typesLegendAdapter
+
         // Update data
         viewModel.getContributionYearsLiveData().observe(viewLifecycleOwner, { years ->
 
-            if (years.isNotEmpty()) {
-                yearContributionsAdapter = YearContributionsAdapter(this)
-                yearContributionsAdapter.setItems(years)
-                binding?.yearsViewPager?.adapter = yearContributionsAdapter
+            if (years != null) {
 
-                // Set to last position
-                binding?.yearsViewPager?.setCurrentItem(years.size - 1, false)
-                binding?.currentYearView?.text = years[years.size-1].year.id.toString()
+                if (years.isNotEmpty()) {
 
-                // Change year in card title when viewpager item changes
-                binding?.yearsViewPager?.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
-                    override fun onPageSelected(position: Int) {
-                        super.onPageSelected(position)
-                        Timber.d("Page changed callback")
-                        binding?.currentYearView?.text = years[position].year.id.toString()
-                    }
-                })
+                    yearContributionsAdapter.setItems(years)
 
-                // Attach tablayout
-                TabLayoutMediator(binding!!.yearsTabLayout, binding!!.yearsViewPager) {
-                        tab, position ->
-                }.attach()
+                    // Set to last position
+                    binding?.yearsViewPager?.setCurrentItem(years.size - 1, false)
+                    binding?.currentYearView?.text = years[years.size - 1].year.id.toString()
 
+                    // Change year in card title when viewpager item changes
+                    binding?.yearsViewPager?.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                        override fun onPageSelected(position: Int) {
+                            super.onPageSelected(position)
+                            Timber.d("Page changed callback")
+                            binding?.currentYearView?.text = years[position].year.id.toString()
+                        }
+                    })
+
+                    // Attach tablayout
+                    TabLayoutMediator(binding!!.yearsTabLayout, binding!!.yearsViewPager) { tab, position ->
+                    }.attach()
+
+                }
             }
         })
 
 
         viewModel.getContributionDaysLiveData().observe(viewLifecycleOwner, { contributions ->
-            val totalContributions = contributions.sumOf { it.count }
-            binding?.totalContributions?.text = totalContributions.toString()
+            if (contributions != null) {
+                val totalContributions = contributions.sumOf { it.count }
+                binding?.totalContributions?.text = totalContributions.toString()
+            }
         })
 
 
         viewModel.getContributionYearsWithRatesLiveData().observe(viewLifecycleOwner, { rateYears ->
 
-            if (rateYears.isNotEmpty()) {
-                yearContributionsRateAdapter = YearContributionRatesAdapter(this)
-                yearContributionsRateAdapter.setItems(rateYears)
-                binding?.rateViewPager?.adapter = yearContributionsRateAdapter
+            if (rateYears != null) {
 
-                TabLayoutMediator(binding!!.rateTabLayout, binding!!.rateViewPager) { tab, position ->
-                }.attach()
+                if (rateYears.isNotEmpty()) {
+                    yearContributionsRateAdapter.setItems(rateYears)
 
-                // Set to last position
-                binding?.rateViewPager?.setCurrentItem(rateYears.size - 1, false)
+                    TabLayoutMediator(binding!!.rateTabLayout, binding!!.rateViewPager) { tab, position ->
+                    }.attach()
 
-                // Set total contribution rate in header
-                binding?.contributionsRate?.text = viewModel.getLastTotalContributionRateForYear(rateYears[rateYears.size - 1]).toString()
+                    // Set to last position
+                    binding?.rateViewPager?.setCurrentItem(rateYears.size - 1, false)
+
+                    // Set total contribution rate in header
+                    binding?.contributionsRate?.text =
+                        viewModel.getLastTotalContributionRateForYear(rateYears[rateYears.size - 1]).toString()
+                }
             }
         })
 
 
-        viewModel.getContributionsRatioLiveData().observe(viewLifecycleOwner, { ratios ->
-            Timber.d("ratios $ratios")
 
-            // FIXME
-            val adapter = RatioLegendAdapter()
-            binding?.ratioLegendRecycler?.layoutManager = FlexboxLayoutManager(requireContext())
-            binding?.ratioLegendRecycler?.adapter = adapter
 
-            if (binding?.ratioChart != null) {
-                val plot = ContributionsRatioPlot()
-                plot.setupPlot(binding!!.ratioChart, ratios)
-                adapter.setItems(plot.getRatioLegendItems(binding!!.ratioChart, ratios))
+        viewModel.getContributionTypesLiveData().observe(viewLifecycleOwner, { typesData ->
+
+            if (typesData != null) {
+
+                // Detect max value
+                // FIXME find better solution
+                val commits = typesData.sumOf { it.commitContributions }
+                val issues = typesData.sumOf { it.issueContributions }
+                val pullRequests = typesData.sumOf { it.pullRequestContributions }
+                val reviews = typesData.sumOf { it.pullRequestReviewContributions }
+                val repositories = typesData.sumOf { it.repositoryContributions }
+                val unknown = typesData.sumOf { it.unknownContributions }
+
+                // FIXME refactoring
+                val maxValue = listOf(
+                    commits,
+                    issues,
+                    pullRequests,
+                    reviews,
+                    repositories,
+                    unknown
+                ).maxByOrNull {
+                    it
+                } ?: 0
+
+
+                // Setup chart
+                binding?.contributionTypesChart?.setupHorizontalBarChart(RemoveThousandsSepFormatter())
+
+                // Populate chart with data
+                binding?.contributionTypesChart?.setChartData(ContributionTypesListToBarDataSetMapper.map(typesData, requireContext()))
+                binding?.contributionTypesChart?.invalidate()
+
+                // Chart axis
+                binding?.contributionTypesChart?.axisLeft?.setupYAxisValuesForContributionTypes(maxValue)
+
+                // Chart margins
+                binding?.contributionTypesChart?.setExtraOffsets(10f,0f,30f,0f)
+
+                // Update legend
+                typesLegendAdapter.setItems(ContributionTypesListToLegendItemsMapper.map(typesData, requireContext()))
+
             }
         })
 

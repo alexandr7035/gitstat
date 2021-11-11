@@ -19,6 +19,12 @@
         <action
             android:id="@+id/action_loginFragment_to_webViewFragment"
             app:destination="@id/webViewFragment" />
+
+        <action
+            android:id="@+id/action_loginFragment_to_profileFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true"
+            app:destination="@id/profileFragment" />
     </fragment>
 
     <fragment
@@ -54,12 +60,12 @@
             android:id="@+id/archivedRepositoriesFragment"
             android:name="by.alexandr7035.gitstat.view.repositories.ArchivedRepositoriesFragment"
             android:label="fragment_archived_repositories"
-            tools:layout="@layout/fragment_archived_repositories" />
+            tools:layout="@layout/fragment_repositories_recycler" />
         <fragment
             android:id="@+id/activeRepositoriesFragment"
             android:name="by.alexandr7035.gitstat.view.repositories.ActiveRepositoriesFragment"
             android:label="fragment_repositories_list"
-            tools:layout="@layout/fragment_active_repositories" />
+            tools:layout="@layout/fragment_repositories_recycler" />
         <fragment
             android:id="@+id/repositoriesListHostFragment"
             android:name="by.alexandr7035.gitstat.view.repositories.RepositoriesListHostFragment"
@@ -96,16 +102,13 @@
             android:name="by.alexandr7035.gitstat.view.datasync.SyncPendingFragment"
             android:label="fragment_sync_pending"
             tools:layout="@layout/fragment_sync_pending" />
-        <fragment
-            android:id="@+id/syncFailedWithCacheFragment"
-            android:name="by.alexandr7035.gitstat.view.datasync.SyncFailedWithCacheFragment"
-            android:label="SyncFailedWithCacheFragment"
-            tools:layout="@layout/fragment_sync_failed_with_cache"/>
+
         <fragment
             android:id="@+id/syncFailedNoCacheFragment"
-            android:name="by.alexandr7035.gitstat.view.datasync.SyncFailedNoCacheFragment"
+            android:name="by.alexandr7035.gitstat.view.datasync.SyncFailedNetworkFragment"
             android:label="fragment_sync_failed_no_cache"
-            tools:layout="@layout/fragment_sync_failed_no_cache" />
+            tools:layout="@layout/fragment_sync_failed_network" />
+
         <action
             android:id="@+id/action_global_profileFragment"
             app:popUpTo="@id/syncGraph"

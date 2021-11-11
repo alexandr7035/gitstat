@@ -74,7 +74,6 @@ class ActiveRepositoriesFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-
         binding = null
     }
 }

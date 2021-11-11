@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:padding="10dp"
     android:orientation="vertical"
-    tools:context=".view.datasync.SyncFailedNoCacheFragment">
+    tools:context=".view.datasync.SyncFailedNetworkFragment">
 
     <TextView
         android:id="@+id/dialogTitle"

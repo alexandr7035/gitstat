@@ -3,6 +3,7 @@
     package="by.alexandr7035.gitstat">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
     <application
         android:name=".core.App"
@@ -23,6 +24,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service android:name=".data.SyncForegroundService" android:exported="false" android:enabled="true">
+        </service>
 
     </application>
 

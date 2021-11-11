@@ -1,6 +1,7 @@
 package by.alexandr7035.gitstat.data
 
-import by.alexandr7035.gitstat.core.AppPreferences
+import androidx.lifecycle.LiveData
+import by.alexandr7035.gitstat.core.KeyValueStorage
 import by.alexandr7035.gitstat.core.Language
 import by.alexandr7035.gitstat.data.local.dao.RepositoriesDao
 import by.alexandr7035.gitstat.data.local.model.RepositoryEntity
@@ -10,8 +11,12 @@ import javax.inject.Inject
 
 class ReposRepository @Inject constructor(
     private val dao: RepositoriesDao,
-    private val appPreferences: AppPreferences,
+    private val keyValueStorage: KeyValueStorage,
     private val gson: Gson) {
+
+    fun getRepositoriesLiveData(): LiveData<List<RepositoryEntity>>{
+        return dao.getRepositoriesLiveData()
+    }
 
     suspend fun fetchAllRepositoriesFromDb(): List<RepositoryEntity> {
         return dao.getRepositories()
@@ -28,7 +33,7 @@ class ReposRepository @Inject constructor(
 
     // Filters
     fun getRepositoriesFilters(): ReposFilters {
-        val filtersStr = appPreferences.repositoriesFilters
+        val filtersStr = keyValueStorage.getRepositoriesFilters()
 
         return if (filtersStr == null) {
             // New instance with default params
@@ -42,7 +47,7 @@ class ReposRepository @Inject constructor(
 
 
     fun saveRepositoriesFilters(filters: ReposFilters) {
-        appPreferences.repositoriesFilters = gson.toJson(filters)
+        keyValueStorage.saveRepositoriesFilters(gson.toJson(filters))
     }
 
 

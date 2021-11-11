@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import by.alexandr7035.gitstat.data.ContributionsRepository
 import by.alexandr7035.gitstat.data.local.model.ContributionDayEntity
-import by.alexandr7035.gitstat.data.local.model.ContributionsRatioEntity
+import by.alexandr7035.gitstat.data.local.model.ContributionTypesEntity
 import by.alexandr7035.gitstat.data.local.model.ContributionsYearWithDays
 import by.alexandr7035.gitstat.data.local.model.ContributionsYearWithRates
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -29,8 +29,8 @@ class ContributionsViewModel @Inject constructor(private val repository: Contrib
         return repository.getContributionYearsWithDaysLiveData()
     }
 
-    fun getContributionsRatioLiveData(): LiveData<List<ContributionsRatioEntity>> {
-        return repository.getContributionsRatioLiveData()
+    fun getContributionTypesLiveData(): LiveData<List<ContributionTypesEntity>> {
+        return repository.getContributionTypesLiveData()
     }
 
     fun getMaxContributionRateForYear(yearData: ContributionsYearWithRates): Float {

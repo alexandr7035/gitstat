@@ -7,14 +7,14 @@
     android:layout_height="wrap_content"
     android:padding="10dp"
     android:orientation="vertical"
-    tools:context=".view.datasync.SyncFailedNoCacheFragment">
+    tools:context=".view.datasync.SyncFailedNetworkFragment">
 
     <TextView
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
-        android:text="@string/sync_the_data_now"
+        android:text="@string/failed_to_sync_data"
         android:textColor="@color/gray_500"
         android:textSize="18sp" />
 
@@ -25,31 +25,15 @@
         android:layout_height="wrap_content"
         android:textColor="@color/gray_400"
         android:textSize="16sp"
-        android:text="@string/sync_cache_suggestion" />
-
-    <TextView
-        android:id="@+id/cacheSyncDateView"
-        android:layout_marginTop="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/gray_400"
-        android:textSize="16sp"
-        tools:text="Last sync: 18.02.2020 22:00" />
+        android:text="@string/error_cant_get_data_remote"
+        tools:text="@string/error_cant_get_data_remote" />
 
     <TextView
         style="@style/PrimaryButton"
-        android:id="@+id/syncBtn"
+        android:id="@+id/retryBtn"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/sync_data"/>
-
-    <TextView
-        style="@style/PrimaryButton"
-        android:id="@+id/loadCacheBtn"
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/load_from_cache"/>
+        android:text="@string/retry"/>
 
 </LinearLayout>

@@ -2,7 +2,7 @@ package by.alexandr7035.gitstat.di
 
 import android.app.Application
 import androidx.room.Room
-import by.alexandr7035.gitstat.core.AppPreferences
+import by.alexandr7035.gitstat.core.KeyValueStorage
 import by.alexandr7035.gitstat.core.TimeHelper
 import by.alexandr7035.gitstat.data.*
 import by.alexandr7035.gitstat.data.local.CacheDB
@@ -31,8 +31,8 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideApollo(appPreferences: AppPreferences): ApolloClient {
-        return ApolloClient(networkTransport = HttpNetworkTransport("https://api.github.com/graphql", interceptors = listOf(AuthInterceptor(appPreferences), ErrorInterceptor())))
+    fun provideApollo(keyValueStorage: KeyValueStorage): ApolloClient {
+        return ApolloClient(networkTransport = HttpNetworkTransport("https://api.github.com/graphql", interceptors = listOf(AuthInterceptor(keyValueStorage), ErrorInterceptor())))
     }
 
     /////////////////////////////////////
@@ -43,9 +43,9 @@ object AppModule {
     @Singleton
     fun provideReposRepository(
         dao: RepositoriesDao,
-        appPreferences: AppPreferences,
+        keyValueStorage: KeyValueStorage,
         gson: Gson): ReposRepository {
-        return ReposRepository(dao, appPreferences, gson)
+        return ReposRepository(dao, keyValueStorage, gson)
     }
 
     @Provides
@@ -56,26 +56,8 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideSyncRepository(
-        apolloClient: ApolloClient,
-        db: CacheDB,
-        userDao: UserDao,
-        contributionsDao: ContributionsDao,
-        repositoriesDao: RepositoriesDao,
-        profileMapper: UserRemoteToCacheMapper,
-        repositoriesMapper: RepositoriesRemoteToCacheMapper,
-        contributionsMapper: ContributionsDaysListRemoteToCacheMapper,
-        daysToRatesMapper: ContributionDaysToRatesMapper,
-        ratioMapper: ContributionsRatioRemoteToCacheMapper,
-        timeHelper: TimeHelper,
-        appPreferences: AppPreferences): SyncRepository {
-        return SyncRepository(apolloClient, db, userDao, repositoriesDao, contributionsDao, profileMapper, repositoriesMapper, contributionsMapper, ratioMapper, daysToRatesMapper, timeHelper, appPreferences)
-    }
-
-    @Provides
-    @Singleton
-    fun provideAuthRepository(apolloClient: ApolloClient, appPreferences: AppPreferences): AuthRepository {
-        return AuthRepository(appPreferences)
+    fun provideAuthRepository(keyValueStorage: KeyValueStorage): AuthRepository {
+        return AuthRepository(keyValueStorage)
     }
 
     @Provides
@@ -83,9 +65,27 @@ object AppModule {
     fun provideContributionsRepository(
         dao: ContributionsDao,
         timeHelper: TimeHelper,
-        appPreferences: AppPreferences
+        keyValueStorage: KeyValueStorage
     ): ContributionsRepository{
-        return ContributionsRepository(dao, timeHelper, appPreferences)
+        return ContributionsRepository(dao, timeHelper, keyValueStorage)
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideDataSyncRepository(
+        apolloClient: ApolloClient,
+        db: CacheDB,
+        timeHelper: TimeHelper,
+        keyValueStorage: KeyValueStorage,
+
+        profileMapper: UserRemoteToCacheMapper,
+        repositoriesMapper: RepositoriesRemoteToCacheMapper,
+        contributionsMapper: ContributionsDaysListRemoteToCacheMapper,
+        contributionTypesMapper: ContributionTypesRemoteToCacheMapper,
+        daysToRatesMapper: ContributionDaysToRatesMapper
+    ): DataSyncRepository {
+        return DataSyncRepository(apolloClient, db, timeHelper, keyValueStorage, profileMapper, repositoriesMapper, contributionsMapper, contributionTypesMapper, daysToRatesMapper)
     }
 
     /////////////////////////////////////
@@ -108,8 +108,8 @@ object AppModule {
     }
 
     @Provides
-    fun provideContributionsRatioMapper(timeHelper: TimeHelper): ContributionsRatioRemoteToCacheMapper {
-        return ContributionsRatioRemoteToCacheMapper(timeHelper)
+    fun provideContributionTypesMapper(timeHelper: TimeHelper): ContributionTypesRemoteToCacheMapper {
+        return ContributionTypesRemoteToCacheMapper(timeHelper)
     }
 
     @Provides
@@ -123,7 +123,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideAppPrefs(application: Application): AppPreferences {
+    fun provideAppPrefs(application: Application): KeyValueStorage {
         return AppPreferences(application)
     }
 

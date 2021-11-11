@@ -1,4 +1,4 @@
-query ContributionsRatioQuery($date_from: DateTime, $date_to: DateTime) {
+query ContributionTypesQuery($date_from: DateTime, $date_to: DateTime) {
     viewer {
         contributionsCollection(from: $date_from, to: $date_to) {
             totalPullRequestReviewContributions

@@ -1,5 +1,6 @@
 package by.alexandr7035.gitstat.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
@@ -12,6 +13,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import by.alexandr7035.gitstat.R
+import by.alexandr7035.gitstat.data.SyncForegroundService
 import by.alexandr7035.gitstat.databinding.ActivityMainBinding
 import by.alexandr7035.gitstat.view.profile.ProfileViewModel
 import com.squareup.picasso.Picasso
@@ -75,12 +77,13 @@ class MainActivity : AppCompatActivity() {
 
 
         if (viewModel.checkIfTokenSaved()) {
-            startSyncData()
+            if (viewModel.checkIfCacheExists()) {
+                navController.navigate(R.id.action_loginFragment_to_profileFragment)
+            }
+            else {
+                startSyncData()
+            }
         }
-        else {
-            // TODO
-        }
-
 
         // Drawer settings
         val drawerPictureView = binding.drawerNavigationView.getHeaderView(0).findViewById<CircleImageView>(R.id.drawerProfileImage)
@@ -103,13 +106,14 @@ class MainActivity : AppCompatActivity() {
                     drawerNameView.text = it.name
                 }
 
-                drawerLoginView.text = "@${it.login}"
+                drawerLoginView.text = getString(R.string.login_string, it.login)
             }
         })
 
         binding.drawerNavigationView.setNavigationItemSelectedListener { menuItem ->
 
             when (menuItem.itemId) {
+
                 R.id.item_logout ->  {
                     navController.navigate(R.id.action_global_logoutConfirmationDialog)
                     binding.drawerLayout.closeDrawer(GravityCompat.START)
@@ -129,7 +133,11 @@ class MainActivity : AppCompatActivity() {
         syncDateView.text = viewModel.getCacheSyncDate().replace(" ", "\n")
 
         resyncBtn.setOnClickListener {
-            navController.navigate(R.id.action_global_syncGraph)
+            // Sync data in foreground service
+            val intent = Intent(this, SyncForegroundService::class.java)
+            startService(intent)
+
+            closeDrawerMenu()
         }
     }
 
@@ -151,12 +159,17 @@ class MainActivity : AppCompatActivity() {
     fun syncFinishedCallback() {
         navController.navigate(R.id.action_global_profileFragment)
 
+        // Update sync date in drawer
         val syncDateView = binding.drawerNavigationView.getHeaderView(0).findViewById<TextView>(R.id.syncDate)
         syncDateView.text = viewModel.getCacheSyncDate().replace(" ", "\n")
     }
 
     fun openDrawerMenu() {
         binding.drawerLayout.openDrawer(GravityCompat.START)
+    }
+
+    fun closeDrawerMenu() {
+        binding.drawerLayout.closeDrawer(GravityCompat.START)
     }
 
 }

@@ -1,13 +1,14 @@
 package by.alexandr7035.gitstat.data.remote.mappers
 
+import by.alexandr7035.gitstat.core.Mapper
 import by.alexandr7035.gitstat.core.TimeHelper
 import by.alexandr7035.gitstat.data.local.model.ContributionDayEntity
 import by.alexandr7035.gitstat.data.local.model.ContributionRateEntity
 import timber.log.Timber
 import kotlin.math.round
 
-class ContributionDaysToRatesMapper(private val timeHelper: TimeHelper) {
-    fun transform(data: List<ContributionDayEntity>): List<ContributionRateEntity> {
+class ContributionDaysToRatesMapper(private val timeHelper: TimeHelper): Mapper<List<ContributionDayEntity>, List<ContributionRateEntity>> {
+    override fun transform(data: List<ContributionDayEntity>): List<ContributionRateEntity> {
 
         val rates = ArrayList<ContributionRateEntity>()
 

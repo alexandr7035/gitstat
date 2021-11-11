@@ -1,20 +1,21 @@
-package by.alexandr7035.gitstat.view.contributions.plots.contributions_ratio
+package by.alexandr7035.gitstat.view.contributions.plots.contributions_types
 
 import android.annotation.SuppressLint
 import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import by.alexandr7035.gitstat.databinding.ViewRatioPlotLegendItemBinding
+import by.alexandr7035.gitstat.databinding.ViewContributionTypesPlotLegendItemBinding
+import by.alexandr7035.gitstat.view.contributions.plots.contributions_types.model.TypesLegendItem
 
-class RatioLegendAdapter: RecyclerView.Adapter<RatioLegendAdapter.ViewHolder>() {
+class TypesLegendAdapter: RecyclerView.Adapter<TypesLegendAdapter.ViewHolder>() {
 
-    private var items: List<RatioLegendItem> = emptyList()
+    private var items: List<TypesLegendItem> = emptyList()
 
-    class ViewHolder(val binding: ViewRatioPlotLegendItemBinding): RecyclerView.ViewHolder(binding.root)
+    class ViewHolder(val binding: ViewContributionTypesPlotLegendItemBinding): RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ViewRatioPlotLegendItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ViewContributionTypesPlotLegendItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
@@ -22,7 +23,7 @@ class RatioLegendAdapter: RecyclerView.Adapter<RatioLegendAdapter.ViewHolder>() 
         // FIXME test
         holder.binding.countView.text = items[position].count.toString()
         holder.binding.label.text = items[position].label
-        holder.binding.percentageView.text = "${items[position].percentage}%"
+        holder.binding.percentageView.text = items[position].percentage
 
         (holder.binding.coloredMark.background as GradientDrawable).setColor(items[position].color)
     }
@@ -32,7 +33,7 @@ class RatioLegendAdapter: RecyclerView.Adapter<RatioLegendAdapter.ViewHolder>() 
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setItems(items: List<RatioLegendItem>) {
+    fun setItems(items: List<TypesLegendItem>) {
         this.items = items
         notifyDataSetChanged()
     }

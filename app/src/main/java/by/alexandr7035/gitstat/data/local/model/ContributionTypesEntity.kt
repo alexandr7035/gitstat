@@ -5,13 +5,13 @@ import androidx.room.PrimaryKey
 
 
 // The real number of contributions obtained from summarizing contribution days may differ
-// from sum of them in ContributionsRatioEntity due to API behaviour
-// Some contributions are not included in ContributionsRatioEntity
+// from sum of them in ContributionTypesEntity due to API behaviour
+// Some contributions are not included in any of 5 types (commits, issues, PRs, reviews, repositories) returned from API
 // E.g the first contributions - account creation. Or contributions from deleted repos in some cases
 // So we pass realTotalContributions in order to calculate the difference
 // and store it in "unknown" field
-@Entity(tableName = "contributions_ratio")
-data class ContributionsRatioEntity(
+@Entity(tableName = "contribution_types")
+data class ContributionTypesEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
 
