@@ -123,7 +123,6 @@ class RepositoriesListHostFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-
         binding = null
     }
 

@@ -19,6 +19,8 @@
     </string>
     <string name="OAUTH_PROVIDER">github.com</string>
 
+    <string name="login_string">\@%s</string>
+    <string name="profile_date_format">dd.MM.yyyy HH:mm</string>
 
     <string name="sign_in">Sign in</string>
 

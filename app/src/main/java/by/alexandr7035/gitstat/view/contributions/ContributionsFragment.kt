@@ -31,23 +31,29 @@ class ContributionsFragment : Fragment() {
     private var binding: FragmentContributionsBinding? = null
     private val viewModel by viewModels<ContributionsViewModel>()
 
-    private lateinit var yearContributionsAdapter: YearContributionsAdapter
-    private lateinit var yearContributionsRateAdapter: YearContributionRatesAdapter
+//    private lateinit var yearContributionsAdapter: YearContributionsAdapter
+//    private lateinit var yearContributionsRateAdapter: YearContributionRatesAdapter
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentContributionsBinding.inflate(inflater, container, false)
-
-        // Inflate the layout for this fragment
         return binding!!.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Adapter for contributions count plot
+        val yearContributionsAdapter = YearContributionsAdapter(this)
+        binding?.yearsViewPager?.adapter = yearContributionsAdapter
+
+        // Adapter for contribution rate plot
+        val yearContributionsRateAdapter = YearContributionRatesAdapter(this)
+        binding?.rateViewPager?.adapter = yearContributionsRateAdapter
+
+        // Adapter for legend on contribution types plot
+        val typesLegendAdapter = TypesLegendAdapter()
+        binding?.contributionTypesLegendRecycler?.layoutManager = FlexboxLayoutManager(requireContext())
+        binding?.contributionTypesLegendRecycler?.adapter = typesLegendAdapter
 
         // Update data
         viewModel.getContributionYearsLiveData().observe(viewLifecycleOwner, { years ->
@@ -55,9 +61,8 @@ class ContributionsFragment : Fragment() {
             if (years != null) {
 
                 if (years.isNotEmpty()) {
-                    yearContributionsAdapter = YearContributionsAdapter(this)
+
                     yearContributionsAdapter.setItems(years)
-                    binding?.yearsViewPager?.adapter = yearContributionsAdapter
 
                     // Set to last position
                     binding?.yearsViewPager?.setCurrentItem(years.size - 1, false)
@@ -94,9 +99,7 @@ class ContributionsFragment : Fragment() {
             if (rateYears != null) {
 
                 if (rateYears.isNotEmpty()) {
-                    yearContributionsRateAdapter = YearContributionRatesAdapter(this)
                     yearContributionsRateAdapter.setItems(rateYears)
-                    binding?.rateViewPager?.adapter = yearContributionsRateAdapter
 
                     TabLayoutMediator(binding!!.rateTabLayout, binding!!.rateViewPager) { tab, position ->
                     }.attach()
@@ -112,10 +115,7 @@ class ContributionsFragment : Fragment() {
         })
 
 
-        // FIXME
-        val adapter = TypesLegendAdapter()
-        binding?.contributionTypesLegendRecycler?.layoutManager = FlexboxLayoutManager(requireContext())
-        binding?.contributionTypesLegendRecycler?.adapter = adapter
+
 
         viewModel.getContributionTypesLiveData().observe(viewLifecycleOwner, { typesData ->
 
@@ -157,7 +157,7 @@ class ContributionsFragment : Fragment() {
                 binding?.contributionTypesChart?.setExtraOffsets(10f,0f,30f,0f)
 
                 // Update legend
-                adapter.setItems(ContributionTypesListToLegendItemsMapper.map(typesData, requireContext()))
+                typesLegendAdapter.setItems(ContributionTypesListToLegendItemsMapper.map(typesData, requireContext()))
 
             }
         })

@@ -19,9 +19,6 @@ import by.alexandr7035.gitstat.databinding.FragmentWebViewBinding
 class WebViewFragment : Fragment() {
 
     private var binding: FragmentWebViewBinding? = null
-
-    private var toolbarTitle: String? = null
-
     private val safeArgs by navArgs<WebViewFragmentArgs>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

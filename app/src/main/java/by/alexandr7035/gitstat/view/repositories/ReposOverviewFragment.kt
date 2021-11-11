@@ -73,9 +73,6 @@ class ReposOverviewFragment : Fragment() {
             (requireActivity() as MainActivity).openDrawerMenu()
         }
 
-//        // FIXME find better solution (see viewmodel)
-//        viewModel.updateAllRepositoriesLiveData()
-
     }
 
     override fun onDestroyView() {
