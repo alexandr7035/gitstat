@@ -10,11 +10,16 @@ import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.databinding.FragmentContributionsBinding
+import by.alexandr7035.gitstat.extensions.setChartData
+import by.alexandr7035.gitstat.extensions.setupHorizontalBarChart
+import by.alexandr7035.gitstat.extensions.setupYAxisValuesForContributionTypes
 import by.alexandr7035.gitstat.view.MainActivity
 import by.alexandr7035.gitstat.view.contributions.plots.contributions_per_year.YearContributionsAdapter
 import by.alexandr7035.gitstat.view.contributions.plots.contributions_rate.YearContributionRatesAdapter
-import by.alexandr7035.gitstat.view.contributions.plots.contributions_types.ContributionTypesPlot
+import by.alexandr7035.gitstat.view.contributions.plots.contributions_types.RemoveThousandsSepFormatter
 import by.alexandr7035.gitstat.view.contributions.plots.contributions_types.TypesLegendAdapter
+import by.alexandr7035.gitstat.view.contributions.plots.contributions_types.model.ContributionTypesListToBarDataSetMapper
+import by.alexandr7035.gitstat.view.contributions.plots.contributions_types.model.ContributionTypesListToLegendItemsMapper
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
@@ -107,20 +112,53 @@ class ContributionsFragment : Fragment() {
         })
 
 
-        viewModel.getContributionTypesLiveData().observe(viewLifecycleOwner, { types ->
+        // FIXME
+        val adapter = TypesLegendAdapter()
+        binding?.contributionTypesLegendRecycler?.layoutManager = FlexboxLayoutManager(requireContext())
+        binding?.contributionTypesLegendRecycler?.adapter = adapter
 
-            if (types != null) {
+        viewModel.getContributionTypesLiveData().observe(viewLifecycleOwner, { typesData ->
 
-                // FIXME
-                val adapter = TypesLegendAdapter()
-                binding?.contributionTypesLegendRecycler?.layoutManager = FlexboxLayoutManager(requireContext())
-                binding?.contributionTypesLegendRecycler?.adapter = adapter
+            if (typesData != null) {
 
-                if (binding?.contributionTypesChart != null) {
-                    val plot = ContributionTypesPlot()
-                    plot.setupPlot(binding!!.contributionTypesChart, types)
-                    adapter.setItems(plot.getContributionTypesLegendItems(binding!!.contributionTypesChart, types))
-                }
+                // Detect max value
+                // FIXME find better solution
+                val commits = typesData.sumOf { it.commitContributions }
+                val issues = typesData.sumOf { it.issueContributions }
+                val pullRequests = typesData.sumOf { it.pullRequestContributions }
+                val reviews = typesData.sumOf { it.pullRequestReviewContributions }
+                val repositories = typesData.sumOf { it.repositoryContributions }
+                val unknown = typesData.sumOf { it.unknownContributions }
+
+                // FIXME refactoring
+                val maxValue = listOf(
+                    commits,
+                    issues,
+                    pullRequests,
+                    reviews,
+                    repositories,
+                    unknown
+                ).maxByOrNull {
+                    it
+                } ?: 0
+
+
+                // Setup chart
+                binding?.contributionTypesChart?.setupHorizontalBarChart(RemoveThousandsSepFormatter())
+
+                // Populate chart with data
+                binding?.contributionTypesChart?.setChartData(ContributionTypesListToBarDataSetMapper.map(typesData, requireContext()))
+                binding?.contributionTypesChart?.invalidate()
+
+                // Chart axis
+                binding?.contributionTypesChart?.axisLeft?.setupYAxisValuesForContributionTypes(maxValue)
+
+                // Chart margins
+                binding?.contributionTypesChart?.setExtraOffsets(10f,0f,30f,0f)
+
+                // Update legend
+                adapter.setItems(ContributionTypesListToLegendItemsMapper.map(typesData, requireContext()))
+
             }
         })
 
