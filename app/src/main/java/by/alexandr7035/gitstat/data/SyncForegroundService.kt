@@ -13,10 +13,8 @@ import by.alexandr7035.gitstat.core.DataSyncStatus
 import by.alexandr7035.gitstat.extensions.debug
 import by.alexandr7035.gitstat.view.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -45,6 +43,8 @@ class SyncForegroundService: LifecycleService() {
 
         job = CoroutineScope(Dispatchers.IO).launch {
             syncRepository.syncData(statusLiveData)
+            // A delay to prevent showing a success message in a separate notification
+            delay(3000)
             stopSelf()
         }
 
@@ -58,8 +58,6 @@ class SyncForegroundService: LifecycleService() {
                 DataSyncStatus.SUCCESS -> getString(R.string.sync_success)
                 DataSyncStatus.FAILED_NETWORK -> getString(R.string.error_cant_get_data_remote)
                 DataSyncStatus.AUTHORIZATION_ERROR -> getString(R.string.authorization_error)
-                // TODO fixme
-                else -> getString(R.string.error_cant_get_data_remote)
             }
 
             // Update notification on status changed
