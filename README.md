@@ -1,7 +1,17 @@
 # GitStat
+
+## Overview
+
 GitStat is a simple android app designed to aggregate Github profile data into informative cards and graphs.
 
-<img src="doc/logo.png" width="20%"/>
+<img src="doc/logo.png" width="20%"/>  
+
+**Major features**:
+- Profile summary
+- Pie chart with programming languages of your repositories
+- List of your repositories with filters and sortings
+- Contributions summary
+- Plots for contributions (count per day, contribution rate (average contributions per day))
 
 ## Screenshots
 
