@@ -7,14 +7,14 @@ GitStat is a simple android app designed to aggregate Github profile data into i
 
 <p align="left">
 <img src="doc/screenshot_login.png" width="30%"/>
+<img src="doc/screenshot_oauth.png" width="30%"/>
 <img src="doc/screenshot_repositories_stat.png" width="30%"/>
-<img src="doc/screenshot_filters.png" width="30%"/>
 </p>
 
 <p align="left">
+<img src="doc/screenshot_filters.png" width="30%"/>
 <img src="doc/screenshot_contributions_1.png" width="30%"/>
 <img src="doc/screenshot_contributions_2.png" width="30%"/>
-<img src="doc/screenshot_sync_suggestion.png" width="30%"/>
 </p>
 
 
