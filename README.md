@@ -19,11 +19,8 @@ GitStat is a simple android app designed to aggregate Github profile data into i
 - Contributions summary
 - Charts for contributions (types, count per day, contribution rate)
 
-[<img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" width="30%"/ 
+[<img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" height=100 
 alt="Download from Google Play">](https://play.google.com/store/apps/details?id=by.alexandr7035.gitstat)
-
-[![Play store](play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png)](play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png)
-
 
 ## Technology (some notes)
 
