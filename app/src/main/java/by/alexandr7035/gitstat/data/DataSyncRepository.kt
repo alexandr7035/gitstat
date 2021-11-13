@@ -52,6 +52,11 @@ class DataSyncRepository @Inject constructor(
             // Write cache
             clearCache()
 
+            // Do not put it after cache saving in db
+            // As it may cause bugs with calculations
+            // (the milliseconds when livedata is written and triggered but the date is not updated)
+            keyValueStorage.saveLastCacheSyncDate(System.currentTimeMillis())
+
             Timber.tag("DEBUG_TAG").d("profile $profile")
             db.getUserDao().insertUser(profile)
             db.getRepositoriesDao().insertRepositories(repositories)
@@ -62,8 +67,6 @@ class DataSyncRepository @Inject constructor(
                 insertContributionTypes(contributionTypes)
                 insertContributionRatesCache(contributionRates)
             }
-
-            keyValueStorage.saveLastCacheSyncDate(System.currentTimeMillis())
 
             syncStatusLiveData?.postValue(DataSyncStatus.SUCCESS)
         }

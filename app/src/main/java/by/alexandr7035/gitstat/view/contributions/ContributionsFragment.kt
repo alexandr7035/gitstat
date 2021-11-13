@@ -145,20 +145,17 @@ class ContributionsFragment : Fragment() {
 
                 // Setup chart
                 binding?.contributionTypesChart?.setupHorizontalBarChart(RemoveThousandsSepFormatter())
+                binding?.contributionTypesChart?.setExtraOffsets(10f,0f,30f,0f)
+
+                // Chart axis
+                binding?.contributionTypesChart?.axisLeft?.setupYAxisValuesForContributionTypes(maxValue)
 
                 // Populate chart with data
                 binding?.contributionTypesChart?.setChartData(ContributionTypesListToBarDataSetMapper.map(typesData, requireContext()))
                 binding?.contributionTypesChart?.invalidate()
 
-                // Chart axis
-                binding?.contributionTypesChart?.axisLeft?.setupYAxisValuesForContributionTypes(maxValue)
-
-                // Chart margins
-                binding?.contributionTypesChart?.setExtraOffsets(10f,0f,30f,0f)
-
                 // Update legend
                 typesLegendAdapter.setItems(ContributionTypesListToLegendItemsMapper.map(typesData, requireContext()))
-
             }
         })
 

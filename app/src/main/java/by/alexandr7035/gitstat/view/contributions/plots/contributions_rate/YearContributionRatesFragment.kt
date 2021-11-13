@@ -78,7 +78,10 @@ class YearContributionRatesFragment : Fragment() {
                     xValueFormatter = DateMonthsValueFormatter(),
                     yValueFormatter = ContributionRateYValueFormatter(0f, maxContributionsRate)
                 )
-                binding?.rateChart?.setExtraOffsets(10f,0f,10f,0f)
+                binding?.rateChart?.setExtraOffsets(0f,0f,0f,0f)
+
+                // Setup left axis
+                binding?.rateChart?.axisLeft?.setupYAxisValuesForContributionRate(topValue = maxContributionsRate)
 
                 // Populate plot with data
                 binding?.rateChart?.setChartData(
@@ -86,8 +89,6 @@ class YearContributionRatesFragment : Fragment() {
                     LinePlotFill.getPlotFillForYear(requireContext(), yearData.year.id)
                 )
 
-                // Setup left axis
-                binding?.rateChart?.axisLeft?.setupYAxisValuesForContributionRate(topValue = maxContributionsRate)
                 // Update data
                 binding?.rateChart?.invalidate()
             }
