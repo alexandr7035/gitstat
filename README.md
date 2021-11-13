@@ -1,6 +1,12 @@
 # GitStat
 
-## Overview
+* [Description](#description)
+* [Technology (some notes)](#technology-some-notes)
+* [Screenshots](#screenshots)
+* [Privacy Policy](#privacy-policy)
+* [Used tools](#used-tools)
+
+## Description
 
 GitStat is a simple android app designed to aggregate Github profile data into informative cards and graphs.
 
@@ -12,21 +18,6 @@ GitStat is a simple android app designed to aggregate Github profile data into i
 - List of your repositories with filters and sortings
 - Contributions summary
 - Plots for contributions (count per day, contribution rate (average contributions per day))
-
-## Screenshots
-
-<p align="left">
-<img src="doc/screenshot_login.png" width="30%"/>
-<img src="doc/screenshot_oauth.png" width="30%"/>
-<img src="doc/screenshot_repositories_stat.png" width="30%"/>
-</p>
-
-<p align="left">
-<img src="doc/screenshot_filters.png" width="30%"/>
-<img src="doc/screenshot_contributions_1.png" width="30%"/>
-<img src="doc/screenshot_contributions_2.png" width="30%"/>
-</p>
-
 
 ## Technology (some notes)
 
@@ -44,11 +35,27 @@ used to implement languages filter (see third screenshot).
 - Use [Firebase Crashlytics](https://firebase.google.com/products/crashlytics) to catch and fix crashes.
 - Use [Firebase Authentication](https://firebase.google.com/products/auth) to implement Github Oauth authorization.
 
-## Used tools
-- Used [Avocado](https://github.com/alexjlockwood/avocado) to optimize vector drawables drawn in Figma.
+## Screenshots
+
+<p align="left">
+<img src="doc/screenshot_login.png" width="30%"/>
+<img src="doc/screenshot_oauth.png" width="30%"/>
+<img src="doc/screenshot_repositories_stat.png" width="30%"/>
+</p>
+
+<p align="left">
+<img src="doc/screenshot_filters.png" width="30%"/>
+<img src="doc/screenshot_contributions_1.png" width="30%"/>
+<img src="doc/screenshot_contributions_2.png" width="30%"/>
+</p>
 
 ## Privacy Policy
 - We use **Github Oauth** (Firebase) for user authentication. As soon as you click the login button, system opens the browser.  You have to enter the login and password from your **Github account**.
 - As **Oauth** method is used for authentication, even if you log out, you may be able log in again without entering your Github login and password. If this is wrong behavior for you, clear your browser cache after logging out.
 - We get access to ```read:user``` and ```repo``` access scopes. We **do not perform any write operations** on your github account. Full ```repo``` scope is used only to have access to your private repos data and not to perform malicious write operations.
 - We do not store your account data anywhere outside the device local storage.
+
+## Used tools
+- Used [Avocado](https://github.com/alexjlockwood/avocado) to optimize vector drawables drawn in Figma.
+- Used [gh-md-toc](https://github.com/ekalinin/github-markdown-toc) to create table of contents for this README.
+
