@@ -22,6 +22,9 @@ GitStat is a simple android app designed to aggregate Github profile data into i
 [<img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" width="30%"/ 
 alt="Download from Google Play">](https://play.google.com/store/apps/details?id=by.alexandr7035.gitstat)
 
+[![Play store](play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png)](play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png)
+
+
 ## Technology (some notes)
 
 - Used single activity approach and [Navigation component](https://developer.android.com/guide/navigation) (with SafeArgs) to navigate across fragments.
