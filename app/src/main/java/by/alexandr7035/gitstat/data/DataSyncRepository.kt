@@ -61,11 +61,15 @@ class DataSyncRepository @Inject constructor(
             db.getUserDao().insertUser(profile)
             db.getRepositoriesDao().insertRepositories(repositories)
 
+            // NOTE! DO NOT CHANGE ORDER
+            // LIVEDATA TRIGGERED IMMEDIATELY AFTER SAVING CACHE
+            // AS ONE DATA MAY DEPEND ON THE OTHER, WRONG ORDER MAY CAUSE CRASH
+            // Years must be at the end
             db.getContributionsDao().apply {
-                insertContributionDays(contributionDays)
-                insertContributionYearsCache(contributionYears)
-                insertContributionTypes(contributionTypes)
                 insertContributionRatesCache(contributionRates)
+                insertContributionDays(contributionDays)
+                insertContributionTypes(contributionTypes)
+                insertContributionYearsCache(contributionYears)
             }
 
             syncStatusLiveData?.postValue(DataSyncStatus.SUCCESS)

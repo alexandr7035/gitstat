@@ -57,7 +57,7 @@ class SyncForegroundService: LifecycleService() {
                 DataSyncStatus.PENDING_CONTRIBUTIONS -> getString(R.string.stage_contributions)
                 DataSyncStatus.SUCCESS -> getString(R.string.sync_success)
                 DataSyncStatus.FAILED_NETWORK -> getString(R.string.error_cant_get_data_remote)
-                DataSyncStatus.AUTHORIZATION_ERROR -> getString(R.string.authorization_error)
+                DataSyncStatus.AUTHORIZATION_ERROR -> getString(R.string.error_sync_authorization)
             }
 
             // Update notification on status changed
