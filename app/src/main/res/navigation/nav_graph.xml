@@ -48,7 +48,17 @@
         android:id="@+id/contributionsFragment"
         android:name="by.alexandr7035.gitstat.view.contributions.ContributionsFragment"
         android:label="fragment_contributions"
-        tools:layout="@layout/fragment_contributions" />
+        tools:layout="@layout/fragment_contributions" >
+
+        <action
+            android:id="@+id/action_contributionsFragment_to_contributionsGridFragment"
+            app:destination="@id/contributionsGridFragment">
+            <argument
+                app:nullable="false"
+                app:argType="integer"
+                android:name="contributionYear"/>
+        </action>
+    </fragment>
 
     <navigation android:id="@+id/repositoriesListGraph"
         app:startDestination="@id/repositoriesListHostFragment">
@@ -186,5 +196,18 @@
         app:destination="@id/loginFragment"
         app:popUpToInclusive="true"
         app:popUpTo="@id/nav_graph" />
+
+    <fragment
+        android:id="@+id/contributionsGridFragment"
+        android:name="by.alexandr7035.gitstat.view.contributions_grid.ContributionsGridFragment"
+        android:label="fragment_contributions_grid"
+        tools:layout="@layout/fragment_contributions_grid">
+
+        <argument
+            android:name="contributionYear"
+            app:argType="integer"
+            app:nullable="false"/>
+
+    </fragment>
 
 </navigation>

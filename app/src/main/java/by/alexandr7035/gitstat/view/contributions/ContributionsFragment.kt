@@ -179,6 +179,11 @@ class ContributionsFragment : Fragment() {
                 getString(R.string.contribution_rate_dynamics_help_text)
             ))
         }
+
+        // FIXME TEST
+        binding?.testButton?.setOnClickListener {
+            findNavController().navigateSafe(ContributionsFragmentDirections.actionContributionsFragmentToContributionsGridFragment(2021))
+        }
     }
 
 }
