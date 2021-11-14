@@ -8,8 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import by.alexandr7035.gitstat.data.local.model.ContributionsMonthWithDays
 import by.alexandr7035.gitstat.databinding.ViewMonthContributionsGridBinding
 import by.alexandr7035.gitstat.extensions.debug
-import com.google.android.flexbox.FlexboxLayoutManager
 import timber.log.Timber
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MonthsAdapter: RecyclerView.Adapter<MonthsAdapter.ViewHolder>() {
 
@@ -33,7 +34,18 @@ class MonthsAdapter: RecyclerView.Adapter<MonthsAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         Timber.debug("month onBindViewHolder")
-        holder.binding.monthCardTitle.text = items[position].month.id.toString()
+        val monthId = items[position].month.id.toString()
+
+        val format = SimpleDateFormat("yyyyMM", Locale.US)
+        format.timeZone = TimeZone.getTimeZone("GMT")
+        // Month id corresponds to date in this format
+        val unixDate = format.parse(monthId)!!.time
+
+        val strFormat = SimpleDateFormat("MMMM yyyy", Locale.US)
+        strFormat.timeZone = TimeZone.getTimeZone("GMT")
+        val dateStr = strFormat.format(unixDate)
+
+        holder.binding.monthCardTitle.text = dateStr
 
         val adapter = DaysAdapter()
         holder.binding.cellsRecycler.adapter = adapter

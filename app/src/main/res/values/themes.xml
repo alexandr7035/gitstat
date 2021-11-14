@@ -119,6 +119,7 @@
     <style name="MonthCardTitle">
         <item name="android:textSize">20sp</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/gray_500</item>
     </style>
 
     <style name="MonthCardGridBackground">
