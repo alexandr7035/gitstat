@@ -13,8 +13,12 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import by.alexandr7035.gitstat.R
+import by.alexandr7035.gitstat.SyncGraphDirections
 import by.alexandr7035.gitstat.data.SyncForegroundService
 import by.alexandr7035.gitstat.databinding.ActivityMainBinding
+import by.alexandr7035.gitstat.extensions.navigateSafe
+import by.alexandr7035.gitstat.view.login.LoginFragmentDirections
+import by.alexandr7035.gitstat.view.login.LogoutConfirmationDialogDirections
 import by.alexandr7035.gitstat.view.profile.ProfileViewModel
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
@@ -78,7 +82,7 @@ class MainActivity : AppCompatActivity() {
 
         if (viewModel.checkIfTokenSaved()) {
             if (viewModel.checkIfCacheExists()) {
-                navController.navigate(R.id.action_loginFragment_to_profileFragment)
+                navController.navigateSafe(LoginFragmentDirections.actionLoginFragmentToProfileFragment())
             }
             else {
                 startSyncData()
@@ -107,6 +111,10 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 drawerLoginView.text = getString(R.string.login_string, it.login)
+
+                // We can also update sync date in drawer
+                // As livedata triggering means cache may have been updated
+                syncDateView.text = viewModel.getCacheSyncDate().replace(" ", "\n")
             }
         })
 
@@ -115,16 +123,16 @@ class MainActivity : AppCompatActivity() {
             when (menuItem.itemId) {
 
                 R.id.item_logout ->  {
-                    navController.navigate(R.id.action_global_logoutConfirmationDialog)
+                    navController.navigateSafe(MainActivityDirections.actionGlobalLogoutConfirmationDialog())
                     binding.drawerLayout.closeDrawer(GravityCompat.START)
                 }
 
-                R.id.item_privacy_policy -> navController.navigate(MainActivityDirections.actionGlobalWebViewFragment(
+                R.id.item_privacy_policy -> navController.navigateSafe(MainActivityDirections.actionGlobalWebViewFragment(
                     getString(R.string.privacy_policy),
                     getString(R.string.privacy_policy_url)
                 ))
 
-                R.id.item_about_app -> navController.navigate(R.id.action_global_aboutAppFragment)
+                R.id.item_about_app -> navController.navigateSafe(MainActivityDirections.actionGlobalAboutAppFragment())
             }
 
             true
@@ -145,7 +153,7 @@ class MainActivity : AppCompatActivity() {
     // FIXME find better solution
     // than public method accessible from fragments
     fun startSyncData() {
-        navController.navigate(R.id.action_loginFragment_to_syncGraph)
+        navController.navigateSafe(LoginFragmentDirections.actionLoginFragmentToSyncGraph())
     }
 
     // FIXME find better solution
@@ -153,15 +161,13 @@ class MainActivity : AppCompatActivity() {
     fun startLogOut() {
         viewModel.clearCache()
         viewModel.clearToken()
-        navController.navigate(R.id.action_logoutConfirmationDialog_to_loginFragment)
+        navController.navigateSafe(LogoutConfirmationDialogDirections
+            .actionLogoutConfirmationDialogToLoginFragment())
     }
 
+    // FIXME
     fun syncFinishedCallback() {
-        navController.navigate(R.id.action_global_profileFragment)
-
-        // Update sync date in drawer
-        val syncDateView = binding.drawerNavigationView.getHeaderView(0).findViewById<TextView>(R.id.syncDate)
-        syncDateView.text = viewModel.getCacheSyncDate().replace(" ", "\n")
+        navController.navigateSafe(SyncGraphDirections.actionGlobalProfileFragment())
     }
 
     fun openDrawerMenu() {

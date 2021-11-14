@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.databinding.FragmentReposOverviewBinding
+import by.alexandr7035.gitstat.extensions.navigateSafe
 import by.alexandr7035.gitstat.view.MainActivity
 import by.alexandr7035.gitstat.view.repositories.plots.languages_plot.LanguagesPlot
 import dagger.hilt.android.AndroidEntryPoint
@@ -66,7 +67,7 @@ class ReposOverviewFragment : Fragment() {
 
 
         binding!!.toReposListBtn.setOnClickListener {
-            findNavController().navigate(R.id.action_reposFragment_to_repositoriesListHostFragment)
+            findNavController().navigateSafe(ReposOverviewFragmentDirections.actionReposFragmentToRepositoriesListHostFragment())
         }
 
         binding?.drawerBtn?.setOnClickListener {

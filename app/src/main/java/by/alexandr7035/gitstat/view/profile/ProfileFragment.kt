@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.databinding.FragmentProfileBinding
+import by.alexandr7035.gitstat.extensions.navigateSafe
 import by.alexandr7035.gitstat.view.MainActivity
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
@@ -75,7 +76,7 @@ class ProfileFragment : Fragment() {
         })
 
         binding!!.reposStatDetailedBtn.setOnClickListener {
-            findNavController().navigate(R.id.action_profileFragment_to_reposOverviewFragment)
+            findNavController().navigateSafe(ProfileFragmentDirections.actionProfileFragmentToReposOverviewFragment())
         }
 
         binding?.drawerBtn?.setOnClickListener {
