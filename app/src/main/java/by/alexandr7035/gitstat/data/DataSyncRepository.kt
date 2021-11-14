@@ -6,10 +6,13 @@ import by.alexandr7035.gitstat.core.*
 import by.alexandr7035.gitstat.data.local.CacheDB
 import by.alexandr7035.gitstat.data.local.model.*
 import by.alexandr7035.gitstat.data.remote.mappers.*
+import by.alexandr7035.gitstat.extensions.debug
 import by.alexandr7035.gitstat.extensions.performRequestWithDataResult
 import com.apollographql.apollo3.ApolloClient
 import timber.log.Timber
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 class DataSyncRepository @Inject constructor(
     private val apolloClient: ApolloClient,
@@ -44,10 +47,11 @@ class DataSyncRepository @Inject constructor(
             val repositories = fetchRepositories()
 
             syncStatusLiveData?.postValue(DataSyncStatus.PENDING_CONTRIBUTIONS)
-            val contributionYears = fetchContributionYears(accountCreationYear, currentYear)
             val contributionDays = fetchContributionDays(accountCreationYear, currentYear)
             val contributionTypes = fetchContributionTypes(accountCreationYear, currentYear, contributionDays)
             val contributionRates = fetchContributionRates(contributionDays)
+            val contributionYears = fetchContributionYears(accountCreationYear, currentYear)
+            val contributionMonths = fetchContributionMonths(contributionDays)
 
             // Write cache
             clearCache()
@@ -64,12 +68,13 @@ class DataSyncRepository @Inject constructor(
             // NOTE! DO NOT CHANGE ORDER
             // LIVEDATA TRIGGERED IMMEDIATELY AFTER SAVING CACHE
             // AS ONE DATA MAY DEPEND ON THE OTHER, WRONG ORDER MAY CAUSE CRASH
-            // Years must be at the end
+            // Years and months must be at the end
             db.getContributionsDao().apply {
                 insertContributionRatesCache(contributionRates)
                 insertContributionDays(contributionDays)
                 insertContributionTypes(contributionTypes)
                 insertContributionYearsCache(contributionYears)
+                insertContributionMonthsCache(contributionMonths)
             }
 
             syncStatusLiveData?.postValue(DataSyncStatus.SUCCESS)
@@ -116,6 +121,23 @@ class DataSyncRepository @Inject constructor(
         }
 
         return years
+    }
+
+    private fun fetchContributionMonths(contributionDays: List<ContributionDayEntity>): ArrayList<ContributionsMonthEntity> {
+
+        // Use TreeMap as it is always sorted by key
+        val monthsMap: TreeMap<Int, Int> = TreeMap()
+        val months = ArrayList<ContributionsMonthEntity>()
+
+        for (day in contributionDays) {
+            monthsMap[day.monthId] = day.yearId
+        }
+
+        for ((id, yearId) in monthsMap) {
+            months.add(ContributionsMonthEntity(id, yearId))
+        }
+
+        return months
     }
 
     private suspend fun fetchContributionDays(profileCreationYear: Int, currentYear: Int): List<ContributionDayEntity> {

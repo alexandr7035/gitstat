@@ -13,7 +13,7 @@ import by.alexandr7035.gitstat.data.local.model.*
     ContributionRateEntity::class,
     ContributionsYearEntity::class,
     ContributionTypesEntity::class,
-    ContributionsMonthEntity::class], version = 18)
+    ContributionsMonthEntity::class], version = 19)
 
 abstract class CacheDB : RoomDatabase() {
 
