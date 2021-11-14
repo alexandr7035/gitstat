@@ -3,7 +3,7 @@
     android:id="@+id/monthCard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp"
+    android:layout_marginBottom="16dp"
     tools:background="@color/gray_100"
     android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"

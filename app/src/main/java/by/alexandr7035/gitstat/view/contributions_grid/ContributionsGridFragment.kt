@@ -9,12 +9,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.databinding.FragmentContributionsGridBinding
-import by.alexandr7035.gitstat.extensions.debug
-import by.alexandr7035.gitstat.view.contributions.ContributionsViewModel
-import by.alexandr7035.gitstat.view.core.WebViewFragmentArgs
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class ContributionsGridFragment : Fragment() {
@@ -32,6 +29,7 @@ class ContributionsGridFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding?.toolbar?.title = getString(R.string.year_toolbar_title, safeArgs.contributionYear)
         binding?.toolbar?.setNavigationOnClickListener {
             findNavController().navigateUp()
         }
@@ -40,12 +38,13 @@ class ContributionsGridFragment : Fragment() {
 
         binding?.monthRecycler?.adapter = adapter
         binding?.monthRecycler?.layoutManager = LinearLayoutManager(requireContext())
-        Timber.debug("set items")
 
-        viewModel.getContributionYearWithMonths(safeArgs.contributionYear).observe(viewLifecycleOwner, {
-            Timber.debug("MONTHS $it")
-            // Set months list (reversed)
-            adapter.setItems(it.contributionMonths.reversed())
+        viewModel.getContributionYearWithMonths(safeArgs.contributionYear).observe(viewLifecycleOwner, { year ->
+
+            if (year != null) {
+                // Set months list (reversed)
+                adapter.setItems(year.contributionMonths.reversed())
+            }
         })
 
     }
