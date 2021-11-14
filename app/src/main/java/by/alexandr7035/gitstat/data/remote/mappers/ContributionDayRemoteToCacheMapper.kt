@@ -13,7 +13,14 @@ class ContributionDayRemoteToCacheMapper @Inject constructor(private val timeHel
         val unixDate = timeHelper.getUnixDateFrom_yyyyMMdd(dateStr)
         val year = timeHelper.getYearFromUnixDate(unixDate)
 
-        return ContributionDayEntity(count = data.contributionCount, date = unixDate, yearId = year)
+        val month = timeHelper.get_yyyyMM_fromUnixDate(unixDate).toInt()
+
+        return ContributionDayEntity(
+            count = data.contributionCount,
+            date = unixDate,
+            yearId = year,
+            monthId = month
+        )
     }
 
 }
