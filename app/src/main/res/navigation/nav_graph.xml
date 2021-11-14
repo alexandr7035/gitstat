@@ -156,11 +156,6 @@
             app:argType="string"
             app:nullable="false"/>
     </action>
-    <activity
-        android:id="@+id/mainActivity"
-        android:name="by.alexandr7035.gitstat.view.MainActivity"
-        android:label="MainActivity"
-        tools:layout="@layout/activity_main"/>
     <fragment
         android:id="@+id/aboutAppFragment"
         android:name="by.alexandr7035.gitstat.view.info.AboutAppFragment"
@@ -190,6 +185,6 @@
     <action android:id="@+id/action_global_loginFragment"
         app:destination="@id/loginFragment"
         app:popUpToInclusive="true"
-        app:popUpTo="@id/nav_graph"/>
+        app:popUpTo="@id/nav_graph" />
 
 </navigation>
