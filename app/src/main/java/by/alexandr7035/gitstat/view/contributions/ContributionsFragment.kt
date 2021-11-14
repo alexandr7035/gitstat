@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.databinding.FragmentContributionsBinding
+import by.alexandr7035.gitstat.extensions.navigateSafe
 import by.alexandr7035.gitstat.extensions.setChartData
 import by.alexandr7035.gitstat.extensions.setupHorizontalBarChart
 import by.alexandr7035.gitstat.extensions.setupYAxisValuesForContributionTypes
@@ -165,7 +166,7 @@ class ContributionsFragment : Fragment() {
 
         // Help icon for contribution rate
         binding?.contributionRateHelpIcon?.setOnClickListener {
-            findNavController().navigate(ContributionsFragmentDirections.actionGlobalInfoDialogFragment(
+            findNavController().navigateSafe(ContributionsFragmentDirections.actionGlobalInfoDialogFragment(
                 getString(R.string.what_is_contribution_rate_title),
                 getString(R.string.what_is_contribution_rate_text)
             ))
@@ -173,7 +174,7 @@ class ContributionsFragment : Fragment() {
 
         // Help icon for contribution rate
         binding?.contributionRateDynamicsHelpIcon?.setOnClickListener {
-            findNavController().navigate(ContributionsFragmentDirections.actionGlobalInfoDialogFragment(
+            findNavController().navigateSafe(ContributionsFragmentDirections.actionGlobalInfoDialogFragment(
                 getString(R.string.contribution_rate_dynamics_help_title),
                 getString(R.string.contribution_rate_dynamics_help_text)
             ))
