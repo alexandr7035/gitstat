@@ -12,13 +12,13 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import by.alexandr7035.gitstat.NavGraphDirections
 import by.alexandr7035.gitstat.R
-import by.alexandr7035.gitstat.SyncGraphDirections
 import by.alexandr7035.gitstat.data.SyncForegroundService
 import by.alexandr7035.gitstat.databinding.ActivityMainBinding
 import by.alexandr7035.gitstat.extensions.navigateSafe
+import by.alexandr7035.gitstat.view.datasync.SyncHostFragmentDirections
 import by.alexandr7035.gitstat.view.login.LoginFragmentDirections
-import by.alexandr7035.gitstat.view.login.LogoutConfirmationDialogDirections
 import by.alexandr7035.gitstat.view.profile.ProfileViewModel
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
@@ -123,16 +123,16 @@ class MainActivity : AppCompatActivity() {
             when (menuItem.itemId) {
 
                 R.id.item_logout ->  {
-                    navController.navigateSafe(MainActivityDirections.actionGlobalLogoutConfirmationDialog())
+                    navController.navigateSafe(NavGraphDirections.actionGlobalLogoutConfirmationDialog())
                     binding.drawerLayout.closeDrawer(GravityCompat.START)
                 }
 
-                R.id.item_privacy_policy -> navController.navigateSafe(MainActivityDirections.actionGlobalWebViewFragment(
+                R.id.item_privacy_policy -> navController.navigateSafe(NavGraphDirections.actionGlobalWebViewFragment(
                     getString(R.string.privacy_policy),
                     getString(R.string.privacy_policy_url)
                 ))
 
-                R.id.item_about_app -> navController.navigateSafe(MainActivityDirections.actionGlobalAboutAppFragment())
+                R.id.item_about_app -> navController.navigateSafe(NavGraphDirections.actionGlobalAboutAppFragment())
             }
 
             true
@@ -153,7 +153,7 @@ class MainActivity : AppCompatActivity() {
     // FIXME find better solution
     // than public method accessible from fragments
     fun startSyncData() {
-        navController.navigateSafe(LoginFragmentDirections.actionLoginFragmentToSyncGraph())
+        navController.navigateSafe(NavGraphDirections.actionGlobalSyncHostFragment())
     }
 
     // FIXME find better solution
@@ -161,13 +161,13 @@ class MainActivity : AppCompatActivity() {
     fun startLogOut() {
         viewModel.clearCache()
         viewModel.clearToken()
-        navController.navigateSafe(LogoutConfirmationDialogDirections
-            .actionLogoutConfirmationDialogToLoginFragment())
+        navController.navigateSafe(NavGraphDirections
+            .actionGlobalLoginFragment())
     }
 
     // FIXME
     fun syncFinishedCallback() {
-        navController.navigateSafe(SyncGraphDirections.actionGlobalProfileFragment())
+        navController.navigateSafe(SyncHostFragmentDirections.actionSyncHostFragmentToProfileFragment())
     }
 
     fun openDrawerMenu() {

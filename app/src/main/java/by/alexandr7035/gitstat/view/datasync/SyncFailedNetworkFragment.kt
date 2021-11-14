@@ -5,14 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.navGraphViewModels
-import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.databinding.FragmentSyncFailedNetworkBinding
+import by.alexandr7035.gitstat.view.MainActivity
 
 class SyncFailedNetworkFragment : Fragment() {
 
     private var binding: FragmentSyncFailedNetworkBinding? = null
-    private val viewModel by navGraphViewModels<SyncViewModel>(R.id.syncGraph) { defaultViewModelProviderFactory }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,7 +24,7 @@ class SyncFailedNetworkFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.retryBtn?.setOnClickListener {
-            viewModel.syncData()
+            (requireActivity() as MainActivity).startSyncData()
         }
     }
 

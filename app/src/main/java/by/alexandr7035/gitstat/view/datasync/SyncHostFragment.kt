@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.navGraphViewModels
+import androidx.fragment.app.viewModels
 import by.alexandr7035.gitstat.BuildConfig
 import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.core.DataSyncStatus
@@ -18,7 +18,7 @@ import timber.log.Timber
 class SyncHostFragment : Fragment() {
 
     private var binding: FragmentSyncHostBinding? = null
-    private val viewModel by navGraphViewModels<SyncViewModel>(R.id.syncGraph) { defaultViewModelProviderFactory }
+    private val viewModel by viewModels<SyncViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentSyncHostBinding.inflate(inflater, container, false)
@@ -27,14 +27,11 @@ class SyncHostFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Timber.d("show sync stub")
 
         viewModel.syncData()
 
         viewModel.getSyncStatusLiveData().observe(viewLifecycleOwner, { status ->
             Timber.d("sync status updated $status")
-//            Toast.makeText(requireContext(), "$status", Toast.LENGTH_SHORT).show()
-
 
             when (status) {
                 DataSyncStatus.SUCCESS -> {
