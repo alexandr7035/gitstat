@@ -45,7 +45,13 @@ class MonthsAdapter: RecyclerView.Adapter<MonthsAdapter.ViewHolder>() {
         strFormat.timeZone = TimeZone.getTimeZone("GMT")
         val dateStr = strFormat.format(unixDate)
 
+        // Moth (e.g. "November 2020")
         holder.binding.monthCardTitle.text = dateStr
+        // Contributions count for this month
+        holder.binding.monthCardTotalContributions.text = items[position]
+            .contributionDays
+            .sumOf { it.count }
+            .toString()
 
         val adapter = DaysAdapter()
         holder.binding.cellsRecycler.adapter = adapter

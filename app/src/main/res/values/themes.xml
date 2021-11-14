@@ -122,6 +122,12 @@
         <item name="android:textColor">@color/gray_500</item>
     </style>
 
+    <style name="MonthCardContributionsCount">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/gray_300</item>
+    </style>
+
     <style name="MonthCardGridBackground">
         <item name="android:elevation">5dp</item>
         <item name="android:background">@drawable/background_card</item>
