@@ -116,4 +116,9 @@
         <item name="android:textColor">@color/gray_300</item>
     </style>
 
+    <style name="MonthCardTitle">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>
