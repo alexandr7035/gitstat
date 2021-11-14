@@ -12,11 +12,12 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import by.alexandr7035.gitstat.NavGraphDirections
 import by.alexandr7035.gitstat.R
-import by.alexandr7035.gitstat.SyncGraphDirections
 import by.alexandr7035.gitstat.data.SyncForegroundService
 import by.alexandr7035.gitstat.databinding.ActivityMainBinding
 import by.alexandr7035.gitstat.extensions.navigateSafe
+import by.alexandr7035.gitstat.view.datasync.SyncHostFragmentDirections
 import by.alexandr7035.gitstat.view.login.LoginFragmentDirections
 import by.alexandr7035.gitstat.view.login.LogoutConfirmationDialogDirections
 import by.alexandr7035.gitstat.view.profile.ProfileViewModel
@@ -153,7 +154,7 @@ class MainActivity : AppCompatActivity() {
     // FIXME find better solution
     // than public method accessible from fragments
     fun startSyncData() {
-        navController.navigateSafe(LoginFragmentDirections.actionLoginFragmentToSyncGraph())
+        navController.navigateSafe(NavGraphDirections.actionGlobalSyncHostFragment())
     }
 
     // FIXME find better solution
@@ -161,13 +162,13 @@ class MainActivity : AppCompatActivity() {
     fun startLogOut() {
         viewModel.clearCache()
         viewModel.clearToken()
-        navController.navigateSafe(LogoutConfirmationDialogDirections
-            .actionLogoutConfirmationDialogToLoginFragment())
+        navController.navigateSafe(NavGraphDirections
+            .actionGlobalLoginFragment())
     }
 
     // FIXME
     fun syncFinishedCallback() {
-        navController.navigateSafe(SyncGraphDirections.actionGlobalProfileFragment())
+        navController.navigateSafe(SyncHostFragmentDirections.actionSyncHostFragmentToProfileFragment())
     }
 
     fun openDrawerMenu() {

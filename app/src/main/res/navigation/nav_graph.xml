@@ -12,11 +12,6 @@
         tools:layout="@layout/fragment_login" >
 
         <action
-            android:id="@+id/action_loginFragment_to_syncGraph"
-            app:popUpTo="@id/loginFragment"
-            app:popUpToInclusive="true"
-            app:destination="@id/syncGraph" />
-        <action
             android:id="@+id/action_loginFragment_to_webViewFragment"
             app:destination="@id/webViewFragment" />
 
@@ -25,6 +20,7 @@
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true"
             app:destination="@id/profileFragment" />
+
     </fragment>
 
     <fragment
@@ -88,46 +84,11 @@
     </navigation>
 
 
-    <navigation android:id="@+id/syncGraph"
-        app:startDestination="@id/syncHostFragment">
-
-        <fragment
-            android:id="@+id/syncHostFragment"
-            android:name="by.alexandr7035.gitstat.view.datasync.SyncHostFragment"
-            android:label="fragment_sync_host"
-            tools:layout="@layout/fragment_sync_host" />
-
-        <fragment
-            android:id="@+id/syncPendingFragment"
-            android:name="by.alexandr7035.gitstat.view.datasync.SyncPendingFragment"
-            android:label="fragment_sync_pending"
-            tools:layout="@layout/fragment_sync_pending" />
-
-        <fragment
-            android:id="@+id/syncFailedNoCacheFragment"
-            android:name="by.alexandr7035.gitstat.view.datasync.SyncFailedNetworkFragment"
-            android:label="fragment_sync_failed_no_cache"
-            tools:layout="@layout/fragment_sync_failed_network" />
-
-        <action
-            android:id="@+id/action_global_profileFragment"
-            app:popUpTo="@id/syncGraph"
-            app:popUpToInclusive="true"
-            app:destination="@id/profileFragment" />
-
-    </navigation>
-
     <dialog
         tools:layout="@layout/fragment_logout_confirmation_dialog"
         android:id="@+id/logoutConfirmationDialog"
         android:name="by.alexandr7035.gitstat.view.login.LogoutConfirmationDialog"
-        android:label="LogoutConfirmationDialog" >
-        <action
-            android:id="@+id/action_logoutConfirmationDialog_to_loginFragment"
-            app:popUpTo="@id/profileFragment"
-            app:popUpToInclusive="true"
-            app:destination="@id/loginFragment" />
-    </dialog>
+        android:label="LogoutConfirmationDialog" />
 
     <fragment
         android:id="@+id/webViewFragment"
@@ -208,10 +169,27 @@
 
     <action android:id="@+id/action_global_aboutAppFragment" app:destination="@id/aboutAppFragment" />
 
-    <action android:id="@+id/action_global_syncGraph"
-        app:destination="@id/syncGraph"
-        app:popUpTo="@id/nav_graph"
+    <fragment
+        android:id="@+id/syncHostFragment"
+        android:name="by.alexandr7035.gitstat.view.datasync.SyncHostFragment"
+        android:label="fragment_sync_host"
+        tools:layout="@layout/fragment_sync_pending" >
+
+        <action
+            app:popUpTo="@id/syncHostFragment"
+            app:popUpToInclusive="true"
+            android:id="@+id/action_syncHostFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+
+    <action android:id="@+id/action_global_syncHostFragment"
+        app:destination="@id/syncHostFragment"
         app:popUpToInclusive="true"
-        />
+        app:popUpTo="@id/nav_graph" />
+
+    <action android:id="@+id/action_global_loginFragment"
+        app:destination="@id/loginFragment"
+        app:popUpToInclusive="true"
+        app:popUpTo="@id/nav_graph"/>
 
 </navigation>
