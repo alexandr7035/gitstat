@@ -1,6 +1,7 @@
 package by.alexandr7035.gitstat.view.contributions_grid
 
 import android.annotation.SuppressLint
+import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -28,6 +29,7 @@ class DaysAdapter: RecyclerView.Adapter<DaysAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 //        TODO("Not yet implemented")
+        (holder.binding.root.background as GradientDrawable).setColor(items[position].color)
     }
 
     class ViewHolder(val binding: ViewContributionsGridCellBinding): RecyclerView.ViewHolder(binding.root)
