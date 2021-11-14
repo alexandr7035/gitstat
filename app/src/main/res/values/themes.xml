@@ -121,4 +121,9 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="MonthCardGridBackground">
+        <item name="android:elevation">5dp</item>
+        <item name="android:background">@drawable/background_card</item>
+    </style>
+
 </resources>

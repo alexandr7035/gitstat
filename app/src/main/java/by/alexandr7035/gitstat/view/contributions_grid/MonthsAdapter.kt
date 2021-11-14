@@ -3,10 +3,12 @@ package by.alexandr7035.gitstat.view.contributions_grid
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import by.alexandr7035.gitstat.data.local.model.ContributionsMonthWithDays
 import by.alexandr7035.gitstat.databinding.ViewMonthContributionsGridBinding
 import by.alexandr7035.gitstat.extensions.debug
+import com.google.android.flexbox.FlexboxLayoutManager
 import timber.log.Timber
 
 class MonthsAdapter: RecyclerView.Adapter<MonthsAdapter.ViewHolder>() {
@@ -32,6 +34,14 @@ class MonthsAdapter: RecyclerView.Adapter<MonthsAdapter.ViewHolder>() {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         Timber.debug("month onBindViewHolder")
         holder.binding.monthCardTitle.text = items[position].month.id.toString()
+
+        val adapter = DaysAdapter()
+        holder.binding.cellsRecycler.adapter = adapter
+//        holder.binding.cellsRecycler.layoutManager = FlexboxLayoutManager(holder.binding.root.context)
+        holder.binding.cellsRecycler.layoutManager = GridLayoutManager(holder.binding.root.context, 7)
+
+        // Set days of the month to cells
+        adapter.setItems(items[position].contributionDays)
     }
 
     class ViewHolder(val binding: ViewMonthContributionsGridBinding): RecyclerView.ViewHolder(binding.root)
