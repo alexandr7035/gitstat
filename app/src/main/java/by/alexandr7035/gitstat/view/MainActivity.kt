@@ -111,6 +111,10 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 drawerLoginView.text = getString(R.string.login_string, it.login)
+
+                // We can also update sync date in drawer
+                // As livedata triggering means cache may have been updated
+                syncDateView.text = viewModel.getCacheSyncDate().replace(" ", "\n")
             }
         })
 
@@ -161,12 +165,9 @@ class MainActivity : AppCompatActivity() {
             .actionLogoutConfirmationDialogToLoginFragment())
     }
 
+    // FIXME
     fun syncFinishedCallback() {
         navController.navigateSafe(SyncGraphDirections.actionGlobalProfileFragment())
-
-        // Update sync date in drawer
-        val syncDateView = binding.drawerNavigationView.getHeaderView(0).findViewById<TextView>(R.id.syncDate)
-        syncDateView.text = viewModel.getCacheSyncDate().replace(" ", "\n")
     }
 
     fun openDrawerMenu() {
