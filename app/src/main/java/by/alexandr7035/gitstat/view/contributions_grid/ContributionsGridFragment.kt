@@ -102,6 +102,9 @@ class ContributionsGridFragment : Fragment(), DayClickListener {
         val yearFormat = SimpleDateFormat("yyyy", Locale.US)
         val currentYear = yearFormat.format(System.currentTimeMillis()).toInt()
 
+        // Fist contribution year
+        val firstContributingYear = yearsWithMonths.first().year.id
+
         // Remove future month if display current year
         return if (yearToDisplay.year.id == currentYear) {
 
@@ -110,7 +113,21 @@ class ContributionsGridFragment : Fragment(), DayClickListener {
             val currentMonth = monthFormat.format(System.currentTimeMillis()).toInt()
 
             monthWithDays.slice(0 until currentMonth).reversed()
-        } else {
+        }
+        // Remove months before first contribution
+        else if (yearToDisplay.year.id == firstContributingYear) {
+            val firstMonthIndex = monthWithDays.indexOfFirst { it.contributionDays.sumOf { it.count } != 0 }
+
+            if (firstMonthIndex != -1) {
+                monthWithDays.slice(firstMonthIndex until monthWithDays.size).reversed()
+            }
+            else {
+                monthWithDays.reversed()
+            }
+        }
+
+        // Other cases
+        else {
             monthWithDays.reversed()
         }
     }
