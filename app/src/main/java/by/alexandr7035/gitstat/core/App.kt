@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.os.Build
 import by.alexandr7035.gitstat.BuildConfig
 import by.alexandr7035.gitstat.R
+import by.alexandr7035.gitstat.data.AppPreferences
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 
@@ -30,6 +31,15 @@ class App : Application() {
 
             val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
+        }
+
+
+        // Force cache (re)synchronization on start if new version was installed
+        // Cache DB schema may be changed and some fields may become 0
+        val appPrefs = AppPreferences(this)
+        if (appPrefs.getLastInstalledVersionCode() != BuildConfig.VERSION_CODE) {
+            appPrefs.saveLastInstalledVersionCode(BuildConfig.VERSION_CODE)
+            appPrefs.saveLastCacheSyncDate(0)
         }
     }
 }

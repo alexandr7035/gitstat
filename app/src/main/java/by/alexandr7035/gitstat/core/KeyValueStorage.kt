@@ -12,4 +12,8 @@ interface KeyValueStorage {
     fun getRepositoriesFilters(): String?
 
     fun saveRepositoriesFilters(filtersStr: String?)
+
+    fun getLastInstalledVersionCode(): Int
+
+    fun saveLastInstalledVersionCode(versionCode: Int)
 }

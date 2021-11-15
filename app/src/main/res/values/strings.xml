@@ -32,6 +32,7 @@
     <string name="private_repos">Private repos</string>
 
     <string name="shared_pref_token">SHARED_PREF_TOKEN</string>
+    <string name="shared_pref_last_version_code">SHARED_PREF_VERSION_CODE</string>
 
     <string name="id">ID</string>
     <string name="created">Created</string>
