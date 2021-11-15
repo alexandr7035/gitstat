@@ -32,9 +32,6 @@ class ContributionsFragment : Fragment() {
     private var binding: FragmentContributionsBinding? = null
     private val viewModel by viewModels<ContributionsViewModel>()
 
-//    private lateinit var yearContributionsAdapter: YearContributionsAdapter
-//    private lateinit var yearContributionsRateAdapter: YearContributionRatesAdapter
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentContributionsBinding.inflate(inflater, container, false)
         return binding!!.root
@@ -180,8 +177,8 @@ class ContributionsFragment : Fragment() {
             ))
         }
 
-        // FIXME TEST
-        binding?.testButton?.setOnClickListener {
+
+        binding?.toContributionsGridBtn?.setOnClickListener {
             findNavController().navigateSafe(ContributionsFragmentDirections.actionContributionsFragmentToContributionsGridFragment(2021))
         }
     }
