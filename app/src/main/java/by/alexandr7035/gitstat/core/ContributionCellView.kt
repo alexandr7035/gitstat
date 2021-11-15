@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import android.view.View
 
 // Use it with one side with WRAP_CONTENT
-class ContributionCeilView: View {
+class ContributionCellView: View {
     constructor(context: Context): super(context)
     constructor(context: Context, attrs: AttributeSet): super(context, attrs)
 

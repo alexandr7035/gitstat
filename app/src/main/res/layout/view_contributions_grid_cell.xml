@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<by.alexandr7035.gitstat.core.ContributionCeilView xmlns:android="http://schemas.android.com/apk/res/android"
+<by.alexandr7035.gitstat.core.ContributionCellView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:layout_width="30dp"
     tools:layout_height="30dp"
