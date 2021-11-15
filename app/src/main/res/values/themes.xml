@@ -141,8 +141,8 @@
         <item name="android:background">@drawable/background_tablayout</item>
         <item name="tabMode">scrollable</item>
         <item name="tabTextAppearance">@style/YearSelectorTabTextAppearance</item>
-        <item name="tabPaddingEnd">16dp</item>
-        <item name="tabPaddingStart">16dp</item>
+        <item name="tabPaddingEnd">20dp</item>
+        <item name="tabPaddingStart">20dp</item>
     </style>
 
     <style name="YearSelectorTabTextAppearance">

@@ -59,7 +59,9 @@ class ContributionsGridFragment : Fragment() {
 
                 binding?.tabLayout?.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                     override fun onTabSelected(tab: TabLayout.Tab) {
-                        adapter.setItems(years.reversed()[tab.position].contributionMonths)
+                        val year = years.reversed()[tab.position]
+                        adapter.setItems(year.contributionMonths)
+                        binding?.toolbar?.title = getString(R.string.year_toolbar_title, year.year.id)
                     }
 
                     override fun onTabUnselected(tab: TabLayout.Tab) {
@@ -67,7 +69,9 @@ class ContributionsGridFragment : Fragment() {
                     }
 
                     override fun onTabReselected(tab: TabLayout.Tab) {
-                        adapter.setItems(years.reversed()[tab.position].contributionMonths)
+                        val year = years.reversed()[tab.position]
+                        adapter.setItems(year.contributionMonths)
+                        binding?.toolbar?.title = getString(R.string.year_toolbar_title, year.year.id)
                     }
                 })
 
