@@ -15,6 +15,7 @@ import by.alexandr7035.gitstat.data.local.model.ContributionYearWithMonths
 import by.alexandr7035.gitstat.data.local.model.ContributionsMonthWithDays
 import by.alexandr7035.gitstat.databinding.FragmentContributionsGridBinding
 import by.alexandr7035.gitstat.extensions.debug
+import by.alexandr7035.gitstat.extensions.navigateSafe
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -123,5 +124,11 @@ class ContributionsGridFragment : Fragment(), DayClickListener {
     // Handle contribution cells clicks here
     override fun onDayItemClick(contributionDay: ContributionDayEntity) {
         Timber.debug("click in FRAGMENT $contributionDay")
+
+        findNavController().navigateSafe(ContributionsGridFragmentDirections.actionContributionsGridFragmentToContributionDayDialogFragment(
+            contributionDay.count,
+            contributionDay.date,
+            contributionDay.color
+        ))
     }
 }

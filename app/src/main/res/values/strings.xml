@@ -134,4 +134,6 @@
     <string name="NOTIFICATION_CHANNEL_ID">GITSTAT_NOTIFICATION_CHANNEL_ID</string>
     <string name="year_toolbar_title">Your %1$d</string>
 
+    <string name="daily_contributions_template">%1$s contribution(s)</string>
+
 </resources>

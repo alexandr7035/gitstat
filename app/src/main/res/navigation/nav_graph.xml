@@ -207,7 +207,26 @@
             android:name="contributionYear"
             app:argType="integer"
             app:nullable="false"/>
+        <action
+            android:id="@+id/action_contributionsGridFragment_to_contributionDayDialogFragment"
+            app:destination="@id/contributionDayDialogFragment" />
 
     </fragment>
+
+    <dialog
+        android:id="@+id/contributionDayDialogFragment"
+        android:name="by.alexandr7035.gitstat.view.contributions_grid.ContributionDayDialogFragment"
+        android:label="fragment_contribution_day_dialog"
+        tools:layout="@layout/fragment_contribution_day_dialog" >
+        <argument
+            android:name="contributionsCount"
+            app:argType="integer" />
+        <argument
+            android:name="contributionDate"
+            app:argType="long" />
+        <argument
+            android:name="contributionsColor"
+            app:argType="integer" />
+    </dialog>
 
 </navigation>
