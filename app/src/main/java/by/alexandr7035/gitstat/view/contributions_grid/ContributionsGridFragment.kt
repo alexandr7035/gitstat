@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.alexandr7035.gitstat.R
+import by.alexandr7035.gitstat.data.local.model.ContributionDayEntity
 import by.alexandr7035.gitstat.data.local.model.ContributionYearWithMonths
 import by.alexandr7035.gitstat.data.local.model.ContributionsMonthWithDays
 import by.alexandr7035.gitstat.databinding.FragmentContributionsGridBinding
@@ -21,7 +22,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 @AndroidEntryPoint
-class ContributionsGridFragment : Fragment() {
+class ContributionsGridFragment : Fragment(), DayClickListener {
 
     private var binding: FragmentContributionsGridBinding? = null
     private val viewModel by viewModels<ContributionsGridViewModel>()
@@ -41,7 +42,7 @@ class ContributionsGridFragment : Fragment() {
             findNavController().navigateUp()
         }
 
-        val adapter = MonthsAdapter()
+        val adapter = MonthsAdapter(this)
 
         binding?.monthRecycler?.adapter = adapter
         binding?.monthRecycler?.layoutManager = LinearLayoutManager(requireContext())
@@ -116,5 +117,11 @@ class ContributionsGridFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
+    }
+
+
+    // Handle contribution cells clicks here
+    override fun onDayItemClick(contributionDay: ContributionDayEntity) {
+        Timber.debug("click in FRAGMENT $contributionDay")
     }
 }

@@ -1,14 +1,23 @@
 package by.alexandr7035.gitstat.view.contributions_grid
 
 import android.annotation.SuppressLint
+import android.content.res.ColorStateList
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.StateListDrawable
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.data.local.model.ContributionDayEntity
 import by.alexandr7035.gitstat.databinding.ViewContributionsGridCellBinding
+import by.alexandr7035.gitstat.extensions.debug
+import timber.log.Timber
 
-class DaysAdapter: RecyclerView.Adapter<DaysAdapter.ViewHolder>() {
+class DaysAdapter(private val dayClickListener: DayClickListener): RecyclerView.Adapter<DaysAdapter.ViewHolder>() {
 
     private var items: List<ContributionDayEntity> = emptyList()
 
@@ -28,9 +37,20 @@ class DaysAdapter: RecyclerView.Adapter<DaysAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-//        TODO("Not yet implemented")
         (holder.binding.root.background as GradientDrawable).setColor(items[position].color)
     }
 
-    class ViewHolder(val binding: ViewContributionsGridCellBinding): RecyclerView.ViewHolder(binding.root)
+    inner class ViewHolder(val binding: ViewContributionsGridCellBinding): RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+
+        init {
+            binding.root.setOnClickListener(this)
+        }
+
+        override fun onClick(view: View) {
+            val clickedDay = items[adapterPosition]
+            Timber.debug("clicked $clickedDay")
+            dayClickListener.onDayItemClick(clickedDay)
+        }
+    }
+
 }

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import by.alexandr7035.gitstat.data.local.model.ContributionDayEntity
 import by.alexandr7035.gitstat.data.local.model.ContributionsMonthWithDays
 import by.alexandr7035.gitstat.databinding.ViewMonthContributionsGridBinding
 import by.alexandr7035.gitstat.extensions.debug
@@ -12,7 +13,7 @@ import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 
-class MonthsAdapter: RecyclerView.Adapter<MonthsAdapter.ViewHolder>() {
+class MonthsAdapter(private val fragmentDayClickListener: DayClickListener): RecyclerView.Adapter<MonthsAdapter.ViewHolder>(), DayClickListener {
 
     // FIXME
     private var items: List<ContributionsMonthWithDays> = emptyList()
@@ -53,7 +54,7 @@ class MonthsAdapter: RecyclerView.Adapter<MonthsAdapter.ViewHolder>() {
             .sumOf { it.count }
             .toString()
 
-        val adapter = DaysAdapter()
+        val adapter = DaysAdapter(this)
         holder.binding.cellsRecycler.adapter = adapter
 //        holder.binding.cellsRecycler.layoutManager = FlexboxLayoutManager(holder.binding.root.context)
         holder.binding.cellsRecycler.layoutManager = GridLayoutManager(holder.binding.root.context, 7)
@@ -63,4 +64,9 @@ class MonthsAdapter: RecyclerView.Adapter<MonthsAdapter.ViewHolder>() {
     }
 
     class ViewHolder(val binding: ViewMonthContributionsGridBinding): RecyclerView.ViewHolder(binding.root)
+
+
+    override fun onDayItemClick(contributionDay: ContributionDayEntity) {
+        fragmentDayClickListener.onDayItemClick(contributionDay)
+    }
 }
