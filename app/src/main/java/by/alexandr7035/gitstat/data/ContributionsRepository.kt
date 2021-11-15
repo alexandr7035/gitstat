@@ -27,8 +27,8 @@ class ContributionsRepository @Inject constructor(
         return dao.getContributionYearsWithRatesCache()
     }
 
-    fun getContributionYearWithMonthsLiveData(yearId: Int): LiveData<ContributionYearWithMonths> {
-        return dao.getContributionYearWithMonthsLiveData(yearId)
+    fun getContributionYearsWithMonthsLiveData(): LiveData<List<ContributionYearWithMonths>> {
+        return dao.getContributionYearsWithMonthsLiveData()
     }
 
     fun getContributionTypesLiveData(): LiveData<List<ContributionTypesEntity>> {

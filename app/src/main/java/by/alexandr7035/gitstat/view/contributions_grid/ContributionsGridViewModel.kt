@@ -10,7 +10,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ContributionsGridViewModel @Inject constructor(private val repository: ContributionsRepository): ViewModel() {
 
-    fun getContributionYearWithMonths(yearId: Int): LiveData<ContributionYearWithMonths> {
-        return repository.getContributionYearWithMonthsLiveData(yearId)
+    fun getContributionYearsWithMonthsLiveData(): LiveData<List<ContributionYearWithMonths>> {
+        return repository.getContributionYearsWithMonthsLiveData()
     }
 }
