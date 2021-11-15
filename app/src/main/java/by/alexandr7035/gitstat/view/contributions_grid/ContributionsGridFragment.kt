@@ -10,10 +10,15 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.alexandr7035.gitstat.R
+import by.alexandr7035.gitstat.data.local.model.ContributionYearWithMonths
+import by.alexandr7035.gitstat.data.local.model.ContributionsMonthWithDays
 import by.alexandr7035.gitstat.databinding.FragmentContributionsGridBinding
-import com.google.android.material.tabs.TabItem
+import by.alexandr7035.gitstat.extensions.debug
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
+import java.text.SimpleDateFormat
+import java.util.*
 
 @AndroidEntryPoint
 class ContributionsGridFragment : Fragment() {
@@ -60,7 +65,7 @@ class ContributionsGridFragment : Fragment() {
                 binding?.tabLayout?.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                     override fun onTabSelected(tab: TabLayout.Tab) {
                         val year = years.reversed()[tab.position]
-                        adapter.setItems(year.contributionMonths.reversed())
+                        adapter.setItems(getMonthsToShow(years, tab.position))
                         binding?.toolbar?.title = getString(R.string.year_toolbar_title, year.year.id)
                     }
 
@@ -70,7 +75,7 @@ class ContributionsGridFragment : Fragment() {
 
                     override fun onTabReselected(tab: TabLayout.Tab) {
                         val year = years.reversed()[tab.position]
-                        adapter.setItems(year.contributionMonths.reversed())
+                        adapter.setItems(getMonthsToShow(years, tab.position))
                         binding?.toolbar?.title = getString(R.string.year_toolbar_title, year.year.id)
                     }
                 })
@@ -83,6 +88,29 @@ class ContributionsGridFragment : Fragment() {
 
         })
 
+    }
+
+
+    // FIXME move to data layer
+    fun getMonthsToShow(yearsWithMonths: List<ContributionYearWithMonths>, tabPosition: Int): List<ContributionsMonthWithDays> {
+        val yearToDisplay = yearsWithMonths.reversed()[tabPosition]
+        val monthWithDays = yearToDisplay.contributionMonths
+
+        // Get current year
+        val yearFormat = SimpleDateFormat("yyyy", Locale.US)
+        val currentYear = yearFormat.format(System.currentTimeMillis()).toInt()
+
+        // Remove future month if display current year
+        return if (yearToDisplay.year.id == currentYear) {
+
+            // Get current month number
+            val monthFormat = SimpleDateFormat("MM", Locale.US)
+            val currentMonth = monthFormat.format(System.currentTimeMillis()).toInt()
+
+            monthWithDays.slice(0 until currentMonth).reversed()
+        } else {
+            monthWithDays.reversed()
+        }
     }
 
     override fun onDestroyView() {
