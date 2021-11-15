@@ -11,10 +11,11 @@
         <b>Major features:</b>
         <br/>
         - Github profile summary <br/>
-        - Plot with your repositories languages <br/>
-        - Your repositories list with filters <br/>
+        - Pie chart with programming languages of your repositories <br/>
+        - List of your repositories with filters and sorting <br/>
         - Contributions summary <br/>
-        - Contributions plots (contributions per day, contribution rate). <br/>
+        - Charts for contributions (types, count per day, contribution rate) <br/>
+        - Contributions grid (Github-like) <br/>
     ]]>
     </string>
     <string name="OAUTH_PROVIDER">github.com</string>
