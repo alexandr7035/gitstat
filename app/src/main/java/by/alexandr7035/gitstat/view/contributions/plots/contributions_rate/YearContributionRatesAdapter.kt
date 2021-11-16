@@ -12,6 +12,7 @@ class YearContributionRatesAdapter(fragment: Fragment) : FragmentStateAdapter(fr
 
     fun setItems(years: List<ContributionsYearWithRates>) {
         this.items = years
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int {
