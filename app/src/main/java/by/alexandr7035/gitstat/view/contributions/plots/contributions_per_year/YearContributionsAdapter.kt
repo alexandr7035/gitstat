@@ -1,5 +1,6 @@
 package by.alexandr7035.gitstat.view.contributions.plots.contributions_per_year
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -10,8 +11,10 @@ class YearContributionsAdapter(fragment: Fragment): FragmentStateAdapter(fragmen
 
     private var items: List<ContributionsYearWithDays> = emptyList()
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setItems(years: List<ContributionsYearWithDays>) {
         this.items = years
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int {

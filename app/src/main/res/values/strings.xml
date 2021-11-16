@@ -11,10 +11,11 @@
         <b>Major features:</b>
         <br/>
         - Github profile summary <br/>
-        - Plot with your repositories languages <br/>
-        - Your repositories list with filters <br/>
+        - Pie chart with programming languages of your repositories <br/>
+        - List of your repositories with filters and sorting <br/>
         - Contributions summary <br/>
-        - Contributions plots (contributions per day, contribution rate). <br/>
+        - Charts for contributions (types, count per day, contribution rate) <br/>
+        - Contributions grid (Github-like) <br/>
     ]]>
     </string>
     <string name="OAUTH_PROVIDER">github.com</string>
@@ -32,6 +33,7 @@
     <string name="private_repos">Private repos</string>
 
     <string name="shared_pref_token">SHARED_PREF_TOKEN</string>
+    <string name="shared_pref_last_version_code">SHARED_PREF_VERSION_CODE</string>
 
     <string name="id">ID</string>
     <string name="created">Created</string>
@@ -118,7 +120,7 @@
 
 
     <string name="what_is_contribution_rate_title">What is contribution rate?</string>
-    <string name="what_is_contribution_rate_text">Contribution rate is total contributions count for the given period divided by the day count of this period.</string>
+    <string name="what_is_contribution_rate_text">Contribution rate (CR) is an average contributions count for the given period.</string>
 
     <string name="contribution_rate_dynamics_help_title">What\'s on these charts?</string>
     <string name="contribution_rate_dynamics_help_text">On all of the years charts the total contribution rate dynamics is presented (for the period from registration date).</string>
@@ -132,5 +134,8 @@
 
     <string name="fg_notification_channel">GitStat service notification</string>
     <string name="NOTIFICATION_CHANNEL_ID">GITSTAT_NOTIFICATION_CHANNEL_ID</string>
+    <string name="year_toolbar_title">Your %1$d</string>
+
+    <string name="daily_contributions_template">%1$s contribution(s)</string>
 
 </resources>

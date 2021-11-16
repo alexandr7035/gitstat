@@ -4,10 +4,7 @@ import androidx.lifecycle.LiveData
 import by.alexandr7035.gitstat.core.KeyValueStorage
 import by.alexandr7035.gitstat.core.TimeHelper
 import by.alexandr7035.gitstat.data.local.dao.ContributionsDao
-import by.alexandr7035.gitstat.data.local.model.ContributionDayEntity
-import by.alexandr7035.gitstat.data.local.model.ContributionTypesEntity
-import by.alexandr7035.gitstat.data.local.model.ContributionsYearWithDays
-import by.alexandr7035.gitstat.data.local.model.ContributionsYearWithRates
+import by.alexandr7035.gitstat.data.local.model.*
 import javax.inject.Inject
 import kotlin.math.round
 
@@ -28,6 +25,10 @@ class ContributionsRepository @Inject constructor(
 
     fun getContributionYearsWithRatesLiveData(): LiveData<List<ContributionsYearWithRates>> {
         return dao.getContributionYearsWithRatesCache()
+    }
+
+    fun getContributionYearsWithMonthsLiveData(): LiveData<List<ContributionYearWithMonths>> {
+        return dao.getContributionYearsWithMonthsLiveData()
     }
 
     fun getContributionTypesLiveData(): LiveData<List<ContributionTypesEntity>> {

@@ -9,6 +9,7 @@ query Contributions($date_from: DateTime, $date_to: DateTime) {
                     contributionDays {
                         contributionCount
                         date
+                        color
                     }
                 }
             }

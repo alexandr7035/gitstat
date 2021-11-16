@@ -34,4 +34,12 @@ class AppPreferences @Inject constructor(private val application: Application): 
     override fun saveRepositoriesFilters(filtersStr: String?) {
         prefs.edit().putString(application.getString(R.string.shared_prefs_filters), filtersStr).apply()
     }
+
+    override fun getLastInstalledVersionCode(): Int {
+        return prefs.getInt(application.getString(R.string.shared_pref_last_version_code), 0)
+    }
+
+    override fun saveLastInstalledVersionCode(versionCode: Int) {
+        prefs.edit().putInt(application.getString(R.string.shared_pref_last_version_code), versionCode).apply()
+    }
 }

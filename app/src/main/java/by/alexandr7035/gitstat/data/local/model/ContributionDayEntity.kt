@@ -9,4 +9,7 @@ class ContributionDayEntity(
     var id: Int = 0,
     var date: Long,
     var count: Int,
-    var yearId: Int)
+    val color: Int,
+
+    var yearId: Int,
+    var monthId: Int)
