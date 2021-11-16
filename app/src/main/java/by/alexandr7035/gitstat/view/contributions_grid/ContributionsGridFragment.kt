@@ -96,7 +96,7 @@ class ContributionsGridFragment : Fragment(), DayClickListener {
     // FIXME move to data layer
     fun getMonthsToShow(yearsWithMonths: List<ContributionYearWithMonths>, tabPosition: Int): List<ContributionsMonthWithDays> {
         val yearToDisplay = yearsWithMonths.reversed()[tabPosition]
-        val monthWithDays = yearToDisplay.contributionMonths
+        var monthWithDays = yearToDisplay.contributionMonths
 
         // Get current year
         val yearFormat = SimpleDateFormat("yyyy", Locale.US)
@@ -106,30 +106,26 @@ class ContributionsGridFragment : Fragment(), DayClickListener {
         val firstContributingYear = yearsWithMonths.first().year.id
 
         // Remove future month if display current year
-        return if (yearToDisplay.year.id == currentYear) {
+        if (yearToDisplay.year.id == currentYear) {
 
             // Get current month number
             val monthFormat = SimpleDateFormat("MM", Locale.US)
             val currentMonth = monthFormat.format(System.currentTimeMillis()).toInt()
 
-            monthWithDays.slice(0 until currentMonth).reversed()
+            monthWithDays = monthWithDays.slice(0 until currentMonth)
         }
+
+
         // Remove months before first contribution
-        else if (yearToDisplay.year.id == firstContributingYear) {
+        if (yearToDisplay.year.id == firstContributingYear) {
             val firstMonthIndex = monthWithDays.indexOfFirst { it.contributionDays.sumOf { it.count } != 0 }
 
             if (firstMonthIndex != -1) {
-                monthWithDays.slice(firstMonthIndex until monthWithDays.size).reversed()
-            }
-            else {
-                monthWithDays.reversed()
+                monthWithDays = monthWithDays.slice(firstMonthIndex until monthWithDays.size)
             }
         }
 
-        // Other cases
-        else {
-            monthWithDays.reversed()
-        }
+        return monthWithDays.reversed()
     }
 
     override fun onDestroyView() {
