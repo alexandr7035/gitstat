@@ -118,7 +118,7 @@ class ContributionsGridFragment : Fragment(), DayClickListener {
 
         // Remove months before first contribution
         if (yearToDisplay.year.id == firstContributingYear) {
-            val firstMonthIndex = monthWithDays.indexOfFirst { it.contributionDays.sumOf { it.count } != 0 }
+            val firstMonthIndex = monthWithDays.indexOfFirst { it -> it.contributionDays.sumOf { it.count } != 0 }
 
             if (firstMonthIndex != -1) {
                 monthWithDays = monthWithDays.slice(firstMonthIndex until monthWithDays.size)

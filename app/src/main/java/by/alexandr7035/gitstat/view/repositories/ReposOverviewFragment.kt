@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.databinding.FragmentReposOverviewBinding
 import by.alexandr7035.gitstat.extensions.navigateSafe
 import by.alexandr7035.gitstat.view.MainActivity

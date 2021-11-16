@@ -1,5 +1,6 @@
 package by.alexandr7035.gitstat.view.contributions.plots.contributions_rate
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -10,6 +11,7 @@ class YearContributionRatesAdapter(fragment: Fragment) : FragmentStateAdapter(fr
     // FIXME
     private var items: List<ContributionsYearWithRates> = emptyList()
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setItems(years: List<ContributionsYearWithRates>) {
         this.items = years
         notifyDataSetChanged()
