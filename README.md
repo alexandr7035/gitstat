@@ -42,15 +42,17 @@ used to implement languages filter (see third screenshot).
 ## Screenshots
 
 <p align="left">
-<img src="doc/screenshot_login.png" width="30%"/>
-<img src="doc/screenshot_oauth.png" width="30%"/>
-<img src="doc/screenshot_repositories_stat.png" width="30%"/>
+<img src="doc/screenshot_login.png" width="23%"/>
+<img src="doc/screenshot_oauth.png" width="23%"/>
+<img src="doc/screenshot_profile.png" width="23%"/>
+<img src="doc/screenshot_repositories_stat.png" width="23%"/>
 </p>
 
 <p align="left">
-<img src="doc/screenshot_filters.png" width="30%"/>
-<img src="doc/screenshot_contributions_1.png" width="30%"/>
-<img src="doc/screenshot_contributions_2.png" width="30%"/>
+<img src="doc/screenshot_filters.png" width="23%"/>
+<img src="doc/screenshot_contributions_1.png" width="23%"/>
+<img src="doc/screenshot_contributions_2.png" width="23%"/>
+<img src="doc/screenshot_contributions_grid_1.png" width="23%"/>
 </p>
 
 ## Privacy Policy
