@@ -7,11 +7,15 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.StateListDrawable
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import by.alexandr7035.gitstat.BuildConfig
 import by.alexandr7035.gitstat.R
+import by.alexandr7035.gitstat.core.TimeHelper
 import by.alexandr7035.gitstat.data.local.model.ContributionDayEntity
 import by.alexandr7035.gitstat.databinding.ViewContributionsGridCellBinding
 import by.alexandr7035.gitstat.extensions.debug
@@ -38,6 +42,17 @@ class DaysAdapter(private val dayClickListener: DayClickListener): RecyclerView.
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         (holder.binding.root.background as GradientDrawable).setColor(items[position].color)
+
+        // FIXME
+        val timeHelper = TimeHelper()
+
+        if (items[position].date == timeHelper.getBeginningOfDayForUnixDate(System.currentTimeMillis())) {
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                holder.binding.root.foreground =
+                    ContextCompat.getDrawable(holder.binding.root.context, R.drawable.foreground_contributions_grid_cell_current_day)
+            }
+        }
     }
 
     inner class ViewHolder(val binding: ViewContributionsGridCellBinding): RecyclerView.ViewHolder(binding.root), View.OnClickListener {
