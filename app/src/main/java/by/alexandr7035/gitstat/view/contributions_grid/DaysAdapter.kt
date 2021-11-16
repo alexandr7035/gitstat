@@ -46,7 +46,7 @@ class DaysAdapter(private val dayClickListener: DayClickListener): RecyclerView.
         // FIXME
         val timeHelper = TimeHelper()
 
-        if (items[position].date == timeHelper.getBeginningOfDayForUnixDate(System.currentTimeMillis())) {
+        if (items[position].date == timeHelper.getBeginningOfDayForUnixDate_currentTz(System.currentTimeMillis())) {
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 holder.binding.root.foreground =

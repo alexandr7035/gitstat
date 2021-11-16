@@ -45,6 +45,13 @@ class TimeHelper {
         return getUnixDateFrom_yyyyMMdd(beginningStr)
     }
 
+    fun getBeginningOfDayForUnixDate_currentTz(currentDate: Long): Long {
+        val format = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+        val beginningStr = format.format(currentDate)
+
+        return getUnixDateFrom_yyyyMMdd(beginningStr)
+    }
+
     fun getCurrentYearForUnixDate(currentDate: Long): Int {
         val format = SimpleDateFormat("yyyy", Locale.US)
         format.timeZone = TimeZone.getTimeZone("GMT")
