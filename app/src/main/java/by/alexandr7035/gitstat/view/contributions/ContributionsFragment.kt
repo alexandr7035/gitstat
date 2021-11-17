@@ -142,6 +142,10 @@ class ContributionsFragment : Fragment() {
         binding?.toContributionsGridBtn?.setOnClickListener {
             findNavController().navigateSafe(ContributionsFragmentDirections.actionContributionsFragmentToContributionsGridFragment(2021))
         }
+
+        binding?.toContributionTypesFragmentBtn?.setOnClickListener {
+            findNavController().navigateSafe(ContributionsFragmentDirections.actionContributionsFragmentToFragmentContributionTypes())
+        }
     }
 
 }

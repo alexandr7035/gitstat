@@ -146,6 +146,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            style="@style/ShowMoreButtonStyle"
+            android:id="@+id/toContributionTypesFragmentBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/more_underlined"
+            app:layout_constraintTop_toTopOf="@id/contributionTypesHeader"
+            app:layout_constraintBottom_toBottomOf="@id/contributionTypesHeader"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:clickable="true"
+            android:layout_marginEnd="10dp"
+            />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/contributionTypesRecycler"
             android:layout_width="0dp"

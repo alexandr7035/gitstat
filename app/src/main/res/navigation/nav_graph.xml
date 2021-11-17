@@ -54,6 +54,9 @@
                 app:argType="integer"
                 android:name="contributionYear"/>
         </action>
+        <action
+            android:id="@+id/action_contributionsFragment_to_fragmentContributionTypes"
+            app:destination="@id/fragmentContributionTypes" />
     </fragment>
 
     <navigation android:id="@+id/repositoriesListGraph"
@@ -233,5 +236,10 @@
             android:name="contributionsColor"
             app:argType="integer" />
     </dialog>
+    <fragment
+        android:id="@+id/fragmentContributionTypes"
+        android:name="by.alexandr7035.gitstat.view.contributions.plots.contributions_types.FragmentContributionTypes"
+        android:label="fragment_contribution_types"
+        tools:layout="@layout/fragment_contribution_types" />
 
 </navigation>
