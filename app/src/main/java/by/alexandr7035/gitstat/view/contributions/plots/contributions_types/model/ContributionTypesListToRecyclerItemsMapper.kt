@@ -7,11 +7,11 @@ import by.alexandr7035.gitstat.data.local.model.ContributionTypesEntity
 import kotlin.math.ceil
 
 // FIXME architecture
-class ContributionTypesListToLegendItemsMapper private constructor() {
+class ContributionTypesListToRecyclerItemsMapper private constructor() {
 
     companion object {
 
-        fun map(data: List<ContributionTypesEntity>, context: Context): List<TypesLegendItem> {
+        fun map(data: List<ContributionTypesEntity>, context: Context): List<TypesItem> {
 
             // Count types for all of the years
             val commits = data.sumOf { it.commitContributions }
@@ -23,38 +23,38 @@ class ContributionTypesListToLegendItemsMapper private constructor() {
             val total = data.sumOf { it.totalContributions }
 
             return listOf(
-                TypesLegendItem(
+                TypesItem(
                     label = "Commits",
                     count = commits,
                     percentage = getPercentage(commits / total.toFloat() * 100),
                     color = ContextCompat.getColor(context, R.color.color_commits)
                 ),
-                TypesLegendItem(
+                TypesItem(
                     label = "Repositories",
                     count = repositories,
                     percentage = getPercentage(repositories / total.toFloat() * 100),
                     color = ContextCompat.getColor(context, R.color.color_repositories)
                 ),
-                TypesLegendItem(
+                TypesItem(
                     label = "Issues",
                     count = issues,
                     percentage = getPercentage(issues / total.toFloat() * 100),
                     color = ContextCompat.getColor(context, R.color.color_issues)
                 ),
-                TypesLegendItem(
+                TypesItem(
                     label = "Pull requests",
                     count = pullRequests,
                     percentage = getPercentage(pullRequests / total.toFloat() * 100),
                     color = ContextCompat.getColor(context, R.color.color_pull_requests)
                 ),
-                TypesLegendItem(
+                TypesItem(
                     label = "Code reviews",
                     count = reviews,
                     percentage = getPercentage(reviews / total.toFloat() * 100),
                     color = ContextCompat.getColor(context, R.color.color_code_reviews)
                 ),
 
-                TypesLegendItem(
+                TypesItem(
                     label = "Unknown",
                     count = unknown,
                     percentage = getPercentage(unknown / total.toFloat() * 100),

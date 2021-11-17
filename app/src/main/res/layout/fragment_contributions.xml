@@ -130,7 +130,7 @@
         android:background="@drawable/background_card"
         android:elevation="5dp"
         android:orientation="vertical"
-        android:paddingBottom="10dp"
+        android:paddingBottom="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/header">
@@ -146,26 +146,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.github.mikephil.charting.charts.HorizontalBarChart
-            android:id="@+id/contributionTypesChart"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:minHeight="170dp"
-            android:layout_marginTop="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/contributionTypesHeader" />
-
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/contributionTypesLegendRecycler"
+            android:id="@+id/contributionTypesRecycler"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
             android:overScrollMode="never"
+            android:layout_marginTop="4dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/contributionTypesChart"
+            app:layout_constraintTop_toBottomOf="@id/contributionTypesHeader"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
