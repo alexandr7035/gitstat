@@ -7,17 +7,17 @@ import android.view.ViewGroup
 import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import by.alexandr7035.gitstat.BuildConfig
-import by.alexandr7035.gitstat.R
-import by.alexandr7035.gitstat.databinding.FragmentAboutAppBinding
+import androidx.navigation.fragment.navArgs
+import by.alexandr7035.gitstat.databinding.FragmentInfoBinding
 
-class AboutAppFragment : Fragment() {
+class InfoFragment : Fragment() {
 
-    private var binding: FragmentAboutAppBinding? = null
+    private var binding: FragmentInfoBinding? = null
+    private val safeArgs by navArgs<InfoFragmentArgs>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        binding = FragmentAboutAppBinding.inflate(inflater, container, false)
+        binding = FragmentInfoBinding.inflate(inflater, container, false)
         return binding?.root
     }
 
@@ -28,8 +28,14 @@ class AboutAppFragment : Fragment() {
             findNavController().navigateUp()
         }
 
-        binding?.appMame?.text = getString(R.string.app_name_with_version, BuildConfig.VERSION_NAME)
-        binding?.descriptionText?.text = HtmlCompat.fromHtml(getString(R.string.app_description), HtmlCompat.FROM_HTML_MODE_LEGACY)
+        binding?.toolbar?.title = safeArgs.toolbarTitle
+        if (safeArgs.infoTitle != null) {
+            binding?.infoTitle?.text = safeArgs.infoTitle
+        }
+        else {
+            binding?.infoTitle?.visibility = View.GONE
+        }
+        binding?.infoText?.text = HtmlCompat.fromHtml(safeArgs.infoText, HtmlCompat.FROM_HTML_MODE_LEGACY)
     }
 
     override fun onDestroyView() {

@@ -120,7 +120,7 @@
 
     <dialog
         android:id="@+id/infoDialogFragment"
-        android:name="by.alexandr7035.gitstat.view.core.info_dialog.InfoDialogFragment"
+        android:name="by.alexandr7035.gitstat.view.info.InfoDialogFragment"
         android:label="fragment_info_dialog"
         tools:layout="@layout/fragment_info_dialog">
 
@@ -167,12 +167,21 @@
             app:nullable="false"/>
     </action>
     <fragment
-        android:id="@+id/aboutAppFragment"
-        android:name="by.alexandr7035.gitstat.view.info.AboutAppFragment"
-        android:label="AboutAppFragment"
-        tools:layout="@layout/fragment_about_app"/>
+        android:id="@+id/infoAppFragment"
+        android:name="by.alexandr7035.gitstat.view.info.InfoFragment"
+        android:label="InfoFragment"
+        tools:layout="@layout/fragment_info">
+        <argument android:name="toolbarTitle"
+            app:argType="string" />
+        <argument android:name="infoTitle"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="infoText"
+            app:argType="string" />
+    </fragment>
 
-    <action android:id="@+id/action_global_aboutAppFragment" app:destination="@id/aboutAppFragment" />
+    <action android:id="@+id/action_global_infoFragment" app:destination="@id/infoAppFragment" />
 
     <fragment
         android:id="@+id/syncHostFragment"

@@ -1,4 +1,4 @@
-package by.alexandr7035.gitstat.view.core.info_dialog
+package by.alexandr7035.gitstat.view.info
 
 import android.os.Bundle
 import android.view.LayoutInflater

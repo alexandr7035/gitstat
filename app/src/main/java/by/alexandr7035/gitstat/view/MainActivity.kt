@@ -12,6 +12,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import by.alexandr7035.gitstat.BuildConfig
 import by.alexandr7035.gitstat.NavGraphDirections
 import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.data.SyncForegroundService
@@ -127,12 +128,17 @@ class MainActivity : AppCompatActivity() {
                     binding.drawerLayout.closeDrawer(GravityCompat.START)
                 }
 
-                R.id.item_privacy_policy -> navController.navigateSafe(NavGraphDirections.actionGlobalWebViewFragment(
+                R.id.item_privacy_policy -> navController.navigateSafe(NavGraphDirections.actionGlobalInfoFragment(
                     getString(R.string.privacy_policy),
-                    getString(R.string.privacy_policy_url)
+                    null,
+                    getString(R.string.privacy_policy_full_text)
                 ))
 
-                R.id.item_about_app -> navController.navigateSafe(NavGraphDirections.actionGlobalAboutAppFragment())
+                R.id.item_about_app -> navController.navigateSafe(NavGraphDirections.actionGlobalInfoFragment(
+                    getString(R.string.about_app),
+                    getString(R.string.app_name_with_version, BuildConfig.VERSION_NAME),
+                    getString(R.string.app_description)
+                ))
             }
 
             true
