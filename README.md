@@ -57,7 +57,7 @@ used to implement languages filter (see third screenshot).
 
 ## Privacy Policy
 - We use **Github Oauth** (Firebase) for user authentication. As soon as you click the login button, system opens the browser.  You have to enter the login and password from your **Github account**.
-- As **Oauth** method is used for authentication, even if you log out, you may be able log in again without entering your Github login and password. If this is wrong behavior for you, clear your browser cache after logging out.
+- As **Oauth** method is used for authentication, even if you log out, you may be able log in again without entering your Github login and password. Clear your browser cache after logging out if you wish to change GitHub account.
 - We get access to ```read:user``` and ```repo``` access scopes. We **do not perform any write operations** on your github account. Full ```repo``` scope is used only to have access to your private repos data and not to perform malicious write operations.
 - We do not store your account data anywhere outside the device local storage.
 
