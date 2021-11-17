@@ -29,16 +29,4 @@ fun YAxis.setupYAxisValuesForContributionRate(topValue: Float) {
 }
 
 
-fun YAxis.setupYAxisValuesForContributionTypes(topValue: Int) {
-
-    axisMaximum = if (topValue % 100 == 0) {
-        topValue.toFloat()
-    } else {
-        (floor(topValue / 100F) + 1) * 100
-    }
-
-    axisMinimum = 0f
-
-    setLabelCount(5, true)
-}
 
