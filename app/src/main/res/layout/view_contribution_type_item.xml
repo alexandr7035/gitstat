@@ -39,9 +39,23 @@
         android:textColor="@color/gray_500"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:layout_marginEnd="10dp"
         app:layout_constraintBottom_toBottomOf="@+id/label"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/label"
+        app:layout_constraintEnd_toStartOf="@id/percentageView"
         tools:text="1345" />
+
+    <TextView
+        android:id="@+id/percentageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/gray_200"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/countView"
+        app:layout_constraintBottom_toBottomOf="@id/countView"
+        tools:text="13.44%" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
