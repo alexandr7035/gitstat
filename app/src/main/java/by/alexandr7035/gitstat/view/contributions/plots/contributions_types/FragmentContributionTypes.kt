@@ -11,6 +11,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.databinding.FragmentContributionTypesBinding
+import by.alexandr7035.gitstat.extensions.setPieChartData
+import by.alexandr7035.gitstat.extensions.setupPieChartView
 import by.alexandr7035.gitstat.view.contributions.ContributionsViewModel
 import by.alexandr7035.gitstat.view.contributions.plots.contributions_types.model.ContributionTypesListToRecyclerItemsMapper
 import by.alexandr7035.gitstat.view.repositories.plots.languages_plot.PieDataValueFormatter
