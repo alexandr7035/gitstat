@@ -114,7 +114,9 @@ class ContributionsFragment : Fragment() {
 
             if (typesData != null) {
                 // Update legend
+                binding?.contributionTypesRecycler?.suppressLayout(false)
                 typesLegendAdapter.setItems(ContributionTypesListToRecyclerItemsMapper.map(typesData, requireContext()))
+                binding?.contributionTypesRecycler?.suppressLayout(true)
             }
         })
 
@@ -143,7 +145,7 @@ class ContributionsFragment : Fragment() {
             findNavController().navigateSafe(ContributionsFragmentDirections.actionContributionsFragmentToContributionsGridFragment(2021))
         }
 
-        binding?.toContributionTypesFragmentBtn?.setOnClickListener {
+        binding?.contributionTypesCard?.setOnClickListener {
             findNavController().navigateSafe(ContributionsFragmentDirections.actionContributionsFragmentToFragmentContributionTypes())
         }
     }

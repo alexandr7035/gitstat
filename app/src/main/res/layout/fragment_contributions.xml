@@ -122,12 +122,13 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/contributionTypesCard"
+        android:clickable="true"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/background_card"
+        android:background="@drawable/background_card_clickable"
         android:elevation="5dp"
         android:orientation="vertical"
         android:paddingBottom="8dp"
@@ -146,20 +147,9 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            style="@style/ShowMoreButtonStyle"
-            android:id="@+id/toContributionTypesFragmentBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/more_underlined"
-            app:layout_constraintTop_toTopOf="@id/contributionTypesHeader"
-            app:layout_constraintBottom_toBottomOf="@id/contributionTypesHeader"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:clickable="true"
-            android:layout_marginEnd="10dp"
-            />
-
         <androidx.recyclerview.widget.RecyclerView
+            android:clickable="false"
+            android:duplicateParentState="true"
             android:id="@+id/contributionTypesRecycler"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

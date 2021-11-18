@@ -3,15 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content" xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:paddingStart="16dp"
-    android:paddingTop="8dp"
-    android:paddingBottom="8dp"
-    android:paddingEnd="16dp">
+    android:paddingStart="10dp"
+    android:paddingTop="4dp"
+    android:paddingBottom="4dp"
+    android:paddingEnd="10dp">
 
     <View
         android:id="@+id/coloredMark"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:background="@drawable/background_contributions_grid_cell"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
