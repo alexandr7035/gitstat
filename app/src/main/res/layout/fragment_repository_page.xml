@@ -9,6 +9,7 @@
     <androidx.appcompat.widget.Toolbar
         style="@style/ToolbarStyle"
         android:id="@+id/toolbar"
+        android:paddingEnd="10dp"
         tools:title="GitStat"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"

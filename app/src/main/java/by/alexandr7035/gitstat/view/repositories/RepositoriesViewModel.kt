@@ -26,6 +26,10 @@ class RepositoriesViewModel @Inject constructor(private val repository: ReposRep
         return repository.getRepositoriesLiveData()
     }
 
+    fun getRepositoryLiveData(repositoryId: Int): LiveData<RepositoryEntity> {
+        return repository.getRepositoryLiveData(repositoryId)
+    }
+
     // Repos livedata
     fun getAllRepositoriesListLiveData(): LiveData<List<RepositoryEntity>> {
         return allRepositoriesLiveData

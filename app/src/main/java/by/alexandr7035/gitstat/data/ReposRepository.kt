@@ -18,6 +18,10 @@ class ReposRepository @Inject constructor(
         return dao.getRepositoriesLiveData()
     }
 
+    fun getRepositoryLiveData(repositoryId: Int): LiveData<RepositoryEntity> {
+        return dao.getRepositoryLiveData(repositoryId)
+    }
+
     suspend fun fetchAllRepositoriesFromDb(): List<RepositoryEntity> {
         return dao.getRepositories()
     }
