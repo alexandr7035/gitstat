@@ -5,6 +5,9 @@ query Repositories {
             nodes {
                 databaseId
                 name
+                nameWithOwner
+
+                description
 
                 primaryLanguage {
                     color

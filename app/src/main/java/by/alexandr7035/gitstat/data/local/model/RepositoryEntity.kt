@@ -9,6 +9,8 @@ class RepositoryEntity(
 @PrimaryKey
 var id: Int,
 var name: String,
+var nameWithOwner: String,
+var description: String,
 var language: String,
 var languageColor: String,
 
