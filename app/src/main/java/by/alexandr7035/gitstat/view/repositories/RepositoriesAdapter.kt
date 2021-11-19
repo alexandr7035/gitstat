@@ -13,7 +13,7 @@ import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.data.local.model.RepositoryEntity
 import by.alexandr7035.gitstat.databinding.ViewRepositoryBinding
 
-class RepositoriesAdapter : RecyclerView.Adapter<RepositoriesAdapter.ViewHolder>() {
+class RepositoriesAdapter(private val clickListener: RepoClickListener) : RecyclerView.Adapter<RepositoriesAdapter.ViewHolder>() {
 
     private var items: List<RepositoryEntity> = ArrayList()
     private val createdDateFormat = "yyyy-MM-dd"
@@ -71,6 +71,15 @@ class RepositoriesAdapter : RecyclerView.Adapter<RepositoriesAdapter.ViewHolder>
         (holder.binding.languageColorView.background as GradientDrawable).setColor(Color.parseColor(items[position].languageColor))
     }
 
-    class ViewHolder(val binding: ViewRepositoryBinding): RecyclerView.ViewHolder(binding.root)
+    inner class ViewHolder(val binding: ViewRepositoryBinding): RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+
+        init {
+            binding.root.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View) {
+            clickListener.onRepoClicked(items[adapterPosition].id)
+        }
+    }
 
 }

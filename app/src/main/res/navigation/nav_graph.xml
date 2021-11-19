@@ -90,6 +90,9 @@
             android:id="@+id/repositoriesFiltersDialog"
             android:name="by.alexandr7035.gitstat.view.repositories.filters.RepositoriesFiltersDialog"
             android:label="RepositoriesFiltersDialog" />
+        <action
+            android:id="@+id/action_global_repositoryPageFragment"
+            app:destination="@id/repositoryPageFragment" />
     </navigation>
 
 
@@ -241,5 +244,14 @@
         android:name="by.alexandr7035.gitstat.view.contributions.plots.contributions_types.FragmentContributionTypes"
         android:label="fragment_contribution_types"
         tools:layout="@layout/fragment_contribution_types" />
+    <fragment
+        android:id="@+id/repositoryPageFragment"
+        android:name="by.alexandr7035.gitstat.view.repositories.RepositoryPageFragment"
+        android:label="fragment_repository_page"
+        tools:layout="@layout/fragment_repository_page" >
+        <argument
+            android:name="repositoryId"
+            app:argType="integer" />
+    </fragment>
 
 </navigation>
