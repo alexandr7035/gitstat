@@ -79,6 +79,18 @@
             app:layout_constraintVertical_bias="0"
             tools:text="@string/app_description" />
 
+
+            <TextView
+                android:id="@+id/websiteUrl"
+                style="@style/LinkStyle"
+                android:paddingTop="8dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                tools:text="https://play.google.com/store/apps/details?id=by.alexandr7035.gitstat"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/repoDescription"/>
+
         <LinearLayout
             android:id="@+id/languageNameView"
             android:layout_width="wrap_content"
@@ -118,7 +130,7 @@
             android:paddingBottom="3dp"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/repoDescription"
+            app:layout_constraintTop_toBottomOf="@id/websiteUrl"
             android:layout_marginTop="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

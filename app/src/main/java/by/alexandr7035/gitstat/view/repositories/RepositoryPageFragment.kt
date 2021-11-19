@@ -1,8 +1,11 @@
 package by.alexandr7035.gitstat.view.repositories
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
+import android.net.Uri
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +17,7 @@ import androidx.navigation.fragment.navArgs
 import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.databinding.FragmentRepositoryPageBinding
 import by.alexandr7035.gitstat.extensions.debug
+import by.alexandr7035.gitstat.extensions.getClickableSpannable
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -46,6 +50,37 @@ class RepositoryPageFragment : Fragment() {
             binding?.stars?.text = repoData.stars.toString()
 
             binding?.repoDescription?.text = repoData.description
+
+            if (repoData.websiteUrl != "") {
+
+                // Make link clickable
+                val urlText = repoData.websiteUrl
+
+                val clickListener = View.OnClickListener {
+                    Timber.debug("click link")
+                    val webpage: Uri = Uri.parse(urlText)
+                    val intent = Intent(Intent.ACTION_VIEW, webpage)
+                    startActivity(intent)
+                }
+
+                val spannableUrl = urlText.getClickableSpannable(
+                    clickListener = clickListener,
+                    clickableText = urlText,
+                    isBold = false,
+                    spannableColor = ContextCompat.getColor(requireContext(), R.color.blue_500)
+                )
+
+                binding?.websiteUrl?.text = spannableUrl
+
+                binding?.websiteUrl?.apply {
+                    movementMethod = LinkMovementMethod.getInstance()
+                    highlightColor = Color.TRANSPARENT
+                }
+
+            }
+            else {
+                binding?.websiteUrl?.visibility = View.GONE
+            }
 
             when (repoData.isPrivate) {
                 true -> {

@@ -35,11 +35,18 @@ class RepositoriesRemoteToCacheMapper @Inject constructor(private val timeHelper
                         }
                     }
 
+                    val websiteUrl = if (repo.homepageUrl != null) {
+                        repo.homepageUrl as String
+                    } else {
+                        ""
+                    }
+
                     val repository = RepositoryEntity(
                         id = repo.databaseId!!,
                         name = repo.name,
                         nameWithOwner = repo.nameWithOwner,
                         description = repo.description ?: "No repository description provided.",
+                        websiteUrl = websiteUrl,
                         language = language,
                         languageColor = languageColor,
 

@@ -8,6 +8,7 @@ query Repositories {
                 nameWithOwner
 
                 description
+                homepageUrl
 
                 primaryLanguage {
                     color
