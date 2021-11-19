@@ -10,6 +10,14 @@ query Repositories {
                 description
                 homepageUrl
 
+                repositoryTopics(first: 100) {
+                    nodes {
+                        topic {
+                            name
+                        }
+                    }
+                }
+
                 primaryLanguage {
                     color
                     name

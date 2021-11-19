@@ -4,6 +4,8 @@ import by.alexandr7035.gitstat.apollo.RepositoriesQuery
 import by.alexandr7035.gitstat.core.Mapper
 import by.alexandr7035.gitstat.core.TimeHelper
 import by.alexandr7035.gitstat.data.local.model.RepositoryEntity
+import by.alexandr7035.gitstat.extensions.debug
+import timber.log.Timber
 import javax.inject.Inject
 
 class RepositoriesRemoteToCacheMapper @Inject constructor(private val timeHelper: TimeHelper): Mapper<RepositoriesQuery.Data, List<RepositoryEntity>> {
@@ -41,6 +43,18 @@ class RepositoriesRemoteToCacheMapper @Inject constructor(private val timeHelper
                         ""
                     }
 
+                    val topics = ArrayList<String>()
+
+                    if (repo.repositoryTopics.nodes != null) {
+                        for (node in repo.repositoryTopics.nodes) {
+                            if (node != null) {
+                                topics.add(node.topic.name)
+                            }
+                        }
+                    }
+
+                    Timber.debug("topics $topics")
+
                     val repository = RepositoryEntity(
                         id = repo.databaseId!!,
                         name = repo.name,
@@ -56,7 +70,9 @@ class RepositoriesRemoteToCacheMapper @Inject constructor(private val timeHelper
 
                         stars = repo.stargazerCount,
 
-                        created_at = timeHelper.getUnixDateFromISO8601(repo.createdAt as String)
+                        created_at = timeHelper.getUnixDateFromISO8601(repo.createdAt as String),
+
+                        topics = topics
                     )
 
                     cachedList.add(repository)

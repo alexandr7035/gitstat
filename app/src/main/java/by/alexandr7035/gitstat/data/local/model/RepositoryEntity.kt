@@ -23,4 +23,6 @@ var isFork: Boolean,
 
 var stars: Int,
 
-var created_at: Long)
+var created_at: Long,
+
+val topics: ArrayList<String>)
