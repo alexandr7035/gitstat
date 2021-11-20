@@ -118,7 +118,6 @@
     <string name="privacy_policy_text">Check how do we manage your data in the Privacy Policy.</string>
     <string name="privacy_policy_clickable">Privacy Policy</string>
 
-    <string name="privacy_policy_url">https://github.com/alexandr7035/gitstat/tree/master#privacy-policy</string>
     <string name="privacy_policy">Privacy Policy</string>
 
     <string name="refresh">Refresh</string>
