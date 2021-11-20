@@ -45,97 +45,102 @@ class RepositoryPageFragment : Fragment() {
         }
 
         viewModel.getRepositoryLiveData(safeArgs.repositoryId).observe(viewLifecycleOwner, { repoData ->
-            Timber.debug("repo page ${repoData.description}")
 
-            binding?.toolbar?.title = repoData.name
-            binding?.repoName?.text = repoData.nameWithOwner
-            binding?.language?.text = repoData.language
-            binding?.stars?.text = repoData.stars.toString()
+            if (repoData != null) {
 
-            binding?.repoDescription?.text = repoData.description
+                Timber.debug("repo page ${repoData.description}")
 
-            // Set parent (if fork)
-            if (repoData.isFork) {
-                binding?.parentName?.text = HtmlCompat.fromHtml(getString(R.string.forked_from_template, repoData.parentNameWithOwner), HtmlCompat.FROM_HTML_MODE_LEGACY)
-            }
-            else {
-                binding?.parentName?.visibility = View.GONE
-            }
+                binding?.toolbar?.title = repoData.name
+                binding?.repoName?.text = repoData.nameWithOwner
+                binding?.language?.text = repoData.language
+                binding?.stars?.text = repoData.stars.toString()
 
-            // Set website link if exists
-            if (repoData.websiteUrl != "") {
+                binding?.repoDescription?.text = repoData.description
 
-                // Make link clickable
-                val urlText = repoData.websiteUrl
-
-                val clickListener = View.OnClickListener {
-                    Timber.debug("click link")
-                    val webpage: Uri = Uri.parse(urlText)
-                    val intent = Intent(Intent.ACTION_VIEW, webpage)
-                    startActivity(intent)
+                // Set parent (if fork)
+                if (repoData.isFork) {
+                    binding?.parentName?.text = HtmlCompat.fromHtml(
+                        getString(R.string.forked_from_template, repoData.parentNameWithOwner),
+                        HtmlCompat.FROM_HTML_MODE_LEGACY
+                    )
+                } else {
+                    binding?.parentName?.visibility = View.GONE
                 }
 
-                val spannableUrl = urlText.getClickableSpannable(
-                    clickListener = clickListener,
-                    clickableText = urlText,
-                    isBold = false,
-                    spannableColor = ContextCompat.getColor(requireContext(), R.color.blue_500)
-                )
+                // Set website link if exists
+                if (repoData.websiteUrl != "") {
 
-                binding?.websiteUrl?.text = spannableUrl
+                    // Make link clickable
+                    val urlText = repoData.websiteUrl
 
-                binding?.websiteUrl?.apply {
-                    movementMethod = LinkMovementMethod.getInstance()
-                    highlightColor = Color.TRANSPARENT
+                    val clickListener = View.OnClickListener {
+                        Timber.debug("click link")
+                        val webpage: Uri = Uri.parse(urlText)
+                        val intent = Intent(Intent.ACTION_VIEW, webpage)
+                        startActivity(intent)
+                    }
+
+                    val spannableUrl = urlText.getClickableSpannable(
+                        clickListener = clickListener,
+                        clickableText = urlText,
+                        isBold = false,
+                        spannableColor = ContextCompat.getColor(requireContext(), R.color.blue_500)
+                    )
+
+                    binding?.websiteUrl?.text = spannableUrl
+
+                    binding?.websiteUrl?.apply {
+                        movementMethod = LinkMovementMethod.getInstance()
+                        highlightColor = Color.TRANSPARENT
+                    }
+
+                } else {
+                    binding?.websiteUrl?.visibility = View.GONE
                 }
 
-            }
-            else {
-                binding?.websiteUrl?.visibility = View.GONE
-            }
-
-            // Change mark color depending on repo private/public
-            when (repoData.isPrivate) {
-                true -> {
-                    binding?.repoVisibility?.text = getString(R.string.private_start_capital)
-                    binding?.repoVisibility?.setTextColor(
-                        ContextCompat.getColor(
-                            requireContext(),
-                            R.color.white
+                // Change mark color depending on repo private/public
+                when (repoData.isPrivate) {
+                    true -> {
+                        binding?.repoVisibility?.text = getString(R.string.private_start_capital)
+                        binding?.repoVisibility?.setTextColor(
+                            ContextCompat.getColor(
+                                requireContext(),
+                                R.color.white
+                            )
                         )
-                    )
 
-                    binding?.repoVisibility?.background = ContextCompat.getDrawable(
-                        requireContext(),
-                        R.drawable.background_repo_visibilily_private
-                    )
-                }
-                else -> {
-                    binding?.repoVisibility?.text = getString(R.string.public_start_capital)
-                    binding?.repoVisibility?.setTextColor(
-                        ContextCompat.getColor(
+                        binding?.repoVisibility?.background = ContextCompat.getDrawable(
                             requireContext(),
-                            R.color.black
+                            R.drawable.background_repo_visibilily_private
                         )
-                    )
-                    binding?.repoVisibility?.background = ContextCompat.getDrawable(
-                        requireContext(),
-                        R.drawable.background_repo_visibilily
-                    )
+                    }
+                    else -> {
+                        binding?.repoVisibility?.text = getString(R.string.public_start_capital)
+                        binding?.repoVisibility?.setTextColor(
+                            ContextCompat.getColor(
+                                requireContext(),
+                                R.color.black
+                            )
+                        )
+                        binding?.repoVisibility?.background = ContextCompat.getDrawable(
+                            requireContext(),
+                            R.drawable.background_repo_visibilily
+                        )
+                    }
                 }
+
+                (binding?.languageColorView?.background as GradientDrawable?)?.setColor(Color.parseColor(repoData.languageColor))
+
+                // Setup topics recycler
+                val adapter = RepoTopicsAdapter()
+                binding?.topicsRecycler?.layoutManager = FlexboxLayoutManager(requireContext())
+                binding?.topicsRecycler?.adapter = adapter
+                adapter.setItems(repoData.topics)
+
+                binding?.createdAt?.text = repoData.created_at.getStringDateFromLong("dd.MM.yyyy HH:mm")
+                binding?.updatedAt?.text = repoData.updated_at.getStringDateFromLong("dd.MM.yyyy HH:mm")
+                binding?.repoSize?.text = getString(R.string.disk_usage_template, repoData.diskUsageKB)
             }
-
-            (binding?.languageColorView?.background as GradientDrawable?)?.setColor(Color.parseColor(repoData.languageColor))
-
-            // Setup topics recycler
-            val adapter = RepoTopicsAdapter()
-            binding?.topicsRecycler?.layoutManager = FlexboxLayoutManager(requireContext())
-            binding?.topicsRecycler?.adapter = adapter
-            adapter.setItems(repoData.topics)
-
-            binding?.createdAt?.text = repoData.created_at.getStringDateFromLong("dd.MM.yyyy HH:mm")
-            binding?.updatedAt?.text = repoData.updated_at.getStringDateFromLong("dd.MM.yyyy HH:mm")
-            binding?.repoSize?.text = getString(R.string.disk_usage_template, repoData.diskUsageKB)
         })
     }
 
