@@ -91,6 +91,20 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/repoDescription"/>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/topicsRecycler"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="5dp"
+            android:overScrollMode="never"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/websiteUrl"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constrainedHeight="true"
+            app:layout_constraintHeight_max="120dp"
+            />
+
         <LinearLayout
             android:id="@+id/languageNameView"
             android:layout_width="wrap_content"
@@ -130,7 +144,7 @@
             android:paddingBottom="3dp"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/websiteUrl"
+            app:layout_constraintTop_toBottomOf="@id/topicsRecycler"
             android:layout_marginTop="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

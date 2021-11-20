@@ -18,6 +18,7 @@ import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.databinding.FragmentRepositoryPageBinding
 import by.alexandr7035.gitstat.extensions.debug
 import by.alexandr7035.gitstat.extensions.getClickableSpannable
+import com.google.android.flexbox.FlexboxLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -113,6 +114,11 @@ class RepositoryPageFragment : Fragment() {
             }
 
             (binding?.languageColorView?.background as GradientDrawable?)?.setColor(Color.parseColor(repoData.languageColor))
+
+            val adapter = RepoTopicsAdapter()
+            binding?.topicsRecycler?.layoutManager = FlexboxLayoutManager(requireContext())
+            binding?.topicsRecycler?.adapter = adapter
+            adapter.setItems(repoData.topics)
         })
     }
 

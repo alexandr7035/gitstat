@@ -158,4 +158,14 @@
         <item name="android:textColor">@color/blue_500</item>
     </style>
 
+    <style name="RepositoryTopicTagStyle">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/blue_100</item>
+        <item name="android:background">@drawable/background_repository_topic</item>
+        <item name="android:paddingStart">10dp</item>
+        <item name="android:paddingEnd">10dp</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+    </style>
+
 </resources>
