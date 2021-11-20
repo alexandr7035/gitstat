@@ -71,6 +71,9 @@ class RepositoriesRemoteToCacheMapper @Inject constructor(private val timeHelper
                         stars = repo.stargazerCount,
 
                         created_at = timeHelper.getUnixDateFromISO8601(repo.createdAt as String),
+                        updated_at = timeHelper.getUnixDateFromISO8601(repo.updatedAt as String),
+
+                        diskUsageKB = repo.diskUsage ?: 0,
 
                         topics = topics
                     )

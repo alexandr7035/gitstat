@@ -18,6 +18,7 @@ import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.databinding.FragmentRepositoryPageBinding
 import by.alexandr7035.gitstat.extensions.debug
 import by.alexandr7035.gitstat.extensions.getClickableSpannable
+import by.alexandr7035.gitstat.extensions.getStringDateFromLong
 import com.google.android.flexbox.FlexboxLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -52,6 +53,7 @@ class RepositoryPageFragment : Fragment() {
 
             binding?.repoDescription?.text = repoData.description
 
+            // Set website link if exists
             if (repoData.websiteUrl != "") {
 
                 // Make link clickable
@@ -83,6 +85,7 @@ class RepositoryPageFragment : Fragment() {
                 binding?.websiteUrl?.visibility = View.GONE
             }
 
+            // Change mark color depending on repo private/public
             when (repoData.isPrivate) {
                 true -> {
                     binding?.repoVisibility?.text = getString(R.string.private_start_capital)
@@ -115,10 +118,15 @@ class RepositoryPageFragment : Fragment() {
 
             (binding?.languageColorView?.background as GradientDrawable?)?.setColor(Color.parseColor(repoData.languageColor))
 
+            // Setup topics recycler
             val adapter = RepoTopicsAdapter()
             binding?.topicsRecycler?.layoutManager = FlexboxLayoutManager(requireContext())
             binding?.topicsRecycler?.adapter = adapter
             adapter.setItems(repoData.topics)
+
+            binding?.createdAt?.text = repoData.created_at.getStringDateFromLong("dd.MM.yyyy HH:mm")
+            binding?.updatedAt?.text = repoData.updated_at.getStringDateFromLong("dd.MM.yyyy HH:mm")
+            binding?.repoSize?.text = getString(R.string.disk_usage_template, repoData.diskUsageKB)
         })
     }
 

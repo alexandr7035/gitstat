@@ -24,5 +24,8 @@ var isFork: Boolean,
 var stars: Int,
 
 var created_at: Long,
+var updated_at: Long,
+
+var diskUsageKB: Int,
 
 val topics: ArrayList<String>)

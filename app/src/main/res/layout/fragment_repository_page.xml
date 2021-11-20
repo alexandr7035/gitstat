@@ -19,6 +19,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/PrimaryCardStyle"
+        android:id="@+id/primaryCard"
         android:padding="12dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -149,6 +150,78 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             tools:text="Private" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/secondaryCard"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        style="@style/PrimaryCardStyle"
+        android:theme="@style/ProfileTextFieldsCardTheme"
+        app:layout_constraintTop_toBottomOf="@id/primaryCard"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp">
+
+        <TextView
+            android:textStyle="bold"
+            android:id="@+id/createdAtLabel"
+            android:text="@string/created"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:textStyle="bold"
+            android:id="@+id/updatedAtLabel"
+            android:layout_marginTop="8dp"
+            android:text="@string/updated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/createdAtLabel"/>
+
+        <TextView
+            android:textStyle="bold"
+            android:id="@+id/sizeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Size"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@id/updatedAtLabel"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+
+        <TextView
+            android:id="@+id/createdAt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="123"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/createdAtLabel"
+            app:layout_constraintBottom_toBottomOf="@id/createdAtLabel"/>
+
+        <TextView
+            android:id="@+id/updatedAt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="123"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/updatedAtLabel"
+            app:layout_constraintBottom_toBottomOf="@id/updatedAtLabel"/>
+
+        <TextView
+            android:id="@+id/repoSize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="123"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/sizeLabel"
+            app:layout_constraintBottom_toBottomOf="@id/sizeLabel"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
