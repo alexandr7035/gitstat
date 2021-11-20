@@ -32,6 +32,10 @@ query Repositories {
                 createdAt
                 updatedAt
                 diskUsage
+
+                parent {
+                    nameWithOwner
+                }
             }
         }
     }

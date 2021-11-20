@@ -65,6 +65,20 @@
             app:layout_constraintTop_toTopOf="@id/stars" />
 
         <TextView
+            android:id="@+id/parentName"
+            android:textSize="16sp"
+            android:textColor="@color/gray_300"
+            android:layout_width="0dp"
+            android:paddingTop="4dp"
+            android:layout_marginEnd="10dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/repoName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/stars"
+            tools:text="Forked from alexandr7035/GitStt"
+            />
+
+        <TextView
             android:id="@+id/repoDescription"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -76,7 +90,7 @@
             app:layout_constraintBottom_toTopOf="@+id/languageNameView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/repoName"
+            app:layout_constraintTop_toBottomOf="@id/parentName"
             app:layout_constraintVertical_bias="0"
             tools:text="@string/app_description" />
 

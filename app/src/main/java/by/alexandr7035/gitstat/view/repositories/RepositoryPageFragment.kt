@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -52,6 +53,14 @@ class RepositoryPageFragment : Fragment() {
             binding?.stars?.text = repoData.stars.toString()
 
             binding?.repoDescription?.text = repoData.description
+
+            // Set parent (if fork)
+            if (repoData.isFork) {
+                binding?.parentName?.text = HtmlCompat.fromHtml(getString(R.string.forked_from_template, repoData.parentNameWithOwner), HtmlCompat.FROM_HTML_MODE_LEGACY)
+            }
+            else {
+                binding?.parentName?.visibility = View.GONE
+            }
 
             // Set website link if exists
             if (repoData.websiteUrl != "") {

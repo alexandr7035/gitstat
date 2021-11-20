@@ -163,5 +163,6 @@
 
     <string name="daily_contributions_template">%1$s contribution(s)</string>
     <string name="disk_usage_template">%1$d KB</string>
+    <string name="forked_from_template"><![CDATA[<b>Forked from:</b> %1$s]]></string>
 
 </resources>

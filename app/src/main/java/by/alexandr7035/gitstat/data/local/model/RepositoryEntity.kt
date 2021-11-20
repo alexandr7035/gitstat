@@ -10,6 +10,7 @@ class RepositoryEntity(
 var id: Int,
 var name: String,
 var nameWithOwner: String,
+var parentNameWithOwner: String,
 
 var description: String,
 var websiteUrl: String,

@@ -59,6 +59,8 @@ class RepositoriesRemoteToCacheMapper @Inject constructor(private val timeHelper
                         id = repo.databaseId!!,
                         name = repo.name,
                         nameWithOwner = repo.nameWithOwner,
+                        parentNameWithOwner = repo.parent?.nameWithOwner ?: "",
+
                         description = repo.description ?: "No repository description provided.",
                         websiteUrl = websiteUrl,
                         language = language,
