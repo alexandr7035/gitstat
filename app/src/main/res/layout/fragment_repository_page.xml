@@ -189,6 +189,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/languagesRecycler"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:overScrollMode="never"
+            app:layout_constraintTop_toBottomOf="@id/languagesCardTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
         <by.alexandr7035.gitstat.core.view.HorizontalRatioBarView
             android:id="@+id/languagesBar"
             android:layout_width="match_parent"
@@ -196,7 +205,7 @@
             android:layout_marginTop="8dp"
             app:hrb_entries_between_spacing="4dp"
             app:hrb_entry_corner_radius="8dp"
-            app:layout_constraintTop_toBottomOf="@id/languagesCardTitle"
+            app:layout_constraintTop_toBottomOf="@id/languagesRecycler"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 

@@ -23,7 +23,6 @@ import by.alexandr7035.gitstat.extensions.getStringDateFromLong
 import com.google.android.flexbox.FlexboxLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
-import java.lang.reflect.Array
 
 @AndroidEntryPoint
 class RepositoryPageFragment : Fragment() {
@@ -133,15 +132,17 @@ class RepositoryPageFragment : Fragment() {
                 (binding?.languageColorView?.background as GradientDrawable?)?.setColor(Color.parseColor(repoData.primaryLanguageColor))
 
                 // Setup topics recycler
-                val adapter = RepoTopicsAdapter()
+                val topicsAdapter = RepoTopicsAdapter()
                 binding?.topicsRecycler?.layoutManager = FlexboxLayoutManager(requireContext())
-                binding?.topicsRecycler?.adapter = adapter
-                adapter.setItems(repoData.topics)
+                binding?.topicsRecycler?.adapter = topicsAdapter
+                topicsAdapter.setItems(repoData.topics)
 
                 binding?.createdAt?.text = repoData.created_at.getStringDateFromLong("dd.MM.yyyy HH:mm")
                 binding?.updatedAt?.text = repoData.updated_at.getStringDateFromLong("dd.MM.yyyy HH:mm")
                 binding?.repoSize?.text = getString(R.string.disk_usage_template, repoData.diskUsageKB)
 
+
+                // Setup languages bar
                 val langValues = ArrayList<Float>()
                 val langColors = ArrayList<Int>()
 
@@ -153,6 +154,11 @@ class RepositoryPageFragment : Fragment() {
                 binding?.languagesBar?.setValues(langValues, langColors)
                 binding?.languagesBar?.invalidate()
 
+                // Setup legend for languages bar (recycler)
+                val languagesAdapter = RepoLanguagesAdapter()
+                binding?.languagesRecycler?.layoutManager = FlexboxLayoutManager(requireContext())
+                binding?.languagesRecycler?.adapter = languagesAdapter
+                languagesAdapter.setItems(repoData.languages)
             }
         })
     }
