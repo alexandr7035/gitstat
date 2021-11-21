@@ -23,6 +23,16 @@ query Repositories {
                     name
                 }
 
+                languages(first: 100) {
+                    edges {
+                        node {
+                            name
+                            color
+                        }
+                        size
+                    }
+                }
+
                 isPrivate
                 isArchived
                 isFork

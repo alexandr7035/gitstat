@@ -3,6 +3,7 @@ package by.alexandr7035.gitstat.data.remote.mappers
 import by.alexandr7035.gitstat.apollo.RepositoriesQuery
 import by.alexandr7035.gitstat.core.Mapper
 import by.alexandr7035.gitstat.core.TimeHelper
+import by.alexandr7035.gitstat.data.local.model.RepoLanguage
 import by.alexandr7035.gitstat.data.local.model.RepositoryEntity
 import by.alexandr7035.gitstat.extensions.debug
 import timber.log.Timber
@@ -55,6 +56,34 @@ class RepositoriesRemoteToCacheMapper @Inject constructor(private val timeHelper
 
                     Timber.debug("topics $topics")
 
+                    val languages = ArrayList<RepoLanguage>()
+
+                    if (repo.languages?.edges != null) {
+
+                        if (repo.languages.edges.isNotEmpty()) {
+
+                            for (edge in repo.languages.edges) {
+
+                                val nodeLanguage = when (edge?.node?.name) {
+                                    null -> "Unknown"
+                                    else -> edge.node.name
+                                }
+
+                                val nodeLanguageColor = when (edge?.node?.color) {
+                                    null -> "#C3C3C3"
+                                    else -> edge.node.color
+                                }
+
+                                val size = edge?.size ?: 0
+
+                                languages.add(RepoLanguage(name = nodeLanguage, color = nodeLanguageColor, size = size))
+                            }
+                        }
+                        else {
+                            languages.add(RepoLanguage("Unknown", "#C3C3C3", size = 1))
+                        }
+                    }
+
                     val repository = RepositoryEntity(
                         id = repo.databaseId!!,
                         name = repo.name,
@@ -77,7 +106,8 @@ class RepositoriesRemoteToCacheMapper @Inject constructor(private val timeHelper
 
                         diskUsageKB = repo.diskUsage ?: 0,
 
-                        topics = topics
+                        topics = topics,
+                        languages = languages
                     )
 
                     cachedList.add(repository)

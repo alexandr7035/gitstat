@@ -2,6 +2,7 @@ package by.alexandr7035.gitstat.data.local.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import by.alexandr7035.gitstat.core.Language
 
 @Entity(tableName = "repositories")
 class RepositoryEntity(
@@ -17,6 +18,8 @@ var id: Int,
 
     var primaryLanguage: String,
     var primaryLanguageColor: String,
+
+    var languages: List<RepoLanguage>,
 
     var isPrivate: Boolean,
     var isArchived: Boolean,

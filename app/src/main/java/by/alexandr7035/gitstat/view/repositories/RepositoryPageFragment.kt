@@ -23,6 +23,7 @@ import by.alexandr7035.gitstat.extensions.getStringDateFromLong
 import com.google.android.flexbox.FlexboxLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
+import java.lang.reflect.Array
 
 @AndroidEntryPoint
 class RepositoryPageFragment : Fragment() {
@@ -141,8 +142,17 @@ class RepositoryPageFragment : Fragment() {
                 binding?.updatedAt?.text = repoData.updated_at.getStringDateFromLong("dd.MM.yyyy HH:mm")
                 binding?.repoSize?.text = getString(R.string.disk_usage_template, repoData.diskUsageKB)
 
-                binding?.languagesBar?.setValues(listOf(20f, 10F), listOf(Color.RED, Color.BLUE))
+                val langValues = ArrayList<Float>()
+                val langColors = ArrayList<Int>()
+
+                repoData.languages.forEach { repoLanguage ->
+                    langValues.add(repoLanguage.size.toFloat())
+                    langColors.add(Color.parseColor(repoLanguage.color))
+                }
+
+                binding?.languagesBar?.setValues(langValues, langColors)
                 binding?.languagesBar?.invalidate()
+
             }
         })
     }
