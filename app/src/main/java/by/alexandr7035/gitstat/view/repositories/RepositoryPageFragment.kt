@@ -140,6 +140,10 @@ class RepositoryPageFragment : Fragment() {
                 binding?.createdAt?.text = repoData.created_at.getStringDateFromLong("dd.MM.yyyy HH:mm")
                 binding?.updatedAt?.text = repoData.updated_at.getStringDateFromLong("dd.MM.yyyy HH:mm")
                 binding?.repoSize?.text = getString(R.string.disk_usage_template, repoData.diskUsageKB)
+
+                binding?.languagesBar?.setColors(listOf(Color.RED, Color.BLUE))
+                binding?.languagesBar?.setValues(listOf(20f, 10F))
+                binding?.languagesBar?.invalidate()
             }
         })
     }
