@@ -63,8 +63,8 @@ class RepositoriesRemoteToCacheMapper @Inject constructor(private val timeHelper
 
                         description = repo.description ?: "No repository description provided.",
                         websiteUrl = websiteUrl,
-                        language = language,
-                        languageColor = languageColor,
+                        primaryLanguage = language,
+                        primaryLanguageColor = languageColor,
 
                         isPrivate = repo.isPrivate,
                         isArchived = repo.isArchived,

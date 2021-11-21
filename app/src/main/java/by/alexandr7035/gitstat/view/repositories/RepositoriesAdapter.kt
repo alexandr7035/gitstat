@@ -34,7 +34,7 @@ class RepositoriesAdapter(private val clickListener: RepoClickListener) : Recycl
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.repoName.text = items[position].name
         holder.binding.createdDate.text = DateFormat.format(createdDateFormat, items[position].created_at)
-        holder.binding.language.text = items[position].language
+        holder.binding.language.text = items[position].primaryLanguage
         holder.binding.stars.text = items[position].stars.toString()
 
         when (items[position].isPrivate) {
@@ -68,7 +68,7 @@ class RepositoriesAdapter(private val clickListener: RepoClickListener) : Recycl
             false -> holder.binding.repoIsForkView.visibility = View.INVISIBLE
         }
 
-        (holder.binding.languageColorView.background as GradientDrawable).setColor(Color.parseColor(items[position].languageColor))
+        (holder.binding.languageColorView.background as GradientDrawable).setColor(Color.parseColor(items[position].primaryLanguageColor))
     }
 
     inner class ViewHolder(val binding: ViewRepositoryBinding): RecyclerView.ViewHolder(binding.root), View.OnClickListener {

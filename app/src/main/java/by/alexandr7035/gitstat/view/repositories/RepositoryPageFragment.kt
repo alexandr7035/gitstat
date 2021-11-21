@@ -52,7 +52,7 @@ class RepositoryPageFragment : Fragment() {
 
                 binding?.toolbar?.title = repoData.name
                 binding?.repoName?.text = repoData.nameWithOwner
-                binding?.language?.text = repoData.language
+                binding?.language?.text = repoData.primaryLanguage
                 binding?.stars?.text = repoData.stars.toString()
 
                 binding?.repoDescription?.text = repoData.description
@@ -129,7 +129,7 @@ class RepositoryPageFragment : Fragment() {
                     }
                 }
 
-                (binding?.languageColorView?.background as GradientDrawable?)?.setColor(Color.parseColor(repoData.languageColor))
+                (binding?.languageColorView?.background as GradientDrawable?)?.setColor(Color.parseColor(repoData.primaryLanguageColor))
 
                 // Setup topics recycler
                 val adapter = RepoTopicsAdapter()
