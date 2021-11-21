@@ -1,5 +1,6 @@
 package by.alexandr7035.gitstat.view.repositories
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -9,6 +10,7 @@ class RepoTopicsAdapter: RecyclerView.Adapter<RepoTopicsAdapter.ViewHolder>() {
 
     private var items: List<String> = emptyList()
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setItems(items: List<String>) {
         this.items = items
         notifyDataSetChanged()

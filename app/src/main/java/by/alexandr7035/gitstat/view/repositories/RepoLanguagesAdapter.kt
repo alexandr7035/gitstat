@@ -6,12 +6,8 @@ import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.data.local.model.RepoLanguage
 import by.alexandr7035.gitstat.databinding.ViewRepositoryLanguageBinding
-import by.alexandr7035.gitstat.extensions.debug
-import timber.log.Timber
-import kotlin.math.ceil
 
 class RepoLanguagesAdapter: RecyclerView.Adapter<RepoLanguagesAdapter.ViewHolder>() {
 
