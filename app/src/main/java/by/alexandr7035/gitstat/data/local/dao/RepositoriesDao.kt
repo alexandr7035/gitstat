@@ -15,6 +15,9 @@ interface RepositoriesDao {
     @Query("select * from repositories")
     fun getRepositoriesLiveData(): LiveData<List<RepositoryEntity>>
 
+    @Query("select * from repositories where id = (:repositoryId)")
+    fun getRepositoryLiveData(repositoryId: Int): LiveData<RepositoryEntity>
+
     @Query("select * from repositories")
     suspend fun getRepositories(): List<RepositoryEntity>
 

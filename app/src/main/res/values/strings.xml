@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">GitStat</string>
     <string name="app_name_with_version">GitStat v%1$s</string>
+
     <string name="app_description"><![CDATA[
         <b>GitStat</b> is a simple android app designed to aggregate Github profile data into informative cards and graphs.
         <br/>
@@ -15,9 +16,33 @@
         - List of your repositories with filters and sorting <br/>
         - Contributions summary <br/>
         - Charts for contributions (types, count per day, contribution rate) <br/>
-        - Contributions grid (Github-like) <br/>
+        - Contributions grid (Github-like)
     ]]>
     </string>
+
+    <string name="privacy_policy_full_text"><![CDATA[
+    - The application <b>Github Oauth</b> (Firebase) for user authentication.
+    As soon as you click the login button, system opens the browser.
+    You have to enter the login and password from your <b>Github account</b>.
+    <br>
+    <br>
+    - As <b>Oauth</b> method is used for authentication, even if you log out, you may be able log in again without entering your Github login and password.
+    <b>Clear your browser cache</b> after logging out if you wish to change GitHub account.
+    <br>
+    <br>
+    - The application gets access to <b><i>read:user</i></b> and <b><i>repo</i></b> access scopes.
+    <br>
+    <br>
+    - The application <b>does not perform any write operations</b> on your github account.
+    <br>
+    <br>
+    - Full <b><i>repo</i></b> scope is used only to have access to your private repos data and not to perform malicious write operations.
+    <br>
+    <br>
+    - The application <b>does not store</b> your GitHub account data anywhere outside the device local storage.
+    ]]>
+    </string>
+
     <string name="OAUTH_PROVIDER">github.com</string>
 
     <string name="login_string">\@%s</string>
@@ -93,7 +118,6 @@
     <string name="privacy_policy_text">Check how do we manage your data in the Privacy Policy.</string>
     <string name="privacy_policy_clickable">Privacy Policy</string>
 
-    <string name="privacy_policy_url">https://github.com/alexandr7035/gitstat/tree/master#privacy-policy</string>
     <string name="privacy_policy">Privacy Policy</string>
 
     <string name="refresh">Refresh</string>
@@ -137,5 +161,7 @@
     <string name="year_toolbar_title">Your %1$d</string>
 
     <string name="daily_contributions_template">%1$s contribution(s)</string>
+    <string name="disk_usage_template">%1$d KB</string>
+    <string name="forked_from_template"><![CDATA[<b>Forked from:</b> %1$s]]></string>
 
 </resources>

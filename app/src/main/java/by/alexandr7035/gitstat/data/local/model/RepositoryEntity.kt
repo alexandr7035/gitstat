@@ -2,20 +2,34 @@ package by.alexandr7035.gitstat.data.local.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import by.alexandr7035.gitstat.core.Language
 
 @Entity(tableName = "repositories")
 class RepositoryEntity(
 
-@PrimaryKey
+    @PrimaryKey
 var id: Int,
-var name: String,
-var language: String,
-var languageColor: String,
+    var name: String,
+    var nameWithOwner: String,
+    var parentNameWithOwner: String,
 
-var isPrivate: Boolean,
-var isArchived: Boolean,
-var isFork: Boolean,
+    var description: String,
+    var websiteUrl: String,
 
-var stars: Int,
+    var primaryLanguage: String,
+    var primaryLanguageColor: String,
 
-var created_at: Long)
+    var languages: List<RepoLanguage>,
+
+    var isPrivate: Boolean,
+    var isArchived: Boolean,
+    var isFork: Boolean,
+
+    var stars: Int,
+
+    var created_at: Long,
+    var updated_at: Long,
+
+    var diskUsageKB: Int,
+
+    val topics: ArrayList<String>)

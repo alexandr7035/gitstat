@@ -13,7 +13,7 @@ import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.data.local.model.RepositoryEntity
 import by.alexandr7035.gitstat.databinding.ViewRepositoryBinding
 
-class RepositoriesAdapter : RecyclerView.Adapter<RepositoriesAdapter.ViewHolder>() {
+class RepositoriesAdapter(private val clickListener: RepoClickListener) : RecyclerView.Adapter<RepositoriesAdapter.ViewHolder>() {
 
     private var items: List<RepositoryEntity> = ArrayList()
     private val createdDateFormat = "yyyy-MM-dd"
@@ -34,7 +34,7 @@ class RepositoriesAdapter : RecyclerView.Adapter<RepositoriesAdapter.ViewHolder>
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.repoName.text = items[position].name
         holder.binding.createdDate.text = DateFormat.format(createdDateFormat, items[position].created_at)
-        holder.binding.language.text = items[position].language
+        holder.binding.language.text = items[position].primaryLanguage
         holder.binding.stars.text = items[position].stars.toString()
 
         when (items[position].isPrivate) {
@@ -68,9 +68,18 @@ class RepositoriesAdapter : RecyclerView.Adapter<RepositoriesAdapter.ViewHolder>
             false -> holder.binding.repoIsForkView.visibility = View.INVISIBLE
         }
 
-        (holder.binding.languageColorView.background as GradientDrawable).setColor(Color.parseColor(items[position].languageColor))
+        (holder.binding.languageColorView.background as GradientDrawable).setColor(Color.parseColor(items[position].primaryLanguageColor))
     }
 
-    class ViewHolder(val binding: ViewRepositoryBinding): RecyclerView.ViewHolder(binding.root)
+    inner class ViewHolder(val binding: ViewRepositoryBinding): RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+
+        init {
+            binding.root.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View) {
+            clickListener.onRepoClicked(items[adapterPosition].id)
+        }
+    }
 
 }

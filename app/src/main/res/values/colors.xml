@@ -13,6 +13,10 @@
     <color name="gray_300">#595959</color>
     <color name="gray_200">#898989</color>
     <color name="gray_100">#B1B1B1</color>
+    <color name="gray_50">#E1E1E1</color>
+
+    <color name="blue_100">#437DDC</color>
+    <color name="blue_500">#4D3872</color>
 
     <color name="yellow_400">#FFC107</color>
 

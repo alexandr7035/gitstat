@@ -46,7 +46,7 @@ object RepositoriesListFiltersHelper {
         // Remove all repos if language is not from filters' set
         if (filters.filterLanguages.isNotEmpty()) {
             filteredList.removeAll {
-                !filters.filterLanguages.contains(it.language)
+                !filters.filterLanguages.contains(it.primaryLanguage)
             }
         }
 

@@ -6,6 +6,7 @@ import by.alexandr7035.gitstat.core.KeyValueStorage
 import by.alexandr7035.gitstat.core.TimeHelper
 import by.alexandr7035.gitstat.data.*
 import by.alexandr7035.gitstat.data.local.CacheDB
+import by.alexandr7035.gitstat.data.local.RoomTypeConverters
 import by.alexandr7035.gitstat.data.local.dao.ContributionsDao
 import by.alexandr7035.gitstat.data.local.dao.RepositoriesDao
 import by.alexandr7035.gitstat.data.local.dao.UserDao
@@ -133,9 +134,10 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideRoomDb(application: Application): CacheDB {
+    fun provideRoomDb(application: Application, gson: Gson): CacheDB {
         return Room
             .databaseBuilder(application.applicationContext, CacheDB::class.java, "cache.db")
+            .addTypeConverter(RoomTypeConverters(gson))
             .fallbackToDestructiveMigration()
             .build()
     }

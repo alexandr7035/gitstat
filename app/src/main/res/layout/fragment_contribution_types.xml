@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="16dp"
+    android:clipToPadding="false"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".view.contributions.plots.contributions_types.FragmentContributionTypes">
+
+    <androidx.appcompat.widget.Toolbar
+        style="@style/ToolbarStyle"
+        android:id="@+id/toolbar"
+        app:title="@string/contribution_types"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <LinearLayout
+        style="@style/PrimaryCardStyle"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        android:layout_margin="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/contribution_types"
+            android:layout_marginBottom="8dp"
+            style="@style/CardHeaderStyle"/>
+
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/typesChart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="250dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:overScrollMode="never"
+            android:id="@+id/typesRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

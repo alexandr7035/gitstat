@@ -3,25 +3,31 @@ package by.alexandr7035.gitstat.view.contributions.plots.contributions_types
 import android.annotation.SuppressLint
 import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import by.alexandr7035.gitstat.databinding.ViewContributionTypesPlotLegendItemBinding
-import by.alexandr7035.gitstat.view.contributions.plots.contributions_types.model.TypesLegendItem
+import by.alexandr7035.gitstat.databinding.ViewContributionTypeItemBinding
+import by.alexandr7035.gitstat.view.contributions.plots.contributions_types.model.TypesItem
 
-class TypesLegendAdapter: RecyclerView.Adapter<TypesLegendAdapter.ViewHolder>() {
+class TypesAdapter(private val showCount: Boolean = false): RecyclerView.Adapter<TypesAdapter.ViewHolder>() {
 
-    private var items: List<TypesLegendItem> = emptyList()
+    private var items: List<TypesItem> = emptyList()
 
-    class ViewHolder(val binding: ViewContributionTypesPlotLegendItemBinding): RecyclerView.ViewHolder(binding.root)
+    class ViewHolder(val binding: ViewContributionTypeItemBinding): RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ViewContributionTypesPlotLegendItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ViewContributionTypeItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        // FIXME test
-        holder.binding.countView.text = items[position].count.toString()
+
+        if (showCount) {
+            holder.binding.countView.text = items[position].count.toString()
+        }
+        else {
+            holder.binding.countView.visibility = View.GONE
+        }
         holder.binding.label.text = items[position].label
         holder.binding.percentageView.text = items[position].percentage
 
@@ -33,7 +39,7 @@ class TypesLegendAdapter: RecyclerView.Adapter<TypesLegendAdapter.ViewHolder>() 
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setItems(items: List<TypesLegendItem>) {
+    fun setItems(items: List<TypesItem>) {
         this.items = items
         notifyDataSetChanged()
     }

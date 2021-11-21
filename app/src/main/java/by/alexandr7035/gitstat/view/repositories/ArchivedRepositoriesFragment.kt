@@ -5,15 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.alexandr7035.gitstat.R
+import by.alexandr7035.gitstat.RepositoriesListGraphDirections
 import by.alexandr7035.gitstat.databinding.FragmentRepositoriesRecyclerBinding
+import by.alexandr7035.gitstat.extensions.navigateSafe
 import by.alexandr7035.gitstat.view.repositories.filters.RepositoriesListFiltersHelper
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ArchivedRepositoriesFragment : Fragment() {
+class ArchivedRepositoriesFragment : Fragment(), RepoClickListener {
 
     private val viewModel by navGraphViewModels<RepositoriesViewModel>(R.id.repositoriesListGraph) { defaultViewModelProviderFactory }
     private var binding: FragmentRepositoriesRecyclerBinding? = null
@@ -30,7 +33,7 @@ class ArchivedRepositoriesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Setup adapter
-        adapter = RepositoriesAdapter()
+        adapter = RepositoriesAdapter(this)
         binding!!.recycler.adapter = adapter
         binding!!.recycler.layoutManager = LinearLayoutManager(context)
 
@@ -76,6 +79,10 @@ class ArchivedRepositoriesFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
+    }
+
+    override fun onRepoClicked(repoId: Int) {
+        findNavController().navigateSafe(RepositoriesListGraphDirections.actionGlobalRepositoryPageFragment(repoId))
     }
 
 }

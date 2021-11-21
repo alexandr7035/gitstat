@@ -12,10 +12,6 @@
         tools:layout="@layout/fragment_login" >
 
         <action
-            android:id="@+id/action_loginFragment_to_webViewFragment"
-            app:destination="@id/webViewFragment" />
-
-        <action
             android:id="@+id/action_loginFragment_to_profileFragment"
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true"
@@ -58,6 +54,9 @@
                 app:argType="integer"
                 android:name="contributionYear"/>
         </action>
+        <action
+            android:id="@+id/action_contributionsFragment_to_fragmentContributionTypes"
+            app:destination="@id/fragmentContributionTypes" />
     </fragment>
 
     <navigation android:id="@+id/repositoriesListGraph"
@@ -91,6 +90,9 @@
             android:id="@+id/repositoriesFiltersDialog"
             android:name="by.alexandr7035.gitstat.view.repositories.filters.RepositoriesFiltersDialog"
             android:label="RepositoriesFiltersDialog" />
+        <action
+            android:id="@+id/action_global_repositoryPageFragment"
+            app:destination="@id/repositoryPageFragment" />
     </navigation>
 
 
@@ -120,7 +122,7 @@
 
     <dialog
         android:id="@+id/infoDialogFragment"
-        android:name="by.alexandr7035.gitstat.view.core.info_dialog.InfoDialogFragment"
+        android:name="by.alexandr7035.gitstat.view.info.InfoDialogFragment"
         android:label="fragment_info_dialog"
         tools:layout="@layout/fragment_info_dialog">
 
@@ -167,12 +169,21 @@
             app:nullable="false"/>
     </action>
     <fragment
-        android:id="@+id/aboutAppFragment"
-        android:name="by.alexandr7035.gitstat.view.info.AboutAppFragment"
-        android:label="AboutAppFragment"
-        tools:layout="@layout/fragment_about_app"/>
+        android:id="@+id/infoAppFragment"
+        android:name="by.alexandr7035.gitstat.view.info.InfoFragment"
+        android:label="InfoFragment"
+        tools:layout="@layout/fragment_info">
+        <argument android:name="toolbarTitle"
+            app:argType="string" />
+        <argument android:name="infoTitle"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="infoText"
+            app:argType="string" />
+    </fragment>
 
-    <action android:id="@+id/action_global_aboutAppFragment" app:destination="@id/aboutAppFragment" />
+    <action android:id="@+id/action_global_infoFragment" app:destination="@id/infoAppFragment" />
 
     <fragment
         android:id="@+id/syncHostFragment"
@@ -228,5 +239,19 @@
             android:name="contributionsColor"
             app:argType="integer" />
     </dialog>
+    <fragment
+        android:id="@+id/fragmentContributionTypes"
+        android:name="by.alexandr7035.gitstat.view.contributions.plots.contributions_types.FragmentContributionTypes"
+        android:label="fragment_contribution_types"
+        tools:layout="@layout/fragment_contribution_types" />
+    <fragment
+        android:id="@+id/repositoryPageFragment"
+        android:name="by.alexandr7035.gitstat.view.repositories.RepositoryPageFragment"
+        android:label="fragment_repository_page"
+        tools:layout="@layout/fragment_repository_page" >
+        <argument
+            android:name="repositoryId"
+            app:argType="integer" />
+    </fragment>
 
 </navigation>

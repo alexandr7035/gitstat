@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import by.alexandr7035.gitstat.BuildConfig
+import by.alexandr7035.gitstat.NavGraphDirections
 import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.core.GithubAccessScopes
 import by.alexandr7035.gitstat.databinding.FragmentLoginBinding
@@ -102,10 +103,10 @@ class LoginFragment: Fragment() {
     }
 
     private fun showPrivacyPolicy() {
-        navController.navigateSafe(
-            LoginFragmentDirections.actionLoginFragmentToWebViewFragment(
+        navController.navigateSafe(NavGraphDirections.actionGlobalInfoFragment(
             getString(R.string.privacy_policy),
-            getString(R.string.privacy_policy_url)
+            null,
+            getString(R.string.privacy_policy_full_text)
         ))
     }
 

@@ -18,6 +18,10 @@ class ReposRepository @Inject constructor(
         return dao.getRepositoriesLiveData()
     }
 
+    fun getRepositoryLiveData(repositoryId: Int): LiveData<RepositoryEntity> {
+        return dao.getRepositoryLiveData(repositoryId)
+    }
+
     suspend fun fetchAllRepositoriesFromDb(): List<RepositoryEntity> {
         return dao.getRepositories()
     }
@@ -57,14 +61,14 @@ class ReposRepository @Inject constructor(
         val languagesList = ArrayList<Language>()
 
         repos.forEach {
-            languagesList.add(Language(it.language, it.languageColor, 0))
+            languagesList.add(Language(it.primaryLanguage, it.primaryLanguageColor, 0))
         }
 
         val trimmedLanguages = languagesList.distinct()
 
         repos.forEach { repo ->
             trimmedLanguages.forEach { language ->
-                if (repo.language == language.name) {
+                if (repo.primaryLanguage == language.name) {
                     language.count += 1
                 }
             }

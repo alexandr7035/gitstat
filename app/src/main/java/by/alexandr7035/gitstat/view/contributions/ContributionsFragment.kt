@@ -7,21 +7,16 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.databinding.FragmentContributionsBinding
 import by.alexandr7035.gitstat.extensions.navigateSafe
-import by.alexandr7035.gitstat.extensions.setChartData
-import by.alexandr7035.gitstat.extensions.setupHorizontalBarChart
-import by.alexandr7035.gitstat.extensions.setupYAxisValuesForContributionTypes
 import by.alexandr7035.gitstat.view.MainActivity
 import by.alexandr7035.gitstat.view.contributions.plots.contributions_per_year.YearContributionsAdapter
 import by.alexandr7035.gitstat.view.contributions.plots.contributions_rate.YearContributionRatesAdapter
-import by.alexandr7035.gitstat.view.contributions.plots.contributions_types.RemoveThousandsSepFormatter
-import by.alexandr7035.gitstat.view.contributions.plots.contributions_types.TypesLegendAdapter
-import by.alexandr7035.gitstat.view.contributions.plots.contributions_types.model.ContributionTypesListToBarDataSetMapper
-import by.alexandr7035.gitstat.view.contributions.plots.contributions_types.model.ContributionTypesListToLegendItemsMapper
-import com.google.android.flexbox.FlexboxLayoutManager
+import by.alexandr7035.gitstat.view.contributions.plots.contributions_types.TypesAdapter
+import by.alexandr7035.gitstat.view.contributions.plots.contributions_types.model.ContributionTypesListToRecyclerItemsMapper
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -49,9 +44,9 @@ class ContributionsFragment : Fragment() {
         binding?.rateViewPager?.adapter = yearContributionsRateAdapter
 
         // Adapter for legend on contribution types plot
-        val typesLegendAdapter = TypesLegendAdapter()
-        binding?.contributionTypesLegendRecycler?.layoutManager = FlexboxLayoutManager(requireContext())
-        binding?.contributionTypesLegendRecycler?.adapter = typesLegendAdapter
+        val typesLegendAdapter = TypesAdapter()
+        binding?.contributionTypesRecycler?.layoutManager = LinearLayoutManager(requireContext())
+        binding?.contributionTypesRecycler?.adapter = typesLegendAdapter
 
         // Update data
         viewModel.getContributionYearsLiveData().observe(viewLifecycleOwner, { years ->
@@ -118,42 +113,10 @@ class ContributionsFragment : Fragment() {
         viewModel.getContributionTypesLiveData().observe(viewLifecycleOwner, { typesData ->
 
             if (typesData != null) {
-
-                // Detect max value
-                // FIXME find better solution
-                val commits = typesData.sumOf { it.commitContributions }
-                val issues = typesData.sumOf { it.issueContributions }
-                val pullRequests = typesData.sumOf { it.pullRequestContributions }
-                val reviews = typesData.sumOf { it.pullRequestReviewContributions }
-                val repositories = typesData.sumOf { it.repositoryContributions }
-                val unknown = typesData.sumOf { it.unknownContributions }
-
-                // FIXME refactoring
-                val maxValue = listOf(
-                    commits,
-                    issues,
-                    pullRequests,
-                    reviews,
-                    repositories,
-                    unknown
-                ).maxByOrNull {
-                    it
-                } ?: 0
-
-
-                // Setup chart
-                binding?.contributionTypesChart?.setupHorizontalBarChart(RemoveThousandsSepFormatter())
-                binding?.contributionTypesChart?.setExtraOffsets(10f,0f,30f,0f)
-
-                // Chart axis
-                binding?.contributionTypesChart?.axisLeft?.setupYAxisValuesForContributionTypes(maxValue)
-
-                // Populate chart with data
-                binding?.contributionTypesChart?.setChartData(ContributionTypesListToBarDataSetMapper.map(typesData, requireContext()))
-                binding?.contributionTypesChart?.invalidate()
-
                 // Update legend
-                typesLegendAdapter.setItems(ContributionTypesListToLegendItemsMapper.map(typesData, requireContext()))
+                binding?.contributionTypesRecycler?.suppressLayout(false)
+                typesLegendAdapter.setItems(ContributionTypesListToRecyclerItemsMapper.map(typesData, requireContext()))
+                binding?.contributionTypesRecycler?.suppressLayout(true)
             }
         })
 
@@ -180,6 +143,10 @@ class ContributionsFragment : Fragment() {
 
         binding?.toContributionsGridBtn?.setOnClickListener {
             findNavController().navigateSafe(ContributionsFragmentDirections.actionContributionsFragmentToContributionsGridFragment(2021))
+        }
+
+        binding?.contributionTypesCard?.setOnClickListener {
+            findNavController().navigateSafe(ContributionsFragmentDirections.actionContributionsFragmentToFragmentContributionTypes())
         }
     }
 

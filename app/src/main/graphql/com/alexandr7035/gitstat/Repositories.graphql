@@ -5,10 +5,32 @@ query Repositories {
             nodes {
                 databaseId
                 name
+                nameWithOwner
+
+                description
+                homepageUrl
+
+                repositoryTopics(first: 100) {
+                    nodes {
+                        topic {
+                            name
+                        }
+                    }
+                }
 
                 primaryLanguage {
                     color
                     name
+                }
+
+                languages(first: 100) {
+                    edges {
+                        node {
+                            name
+                            color
+                        }
+                        size
+                    }
                 }
 
                 isPrivate
@@ -18,6 +40,12 @@ query Repositories {
                 stargazerCount
 
                 createdAt
+                updatedAt
+                diskUsage
+
+                parent {
+                    nameWithOwner
+                }
             }
         }
     }
