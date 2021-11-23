@@ -16,6 +16,7 @@ GitStat is a simple android app designed to aggregate Github profile data into i
 - Profile summary
 - Pie chart with programming languages of your repositories
 - List of your repositories with filters and sorting
+- Repository page
 - Contributions summary
 - Charts for contributions (types, count per day, contribution rate)
 - Contributions grid (Github-like)
@@ -42,17 +43,20 @@ used to implement languages filter (see third screenshot).
 ## Screenshots
 
 <p align="left">
-<img src="doc/screenshot_login.png" width="23%"/>
-<img src="doc/screenshot_oauth.png" width="23%"/>
-<img src="doc/screenshot_profile.png" width="23%"/>
-<img src="doc/screenshot_repositories_stat.png" width="23%"/>
+<img src="doc/screenshot_login.png" width="19%"/>
+<img src="doc/screenshot_oauth.png" width="19%"/>
+<img src="doc/screenshot_profile.png" width="19%"/>
+<img src="doc/screenshot_repositories_stat.png" width="19%"/>
+<img src="doc/screenshot_filters.png" width="19%"/>
 </p>
 
 <p align="left">
-<img src="doc/screenshot_filters.png" width="23%"/>
-<img src="doc/screenshot_contributions_1.png" width="23%"/>
-<img src="doc/screenshot_contributions_2.png" width="23%"/>
-<img src="doc/screenshot_contributions_grid_1.png" width="23%"/>
+
+<img src="doc/screenshot_repository_page.png" width="19%"/>
+<img src="doc/screenshot_contributions_1.png" width="19%"/>
+<img src="doc/screenshot_contributions_2.png" width="19%"/>
+<img src="doc/screenshot_contributions_3.png" width="19%"/>
+<img src="doc/screenshot_contributions_grid_1.png" width="19%"/>
 </p>
 
 ## Privacy Policy
