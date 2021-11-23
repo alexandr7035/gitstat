@@ -32,8 +32,8 @@ android {
         applicationId 'by.alexandr7035.gitstat'
         minSdkVersion 21
         targetSdkVersion 31
-        versionCode 1900
-        versionName "5.1"
+        versionCode 2000
+        versionName "5.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
