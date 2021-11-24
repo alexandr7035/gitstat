@@ -1,5 +1,7 @@
 package by.alexandr7035.gitstat.core
 
+import by.alexandr7035.gitstat.extensions.getStringDateFromLong
+import by.alexandr7035.gitstat.extensions.getUnixDateFromStringFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -12,46 +14,34 @@ class TimeHelper {
     }
 
     fun getUnixDateFromISO8601(iso8601Date: String): Long {
-        val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US)
-        format.timeZone = TimeZone.getTimeZone("GMT")
-        return format.parse(iso8601Date)!!.time
+        return iso8601Date.getUnixDateFromStringFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", "GMT")
     }
 
     // Example input date: "2016-01-01"
     // Used in github contributions
     fun getUnixDateFrom_yyyyMMdd(stringDate: String): Long {
-        val format = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-        format.timeZone = TimeZone.getTimeZone("GMT")
-        return format.parse(stringDate)!!.time
+        return stringDate.getUnixDateFromStringFormat("yyyy-MM-dd", "GMT")
     }
 
     fun getYearFromUnixDate(timestamp: Long): Int {
-        val format = SimpleDateFormat("yyyy", Locale.US)
-        format.timeZone = TimeZone.getTimeZone("GMT")
-
-        return format.format(timestamp).toInt()
+        return timestamp.getStringDateFromLong("yyyy", "GMT").toInt()
     }
 
     fun getFullFromUnixDate(timestamp: Long): String {
-        val format = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US)
-        return format.format(timestamp)
+        return timestamp.getStringDateFromLong("yyyy-MM-dd HH:mm")
     }
 
     fun getBeginningOfDayForUnixDate(currentDate: Long): Long {
-        val format = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-        format.timeZone = TimeZone.getTimeZone("GMT")
-        val beginningStr = format.format(currentDate)
-
+        val beginningStr = currentDate.getStringDateFromLong("yyyy-MM-dd", "GMT")
         return getUnixDateFrom_yyyyMMdd(beginningStr)
     }
 
     fun getBeginningOfDayForUnixDate_currentTz(currentDate: Long): Long {
-        val format = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-        val beginningStr = format.format(currentDate)
-
+        val beginningStr = currentDate.getStringDateFromLong("yyyy-MM-dd")
         return getUnixDateFrom_yyyyMMdd(beginningStr)
     }
 
+    // TODO remove (duplicate)
     fun getCurrentYearForUnixDate(currentDate: Long): Int {
         val format = SimpleDateFormat("yyyy", Locale.US)
         format.timeZone = TimeZone.getTimeZone("GMT")
@@ -60,10 +50,9 @@ class TimeHelper {
         return yearStr.toInt()
     }
 
+    // Use as month ID in database
     fun get_yyyyMM_fromUnixDate(unixDate: Long): String {
-        val format = SimpleDateFormat("yyyyMM", Locale.US)
-        format.timeZone = TimeZone.getTimeZone("GMT")
-        return format.format(unixDate)
+        return unixDate.getStringDateFromLong("yyyyMM", "GMT")
     }
 
     data class Iso8601Year(val startDate: String, val endDate: String)
