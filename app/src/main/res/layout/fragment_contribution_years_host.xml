@@ -8,7 +8,7 @@
     <androidx.appcompat.widget.Toolbar
         style="@style/ToolbarStyle"
         android:id="@+id/toolbar"
-        tools:title="Your 2020"
+        app:title="Contribution year"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

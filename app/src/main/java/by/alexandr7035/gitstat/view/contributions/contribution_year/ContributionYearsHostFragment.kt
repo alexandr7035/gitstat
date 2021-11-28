@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.databinding.FragmentContributionYearsHostBinding
 import by.alexandr7035.gitstat.view.contributions.ContributionsViewModel
 import com.google.android.material.tabs.TabLayoutMediator
@@ -45,7 +46,8 @@ class ContributionYearsHostFragment : Fragment() {
                 pagerAdapter.setItems(years.reversed())
 
                 TabLayoutMediator(binding!!.tabLayout, binding!!.yearsPager) { tab, position ->
-                    tab.text = years.reversed()[position].year.id.toString()
+                    val year = years.reversed()[position].year.id
+                    tab.text = year.toString()
                 }.attach()
             }
         })
