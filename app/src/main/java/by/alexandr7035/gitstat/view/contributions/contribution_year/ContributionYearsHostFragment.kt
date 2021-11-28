@@ -32,10 +32,11 @@ class ContributionYearsHostFragment : Fragment() {
             findNavController().navigateUp()
         }
 
-        // Setup viewpager and tab layout
+        // Setup viewpager
+        // Disable scroll
         val pagerAdapter = ContributionYearAdapter(this)
-        binding!!.yearsPager.adapter = pagerAdapter
-
+        binding?.yearsPager?.adapter = pagerAdapter
+        binding?.yearsPager?.isUserInputEnabled = false
 
         viewModel.getContributionYearsWithDaysLiveData().observe(viewLifecycleOwner, { years ->
 
@@ -46,9 +47,7 @@ class ContributionYearsHostFragment : Fragment() {
                 TabLayoutMediator(binding!!.tabLayout, binding!!.yearsPager) { tab, position ->
                     tab.text = years.reversed()[position].year.id.toString()
                 }.attach()
-
             }
-
         })
     }
 }
