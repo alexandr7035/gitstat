@@ -142,7 +142,8 @@ class ContributionsFragment : Fragment() {
 
 
         binding?.toContributionsGridBtn?.setOnClickListener {
-            findNavController().navigateSafe(ContributionsFragmentDirections.actionContributionsFragmentToContributionsGridFragment(2021))
+//            findNavController().navigateSafe(ContributionsFragmentDirections.actionContributionsFragmentToContributionsGridFragment(2021))
+            findNavController().navigateSafe(ContributionsFragmentDirections.actionContributionsFragmentToContributionYearsHostFragment())
         }
 
         binding?.contributionTypesCard?.setOnClickListener {
