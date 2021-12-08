@@ -137,7 +137,7 @@
                 android:id="@+id/languageColorView"
                 android:layout_width="12dp"
                 android:layout_height="12dp"
-                android:layout_marginEnd="5dp"
+                android:layout_marginEnd="4dp"
                 android:background="@drawable/background_circle" />
 
             <TextView
@@ -201,7 +201,7 @@
         <by.alexandr7035.gitstat.core.view.HorizontalRatioBarView
             android:id="@+id/languagesBar"
             android:layout_width="match_parent"
-            android:layout_height="20dp"
+            android:layout_height="16dp"
             android:layout_marginTop="8dp"
             app:hrb_entries_between_spacing="4dp"
             app:hrb_entry_corner_radius="8dp"

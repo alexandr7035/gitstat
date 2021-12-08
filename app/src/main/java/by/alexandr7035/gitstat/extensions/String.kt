@@ -7,6 +7,8 @@ import android.text.TextPaint
 import android.text.style.ClickableSpan
 import android.text.style.StyleSpan
 import android.view.View
+import java.text.SimpleDateFormat
+import java.util.*
 
 fun String.getClickableSpannable(
     clickableText: String,
@@ -48,4 +50,18 @@ fun String.getClickableSpannable(
     }
 
     return spannableString
+}
+
+
+fun String.getUnixDateFromStringFormat(
+    formatStr: String,
+    timeZoneStr: String? = null,
+    dateLocale: Locale = Locale.US
+): Long {
+    val format = SimpleDateFormat(formatStr, dateLocale)
+
+    if (timeZoneStr != null) {
+        format.timeZone = TimeZone.getTimeZone(timeZoneStr)
+    }
+    return format.parse(this)!!.time
 }
