@@ -16,7 +16,7 @@ import by.alexandr7035.gitstat.view.MainActivity
 import by.alexandr7035.gitstat.view.contributions.plots.contributions_per_year.YearContributionsAdapter
 import by.alexandr7035.gitstat.view.contributions.plots.contributions_rate.YearContributionRatesAdapter
 import by.alexandr7035.gitstat.view.contributions.plots.contributions_types.TypesAdapter
-import by.alexandr7035.gitstat.view.contributions.plots.contributions_types.model.ContributionTypesListToRecyclerItemsMapper
+import by.alexandr7035.gitstat.view.contributions.plots.contributions_types.ContributionTypesListToRecyclerItemsMapper
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -158,9 +158,6 @@ class ContributionsFragment : Fragment() {
             findNavController().navigateSafe(ContributionsFragmentDirections.actionContributionsFragmentToContributionsGridFragment(2021))
         }
 
-        binding?.contributionTypesCard?.setOnClickListener {
-            findNavController().navigateSafe(ContributionsFragmentDirections.actionContributionsFragmentToFragmentContributionTypes())
-        }
     }
 
 }
