@@ -55,7 +55,6 @@ used to implement languages filter (see third screenshot).
 <img src="doc/screenshot_repository_page.png" width="19%"/>
 <img src="doc/screenshot_contributions_1.png" width="19%"/>
 <img src="doc/screenshot_contributions_2.png" width="19%"/>
-<img src="doc/screenshot_contributions_3.png" width="19%"/>
 <img src="doc/screenshot_contributions_grid_1.png" width="19%"/>
 </p>
 
