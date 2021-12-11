@@ -57,9 +57,6 @@
         <action
             android:id="@+id/action_contributionsFragment_to_fragmentContributionTypes"
             app:destination="@id/fragmentContributionTypes" />
-        <action
-            android:id="@+id/action_contributionsFragment_to_contributionYearsHostFragment"
-            app:destination="@id/contributionYearsHostFragment" />
     </fragment>
 
     <navigation android:id="@+id/repositoriesListGraph"
@@ -256,9 +253,5 @@
             android:name="repositoryId"
             app:argType="integer" />
     </fragment>
-    <fragment
-        android:id="@+id/contributionYearsHostFragment"
-        android:name="by.alexandr7035.gitstat.view.contributions.contribution_year.ContributionYearsHostFragment"
-        android:label="ContributionYearsHostFragment" />
 
 </navigation>
