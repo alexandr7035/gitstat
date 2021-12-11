@@ -115,8 +115,21 @@ class ContributionsFragment : Fragment() {
             if (typesData != null) {
                 // Update legend
                 binding?.contributionTypesRecycler?.suppressLayout(false)
-                typesLegendAdapter.setItems(ContributionTypesListToRecyclerItemsMapper.map(typesData, requireContext()))
+                val types = ContributionTypesListToRecyclerItemsMapper.map(typesData, requireContext())
+                typesLegendAdapter.setItems(types)
                 binding?.contributionTypesRecycler?.suppressLayout(true)
+
+                // Setup ratio bar bar
+                val values = ArrayList<Float>()
+                val colors = ArrayList<Int>()
+
+                for (type in types) {
+                    colors.add(type.color)
+                    values.add(type.count.toFloat())
+                }
+
+                binding?.typesRatioView?.setValues(values, colors)
+                binding?.typesRatioView?.invalidate()
             }
         })
 
