@@ -1,4 +1,4 @@
-package by.alexandr7035.gitstat.view.contributions.plots.contributions_types.model
+package by.alexandr7035.gitstat.view.contributions.plots.contributions_types
 
 class TypesItem(
     val count: Int,

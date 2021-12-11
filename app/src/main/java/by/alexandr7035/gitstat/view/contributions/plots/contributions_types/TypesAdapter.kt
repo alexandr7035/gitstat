@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import by.alexandr7035.gitstat.databinding.ViewContributionTypeItemBinding
-import by.alexandr7035.gitstat.view.contributions.plots.contributions_types.model.TypesItem
 
 class TypesAdapter(private val showCount: Boolean = false): RecyclerView.Adapter<TypesAdapter.ViewHolder>() {
 
