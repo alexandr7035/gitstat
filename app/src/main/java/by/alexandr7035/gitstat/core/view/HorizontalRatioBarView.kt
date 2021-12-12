@@ -8,7 +8,7 @@ import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
 import by.alexandr7035.gitstat.R
-import by.alexandr7035.gitstat.extensions.debug
+import by.alexandr7035.gitstat.core.extensions.debug
 import timber.log.Timber
 
 

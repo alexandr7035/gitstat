@@ -17,8 +17,8 @@ import by.alexandr7035.gitstat.NavGraphDirections
 import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.core.GithubAccessScopes
 import by.alexandr7035.gitstat.databinding.FragmentLoginBinding
-import by.alexandr7035.gitstat.extensions.getClickableSpannable
-import by.alexandr7035.gitstat.extensions.navigateSafe
+import by.alexandr7035.gitstat.core.extensions.getClickableSpannable
+import by.alexandr7035.gitstat.core.extensions.navigateSafe
 import by.alexandr7035.gitstat.view.MainActivity
 import com.google.firebase.auth.OAuthCredential
 import com.google.firebase.auth.OAuthProvider

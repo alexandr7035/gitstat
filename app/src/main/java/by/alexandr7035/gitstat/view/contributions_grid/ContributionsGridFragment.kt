@@ -14,8 +14,8 @@ import by.alexandr7035.gitstat.data.local.model.ContributionDayEntity
 import by.alexandr7035.gitstat.data.local.model.ContributionYearWithMonths
 import by.alexandr7035.gitstat.data.local.model.ContributionsMonthWithDays
 import by.alexandr7035.gitstat.databinding.FragmentContributionsGridBinding
-import by.alexandr7035.gitstat.extensions.debug
-import by.alexandr7035.gitstat.extensions.navigateSafe
+import by.alexandr7035.gitstat.core.extensions.debug
+import by.alexandr7035.gitstat.core.extensions.navigateSafe
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber

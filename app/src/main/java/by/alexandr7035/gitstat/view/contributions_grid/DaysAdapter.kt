@@ -12,7 +12,7 @@ import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.core.TimeHelper
 import by.alexandr7035.gitstat.data.local.model.ContributionDayEntity
 import by.alexandr7035.gitstat.databinding.ViewContributionsGridCellBinding
-import by.alexandr7035.gitstat.extensions.debug
+import by.alexandr7035.gitstat.core.extensions.debug
 import timber.log.Timber
 
 class DaysAdapter(private val dayClickListener: DayClickListener): RecyclerView.Adapter<DaysAdapter.ViewHolder>() {

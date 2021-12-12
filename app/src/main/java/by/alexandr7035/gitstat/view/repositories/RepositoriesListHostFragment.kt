@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.databinding.FragmentHostRepositoriesListBinding
-import by.alexandr7035.gitstat.extensions.navigateSafe
+import by.alexandr7035.gitstat.core.extensions.navigateSafe
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.badge.BadgeUtils
 import com.google.android.material.tabs.TabLayout

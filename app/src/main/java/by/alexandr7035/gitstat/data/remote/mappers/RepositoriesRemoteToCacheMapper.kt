@@ -5,7 +5,7 @@ import by.alexandr7035.gitstat.core.Mapper
 import by.alexandr7035.gitstat.core.TimeHelper
 import by.alexandr7035.gitstat.data.local.model.RepoLanguage
 import by.alexandr7035.gitstat.data.local.model.RepositoryEntity
-import by.alexandr7035.gitstat.extensions.debug
+import by.alexandr7035.gitstat.core.extensions.debug
 import timber.log.Timber
 import javax.inject.Inject
 

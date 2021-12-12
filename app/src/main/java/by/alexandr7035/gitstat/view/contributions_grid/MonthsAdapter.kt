@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import by.alexandr7035.gitstat.data.local.model.ContributionDayEntity
 import by.alexandr7035.gitstat.data.local.model.ContributionsMonthWithDays
 import by.alexandr7035.gitstat.databinding.ViewMonthContributionsGridBinding
-import by.alexandr7035.gitstat.extensions.debug
+import by.alexandr7035.gitstat.core.extensions.debug
 import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*

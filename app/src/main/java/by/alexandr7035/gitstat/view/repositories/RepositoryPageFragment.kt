@@ -17,9 +17,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.databinding.FragmentRepositoryPageBinding
-import by.alexandr7035.gitstat.extensions.debug
-import by.alexandr7035.gitstat.extensions.getClickableSpannable
-import by.alexandr7035.gitstat.extensions.getStringDateFromLong
+import by.alexandr7035.gitstat.core.extensions.debug
+import by.alexandr7035.gitstat.core.extensions.getClickableSpannable
+import by.alexandr7035.gitstat.core.extensions.getStringDateFromLong
 import com.google.android.flexbox.FlexboxLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber

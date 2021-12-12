@@ -1,4 +1,4 @@
-package by.alexandr7035.gitstat.extensions
+package by.alexandr7035.gitstat.core.extensions
 
 import by.alexandr7035.gitstat.core.AppError
 import by.alexandr7035.gitstat.core.ErrorType

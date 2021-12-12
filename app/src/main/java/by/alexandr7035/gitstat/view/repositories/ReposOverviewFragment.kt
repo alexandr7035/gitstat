@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.alexandr7035.gitstat.databinding.FragmentReposOverviewBinding
-import by.alexandr7035.gitstat.extensions.navigateSafe
+import by.alexandr7035.gitstat.core.extensions.navigateSafe
 import by.alexandr7035.gitstat.view.MainActivity
 import by.alexandr7035.gitstat.view.repositories.plots.languages_plot.LanguagesPlot
 import dagger.hilt.android.AndroidEntryPoint

@@ -9,9 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.databinding.FragmentYearContributionsRateBinding
-import by.alexandr7035.gitstat.extensions.setChartData
-import by.alexandr7035.gitstat.extensions.setupYAxisValuesForContributionRate
-import by.alexandr7035.gitstat.extensions.setupYearLineChartView
+import by.alexandr7035.gitstat.core.extensions.setChartData
+import by.alexandr7035.gitstat.core.extensions.setupYAxisValuesForContributionRate
+import by.alexandr7035.gitstat.core.extensions.setupYearLineChartView
 import by.alexandr7035.gitstat.view.contributions.ContributionsViewModel
 import by.alexandr7035.gitstat.view.contributions.plots.DateMonthsValueFormatter
 import by.alexandr7035.gitstat.view.contributions.plots.LinePlotFill

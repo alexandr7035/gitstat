@@ -17,7 +17,7 @@ import by.alexandr7035.gitstat.NavGraphDirections
 import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.data.SyncForegroundService
 import by.alexandr7035.gitstat.databinding.ActivityMainBinding
-import by.alexandr7035.gitstat.extensions.navigateSafe
+import by.alexandr7035.gitstat.core.extensions.navigateSafe
 import by.alexandr7035.gitstat.view.datasync.SyncHostFragmentDirections
 import by.alexandr7035.gitstat.view.login.LoginFragmentDirections
 import by.alexandr7035.gitstat.view.profile.ProfileViewModel

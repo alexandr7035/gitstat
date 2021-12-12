@@ -1,4 +1,4 @@
-package by.alexandr7035.gitstat.extensions
+package by.alexandr7035.gitstat.core.extensions
 
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections

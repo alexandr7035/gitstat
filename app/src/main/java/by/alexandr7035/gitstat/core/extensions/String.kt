@@ -1,4 +1,4 @@
-package by.alexandr7035.gitstat.extensions
+package by.alexandr7035.gitstat.core.extensions
 
 import android.graphics.Typeface
 import android.text.SpannableString

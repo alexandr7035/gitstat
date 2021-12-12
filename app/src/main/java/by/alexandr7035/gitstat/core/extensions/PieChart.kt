@@ -1,8 +1,7 @@
-package by.alexandr7035.gitstat.extensions
+package by.alexandr7035.gitstat.core.extensions
 
 import android.graphics.Color
 import android.graphics.Typeface
-import by.alexandr7035.gitstat.view.repositories.plots.languages_plot.PieDataValueFormatter
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
