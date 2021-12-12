@@ -67,13 +67,13 @@ class DataSyncRepository @Inject constructor(
             // NOTE! DO NOT CHANGE ORDER
             // LIVEDATA TRIGGERED IMMEDIATELY AFTER SAVING CACHE
             // AS ONE DATA MAY DEPEND ON THE OTHER, WRONG ORDER MAY CAUSE CRASH
-            // Years and months must be at the end
+            // Order must be: days -> months -> years
             db.getContributionsDao().apply {
                 insertContributionRatesCache(contributionRates)
                 insertContributionDays(contributionDays)
                 insertContributionTypes(contributionTypes)
-                insertContributionYearsCache(contributionYears)
                 insertContributionMonthsCache(contributionMonths)
+                insertContributionYearsCache(contributionYears)
             }
 
             syncStatusLiveData?.postValue(DataSyncStatus.SUCCESS)
