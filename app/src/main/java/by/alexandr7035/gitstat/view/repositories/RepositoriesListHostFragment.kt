@@ -12,6 +12,7 @@ import androidx.navigation.navGraphViewModels
 import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.databinding.FragmentHostRepositoriesListBinding
 import by.alexandr7035.gitstat.core.extensions.navigateSafe
+import by.alexandr7035.gitstat.core.extensions.observeNullSafe
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.badge.BadgeUtils
 import com.google.android.material.tabs.TabLayout
@@ -83,17 +84,17 @@ class RepositoriesListHostFragment : Fragment() {
         BadgeUtils.attachBadgeDrawable(badge, binding!!.toolbar, R.id.item_filters)
 
         // Update counters in the tabs
-        viewModel.getActiveRepositoriesLiveData().observe(viewLifecycleOwner, {
+        viewModel.getActiveRepositoriesLiveData().observeNullSafe(viewLifecycleOwner, {
             val repos = viewModel.getFilteredRepositoriesList(it)
             (binding!!.tabLayout.getTabAt(0) as TabLayout.Tab).text = "Active (${repos.size})"
         })
 
-        viewModel.getArchivedRepositoriesLiveData().observe(viewLifecycleOwner, {
+        viewModel.getArchivedRepositoriesLiveData().observeNullSafe(viewLifecycleOwner, {
             val repos = viewModel.getFilteredRepositoriesList(it)
             (binding!!.tabLayout.getTabAt(1) as TabLayout.Tab).text = "Archived (${repos.size})"
         })
 
-        viewModel.getAllRepositoriesListLiveData().observe(viewLifecycleOwner, { unfilteredRepos ->
+        viewModel.getAllRepositoriesListLiveData().observeNullSafe(viewLifecycleOwner, { unfilteredRepos ->
 
             val filteredRepos = viewModel.getFilteredRepositoriesList(unfilteredRepos)
 

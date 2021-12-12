@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import by.alexandr7035.gitstat.BuildConfig
 import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.core.DataSyncStatus
+import by.alexandr7035.gitstat.core.extensions.observeNullSafe
 import by.alexandr7035.gitstat.databinding.FragmentSyncHostBinding
 import by.alexandr7035.gitstat.view.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,7 +31,7 @@ class SyncHostFragment : Fragment() {
 
         viewModel.syncData()
 
-        viewModel.getSyncStatusLiveData().observe(viewLifecycleOwner, { status ->
+        viewModel.getSyncStatusLiveData().observeNullSafe(viewLifecycleOwner, { status ->
             Timber.d("sync status updated $status")
 
             when (status) {
