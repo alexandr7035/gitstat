@@ -82,20 +82,18 @@
 
         <by.alexandr7035.gitstat.core.view.CollapsingTextView
             android:id="@+id/repoDescription"
-            android:clickable="true"
-            android:background="@drawable/background_clickable_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:background="@drawable/background_clickable_text"
+            android:clickable="true"
             android:ellipsize="end"
             android:maxLines="4"
             android:textColor="@color/gray_300"
             android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/languageNameView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/parentName"
-            app:layout_constraintVertical_bias="0"
             tools:text="@string/app_description" />
 
 
