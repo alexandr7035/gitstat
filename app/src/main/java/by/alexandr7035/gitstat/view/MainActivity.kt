@@ -12,6 +12,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import androidx.viewbinding.ViewBinding
 import by.alexandr7035.gitstat.BuildConfig
 import by.alexandr7035.gitstat.NavGraphDirections
 import by.alexandr7035.gitstat.R
@@ -28,21 +29,21 @@ import de.hdodenhof.circleimageview.CircleImageView
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var navController: NavController
-    private lateinit var binding: ActivityMainBinding
-    private val viewModel by viewModels<MainViewModel>()
+    private val navController: NavController by lazy(LazyThreadSafetyMode.NONE) {
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navHostFragment.navController
+    }
 
+    private val binding: ActivityMainBinding by lazy(LazyThreadSafetyMode.NONE) {
+        ActivityMainBinding.inflate(layoutInflater)
+    }
+
+    private val viewModel by viewModels<MainViewModel>()
     private val profileViewModel by viewModels<ProfileViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        // NavController
-        val hf: NavHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        navController = hf.navController
 
         // Setting Navigation Controller with the BottomNavigationView )
         binding.bottomNavigationView.setupWithNavController(navController)
