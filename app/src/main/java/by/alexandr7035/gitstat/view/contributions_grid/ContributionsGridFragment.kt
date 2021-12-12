@@ -16,6 +16,7 @@ import by.alexandr7035.gitstat.data.local.model.ContributionsMonthWithDays
 import by.alexandr7035.gitstat.databinding.FragmentContributionsGridBinding
 import by.alexandr7035.gitstat.core.extensions.debug
 import by.alexandr7035.gitstat.core.extensions.navigateSafe
+import by.alexandr7035.gitstat.core.extensions.observeNullSafe
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -48,10 +49,8 @@ class ContributionsGridFragment : Fragment(), DayClickListener {
         binding?.monthRecycler?.adapter = adapter
         binding?.monthRecycler?.layoutManager = LinearLayoutManager(requireContext())
 
-        viewModel.getContributionYearsWithMonthsLiveData().observe(viewLifecycleOwner, { years ->
-
-            if (! years.isNullOrEmpty()) {
-
+        viewModel.getContributionYearsWithMonthsLiveData().observeNullSafe(viewLifecycleOwner, { years ->
+            if (years.isNotEmpty()) {
                 // Add year tabs depending on years list (reversed)
                 for (year in years.reversed()) {
                     val tab = binding?.tabLayout?.newTab()
@@ -85,9 +84,7 @@ class ContributionsGridFragment : Fragment(), DayClickListener {
                 // Set initial tab position
                 val initialTab = binding?.tabLayout?.getTabAt(0)
                 initialTab?.select()
-
             }
-
         })
 
     }
@@ -138,10 +135,12 @@ class ContributionsGridFragment : Fragment(), DayClickListener {
     override fun onDayItemClick(contributionDay: ContributionDayEntity) {
         Timber.debug("click in FRAGMENT $contributionDay")
 
-        findNavController().navigateSafe(ContributionsGridFragmentDirections.actionContributionsGridFragmentToContributionDayDialogFragment(
-            contributionDay.count,
-            contributionDay.date,
-            contributionDay.color
-        ))
+        findNavController().navigateSafe(
+            ContributionsGridFragmentDirections.actionContributionsGridFragmentToContributionDayDialogFragment(
+                contributionDay.count,
+                contributionDay.date,
+                contributionDay.color
+            )
+        )
     }
 }

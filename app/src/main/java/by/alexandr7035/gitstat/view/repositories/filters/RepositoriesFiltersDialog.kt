@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.navGraphViewModels
 import by.alexandr7035.gitstat.R
+import by.alexandr7035.gitstat.core.extensions.observeNullSafe
 import by.alexandr7035.gitstat.databinding.FiltersDialogBinding
 import by.alexandr7035.gitstat.view.repositories.RepositoriesViewModel
 import com.google.android.flexbox.FlexboxLayoutManager
@@ -53,7 +54,7 @@ class RepositoriesFiltersDialog : BottomSheetDialogFragment() {
         // FIXME
         // Now build langs list depending on ALL the repos of a user
         // Create different filters for active/archived later
-        viewModel.getAllRepositoriesListLiveData().observe(viewLifecycleOwner, { repos ->
+        viewModel.getAllRepositoriesListLiveData().observeNullSafe(viewLifecycleOwner, { repos ->
             adapter.setItems(viewModel.getLanguagesForReposList(repos))
         })
 

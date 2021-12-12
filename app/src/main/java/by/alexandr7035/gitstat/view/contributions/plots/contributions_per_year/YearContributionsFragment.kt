@@ -8,11 +8,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import by.alexandr7035.gitstat.R
+import by.alexandr7035.gitstat.core.extensions.*
 import by.alexandr7035.gitstat.databinding.ViewPlotContributionsYearBinding
-import by.alexandr7035.gitstat.core.extensions.debug
-import by.alexandr7035.gitstat.core.extensions.setChartData
-import by.alexandr7035.gitstat.core.extensions.setupYAxisValuesForContributions
-import by.alexandr7035.gitstat.core.extensions.setupYearLineChartView
 import by.alexandr7035.gitstat.view.contributions.ContributionsViewModel
 import by.alexandr7035.gitstat.view.contributions.plots.DateMonthsValueFormatter
 import by.alexandr7035.gitstat.view.contributions.plots.LinePlotFill
@@ -37,11 +34,9 @@ class YearContributionsFragment: Fragment() {
 
         val year = arguments?.getInt("year")
 
-        viewModel.getContributionYearsWithDaysLiveData().observe(viewLifecycleOwner, { yearsData ->
+        viewModel.getContributionYearsWithDaysLiveData().observeNullSafe(viewLifecycleOwner, { yearsData ->
 
-            Timber.debug("$year $yearsData")
-
-            if (! yearsData.isNullOrEmpty()) {
+            if (yearsData.isNotEmpty()) {
 
                 // FIXME find better solution (obtain certain year from data layer)
                 val yearData = yearsData.findLast {
@@ -100,12 +95,10 @@ class YearContributionsFragment: Fragment() {
                 binding?.contributionsChart?.invalidate()
             }
         })
-
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
     }
-
 }
