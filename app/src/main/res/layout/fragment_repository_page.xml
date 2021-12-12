@@ -80,8 +80,10 @@
             tools:text="Forked from alexandr7035/GitStt"
             />
 
-        <TextView
+        <by.alexandr7035.gitstat.core.view.CollapsingTextView
             android:id="@+id/repoDescription"
+            android:clickable="true"
+            android:background="@drawable/background_clickable_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
