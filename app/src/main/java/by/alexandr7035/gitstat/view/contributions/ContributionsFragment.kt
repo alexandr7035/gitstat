@@ -113,8 +113,10 @@ class ContributionsFragment : Fragment() {
             val colors = ArrayList<Int>()
 
             for (type in types) {
-                colors.add(type.color)
-                values.add(type.count.toFloat())
+                if (type.count > 0) {
+                    colors.add(type.color)
+                    values.add(type.count.toFloat())
+                }
             }
 
             binding?.typesRatioView?.setValues(values, colors)
