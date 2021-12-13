@@ -5,17 +5,17 @@ import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.alexandr7035.gitstat.R
-import by.alexandr7035.gitstat.databinding.FragmentProfileBinding
 import by.alexandr7035.gitstat.core.extensions.navigateSafe
 import by.alexandr7035.gitstat.core.extensions.observeNullSafe
+import by.alexandr7035.gitstat.databinding.FragmentProfileBinding
 import by.alexandr7035.gitstat.view.MainActivity
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 
 @AndroidEntryPoint
@@ -36,8 +36,6 @@ class ProfileFragment : Fragment() {
 
         // Update profile data
         viewModel.getUserLiveData().observeNullSafe(viewLifecycleOwner, {
-
-            Timber.tag("DEBUG_TAG").d("livedata updated $it")
 
             Picasso.get().load(it.avatar_url).into(binding!!.profileImageView)
 
@@ -61,9 +59,9 @@ class ProfileFragment : Fragment() {
 
             // This field can be empty
             if (it.location.isEmpty()) {
-                binding!!.locationContainer.visibility = View.GONE
+                setLocationVisibility(false)
             } else {
-                binding!!.locationContainer.visibility = View.VISIBLE
+                setLocationVisibility(true)
                 binding!!.locationView.text = it.location
             }
 
@@ -82,6 +80,11 @@ class ProfileFragment : Fragment() {
 
     }
 
+    private fun setLocationVisibility(isVisible: Boolean) {
+        binding?.locationIcon?.isGone = ! isVisible
+        binding?.locationLabel?.isGone = ! isVisible
+        binding?.locationView?.isGone = ! isVisible
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
