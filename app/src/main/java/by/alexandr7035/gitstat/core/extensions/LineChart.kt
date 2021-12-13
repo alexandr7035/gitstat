@@ -1,4 +1,4 @@
-package by.alexandr7035.gitstat.extensions
+package by.alexandr7035.gitstat.core.extensions
 
 import by.alexandr7035.gitstat.view.contributions.plots.LinePlotFill
 import com.github.mikephil.charting.charts.LineChart

@@ -1,7 +1,7 @@
 package by.alexandr7035.gitstat.core
 
-import by.alexandr7035.gitstat.extensions.getStringDateFromLong
-import by.alexandr7035.gitstat.extensions.getUnixDateFromStringFormat
+import by.alexandr7035.gitstat.core.extensions.getStringDateFromLong
+import by.alexandr7035.gitstat.core.extensions.getUnixDateFromStringFormat
 import java.text.SimpleDateFormat
 import java.util.*
 

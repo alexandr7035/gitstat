@@ -8,10 +8,11 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import by.alexandr7035.gitstat.R
+import by.alexandr7035.gitstat.core.extensions.observeNullSafe
 import by.alexandr7035.gitstat.databinding.FragmentYearContributionsRateBinding
-import by.alexandr7035.gitstat.extensions.setChartData
-import by.alexandr7035.gitstat.extensions.setupYAxisValuesForContributionRate
-import by.alexandr7035.gitstat.extensions.setupYearLineChartView
+import by.alexandr7035.gitstat.core.extensions.setChartData
+import by.alexandr7035.gitstat.core.extensions.setupYAxisValuesForContributionRate
+import by.alexandr7035.gitstat.core.extensions.setupYearLineChartView
 import by.alexandr7035.gitstat.view.contributions.ContributionsViewModel
 import by.alexandr7035.gitstat.view.contributions.plots.DateMonthsValueFormatter
 import by.alexandr7035.gitstat.view.contributions.plots.LinePlotFill
@@ -36,9 +37,9 @@ class YearContributionRatesFragment : Fragment() {
         val year = arguments?.getInt("year")
 
         // Observe the result
-        viewModel.getContributionYearsWithRatesLiveData().observe(viewLifecycleOwner, { yearsData ->
+        viewModel.getContributionYearsWithRatesLiveData().observeNullSafe(viewLifecycleOwner, { yearsData ->
 
-            if (! yearsData.isNullOrEmpty()) {
+            if (yearsData.isNotEmpty()) {
 
                 // FIXME find better solution (obtain certain year from data layer)
                 val yearData = yearsData.findLast {
@@ -93,7 +94,5 @@ class YearContributionRatesFragment : Fragment() {
                 binding?.rateChart?.invalidate()
             }
         })
-
     }
-
 }

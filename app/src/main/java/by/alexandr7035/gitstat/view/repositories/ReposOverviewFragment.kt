@@ -8,7 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.alexandr7035.gitstat.databinding.FragmentReposOverviewBinding
-import by.alexandr7035.gitstat.extensions.navigateSafe
+import by.alexandr7035.gitstat.core.extensions.navigateSafe
+import by.alexandr7035.gitstat.core.extensions.observeNullSafe
 import by.alexandr7035.gitstat.view.MainActivity
 import by.alexandr7035.gitstat.view.repositories.plots.languages_plot.LanguagesPlot
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,32 +36,28 @@ class ReposOverviewFragment : Fragment() {
             plot.setupPlot(binding!!.languagesChart)
         }
 
-        viewModel.getRepositoriesLiveData().observe(viewLifecycleOwner, { repos ->
+        viewModel.getRepositoriesLiveData().observeNullSafe(viewLifecycleOwner, { repos ->
 
-            if (repos != null) {
+            Timber.tag("DEBUG_TAG").d("repos $repos")
 
-                Timber.tag("DEBUG_TAG").d("repos $repos")
+            binding!!.totalReposCountView.text = repos.size.toString()
+            binding!!.privateReposCountView.text = repos.filter { it.isPrivate }.size.toString()
+            binding!!.publicReposCountView.text = repos.filter { !it.isPrivate }.size.toString()
 
-                binding!!.totalReposCountView.text = repos.size.toString()
-                binding!!.privateReposCountView.text = repos.filter { it.isPrivate }.size.toString()
-                binding!!.publicReposCountView.text = repos.filter { !it.isPrivate }.size.toString()
+            // Show stup instead of plot if list is empty
+            if (repos.isNullOrEmpty()) {
+                binding?.languagesChart?.visibility = View.GONE
+                binding?.noReposStub?.visibility = View.VISIBLE
+            } else {
+                binding?.languagesChart?.visibility = View.VISIBLE
+                binding?.noReposStub?.visibility = View.GONE
 
-                // Show stup instead of plot if list is empty
-                if (repos.isNullOrEmpty()) {
-                    binding?.languagesChart?.visibility = View.GONE
-                    binding?.noReposStub?.visibility = View.VISIBLE
-                } else {
-                    binding?.languagesChart?.visibility = View.VISIBLE
-                    binding?.noReposStub?.visibility = View.GONE
-
-                    // Populate chart with data
-                    plot.setLanguagesData(
-                        chart = binding!!.languagesChart,
-                        languages = viewModel.getLanguagesForReposList(repos),
-                        totalReposCount = repos.size
-                    )
-
-                }
+                // Populate chart with data
+                plot.setLanguagesData(
+                    chart = binding!!.languagesChart,
+                    languages = viewModel.getLanguagesForReposList(repos),
+                    totalReposCount = repos.size
+                )
             }
         })
 

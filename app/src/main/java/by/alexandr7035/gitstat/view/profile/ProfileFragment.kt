@@ -5,16 +5,17 @@ import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.alexandr7035.gitstat.R
+import by.alexandr7035.gitstat.core.extensions.navigateSafe
+import by.alexandr7035.gitstat.core.extensions.observeNullSafe
 import by.alexandr7035.gitstat.databinding.FragmentProfileBinding
-import by.alexandr7035.gitstat.extensions.navigateSafe
 import by.alexandr7035.gitstat.view.MainActivity
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 
 @AndroidEntryPoint
@@ -34,45 +35,39 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Update profile data
-        viewModel.getUserLiveData().observe(viewLifecycleOwner, {
+        viewModel.getUserLiveData().observeNullSafe(viewLifecycleOwner, {
 
-            Timber.tag("DEBUG_TAG").d("livedata updated $it")
+            Picasso.get().load(it.avatar_url).into(binding!!.profileImageView)
 
-            if (it != null) {
-
-                Picasso.get().load(it.avatar_url).into(binding!!.profileImageView)
-
-                // This field can be empty
-                if (it.name.isEmpty()) {
-                    binding?.nameView?.visibility = View.GONE
-                } else {
-                    binding?.nameView?.visibility = View.VISIBLE
-                    binding?.nameView?.text = it.name
-                }
-
-                binding!!.loginView.text = getString(R.string.login_string, it.login)
-
-                binding!!.idView.text = it.id.toString()
-
-                val dateFormat = getString(R.string.profile_date_format)
-                binding!!.createdView.text = DateFormat.format(dateFormat, it.created_at)
-                binding!!.updatedView.text = DateFormat.format(dateFormat, it.updated_at)
-
-                binding!!.followersView.text = it.followers.toString()
-
-                // This field can be empty
-                if (it.location.isEmpty()) {
-                    binding!!.locationContainer.visibility = View.GONE
-                } else {
-                    binding!!.locationContainer.visibility = View.VISIBLE
-                    binding!!.locationView.text = it.location
-                }
-
-                binding!!.totalReposView.text = it.total_repos_count.toString()
-                binding!!.privateReposView.text = it.private_repos_count.toString()
-                binding!!.publicReposView.text = it.public_repos_count.toString()
-
+            // This field can be empty
+            if (it.name.isEmpty()) {
+                binding?.nameView?.visibility = View.GONE
+            } else {
+                binding?.nameView?.visibility = View.VISIBLE
+                binding?.nameView?.text = it.name
             }
+
+            binding!!.loginView.text = getString(R.string.login_string, it.login)
+
+            binding!!.idView.text = it.id.toString()
+
+            val dateFormat = getString(R.string.profile_date_format)
+            binding!!.createdView.text = DateFormat.format(dateFormat, it.created_at)
+            binding!!.updatedView.text = DateFormat.format(dateFormat, it.updated_at)
+
+            binding!!.followersView.text = it.followers.toString()
+
+            // This field can be empty
+            if (it.location.isEmpty()) {
+                setLocationVisibility(false)
+            } else {
+                setLocationVisibility(true)
+                binding!!.locationView.text = it.location
+            }
+
+            binding!!.totalReposView.text = it.total_repos_count.toString()
+            binding!!.privateReposView.text = it.private_repos_count.toString()
+            binding!!.publicReposView.text = it.public_repos_count.toString()
         })
 
         binding!!.reposStatDetailedBtn.setOnClickListener {
@@ -85,6 +80,11 @@ class ProfileFragment : Fragment() {
 
     }
 
+    private fun setLocationVisibility(isVisible: Boolean) {
+        binding?.locationIcon?.isGone = ! isVisible
+        binding?.locationLabel?.isGone = ! isVisible
+        binding?.locationView?.isGone = ! isVisible
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

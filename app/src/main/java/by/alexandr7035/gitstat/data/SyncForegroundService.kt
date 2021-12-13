@@ -10,7 +10,8 @@ import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.MutableLiveData
 import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.core.DataSyncStatus
-import by.alexandr7035.gitstat.extensions.debug
+import by.alexandr7035.gitstat.core.extensions.debug
+import by.alexandr7035.gitstat.core.extensions.observeNullSafe
 import by.alexandr7035.gitstat.view.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
@@ -48,7 +49,7 @@ class SyncForegroundService: LifecycleService() {
             stopSelf()
         }
 
-        statusLiveData?.observe(this, {
+        statusLiveData?.observeNullSafe(this, {
             Timber.debug("Service: sync status changed $it")
 
             val notificationText = when (it) {

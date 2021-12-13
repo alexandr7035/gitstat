@@ -11,7 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.RepositoriesListGraphDirections
 import by.alexandr7035.gitstat.databinding.FragmentRepositoriesRecyclerBinding
-import by.alexandr7035.gitstat.extensions.navigateSafe
+import by.alexandr7035.gitstat.core.extensions.navigateSafe
+import by.alexandr7035.gitstat.core.extensions.observeNullSafe
 import by.alexandr7035.gitstat.view.repositories.filters.RepositoriesListFiltersHelper
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -37,7 +38,7 @@ class ArchivedRepositoriesFragment : Fragment(), RepoClickListener {
         binding!!.recycler.adapter = adapter
         binding!!.recycler.layoutManager = LinearLayoutManager(context)
 
-        viewModel.getTabRefreshedLiveData().observe(viewLifecycleOwner, {
+        viewModel.getTabRefreshedLiveData().observeNullSafe(viewLifecycleOwner, {
             // If current fragment
             // FIXME find better solution
             if (it == 1) {
@@ -50,7 +51,7 @@ class ArchivedRepositoriesFragment : Fragment(), RepoClickListener {
     override fun onResume() {
         super.onResume()
 
-        viewModel.getArchivedRepositoriesLiveData().observe(viewLifecycleOwner, { repos ->
+        viewModel.getArchivedRepositoriesLiveData().observeNullSafe(viewLifecycleOwner, { repos ->
             val filteredList = RepositoriesListFiltersHelper.getFilteredRepositoriesList(
                 repos,
                 viewModel.getRepositoriesFilters()

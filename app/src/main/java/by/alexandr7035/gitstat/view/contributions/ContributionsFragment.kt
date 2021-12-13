@@ -11,7 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.databinding.FragmentContributionsBinding
-import by.alexandr7035.gitstat.extensions.navigateSafe
+import by.alexandr7035.gitstat.core.extensions.navigateSafe
+import by.alexandr7035.gitstat.core.extensions.observeNullSafe
 import by.alexandr7035.gitstat.view.MainActivity
 import by.alexandr7035.gitstat.view.contributions.plots.contributions_per_year.YearContributionsAdapter
 import by.alexandr7035.gitstat.view.contributions.plots.contributions_rate.YearContributionRatesAdapter
@@ -49,88 +50,77 @@ class ContributionsFragment : Fragment() {
         binding?.contributionTypesRecycler?.adapter = typesLegendAdapter
 
         // Update data
-        viewModel.getContributionYearsLiveData().observe(viewLifecycleOwner, { years ->
+        viewModel.getContributionYearsLiveData().observeNullSafe(viewLifecycleOwner, { years ->
+            if (years.isNotEmpty()) {
 
-            if (years != null) {
+                yearContributionsAdapter.setItems(years)
 
-                if (years.isNotEmpty()) {
+                // Set to last position
+                binding?.yearsViewPager?.setCurrentItem(years.size - 1, false)
+                binding?.currentYearView?.text = years[years.size - 1].year.id.toString()
 
-                    yearContributionsAdapter.setItems(years)
+                // Change year in card title when viewpager item changes
+                binding?.yearsViewPager?.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                    override fun onPageSelected(position: Int) {
+                        super.onPageSelected(position)
+                        Timber.d("Page changed callback")
+                        binding?.currentYearView?.text = years[position].year.id.toString()
+                    }
+                })
 
-                    // Set to last position
-                    binding?.yearsViewPager?.setCurrentItem(years.size - 1, false)
-                    binding?.currentYearView?.text = years[years.size - 1].year.id.toString()
+                // Attach tablayout
+                TabLayoutMediator(binding!!.yearsTabLayout, binding!!.yearsViewPager) { tab, position ->
+                }.attach()
 
-                    // Change year in card title when viewpager item changes
-                    binding?.yearsViewPager?.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-                        override fun onPageSelected(position: Int) {
-                            super.onPageSelected(position)
-                            Timber.d("Page changed callback")
-                            binding?.currentYearView?.text = years[position].year.id.toString()
-                        }
-                    })
-
-                    // Attach tablayout
-                    TabLayoutMediator(binding!!.yearsTabLayout, binding!!.yearsViewPager) { tab, position ->
-                    }.attach()
-
-                }
             }
         })
 
 
-        viewModel.getContributionDaysLiveData().observe(viewLifecycleOwner, { contributions ->
-            if (contributions != null) {
-                val totalContributions = contributions.sumOf { it.count }
-                binding?.totalContributions?.text = totalContributions.toString()
-            }
+        viewModel.getContributionDaysLiveData().observeNullSafe(viewLifecycleOwner, { contributions ->
+            val totalContributions = contributions.sumOf { it.count }
+            binding?.totalContributions?.text = totalContributions.toString()
         })
 
 
-        viewModel.getContributionYearsWithRatesLiveData().observe(viewLifecycleOwner, { rateYears ->
+        viewModel.getContributionYearsWithRatesLiveData().observeNullSafe(viewLifecycleOwner, { rateYears ->
+            if (rateYears.isNotEmpty()) {
+                yearContributionsRateAdapter.setItems(rateYears)
 
-            if (rateYears != null) {
+                TabLayoutMediator(binding!!.rateTabLayout, binding!!.rateViewPager) { tab, position ->
+                }.attach()
 
-                if (rateYears.isNotEmpty()) {
-                    yearContributionsRateAdapter.setItems(rateYears)
+                // Set to last position
+                binding?.rateViewPager?.setCurrentItem(rateYears.size - 1, false)
 
-                    TabLayoutMediator(binding!!.rateTabLayout, binding!!.rateViewPager) { tab, position ->
-                    }.attach()
-
-                    // Set to last position
-                    binding?.rateViewPager?.setCurrentItem(rateYears.size - 1, false)
-
-                    // Set total contribution rate in header
-                    binding?.contributionsRate?.text =
-                        viewModel.getLastTotalContributionRateForYear(rateYears[rateYears.size - 1]).toString()
-                }
+                // Set total contribution rate in header
+                binding?.contributionsRate?.text =
+                    viewModel.getLastTotalContributionRateForYear(rateYears[rateYears.size - 1]).toString()
             }
         })
 
 
 
 
-        viewModel.getContributionTypesLiveData().observe(viewLifecycleOwner, { typesData ->
+        viewModel.getContributionTypesLiveData().observeNullSafe(viewLifecycleOwner, { typesData ->
+            // Update legend
+            binding?.contributionTypesRecycler?.suppressLayout(false)
+            val types = ContributionTypesListToRecyclerItemsMapper.map(typesData, requireContext())
+            typesLegendAdapter.setItems(types)
+            binding?.contributionTypesRecycler?.suppressLayout(true)
 
-            if (typesData != null) {
-                // Update legend
-                binding?.contributionTypesRecycler?.suppressLayout(false)
-                val types = ContributionTypesListToRecyclerItemsMapper.map(typesData, requireContext())
-                typesLegendAdapter.setItems(types)
-                binding?.contributionTypesRecycler?.suppressLayout(true)
+            // Setup ratio bar bar
+            val values = ArrayList<Float>()
+            val colors = ArrayList<Int>()
 
-                // Setup ratio bar bar
-                val values = ArrayList<Float>()
-                val colors = ArrayList<Int>()
-
-                for (type in types) {
+            for (type in types) {
+                if (type.count > 0) {
                     colors.add(type.color)
                     values.add(type.count.toFloat())
                 }
-
-                binding?.typesRatioView?.setValues(values, colors)
-                binding?.typesRatioView?.invalidate()
             }
+
+            binding?.typesRatioView?.setValues(values, colors)
+            binding?.typesRatioView?.invalidate()
         })
 
         binding?.drawerBtn?.setOnClickListener {
@@ -139,18 +129,22 @@ class ContributionsFragment : Fragment() {
 
         // Help icon for contribution rate
         binding?.contributionRateHelpIcon?.setOnClickListener {
-            findNavController().navigateSafe(ContributionsFragmentDirections.actionGlobalInfoDialogFragment(
-                getString(R.string.what_is_contribution_rate_title),
-                getString(R.string.what_is_contribution_rate_text)
-            ))
+            findNavController().navigateSafe(
+                ContributionsFragmentDirections.actionGlobalInfoDialogFragment(
+                    getString(R.string.what_is_contribution_rate_title),
+                    getString(R.string.what_is_contribution_rate_text)
+                )
+            )
         }
 
         // Help icon for contribution rate
         binding?.contributionRateDynamicsHelpIcon?.setOnClickListener {
-            findNavController().navigateSafe(ContributionsFragmentDirections.actionGlobalInfoDialogFragment(
-                getString(R.string.contribution_rate_dynamics_help_title),
-                getString(R.string.contribution_rate_dynamics_help_text)
-            ))
+            findNavController().navigateSafe(
+                ContributionsFragmentDirections.actionGlobalInfoDialogFragment(
+                    getString(R.string.contribution_rate_dynamics_help_title),
+                    getString(R.string.contribution_rate_dynamics_help_text)
+                )
+            )
         }
 
 
