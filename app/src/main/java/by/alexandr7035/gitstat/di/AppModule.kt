@@ -7,6 +7,7 @@ import by.alexandr7035.gitstat.data.*
 import by.alexandr7035.gitstat.data.helpers.LanguagesHelper
 import by.alexandr7035.gitstat.data.helpers.LanguagesHelperImpl
 import by.alexandr7035.gitstat.data.helpers.YearlyMetricsHelper
+import by.alexandr7035.gitstat.data.helpers.YearlyMetricsHelperImpl
 import by.alexandr7035.gitstat.data.local.CacheDB
 import by.alexandr7035.gitstat.data.local.KeyValueStorage
 import by.alexandr7035.gitstat.data.local.KeyValueStorageImpl
@@ -190,7 +191,7 @@ object AppModule {
     @Provides
     @Singleton
     fun provideYearlyMetricsHelper(appPreferences: AppPreferences, timeHelper: TimeHelper): YearlyMetricsHelper {
-        return YearlyMetricsHelper.Impl(timeHelper, appPreferences)
+        return YearlyMetricsHelperImpl(timeHelper, appPreferences)
     }
 
     @Provides
