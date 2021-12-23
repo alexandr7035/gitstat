@@ -2,15 +2,18 @@ package by.alexandr7035.gitstat.di
 
 import android.app.Application
 import androidx.room.Room
-import by.alexandr7035.gitstat.core.KeyValueStorage
 import by.alexandr7035.gitstat.core.TimeHelper
 import by.alexandr7035.gitstat.data.*
 import by.alexandr7035.gitstat.data.helpers.YearlyMetricsHelper
 import by.alexandr7035.gitstat.data.local.CacheDB
+import by.alexandr7035.gitstat.data.local.KeyValueStorage
+import by.alexandr7035.gitstat.data.local.KeyValueStorageImpl
 import by.alexandr7035.gitstat.data.local.RoomTypeConverters
 import by.alexandr7035.gitstat.data.local.dao.ContributionsDao
 import by.alexandr7035.gitstat.data.local.dao.RepositoriesDao
 import by.alexandr7035.gitstat.data.local.dao.UserDao
+import by.alexandr7035.gitstat.data.local.preferences.AppPreferences
+import by.alexandr7035.gitstat.data.local.preferences.AppPreferencesImpl
 import by.alexandr7035.gitstat.data.remote.AuthInterceptor
 import by.alexandr7035.gitstat.data.remote.ErrorInterceptor
 import by.alexandr7035.gitstat.data.remote.mappers.*
@@ -33,8 +36,8 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideApollo(keyValueStorage: KeyValueStorage): ApolloClient {
-        return ApolloClient(networkTransport = HttpNetworkTransport("https://api.github.com/graphql", interceptors = listOf(AuthInterceptor(keyValueStorage), ErrorInterceptor())))
+    fun provideApollo(appPreferences: AppPreferences): ApolloClient {
+        return ApolloClient(networkTransport = HttpNetworkTransport("https://api.github.com/graphql", interceptors = listOf(AuthInterceptor(appPreferences), ErrorInterceptor())))
     }
 
     /////////////////////////////////////
@@ -45,9 +48,9 @@ object AppModule {
     @Singleton
     fun provideReposRepository(
         dao: RepositoriesDao,
-        keyValueStorage: KeyValueStorage,
+        appPreferences: AppPreferences,
         gson: Gson): ReposRepository {
-        return ReposRepository(dao, keyValueStorage, gson)
+        return ReposRepository(dao, appPreferences, gson)
     }
 
     @Provides
@@ -58,8 +61,8 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideAuthRepository(keyValueStorage: KeyValueStorage): AuthRepository {
-        return AuthRepository(keyValueStorage)
+    fun provideAuthRepository(appPreferences: AppPreferences): AuthRepository {
+        return AuthRepository(appPreferences)
     }
 
     @Provides
@@ -78,15 +81,14 @@ object AppModule {
         apolloClient: ApolloClient,
         db: CacheDB,
         timeHelper: TimeHelper,
-        keyValueStorage: KeyValueStorage,
-
+        appPreferences: AppPreferences,
         profileMapper: UserRemoteToCacheMapper,
         repositoriesMapper: RepositoriesRemoteToCacheMapper,
         contributionsMapper: ContributionsDaysListRemoteToCacheMapper,
         contributionTypesMapper: ContributionTypesRemoteToCacheMapper,
         daysToRatesMapper: ContributionDaysToRatesMapper
     ): DataSyncRepository {
-        return DataSyncRepository(apolloClient, db, timeHelper, keyValueStorage, profileMapper, repositoriesMapper, contributionsMapper, contributionTypesMapper, daysToRatesMapper)
+        return DataSyncRepository(apolloClient, db, timeHelper, appPreferences, profileMapper, repositoriesMapper, contributionsMapper, contributionTypesMapper, daysToRatesMapper)
     }
 
     /////////////////////////////////////
@@ -124,8 +126,14 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideAppPrefs(application: Application): KeyValueStorage {
-        return AppPreferences(application)
+    fun provideKeyValueStorage(application: Application): KeyValueStorage {
+        return KeyValueStorageImpl(application.applicationContext)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAppPreferences(keyValueStorage: KeyValueStorage): AppPreferences {
+        return AppPreferencesImpl(keyValueStorage)
     }
 
     /////////////////////////////////////
@@ -178,7 +186,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideYearlyMetricsHelper(keyValueStorage: KeyValueStorage, timeHelper: TimeHelper): YearlyMetricsHelper {
-        return YearlyMetricsHelper.Impl(timeHelper, keyValueStorage)
+    fun provideYearlyMetricsHelper(appPreferences: AppPreferences, timeHelper: TimeHelper): YearlyMetricsHelper {
+        return YearlyMetricsHelper.Impl(timeHelper, appPreferences)
     }
 }

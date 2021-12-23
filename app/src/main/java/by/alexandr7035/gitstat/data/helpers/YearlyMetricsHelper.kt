@@ -1,9 +1,9 @@
 package by.alexandr7035.gitstat.data.helpers
 
-import by.alexandr7035.gitstat.core.KeyValueStorage
 import by.alexandr7035.gitstat.core.TimeHelper
 import by.alexandr7035.gitstat.data.local.model.ContributionsYearWithDays
 import by.alexandr7035.gitstat.data.local.model.ContributionsYearWithRates
+import by.alexandr7035.gitstat.data.local.preferences.AppPreferences
 import javax.inject.Inject
 import kotlin.math.round
 
@@ -15,10 +15,10 @@ interface YearlyMetricsHelper {
     fun getEndingTotalContributionRate(yearData: ContributionsYearWithDays): Float
 
 
-    class Impl @Inject constructor(private val timeHelper: TimeHelper, private val keyValueStorage: KeyValueStorage): YearlyMetricsHelper {
+    class Impl @Inject constructor(private val timeHelper: TimeHelper, private val appPreferences: AppPreferences): YearlyMetricsHelper {
         override fun getAnnualContributionRate(yearData: ContributionsYearWithRates): Float {
             return if (yearData.year.id == timeHelper.getCurrentYearForUnixDate(System.currentTimeMillis())) {
-                val lastCacheSyncDate = keyValueStorage.getLastCacheSyncDate()
+                val lastCacheSyncDate = appPreferences.getLastCacheSyncDate()
                 yearData.contributionRates.findLast { it.date == timeHelper.getBeginningOfDayForUnixDate(lastCacheSyncDate) }?.rate ?: 0F
             } else {
                 yearData.contributionRates[yearData.contributionRates.size - 1].rate
@@ -30,7 +30,7 @@ interface YearlyMetricsHelper {
 
             return if (yearData.year.id == timeHelper.getCurrentYearForUnixDate(System.currentTimeMillis())) {
                 // Get last contribution day
-                val lastCacheSyncDate = keyValueStorage.getLastCacheSyncDate()
+                val lastCacheSyncDate = appPreferences.getLastCacheSyncDate()
                 val lastContributedDay = yearData.contributionDays.findLast {
                     it.date == timeHelper.getBeginningOfDayForUnixDate(lastCacheSyncDate)
                 }

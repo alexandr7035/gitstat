@@ -1,6 +1,6 @@
-package by.alexandr7035.gitstat.core
+package by.alexandr7035.gitstat.data.local.preferences
 
-interface KeyValueStorage {
+interface AppPreferences {
     fun getToken(): String?
 
     fun saveToken(token: String?)
