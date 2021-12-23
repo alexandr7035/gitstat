@@ -2,6 +2,7 @@ package by.alexandr7035.gitstat.data
 
 import androidx.lifecycle.LiveData
 import by.alexandr7035.gitstat.core.Language
+import by.alexandr7035.gitstat.data.helpers.LanguagesHelper
 import by.alexandr7035.gitstat.data.local.dao.RepositoriesDao
 import by.alexandr7035.gitstat.data.local.model.RepositoryEntity
 import by.alexandr7035.gitstat.data.local.preferences.AppPreferences
@@ -12,6 +13,7 @@ import javax.inject.Inject
 class ReposRepository @Inject constructor(
     private val dao: RepositoriesDao,
     private val appPreferences: AppPreferences,
+    private val languagesHelper: LanguagesHelper,
     private val gson: Gson) {
 
     fun getRepositoriesLiveData(): LiveData<List<RepositoryEntity>>{
@@ -55,29 +57,9 @@ class ReposRepository @Inject constructor(
     }
 
 
-    // Prog languages
-    // FIXME find more optimal way (too many iterations)
+    // Prog languages for repo list
     fun getLanguagesForReposList(repos: List<RepositoryEntity>): List<Language> {
-        val languagesList = ArrayList<Language>()
-
-        repos.forEach {
-            languagesList.add(Language(it.primaryLanguage, it.primaryLanguageColor, 0))
-        }
-
-        val trimmedLanguages = languagesList.distinct()
-
-        repos.forEach { repo ->
-            trimmedLanguages.forEach { language ->
-                if (repo.primaryLanguage == language.name) {
-                    language.count += 1
-                }
-            }
-        }
-
-        return trimmedLanguages.sortedBy {
-            it.name
-        }
-
+        return languagesHelper.getLanguagesForReposList(repos)
     }
 
 }

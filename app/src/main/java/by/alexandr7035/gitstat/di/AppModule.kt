@@ -4,6 +4,8 @@ import android.app.Application
 import androidx.room.Room
 import by.alexandr7035.gitstat.core.TimeHelper
 import by.alexandr7035.gitstat.data.*
+import by.alexandr7035.gitstat.data.helpers.LanguagesHelper
+import by.alexandr7035.gitstat.data.helpers.LanguagesHelperImpl
 import by.alexandr7035.gitstat.data.helpers.YearlyMetricsHelper
 import by.alexandr7035.gitstat.data.local.CacheDB
 import by.alexandr7035.gitstat.data.local.KeyValueStorage
@@ -49,8 +51,9 @@ object AppModule {
     fun provideReposRepository(
         dao: RepositoriesDao,
         appPreferences: AppPreferences,
+        languagesHelper: LanguagesHelper,
         gson: Gson): ReposRepository {
-        return ReposRepository(dao, appPreferences, gson)
+        return ReposRepository(dao, appPreferences, languagesHelper, gson)
     }
 
     @Provides
@@ -188,5 +191,10 @@ object AppModule {
     @Singleton
     fun provideYearlyMetricsHelper(appPreferences: AppPreferences, timeHelper: TimeHelper): YearlyMetricsHelper {
         return YearlyMetricsHelper.Impl(timeHelper, appPreferences)
+    }
+
+    @Provides
+    fun provideLanguagesHelper(): LanguagesHelper {
+        return LanguagesHelperImpl()
     }
 }
