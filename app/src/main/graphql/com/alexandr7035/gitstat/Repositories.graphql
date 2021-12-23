@@ -1,7 +1,13 @@
-query Repositories {
+query Repositories($startPageFrom: String) {
     viewer {
-        # FIXME pagination
-        repositories(first: 100)  {
+        repositories(first: 100, after: $startPageFrom)  {
+
+            pageInfo {
+                startCursor
+                hasNextPage
+                endCursor
+            }
+
             nodes {
                 databaseId
                 name
