@@ -7,6 +7,7 @@ import by.alexandr7035.gitstat.data.local.CacheDB
 import by.alexandr7035.gitstat.data.local.model.*
 import by.alexandr7035.gitstat.data.remote.mappers.*
 import by.alexandr7035.gitstat.core.extensions.performRequestWithDataResult
+import by.alexandr7035.gitstat.data.local.preferences.AppPreferences
 import com.apollographql.apollo3.ApolloClient
 import timber.log.Timber
 import java.util.*
@@ -17,7 +18,7 @@ class DataSyncRepository @Inject constructor(
     private val apolloClient: ApolloClient,
     private val db: CacheDB,
     private val timeHelper: TimeHelper,
-    private val keyValueStorage: KeyValueStorage,
+    private val appPreferences: AppPreferences,
 
     private val profileMapper: UserRemoteToCacheMapper,
     private val repositoriesMapper: RepositoriesRemoteToCacheMapper,
@@ -58,7 +59,7 @@ class DataSyncRepository @Inject constructor(
             // Do not put it after cache saving in db
             // As it may cause bugs with calculations
             // (the milliseconds when livedata is written and triggered but the date is not updated)
-            keyValueStorage.saveLastCacheSyncDate(System.currentTimeMillis())
+            appPreferences.saveLastCacheSyncDate(System.currentTimeMillis())
 
             Timber.tag("DEBUG_TAG").d("profile $profile")
             db.getUserDao().insertUser(profile)
@@ -108,8 +109,19 @@ class DataSyncRepository @Inject constructor(
     }
 
     private suspend fun fetchRepositories(): List<RepositoryEntity> {
-        val data = apolloClient.performRequestWithDataResult(RepositoriesQuery())
-        return repositoriesMapper.transform(data)
+        val repositories = ArrayList<RepositoryEntity>()
+        var nextPagesExist = true
+        var endCursor: String? = null
+
+        while (nextPagesExist) {
+            val data = apolloClient.performRequestWithDataResult(RepositoriesQuery(endCursor))
+            repositories.addAll(repositoriesMapper.transform(data))
+
+            nextPagesExist = data.viewer.repositories.pageInfo.hasNextPage
+            endCursor = data.viewer.repositories.pageInfo.endCursor
+        }
+
+        return repositories
     }
 
     private fun fetchContributionYears(accountCreationYear: Int, currentYear: Int): List<ContributionsYearEntity> {
@@ -220,26 +232,26 @@ class DataSyncRepository @Inject constructor(
     }
 
     fun checkIfCacheExists(): Boolean {
-        return keyValueStorage.getLastCacheSyncDate() != 0L
+        return appPreferences.getLastCacheSyncDate() != 0L
     }
 
     fun checkIfTokenSaved(): Boolean {
-        return keyValueStorage.getToken() != null
+        return appPreferences.getToken() != null
     }
 
     fun clearCache() {
         // Be patient with livedata. This call causes updates with null
         // So wrap code in observers with null check
         db.clearAllTables()
-        keyValueStorage.saveLastCacheSyncDate(0)
+        appPreferences.saveLastCacheSyncDate(0)
     }
 
     fun clearToken() {
-        keyValueStorage.saveToken(null)
+        appPreferences.saveToken(null)
     }
 
     fun getLastCacheSyncDateText(): String {
-        return timeHelper.getFullFromUnixDate(keyValueStorage.getLastCacheSyncDate())
+        return timeHelper.getFullFromUnixDate(appPreferences.getLastCacheSyncDate())
     }
 
 }

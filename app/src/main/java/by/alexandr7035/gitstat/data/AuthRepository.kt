@@ -1,12 +1,12 @@
 package by.alexandr7035.gitstat.data
 
-import by.alexandr7035.gitstat.core.KeyValueStorage
+import by.alexandr7035.gitstat.data.local.preferences.AppPreferences
 import javax.inject.Inject
 
-class AuthRepository @Inject constructor(private val keyValueStorage: KeyValueStorage) {
+class AuthRepository @Inject constructor(private val appPreferences: AppPreferences) {
 
     fun saveToken(token: String) {
-        keyValueStorage.saveToken(token)
+        appPreferences.saveToken(token)
     }
 
 }
