@@ -109,8 +109,19 @@ class DataSyncRepository @Inject constructor(
     }
 
     private suspend fun fetchRepositories(): List<RepositoryEntity> {
-        val data = apolloClient.performRequestWithDataResult(RepositoriesQuery())
-        return repositoriesMapper.transform(data)
+        val repositories = ArrayList<RepositoryEntity>()
+        var nextPagesExist = true
+        var endCursor: String? = null
+
+        while (nextPagesExist) {
+            val data = apolloClient.performRequestWithDataResult(RepositoriesQuery(endCursor))
+            repositories.addAll(repositoriesMapper.transform(data))
+
+            nextPagesExist = data.viewer.repositories.pageInfo.hasNextPage
+            endCursor = data.viewer.repositories.pageInfo.endCursor
+        }
+
+        return repositories
     }
 
     private fun fetchContributionYears(accountCreationYear: Int, currentYear: Int): List<ContributionsYearEntity> {
