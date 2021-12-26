@@ -66,8 +66,7 @@ class RepositoriesListHostFragment : Fragment() {
 
         })
 
-        // Inflate toolbar menu
-        binding!!.toolbar.inflateMenu(R.menu.menu_toolbar_repos_list)
+        // Toolbar menu
         binding!!.toolbar.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.item_filters -> {
