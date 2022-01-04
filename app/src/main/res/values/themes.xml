@@ -39,7 +39,7 @@
     </style>
 
     <style name="PrimaryCardStyle">
-        <item name="android:elevation">5dp</item>
+        <item name="android:elevation">@dimen/default_element_elevation</item>
         <item name="android:padding">10dp</item>
         <item name="android:background">@drawable/background_card</item>
     </style>
