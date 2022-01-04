@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.RepositoriesListGraphDirections
@@ -34,15 +36,28 @@ class ActiveRepositoriesFragment : Fragment(), RepoClickListener {
 
         // Setup adapter
         adapter = RepositoriesAdapter(this)
-        binding!!.recycler.adapter = adapter
-        binding!!.recycler.layoutManager = LinearLayoutManager(context)
+        binding?.recycler?.adapter = adapter
+        val layoutManager = LinearLayoutManager(context)
+
+        val decoration = DividerItemDecoration(
+            binding?.recycler?.context,
+            layoutManager.orientation
+        )
+
+        ContextCompat.getDrawable(requireContext(), R.drawable.decoration_repository_item)?.let {
+            decoration.setDrawable(it)
+        }
+
+        binding?.recycler?.addItemDecoration(decoration)
+        binding?.recycler?.layoutManager = layoutManager
+
 
         viewModel.getTabRefreshedLiveData().observeNullSafe(viewLifecycleOwner, {
             // If current fragment
             // FIXME find better solution
             if (it == 0) {
                 //binding!!.root.smoothScrollToPosition(0)
-                binding!!.recycler.layoutManager!!.scrollToPosition(0)
+                binding?.recycler?.layoutManager?.scrollToPosition(0)
             }
         })
     }

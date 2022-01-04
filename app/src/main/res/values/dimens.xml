@@ -4,4 +4,5 @@
     <dimen name="profile_card_field_margin">16dp</dimen>
     <dimen name="profile_card_label_margin">8dp</dimen>
     <dimen name="profile_fields_vertical_spacing">4dp</dimen>
+    <dimen name="decoration_repository_item_spacing">16dp</dimen>
 </resources>
