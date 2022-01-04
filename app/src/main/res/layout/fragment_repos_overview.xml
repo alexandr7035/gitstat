@@ -52,9 +52,9 @@
         android:id="@+id/reposCountCard"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="@dimen/default_fragment_margin"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="@dimen/default_fragment_margin"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -137,9 +137,9 @@
         android:id="@+id/languagesCard"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="@dimen/default_fragment_margin"
+        android:layout_marginTop="@dimen/default_cards_spacing"
+        android:layout_marginEnd="@dimen/default_fragment_margin"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -185,8 +185,8 @@
                 android:textStyle="bold"
                 android:text="@string/no_repositories"/>
 
-
         </LinearLayout>
 
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
