@@ -10,3 +10,5 @@ dependencyResolutionManagement {
 }
 rootProject.name = "GitStat"
 include ':app'
+include ':domain'
+include ':data'
