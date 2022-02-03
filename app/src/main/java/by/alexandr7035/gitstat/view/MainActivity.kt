@@ -100,13 +100,13 @@ class MainActivity : AppCompatActivity() {
 
             Picasso.get().load(it.avatar_url).into(drawerPictureView)
 
-            // This field can be empty
-            if (it.name.isEmpty()) {
-                drawerNameView.visibility = View.GONE
-            } else {
-                drawerNameView.visibility = View.VISIBLE
-                drawerNameView.text = it.name
-            }
+//            // This field can be empty
+//            if (it.name.isEmpty()) {
+//                drawerNameView.visibility = View.GONE
+//            } else {
+//                drawerNameView.visibility = View.VISIBLE
+//                drawerNameView.text = it.name
+//            }
 
             drawerLoginView.text = getString(R.string.login_string, it.login)
 

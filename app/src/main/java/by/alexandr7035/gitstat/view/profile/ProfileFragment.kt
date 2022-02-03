@@ -1,11 +1,10 @@
 package by.alexandr7035.gitstat.view.profile
 
 import android.os.Bundle
-import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -14,6 +13,7 @@ import by.alexandr7035.gitstat.core.extensions.navigateSafe
 import by.alexandr7035.gitstat.core.extensions.observeNullSafe
 import by.alexandr7035.gitstat.databinding.FragmentProfileBinding
 import by.alexandr7035.gitstat.view.MainActivity
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,74 +21,54 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ProfileFragment : Fragment() {
 
-    private var binding: FragmentProfileBinding? = null
+//    private var binding: FragmentProfileBinding? = null
+    private val binding by viewBinding(FragmentProfileBinding::bind)
     private val viewModel by viewModels<ProfileViewModel>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        // Inflate the layout for this fragment
-        binding = FragmentProfileBinding.inflate(inflater, container, false)
-        return binding!!.root
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_profile, container, false)
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         // Update profile data
-        viewModel.getUserLiveData().observeNullSafe(viewLifecycleOwner, {
+        viewModel.getUserLiveData().observeNullSafe(viewLifecycleOwner, { profileUi ->
 
-            Picasso.get().load(it.avatar_url).into(binding!!.profileImageView)
+            Picasso.get().load(profileUi.avatar_url).into(binding.profileImageView)
 
-            // This field can be empty
-            if (it.name.isEmpty()) {
-                binding?.nameView?.visibility = View.GONE
-            } else {
-                binding?.nameView?.visibility = View.VISIBLE
-                binding?.nameView?.text = it.name
-            }
+            binding.idView.text = profileUi.id
+            binding.loginView.text = getString(R.string.login_string, profileUi.login)
 
-            binding!!.loginView.text = getString(R.string.login_string, it.login)
+            // These fields can be empty
+            binding.nameView.isVisible = profileUi.name.isVisible
+            binding.nameView.text = profileUi.name.value
+            setLocationVisibility(profileUi.location.isVisible)
+            binding.locationView.text = profileUi.location.value
 
-            binding!!.idView.text = it.id.toString()
+            binding.createdView.text = profileUi.created_at
+            binding.updatedView.text = profileUi.updated_at
 
-            val dateFormat = getString(R.string.profile_date_format)
-            binding!!.createdView.text = DateFormat.format(dateFormat, it.created_at)
-            binding!!.updatedView.text = DateFormat.format(dateFormat, it.updated_at)
+            binding.followersView.text = profileUi.followers
 
-            binding!!.followersView.text = it.followers.toString()
-
-            // This field can be empty
-            if (it.location.isEmpty()) {
-                setLocationVisibility(false)
-            } else {
-                setLocationVisibility(true)
-                binding!!.locationView.text = it.location
-            }
-
-            binding!!.totalReposView.text = it.total_repos_count.toString()
-            binding!!.privateReposView.text = it.private_repos_count.toString()
-            binding!!.publicReposView.text = it.public_repos_count.toString()
+//            binding!!.totalReposView.text = it.total_repos_count.toString()
+//            binding!!.privateReposView.text = it.private_repos_count.toString()
+//            binding!!.publicReposView.text = it.public_repos_count.toString()
         })
 
-        binding!!.reposStatDetailedBtn.setOnClickListener {
+        binding.reposStatDetailedBtn.setOnClickListener {
             findNavController().navigateSafe(ProfileFragmentDirections.actionProfileFragmentToReposOverviewFragment())
         }
 
-        binding?.drawerBtn?.setOnClickListener {
+        binding.drawerBtn.setOnClickListener {
             (requireActivity() as MainActivity).openDrawerMenu()
         }
 
     }
 
     private fun setLocationVisibility(isVisible: Boolean) {
-        binding?.locationIcon?.isGone = ! isVisible
-        binding?.locationLabel?.isGone = ! isVisible
-        binding?.locationView?.isGone = ! isVisible
+        binding.locationIcon.isVisible = isVisible
+        binding.locationLabel.isVisible = isVisible
+        binding.locationView.isVisible = isVisible
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
-    }
-
 }
