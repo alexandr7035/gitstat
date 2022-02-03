@@ -129,6 +129,10 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
+
+    // ViewBinding delegate
+    def viewbindingdelegate_version = "1.5.3"
+    implementation "com.github.kirich1409:viewbindingpropertydelegate-noreflection:$viewbindingdelegate_version"
 }
 
 // Allow references to generated code
