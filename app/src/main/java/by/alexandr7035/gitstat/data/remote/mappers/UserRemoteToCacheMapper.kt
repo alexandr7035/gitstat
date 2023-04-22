@@ -7,7 +7,7 @@ import by.alexandr7035.gitstat.data.local.model.UserEntity
 import javax.inject.Inject
 
 class UserRemoteToCacheMapper @Inject constructor(private val timeHelper: TimeHelper): Mapper<ProfileQuery.Data, UserEntity> {
-    override fun transform(data: ProfileQuery.Data): UserEntity {
+    override fun map(data: ProfileQuery.Data): UserEntity {
 
         // FIXME research later
         val id = data.viewer.databaseId!!

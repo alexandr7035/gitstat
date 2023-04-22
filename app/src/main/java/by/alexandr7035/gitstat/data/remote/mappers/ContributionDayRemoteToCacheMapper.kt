@@ -8,7 +8,7 @@ import by.alexandr7035.gitstat.data.local.model.ContributionDayEntity
 import javax.inject.Inject
 
 class ContributionDayRemoteToCacheMapper @Inject constructor(private val timeHelper: TimeHelper): Mapper<ContributionsQuery.ContributionDay, ContributionDayEntity> {
-    override fun transform(data: ContributionsQuery.ContributionDay): ContributionDayEntity {
+    override fun map(data: ContributionsQuery.ContributionDay): ContributionDayEntity {
         val dateStr = data.date as String
 
         val unixDate = timeHelper.getUnixDateFrom_yyyyMMdd(dateStr)

@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class RepositoriesRemoteToCacheMapper @Inject constructor(private val timeHelper: TimeHelper): Mapper<RepositoriesQuery.Data, List<RepositoryEntity>> {
 
-    override fun transform(data: RepositoriesQuery.Data): List<RepositoryEntity> {
+    override fun map(data: RepositoriesQuery.Data): List<RepositoryEntity> {
 
         if (data.viewer.repositories.nodes == null) {
             return emptyList()

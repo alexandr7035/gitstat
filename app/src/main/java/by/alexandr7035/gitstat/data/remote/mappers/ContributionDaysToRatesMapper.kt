@@ -8,7 +8,7 @@ import timber.log.Timber
 import kotlin.math.round
 
 class ContributionDaysToRatesMapper(private val timeHelper: TimeHelper): Mapper<List<ContributionDayEntity>, List<ContributionRateEntity>> {
-    override fun transform(data: List<ContributionDayEntity>): List<ContributionRateEntity> {
+    override fun map(data: List<ContributionDayEntity>): List<ContributionRateEntity> {
 
         val rates = ArrayList<ContributionRateEntity>()
 

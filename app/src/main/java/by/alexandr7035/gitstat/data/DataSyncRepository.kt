@@ -104,7 +104,7 @@ class DataSyncRepository @Inject constructor(
 
     private suspend fun fetchProfile(): UserEntity {
         val data = apolloClient.performRequestWithDataResult(ProfileQuery())
-        return profileMapper.transform(data)
+        return profileMapper.map(data)
     }
 
     private suspend fun fetchRepositories(): List<RepositoryEntity> {
@@ -114,7 +114,7 @@ class DataSyncRepository @Inject constructor(
 
         while (nextPagesExist) {
             val data = apolloClient.performRequestWithDataResult(RepositoriesQuery(Optional.present(endCursor)))
-            repositories.addAll(repositoriesMapper.transform(data))
+            repositories.addAll(repositoriesMapper.map(data))
 
             nextPagesExist = data.viewer.repositories.pageInfo.hasNextPage
             endCursor = data.viewer.repositories.pageInfo.endCursor
@@ -160,7 +160,7 @@ class DataSyncRepository @Inject constructor(
 
             val contributionsData = getContributionsForDateRange(year)
             // Map apollo result into room cache
-            val cachedContributionsData = contributionsMapper.transform(contributionsData)
+            val cachedContributionsData = contributionsMapper.map(contributionsData)
             contributionDaysCached.addAll(cachedContributionsData)
         }
 
@@ -193,7 +193,7 @@ class DataSyncRepository @Inject constructor(
 
 
     private fun fetchContributionRates(contributionDays: List<ContributionDayEntity>): List<ContributionRateEntity> {
-        return daysToRatesMapper.transform(contributionDays)
+        return daysToRatesMapper.map(contributionDays)
     }
 
 
