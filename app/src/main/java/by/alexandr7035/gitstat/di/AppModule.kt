@@ -21,7 +21,6 @@ import by.alexandr7035.gitstat.data.remote.AuthInterceptor
 import by.alexandr7035.gitstat.data.remote.ErrorInterceptor
 import by.alexandr7035.gitstat.data.remote.mappers.*
 import com.apollographql.apollo3.ApolloClient
-import com.apollographql.apollo3.network.http.HttpNetworkTransport
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -37,10 +36,26 @@ object AppModule {
     // Network
     /////////////////////////////////////
 
+//    @Provides
+//    @Singleton
+//    fun provideHttpClient(): OkHttpClient {
+//        val logging = HttpLoggingInterceptor()
+//        logging.setLevel(HttpLoggingInterceptor.Level.BODY)
+//
+//        return OkHttpClient.Builder()
+//            .addInterceptor(logging)
+//            .build()
+//    }
+
     @Provides
     @Singleton
     fun provideApollo(appPreferences: AppPreferences): ApolloClient {
-        return ApolloClient(networkTransport = HttpNetworkTransport("https://api.github.com/graphql", interceptors = listOf(AuthInterceptor(appPreferences), ErrorInterceptor())))
+        return ApolloClient.Builder()
+//            .okHttpClient(okHttpClient)
+            .serverUrl("https://api.github.com/graphql")
+            .addHttpInterceptor(AuthInterceptor(appPreferences))
+            .addHttpInterceptor(ErrorInterceptor())
+            .build()
     }
 
     /////////////////////////////////////
@@ -53,7 +68,8 @@ object AppModule {
         dao: RepositoriesDao,
         appPreferences: AppPreferences,
         languagesHelper: LanguagesHelper,
-        gson: Gson): ReposRepository {
+        gson: Gson
+    ): ReposRepository {
         return ReposRepository(dao, appPreferences, languagesHelper, gson)
     }
 
@@ -74,7 +90,7 @@ object AppModule {
     fun provideContributionsRepository(
         dao: ContributionsDao,
         yearlyMetricsHelper: YearlyMetricsHelper
-    ): ContributionsRepository{
+    ): ContributionsRepository {
         return ContributionsRepository(dao, yearlyMetricsHelper)
     }
 
@@ -92,7 +108,17 @@ object AppModule {
         contributionTypesMapper: ContributionTypesRemoteToCacheMapper,
         daysToRatesMapper: ContributionDaysToRatesMapper
     ): DataSyncRepository {
-        return DataSyncRepository(apolloClient, db, timeHelper, appPreferences, profileMapper, repositoriesMapper, contributionsMapper, contributionTypesMapper, daysToRatesMapper)
+        return DataSyncRepository(
+            apolloClient,
+            db,
+            timeHelper,
+            appPreferences,
+            profileMapper,
+            repositoriesMapper,
+            contributionsMapper,
+            contributionTypesMapper,
+            daysToRatesMapper
+        )
     }
 
     /////////////////////////////////////
