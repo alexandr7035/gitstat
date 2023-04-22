@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import by.alexandr7035.gitstat.R
-import by.alexandr7035.gitstat.core.TimeHelper
+import by.alexandr7035.gitstat.core.helpers.TimeHelper
 import by.alexandr7035.gitstat.data.local.model.ContributionDayEntity
 import by.alexandr7035.gitstat.databinding.ViewContributionsGridCellBinding
 import by.alexandr7035.gitstat.core.extensions.debug

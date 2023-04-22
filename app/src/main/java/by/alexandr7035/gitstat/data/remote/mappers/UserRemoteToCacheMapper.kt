@@ -2,7 +2,7 @@ package by.alexandr7035.gitstat.data.remote.mappers
 
 import by.alexandr7035.gitstat.apollo.ProfileQuery
 import by.alexandr7035.gitstat.core.Mapper
-import by.alexandr7035.gitstat.core.TimeHelper
+import by.alexandr7035.gitstat.core.helpers.TimeHelper
 import by.alexandr7035.gitstat.data.local.model.UserEntity
 import javax.inject.Inject
 

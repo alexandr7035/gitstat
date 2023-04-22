@@ -1,6 +1,6 @@
 package by.alexandr7035.gitstat.data.helpers
 
-import by.alexandr7035.gitstat.core.TimeHelper
+import by.alexandr7035.gitstat.core.helpers.TimeHelper
 import by.alexandr7035.gitstat.data.local.model.ContributionsYearWithDays
 import by.alexandr7035.gitstat.data.local.model.ContributionsYearWithRates
 import by.alexandr7035.gitstat.data.local.preferences.AppPreferences

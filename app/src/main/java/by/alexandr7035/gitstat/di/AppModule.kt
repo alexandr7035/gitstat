@@ -2,7 +2,7 @@ package by.alexandr7035.gitstat.di
 
 import android.app.Application
 import androidx.room.Room
-import by.alexandr7035.gitstat.core.TimeHelper
+import by.alexandr7035.gitstat.core.helpers.TimeHelper
 import by.alexandr7035.gitstat.data.*
 import by.alexandr7035.gitstat.data.helpers.LanguagesHelper
 import by.alexandr7035.gitstat.data.helpers.LanguagesHelperImpl
