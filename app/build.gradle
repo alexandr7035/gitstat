@@ -131,6 +131,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics-ktx:21.2.2'
     implementation 'com.google.firebase:firebase-auth-ktx:21.3.0'
     implementation 'com.google.firebase:firebase-crashlytics-ktx:18.3.6'
+
+    // View binding delegate
+    implementation 'com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.5.9'
 }
 
 // Allow references to generated code
