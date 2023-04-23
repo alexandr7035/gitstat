@@ -1,5 +1,6 @@
 package by.alexandr7035.gitstat.data.local.model
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -18,6 +19,8 @@ class RepositoryEntity(
     val isPrivate: Boolean,
     val isArchived: Boolean,
     val isFork: Boolean,
+    @ColumnInfo(defaultValue = "false")
+    val isPinned: Boolean,
     val stars: Int,
     val created_at: Long,
     val updated_at: Long,

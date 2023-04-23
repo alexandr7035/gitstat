@@ -98,6 +98,8 @@ class RepositoriesRemoteToCacheMapper @Inject constructor(private val timeHelper
                         isPrivate = repo.isPrivate,
                         isArchived = repo.isArchived,
                         isFork = repo.isFork,
+                        // FIXME
+                        isPinned = false,
 
                         stars = repo.stargazerCount,
 

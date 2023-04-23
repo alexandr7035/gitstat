@@ -1,5 +1,6 @@
 package by.alexandr7035.gitstat.data.local
 
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
@@ -16,8 +17,11 @@ import by.alexandr7035.gitstat.data.local.model.*
         ContributionsYearEntity::class,
         ContributionTypesEntity::class,
         ContributionsMonthEntity::class],
-    version = 21,
+    version = 22,
     exportSchema = true,
+    autoMigrations = [
+        AutoMigration(from = 21, to = 22)
+    ],
 )
 
 @TypeConverters(RoomTypeConverters::class)
