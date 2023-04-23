@@ -1,4 +1,4 @@
-package by.alexandr7035.gitstat.view.repositories
+package by.alexandr7035.gitstat.view.repositories.overview
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,10 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import by.alexandr7035.gitstat.databinding.FragmentReposOverviewBinding
 import by.alexandr7035.gitstat.core.extensions.navigateSafe
 import by.alexandr7035.gitstat.core.extensions.observeNullSafe
+import by.alexandr7035.gitstat.databinding.FragmentReposOverviewBinding
 import by.alexandr7035.gitstat.view.MainActivity
+import by.alexandr7035.gitstat.view.repositories.RepositoriesViewModel
 import by.alexandr7035.gitstat.view.repositories.plots.languages_plot.LanguagesPlot
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber

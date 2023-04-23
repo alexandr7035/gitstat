@@ -1,4 +1,4 @@
-package by.alexandr7035.gitstat.view.repositories
+package by.alexandr7035.gitstat.view.repositories.repo_list
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -10,9 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import by.alexandr7035.gitstat.R
-import by.alexandr7035.gitstat.databinding.FragmentHostRepositoriesListBinding
 import by.alexandr7035.gitstat.core.extensions.navigateSafe
 import by.alexandr7035.gitstat.core.extensions.observeNullSafe
+import by.alexandr7035.gitstat.databinding.FragmentHostRepositoriesListBinding
+import by.alexandr7035.gitstat.view.repositories.RepositoriesViewModel
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.badge.BadgeUtils
 import com.google.android.material.tabs.TabLayout
@@ -118,8 +119,7 @@ class RepositoriesListHostFragment : Fragment() {
 
 
     private fun showFiltersDialog() {
-        findNavController().navigateSafe(RepositoriesListHostFragmentDirections
-            .actionRepositoriesListHostFragmentToRepositoriesFiltersDialog())
+        findNavController().navigateSafe(RepositoriesListHostFragmentDirections.actionRepositoriesListHostFragmentToRepositoriesFiltersDialog())
     }
 
 

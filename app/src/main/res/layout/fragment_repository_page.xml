@@ -6,7 +6,7 @@
     android:paddingBottom="16dp"
     android:clipToPadding="false"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.repositories.RepositoryPageFragment">
+    tools:context=".view.repositories.repo_details.RepositoryPageFragment">
 
     <androidx.appcompat.widget.Toolbar
         style="@style/ToolbarStyle"

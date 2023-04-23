@@ -1,4 +1,4 @@
-package by.alexandr7035.gitstat.view.repositories
+package by.alexandr7035.gitstat.view.repositories.repo_list
 
 import android.annotation.SuppressLint
 import android.graphics.Color
@@ -12,8 +12,9 @@ import androidx.recyclerview.widget.RecyclerView
 import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.data.local.model.RepositoryEntity
 import by.alexandr7035.gitstat.databinding.ViewRepositoryBinding
+import by.alexandr7035.gitstat.view.repositories.RepoClickListener
 
-class RepositoriesAdapter(private val clickListener: RepoClickListener) : RecyclerView.Adapter<RepositoriesAdapter.ViewHolder>() {
+class RepositoriesListAdapter(private val clickListener: RepoClickListener) : RecyclerView.Adapter<RepositoriesListAdapter.ViewHolder>() {
 
     private var items: List<RepositoryEntity> = ArrayList()
     private val createdDateFormat = "yyyy-MM-dd"

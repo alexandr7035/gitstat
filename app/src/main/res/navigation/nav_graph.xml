@@ -32,7 +32,7 @@
 
     <fragment
         android:id="@+id/reposOverviewFragment"
-        android:name="by.alexandr7035.gitstat.view.repositories.ReposOverviewFragment"
+        android:name="by.alexandr7035.gitstat.view.repositories.overview.ReposOverviewFragment"
         android:label="fragment_repos"
         tools:layout="@layout/fragment_repos_overview" >
         <action
@@ -60,17 +60,17 @@
         app:startDestination="@id/repositoriesListHostFragment">
         <fragment
             android:id="@+id/archivedRepositoriesFragment"
-            android:name="by.alexandr7035.gitstat.view.repositories.ArchivedRepositoriesFragment"
+            android:name="by.alexandr7035.gitstat.view.repositories.repo_list.ArchivedRepositoriesFragment"
             android:label="fragment_archived_repositories"
             tools:layout="@layout/fragment_repositories_recycler" />
         <fragment
             android:id="@+id/activeRepositoriesFragment"
-            android:name="by.alexandr7035.gitstat.view.repositories.ActiveRepositoriesFragment"
+            android:name="by.alexandr7035.gitstat.view.repositories.repo_list.ActiveRepositoriesFragment"
             android:label="fragment_repositories_list"
             tools:layout="@layout/fragment_repositories_recycler" />
         <fragment
             android:id="@+id/repositoriesListHostFragment"
-            android:name="by.alexandr7035.gitstat.view.repositories.RepositoriesListHostFragment"
+            android:name="by.alexandr7035.gitstat.view.repositories.repo_list.RepositoriesListHostFragment"
             android:label="RepositoriesListHostFragment" >
             <action
                 android:id="@+id/action_repositoriesListHostFragment_to_activeRepositoriesFragment"
@@ -238,7 +238,7 @@
     </dialog>
     <fragment
         android:id="@+id/repositoryPageFragment"
-        android:name="by.alexandr7035.gitstat.view.repositories.RepositoryPageFragment"
+        android:name="by.alexandr7035.gitstat.view.repositories.repo_details.RepositoryPageFragment"
         android:label="fragment_repository_page"
         tools:layout="@layout/fragment_repository_page" >
         <argument

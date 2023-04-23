@@ -1,4 +1,4 @@
-package by.alexandr7035.gitstat.view.repositories
+package by.alexandr7035.gitstat.view.repositories.repo_list
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,6 +15,8 @@ import by.alexandr7035.gitstat.RepositoriesListGraphDirections
 import by.alexandr7035.gitstat.databinding.FragmentRepositoriesRecyclerBinding
 import by.alexandr7035.gitstat.core.extensions.navigateSafe
 import by.alexandr7035.gitstat.core.extensions.observeNullSafe
+import by.alexandr7035.gitstat.view.repositories.RepoClickListener
+import by.alexandr7035.gitstat.view.repositories.RepositoriesViewModel
 import by.alexandr7035.gitstat.view.repositories.filters.RepositoriesListFiltersHelper
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,7 +25,7 @@ class ArchivedRepositoriesFragment : Fragment(), RepoClickListener {
 
     private val viewModel by navGraphViewModels<RepositoriesViewModel>(R.id.repositoriesListGraph) { defaultViewModelProviderFactory }
     private var binding: FragmentRepositoriesRecyclerBinding? = null
-    private var adapter: RepositoriesAdapter? = null
+    private var adapter: RepositoriesListAdapter? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -36,7 +38,7 @@ class ArchivedRepositoriesFragment : Fragment(), RepoClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         // Setup adapter
-        adapter = RepositoriesAdapter(this)
+        adapter = RepositoriesListAdapter(this)
         binding?.recycler?.adapter = adapter
         val layoutManager = LinearLayoutManager(context)
 
