@@ -2,15 +2,21 @@ package by.alexandr7035.gitstat.view.repositories.overview
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.Orientation
 import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.core.extensions.navigateSafe
 import by.alexandr7035.gitstat.core.extensions.observeNullSafe
 import by.alexandr7035.gitstat.databinding.FragmentReposOverviewBinding
 import by.alexandr7035.gitstat.view.MainActivity
 import by.alexandr7035.gitstat.view.repositories.RepositoriesViewModel
+import by.alexandr7035.gitstat.view.repositories.overview.scrollable_repos_bar.ReposBarItems
+import by.alexandr7035.gitstat.view.repositories.overview.scrollable_repos_bar.ReposScrollableBarAdapter
 import by.alexandr7035.gitstat.view.repositories.plots.languages_plot.LanguagesPlot
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -49,6 +55,29 @@ class ReposOverviewFragment : Fragment(R.layout.fragment_repos_overview) {
                 plot.setLanguagesData(
                     chart = binding.languagesChart, languages = viewModel.getLanguagesForReposList(repos), totalReposCount = repos.size
                 )
+
+                binding.reposBar.isVisible = true
+
+                val pinnedRepos = repos.filter {
+                    it.isPinned
+                }.map {
+                    ReposBarItems.PinnedRepo(
+                        repoName = it.name
+                    )
+                }
+
+                val mostStarredRepo = repos.maxBy { it.stars }
+                val items = listOf<ReposBarItems>(
+                    ReposBarItems.MetricCard(
+                        repoName = mostStarredRepo.name,
+                        metricName = "Most stars",
+                        metricValue = mostStarredRepo.stars,
+                        // FIXME
+                        iconResId = 0
+                    ),
+                ) + pinnedRepos
+                binding.reposBar.adapter = ReposScrollableBarAdapter(items)
+                binding.reposBar.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
             }
         }
 
