@@ -8,13 +8,17 @@ import by.alexandr7035.gitstat.data.local.dao.RepositoriesDao
 import by.alexandr7035.gitstat.data.local.dao.UserDao
 import by.alexandr7035.gitstat.data.local.model.*
 
-@Database(entities = [UserEntity::class,
-    RepositoryEntity::class,
-    ContributionDayEntity::class,
-    ContributionRateEntity::class,
-    ContributionsYearEntity::class,
-    ContributionTypesEntity::class,
-    ContributionsMonthEntity::class], version = 21)
+@Database(
+    entities = [UserEntity::class,
+        RepositoryEntity::class,
+        ContributionDayEntity::class,
+        ContributionRateEntity::class,
+        ContributionsYearEntity::class,
+        ContributionTypesEntity::class,
+        ContributionsMonthEntity::class],
+    version = 21,
+    exportSchema = true,
+)
 
 @TypeConverters(RoomTypeConverters::class)
 abstract class CacheDB : RoomDatabase() {
