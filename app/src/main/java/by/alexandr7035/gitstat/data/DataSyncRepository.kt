@@ -113,9 +113,19 @@ class DataSyncRepository @Inject constructor(
         var nextPagesExist = true
         var endCursor: String? = null
 
+        val pinnedRepositoriesData = (apolloClient
+            .performRequestWithDataResult(PinnedRepositoriesQuery())
+            .viewer.pinnedItems.nodes)?.filterNotNull() ?: emptyList()
+
+        val pinnedIds = (pinnedRepositoriesData.filter {
+            it.onRepository != null
+        }).mapNotNull {
+            it.onRepository?.databaseId
+        }
+
         while (nextPagesExist) {
             val data = apolloClient.performRequestWithDataResult(RepositoriesQuery(Optional.present(endCursor)))
-            repositories.addAll(repositoriesMapper.map(data))
+            repositories.addAll(repositoriesMapper.map(repositories = data, pinnedItems = pinnedIds))
 
             nextPagesExist = data.viewer.repositories.pageInfo.hasNextPage
             endCursor = data.viewer.repositories.pageInfo.endCursor
