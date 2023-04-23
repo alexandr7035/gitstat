@@ -23,4 +23,5 @@ data class ContributionTypesEntity(
     val unknownContributions: Int,
 
     val totalContributions: Int,
-    val yearId: Int)
+    val yearId: Int
+)

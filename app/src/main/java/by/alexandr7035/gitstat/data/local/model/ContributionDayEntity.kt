@@ -6,10 +6,10 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "contributions")
 class ContributionDayEntity(
     @PrimaryKey(autoGenerate = true)
-    var id: Int = 0,
-    var date: Long,
-    var count: Int,
+    val id: Int = 0,
+    val date: Long,
+    val count: Int,
     val color: Int,
-
-    var yearId: Int,
-    var monthId: Int)
+    val yearId: Int,
+    val monthId: Int
+)
