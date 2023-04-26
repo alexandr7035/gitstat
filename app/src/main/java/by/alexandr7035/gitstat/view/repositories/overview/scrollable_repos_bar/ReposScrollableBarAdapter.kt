@@ -1,13 +1,24 @@
 package by.alexandr7035.gitstat.view.repositories.overview.scrollable_repos_bar
 
+import android.annotation.SuppressLint
+import android.content.res.ColorStateList
+import android.graphics.Color
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
+import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.ShapeDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import by.alexandr7035.gitstat.databinding.ViewCardPinnedRepoBinding
 import by.alexandr7035.gitstat.databinding.ViewCardRepoMetricBinding
 
-class ReposScrollableBarAdapter(private val items: List<ReposBarItems>) : RecyclerView.Adapter<ReposScrollableBarAdapter.BarViewHolder>() {
+class ReposScrollableBarAdapter() : RecyclerView.Adapter<ReposScrollableBarAdapter.BarViewHolder>() {
+
+    private var items: List<ReposBarItems> = emptyList()
 
     override fun getItemViewType(position: Int): Int {
         return when (items[position]) {
@@ -55,12 +66,38 @@ class ReposScrollableBarAdapter(private val items: List<ReposBarItems>) : Recycl
         class PinnedRepoViewHolder(override val binding: ViewCardPinnedRepoBinding) : BarViewHolder(binding) {
             override fun bind(item: ReposBarItems) {
                 item as ReposBarItems.PinnedRepo
-                // FIXME
-                binding.repoName.text = "${item.repoName}\nPinned"
+                binding.repoName.text = item.repoName
+
+                val bgDrawable = binding.root.background.constantState?.newDrawable()?.mutate() as GradientDrawable
+                val colorRes = ContextCompat.getColor(binding.root.context, item.bgColorRes)
+
+//                val colorsList = intArrayOf(colorRes, ColorUtils.setAlphaComponent(colorRes, 1))
+                // Choose color 20% more dark
+                val colorsList = intArrayOf(colorRes, ColorUtils.blendARGB(colorRes, Color.BLACK, 0.3f))
+
+                bgDrawable.colors = colorsList
+                bgDrawable.orientation = GradientDrawable.Orientation.BL_TR
+                bgDrawable.setGradientCenter(0.8f, 0.8f)
+
+                binding.root.background = bgDrawable
+
+                // Lang
+                binding.repoLanguage.text = item.repoLang
+                (binding.langContainer.background as GradientDrawable).setColor(Color.WHITE)
+                (binding.languageColorView.background as GradientDrawable).setColor(Color.parseColor(item.repoLangColor))
+
+                // Stars
+                binding.stars.text = item.stars.toString()
             }
         }
     }
 
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun setItems(items: List<ReposBarItems>) {
+        this.items = items
+        notifyDataSetChanged()
+    }
 
     companion object {
         private const val VIEW_TYPE_METRIC_CARD = 0

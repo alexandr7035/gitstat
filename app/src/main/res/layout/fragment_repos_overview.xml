@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="false"
+    android:clipChildren="false"
     android:paddingBottom="20dp"
     tools:context=".view.repositories.overview.ReposOverviewFragment">
 
@@ -135,10 +136,14 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/reposBar"
         tools:listitem="@layout/view_card_pinned_repo"
-        android:layout_marginTop="@dimen/default_cards_spacing"
+        tools:itemCount="1"
+        android:overScrollMode="never"
+        android:layout_marginTop="@dimen/small_cards_spacing"
         android:layout_marginStart="@dimen/default_fragment_margin"
         android:layout_marginEnd="@dimen/default_fragment_margin"
         android:orientation="horizontal"
+        android:clipToPadding="false"
+        android:clipChildren="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/reposCountCard"
@@ -151,7 +156,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_fragment_margin"
-        android:layout_marginTop="@dimen/default_cards_spacing"
+        android:layout_marginTop="@dimen/small_cards_spacing"
         android:layout_marginEnd="@dimen/default_fragment_margin"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"

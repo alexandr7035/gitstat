@@ -168,6 +168,14 @@
         <item name="android:paddingTop">4dp</item>
         <item name="android:paddingBottom">4dp</item>
     </style>
+
+    <style name="RepositoryBarCardStyle">
+        <item name="android:clickable">true</item>
+        <item name="android:foreground">@drawable/fg_card_darkened</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:background">@drawable/background_card</item>
+        <item name="android:elevation">@dimen/cardview_default_elevation</item>
+    </style>
     
     <style name="RadioButtonStyle">
 <!--        <item name="android:textStyle">bold</item>-->

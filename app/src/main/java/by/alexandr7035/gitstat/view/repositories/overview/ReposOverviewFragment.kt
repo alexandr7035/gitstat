@@ -2,10 +2,12 @@ package by.alexandr7035.gitstat.view.repositories.overview
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Orientation
@@ -14,6 +16,7 @@ import by.alexandr7035.gitstat.core.extensions.navigateSafe
 import by.alexandr7035.gitstat.core.extensions.observeNullSafe
 import by.alexandr7035.gitstat.databinding.FragmentReposOverviewBinding
 import by.alexandr7035.gitstat.view.MainActivity
+import by.alexandr7035.gitstat.view.core.BRAND_COLORS
 import by.alexandr7035.gitstat.view.repositories.RepositoriesViewModel
 import by.alexandr7035.gitstat.view.repositories.overview.scrollable_repos_bar.ReposBarItems
 import by.alexandr7035.gitstat.view.repositories.overview.scrollable_repos_bar.ReposScrollableBarAdapter
@@ -34,6 +37,23 @@ class ReposOverviewFragment : Fragment(R.layout.fragment_repos_overview) {
         val plot = LanguagesPlot()
         // Setup chart configuration
         plot.setupPlot(binding.languagesChart)
+
+        // Pinned repos
+        val reposAdapter = ReposScrollableBarAdapter()
+        binding.reposBar.adapter = reposAdapter
+        val layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
+
+        val decoration = DividerItemDecoration(
+            binding.reposBar.context,
+            layoutManager.orientation
+        )
+
+        ContextCompat.getDrawable(requireContext(), R.drawable.decoration_repository_item_horizontal)?.let {
+            decoration.setDrawable(it)
+        }
+
+        binding.reposBar.addItemDecoration(decoration)
+        binding.reposBar.layoutManager = layoutManager
 
         viewModel.getRepositoriesLiveData().observeNullSafe(viewLifecycleOwner) { repos ->
 
@@ -60,11 +80,17 @@ class ReposOverviewFragment : Fragment(R.layout.fragment_repos_overview) {
 
                 val pinnedRepos = repos.filter {
                     it.isPinned
-                }.map {
-                    ReposBarItems.PinnedRepo(
-                        repoName = it.name
-                    )
-                }
+                }.sortedByDescending { it.stars }
+                    .mapIndexed { index, it ->
+                        val color = BRAND_COLORS[index % BRAND_COLORS.size] // Choose a color based on the current index
+                        ReposBarItems.PinnedRepo(
+                            repoName = it.name,
+                            repoLang = it.primaryLanguage,
+                            repoLangColor = it.primaryLanguageColor,
+                            bgColorRes = color,
+                            stars = it.stars,
+                        )
+                    }
 
                 val mostStarredRepo = repos.maxBy { it.stars }
                 val items = listOf<ReposBarItems>(
@@ -76,8 +102,8 @@ class ReposOverviewFragment : Fragment(R.layout.fragment_repos_overview) {
                         iconResId = 0
                     ),
                 ) + pinnedRepos
-                binding.reposBar.adapter = ReposScrollableBarAdapter(items)
-                binding.reposBar.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
+
+                reposAdapter.setItems(items)
             }
         }
 
