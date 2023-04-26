@@ -133,6 +133,7 @@
         </LinearLayout>
     </LinearLayout>
 
+<!--    TODO margins for gone + condition for rendering panel-->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/reposBar"
         tools:listitem="@layout/view_card_pinned_repo"
