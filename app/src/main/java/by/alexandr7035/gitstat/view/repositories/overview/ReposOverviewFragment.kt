@@ -60,27 +60,23 @@ class ReposOverviewFragment : Fragment(R.layout.fragment_repos_overview) {
         binding.reposBar.layoutManager = layoutManager
 
         viewModel.getRepositoriesLiveData().observeNullSafe(viewLifecycleOwner) { repos ->
-
-            Timber.tag("DEBUG_TAG").d("repos $repos")
-
             binding.totalReposCountView.text = repos.size.toString()
             binding.privateReposCountView.text = repos.filter { it.isPrivate }.size.toString()
             binding.publicReposCountView.text = repos.filterNot { it.isPrivate }.size.toString()
 
             // Show stub instead of plot if list is empty
             if (repos.isEmpty()) {
-                binding.languagesChart.visibility = View.GONE
-                binding.noReposStub.visibility = View.VISIBLE
+                binding.languagesChart.isVisible = false
+                binding.reposBar.isVisible = false
+                binding.noReposStub.isVisible = true
             } else {
-                binding.languagesChart.visibility = View.VISIBLE
-                binding.noReposStub.visibility = View.GONE
+                binding.languagesChart.isVisible = true
+                binding.noReposStub.isVisible = false
 
                 // Populate chart with data
                 plot.setLanguagesData(
                     chart = binding.languagesChart, languages = viewModel.getLanguagesForReposList(repos), totalReposCount = repos.size
                 )
-
-                binding.reposBar.isVisible = true
 
                 val pinnedRepos = repos.filter {
                     it.isPinned
@@ -97,18 +93,12 @@ class ReposOverviewFragment : Fragment(R.layout.fragment_repos_overview) {
                         )
                     }
 
-                val mostStarredRepo = repos.maxBy { it.stars }
-                val items = listOf<ReposBarItems>(
-                    ReposBarItems.MetricCard(
-                        repoName = mostStarredRepo.name,
-                        metricName = "Most stars",
-                        metricValue = mostStarredRepo.stars,
-                        // FIXME
-                        iconResId = 0
-                    ),
-                ) + pinnedRepos
-
-                reposAdapter.setItems(items)
+                if (pinnedRepos.isNotEmpty()) {
+                    binding.reposBar.isVisible = true
+                    reposAdapter.setItems(pinnedRepos)
+                } else {
+                    binding.reposBar.isVisible = false
+                }
             }
         }
 

@@ -133,7 +133,6 @@
         </LinearLayout>
     </LinearLayout>
 
-<!--    TODO margins for gone + condition for rendering panel-->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/reposBar"
         tools:listitem="@layout/view_card_pinned_repo"
@@ -158,6 +157,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_fragment_margin"
         android:layout_marginTop="@dimen/small_cards_spacing"
+        app:layout_goneMarginTop="@dimen/default_cards_spacing"
         android:layout_marginEnd="@dimen/default_fragment_margin"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
