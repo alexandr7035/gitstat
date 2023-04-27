@@ -10,7 +10,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.Orientation
 import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.core.extensions.navigateSafe
 import by.alexandr7035.gitstat.core.extensions.observeNullSafe
@@ -39,7 +38,12 @@ class ReposOverviewFragment : Fragment(R.layout.fragment_repos_overview) {
         plot.setupPlot(binding.languagesChart)
 
         // Pinned repos
-        val reposAdapter = ReposScrollableBarAdapter()
+        val reposAdapter = ReposScrollableBarAdapter(repoClickCallback = { repoId ->
+            findNavController().navigateSafe(
+                ReposOverviewFragmentDirections
+                    .actionReposOverviewFragmentToRepositoryPageFragment(repoId)
+            )
+        })
         binding.reposBar.adapter = reposAdapter
         val layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
 
@@ -84,6 +88,7 @@ class ReposOverviewFragment : Fragment(R.layout.fragment_repos_overview) {
                     .mapIndexed { index, it ->
                         val color = BRAND_COLORS[index % BRAND_COLORS.size] // Choose a color based on the current index
                         ReposBarItems.PinnedRepo(
+                            repoId = it.id,
                             repoName = it.name,
                             repoLang = it.primaryLanguage,
                             repoLangColor = it.primaryLanguageColor,

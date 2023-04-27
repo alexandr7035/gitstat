@@ -38,6 +38,9 @@
         <action
             android:id="@+id/action_reposFragment_to_repositoriesListHostFragment"
             app:destination="@id/repositoriesListGraph" />
+        <action
+            android:id="@+id/action_reposOverviewFragment_to_repositoryPageFragment"
+            app:destination="@id/repositoryPageFragment" />
     </fragment>
 
     <fragment

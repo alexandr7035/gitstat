@@ -16,7 +16,7 @@ import androidx.viewbinding.ViewBinding
 import by.alexandr7035.gitstat.databinding.ViewCardPinnedRepoBinding
 import by.alexandr7035.gitstat.databinding.ViewCardRepoMetricBinding
 
-class ReposScrollableBarAdapter() : RecyclerView.Adapter<ReposScrollableBarAdapter.BarViewHolder>() {
+class ReposScrollableBarAdapter(private val repoClickCallback: (repositoryId: Int) -> Unit) : RecyclerView.Adapter<ReposScrollableBarAdapter.BarViewHolder>() {
 
     private var items: List<ReposBarItems> = emptyList()
 
@@ -36,7 +36,7 @@ class ReposScrollableBarAdapter() : RecyclerView.Adapter<ReposScrollableBarAdapt
 
             VIEW_TYPE_PINNED_REPO -> {
                 val binding = ViewCardPinnedRepoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-                BarViewHolder.PinnedRepoViewHolder(binding)
+                BarViewHolder.PinnedRepoViewHolder(binding, repoClickCallback)
             }
 
             else -> throw IllegalArgumentException("View type not implemented")
@@ -63,7 +63,10 @@ class ReposScrollableBarAdapter() : RecyclerView.Adapter<ReposScrollableBarAdapt
             }
         }
 
-        class PinnedRepoViewHolder(override val binding: ViewCardPinnedRepoBinding) : BarViewHolder(binding) {
+        class PinnedRepoViewHolder(
+            override val binding: ViewCardPinnedRepoBinding,
+            private val repoClickCallback: (repositoryId: Int) -> Unit
+        ) : BarViewHolder(binding) {
             override fun bind(item: ReposBarItems) {
                 item as ReposBarItems.PinnedRepo
                 binding.repoName.text = item.repoName
@@ -88,6 +91,10 @@ class ReposScrollableBarAdapter() : RecyclerView.Adapter<ReposScrollableBarAdapt
 
                 // Stars
                 binding.stars.text = item.stars.toString()
+
+                binding.root.setOnClickListener {
+                    repoClickCallback.invoke(item.repoId)
+                }
             }
         }
     }

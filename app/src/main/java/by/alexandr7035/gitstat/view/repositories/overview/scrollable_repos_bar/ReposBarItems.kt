@@ -12,6 +12,7 @@ sealed class ReposBarItems {
     ) : ReposBarItems()
 
     data class PinnedRepo(
+        val repoId: Int,
         val repoName: String,
         val repoLang: String,
         val repoLangColor: String,
