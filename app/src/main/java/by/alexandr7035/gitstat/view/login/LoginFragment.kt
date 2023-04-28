@@ -82,9 +82,14 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     }
 
     private fun showPrivacyPolicy() {
+//        findNavController().navigateSafe(
+//            NavGraphDirections.actionGlobalInfoFragment(
+//                getString(R.string.privacy_policy), null, getString(R.string.privacy_policy_full_text)
+//            )
+//        )
         findNavController().navigateSafe(
-            NavGraphDirections.actionGlobalInfoFragment(
-                getString(R.string.privacy_policy), null, getString(R.string.privacy_policy_full_text)
+            NavGraphDirections.actionGlobalWebViewFragment(
+                getString(R.string.privacy_policy), getString(R.string.privacy_policy_url)
             )
         )
     }

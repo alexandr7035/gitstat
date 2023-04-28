@@ -19,6 +19,8 @@
         - Contributions grid (Github-like)
     ]]>
     </string>
+    
+    <string name="privacy_policy_url">https://sites.google.com/view/gitstat-privacypolicy/home</string>
 
     <string name="privacy_policy_full_text"><![CDATA[
     - The application <b>Github Oauth</b> (Firebase) for user authentication.

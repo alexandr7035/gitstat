@@ -125,10 +125,8 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.item_privacy_policy -> navController.navigateSafe(
-                    NavGraphDirections.actionGlobalInfoFragment(
-                        getString(R.string.privacy_policy),
-                        null,
-                        getString(R.string.privacy_policy_full_text)
+                    NavGraphDirections.actionGlobalWebViewFragment(
+                        getString(R.string.privacy_policy), getString(R.string.privacy_policy_url)
                     )
                 )
 
