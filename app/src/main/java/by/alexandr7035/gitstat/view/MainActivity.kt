@@ -12,7 +12,6 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import androidx.viewbinding.ViewBinding
 import by.alexandr7035.gitstat.BuildConfig
 import by.alexandr7035.gitstat.NavGraphDirections
 import by.alexandr7035.gitstat.R
@@ -23,6 +22,7 @@ import by.alexandr7035.gitstat.core.extensions.observeNullSafe
 import by.alexandr7035.gitstat.view.datasync.SyncHostFragmentDirections
 import by.alexandr7035.gitstat.view.login.LoginFragmentDirections
 import by.alexandr7035.gitstat.view.profile.ProfileViewModel
+import com.google.firebase.auth.FirebaseAuth
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import de.hdodenhof.circleimageview.CircleImageView
@@ -165,8 +165,8 @@ class MainActivity : AppCompatActivity() {
     // FIXME find better solution
     // than public method accessible from fragments
     fun startLogOut() {
-        viewModel.clearCache()
-        viewModel.clearToken()
+        viewModel.logOut()
+        FirebaseAuth.getInstance().signOut()
         navController.navigateSafe(
             NavGraphDirections
                 .actionGlobalLoginFragment()
