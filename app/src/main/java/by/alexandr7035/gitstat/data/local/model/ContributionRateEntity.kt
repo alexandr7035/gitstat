@@ -4,9 +4,10 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "contribution_rates")
-data class ContributionRateEntity (
+data class ContributionRateEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val rate: Float,
     val date: Long,
-    var yearId: Int)
+    val yearId: Int
+)

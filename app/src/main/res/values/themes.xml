@@ -6,7 +6,7 @@
         <item name="colorPrimaryVariant">@color/gray_500</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondary">@color/gray_500</item>
         <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
@@ -39,7 +39,7 @@
     </style>
 
     <style name="PrimaryCardStyle">
-        <item name="android:elevation">5dp</item>
+        <item name="android:elevation">@dimen/default_element_elevation</item>
         <item name="android:padding">10dp</item>
         <item name="android:background">@drawable/background_card</item>
     </style>
@@ -154,6 +154,11 @@
         <item name="android:textColor">@color/blue_500</item>
     </style>
 
+    <style name="RepositoryViewStyle">
+        <item name="android:background">@drawable/background_repository_item</item>
+        <item name="android:elevation">@dimen/default_element_elevation</item>
+    </style>
+
     <style name="RepositoryTopicTagStyle">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/blue_100</item>
@@ -162,6 +167,14 @@
         <item name="android:paddingEnd">10dp</item>
         <item name="android:paddingTop">4dp</item>
         <item name="android:paddingBottom">4dp</item>
+    </style>
+
+    <style name="RepositoryBarCardStyle">
+        <item name="android:clickable">true</item>
+        <item name="android:foreground">@drawable/fg_card_darkened</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:background">@drawable/background_card</item>
+        <item name="android:elevation">@dimen/cardview_default_elevation</item>
     </style>
     
     <style name="RadioButtonStyle">
@@ -177,4 +190,9 @@
         <item name="android:layout_marginBottom">4dp</item>
     </style>
 
+    <style name="SwitchMenuItem">
+        <item name="switchPadding">16dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/gray_500</item>
+    </style>
 </resources>

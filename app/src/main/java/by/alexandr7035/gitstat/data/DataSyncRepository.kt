@@ -7,8 +7,10 @@ import by.alexandr7035.gitstat.data.local.CacheDB
 import by.alexandr7035.gitstat.data.local.model.*
 import by.alexandr7035.gitstat.data.remote.mappers.*
 import by.alexandr7035.gitstat.core.extensions.performRequestWithDataResult
+import by.alexandr7035.gitstat.core.helpers.TimeHelper
 import by.alexandr7035.gitstat.data.local.preferences.AppPreferences
 import com.apollographql.apollo3.ApolloClient
+import com.apollographql.apollo3.api.Optional
 import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
@@ -25,8 +27,7 @@ class DataSyncRepository @Inject constructor(
     private val contributionsMapper: ContributionsDaysListRemoteToCacheMapper,
     private val contributionTypesMapper: ContributionTypesRemoteToCacheMapper,
     private val daysToRatesMapper: ContributionDaysToRatesMapper,
-    )
-{
+) {
 
     // Set livedata to non-null when need to observe sync status on UI
     // Null by default
@@ -102,10 +103,9 @@ class DataSyncRepository @Inject constructor(
 
     }
 
-
     private suspend fun fetchProfile(): UserEntity {
         val data = apolloClient.performRequestWithDataResult(ProfileQuery())
-        return profileMapper.transform(data)
+        return profileMapper.map(data)
     }
 
     private suspend fun fetchRepositories(): List<RepositoryEntity> {
@@ -113,9 +113,19 @@ class DataSyncRepository @Inject constructor(
         var nextPagesExist = true
         var endCursor: String? = null
 
+        val pinnedRepositoriesData = (apolloClient
+            .performRequestWithDataResult(PinnedRepositoriesQuery())
+            .viewer.pinnedItems.nodes)?.filterNotNull() ?: emptyList()
+
+        val pinnedIds = (pinnedRepositoriesData.filter {
+            it.onRepository != null
+        }).mapNotNull {
+            it.onRepository?.databaseId
+        }
+
         while (nextPagesExist) {
-            val data = apolloClient.performRequestWithDataResult(RepositoriesQuery(endCursor))
-            repositories.addAll(repositoriesMapper.transform(data))
+            val data = apolloClient.performRequestWithDataResult(RepositoriesQuery(Optional.present(endCursor)))
+            repositories.addAll(repositoriesMapper.map(repositories = data, pinnedItems = pinnedIds))
 
             nextPagesExist = data.viewer.repositories.pageInfo.hasNextPage
             endCursor = data.viewer.repositories.pageInfo.endCursor
@@ -161,7 +171,7 @@ class DataSyncRepository @Inject constructor(
 
             val contributionsData = getContributionsForDateRange(year)
             // Map apollo result into room cache
-            val cachedContributionsData = contributionsMapper.transform(contributionsData)
+            val cachedContributionsData = contributionsMapper.map(contributionsData)
             contributionDaysCached.addAll(cachedContributionsData)
         }
 
@@ -170,7 +180,9 @@ class DataSyncRepository @Inject constructor(
 
 
     // TODO try to find better solution later
-    private suspend fun fetchContributionTypes(profileCreationYear: Int, currentYear: Int, cachedContributions: List<ContributionDayEntity>): ArrayList<ContributionTypesEntity> {
+    private suspend fun fetchContributionTypes(
+        profileCreationYear: Int, currentYear: Int, cachedContributions: List<ContributionDayEntity>
+    ): ArrayList<ContributionTypesEntity> {
 
         val contributionTypesCached = ArrayList<ContributionTypesEntity>()
 
@@ -192,7 +204,7 @@ class DataSyncRepository @Inject constructor(
 
 
     private fun fetchContributionRates(contributionDays: List<ContributionDayEntity>): List<ContributionRateEntity> {
-        return daysToRatesMapper.transform(contributionDays)
+        return daysToRatesMapper.map(contributionDays)
     }
 
 
@@ -201,14 +213,18 @@ class DataSyncRepository @Inject constructor(
     private suspend fun getContributionsForDateRange(year: Int?): ContributionsQuery.Data {
 
         return if (year == null) {
-            apolloClient.performRequestWithDataResult(ContributionsQuery(date_from = null, date_to = null))
-        }
-        else {
+            apolloClient.performRequestWithDataResult(
+                ContributionsQuery(
+                    date_from = Optional.Present(null),
+                    date_to = Optional.Present(null)
+                )
+            )
+        } else {
             val iso8601Year = timeHelper.getDatesRangeForYear_iso8601(year)
             apolloClient.performRequestWithDataResult(
                 ContributionsQuery(
-                    date_from = iso8601Year.startDate,
-                    date_to = iso8601Year.endDate
+                    date_from = Optional.Present(iso8601Year.startDate),
+                    date_to = Optional.present(iso8601Year.endDate)
                 )
             )
         }
@@ -218,14 +234,16 @@ class DataSyncRepository @Inject constructor(
     private suspend fun getContributionTypesForDateRange(year: Int?): ContributionTypesQuery.Data {
 
         return if (year == null) {
-            apolloClient.performRequestWithDataResult(ContributionTypesQuery(date_from = null, date_to = null))
-        }
-        else {
+            apolloClient.performRequestWithDataResult(
+                ContributionTypesQuery(
+                    date_from = Optional.Present(null), date_to = Optional.Present(null)
+                )
+            )
+        } else {
             val iso8601Year = timeHelper.getDatesRangeForYear_iso8601(year)
             apolloClient.performRequestWithDataResult(
                 ContributionTypesQuery(
-                    date_from = iso8601Year.startDate,
-                    date_to = iso8601Year.endDate
+                    date_from = Optional.Present(iso8601Year.startDate), date_to = Optional.Present(iso8601Year.endDate)
                 )
             )
         }

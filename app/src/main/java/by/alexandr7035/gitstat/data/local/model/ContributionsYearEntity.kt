@@ -6,4 +6,5 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "contribution_years")
 data class ContributionsYearEntity(
     @PrimaryKey
-    var id: Int)
+    val id: Int
+)

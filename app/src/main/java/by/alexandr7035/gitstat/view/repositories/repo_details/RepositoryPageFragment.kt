@@ -1,4 +1,4 @@
-package by.alexandr7035.gitstat.view.repositories
+package by.alexandr7035.gitstat.view.repositories.repo_details
 
 import android.content.Intent
 import android.graphics.Color
@@ -16,11 +16,12 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import by.alexandr7035.gitstat.R
-import by.alexandr7035.gitstat.databinding.FragmentRepositoryPageBinding
 import by.alexandr7035.gitstat.core.extensions.debug
 import by.alexandr7035.gitstat.core.extensions.getClickableSpannable
 import by.alexandr7035.gitstat.core.extensions.getStringDateFromLong
 import by.alexandr7035.gitstat.core.extensions.observeNullSafe
+import by.alexandr7035.gitstat.databinding.FragmentRepositoryPageBinding
+import by.alexandr7035.gitstat.view.repositories.RepositoriesViewModel
 import com.google.android.flexbox.FlexboxLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber

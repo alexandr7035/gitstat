@@ -6,8 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="false"
+    android:clipChildren="false"
     android:paddingBottom="20dp"
-    tools:context=".view.repositories.ReposOverviewFragment">
+    tools:context=".view.repositories.overview.ReposOverviewFragment">
 
     <ImageButton
         android:scaleType="fitXY"
@@ -52,9 +53,9 @@
         android:id="@+id/reposCountCard"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="@dimen/default_fragment_margin"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="@dimen/default_fragment_margin"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -132,18 +133,36 @@
         </LinearLayout>
     </LinearLayout>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/reposBar"
+        tools:listitem="@layout/view_card_pinned_repo"
+        tools:itemCount="1"
+        android:overScrollMode="never"
+        android:layout_marginTop="@dimen/small_cards_spacing"
+        android:layout_marginStart="@dimen/default_fragment_margin"
+        android:layout_marginEnd="@dimen/default_fragment_margin"
+        android:orientation="horizontal"
+        android:clipToPadding="false"
+        android:clipChildren="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/reposCountCard"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+
     <LinearLayout
         style="@style/PrimaryCardStyle"
         android:id="@+id/languagesCard"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="@dimen/default_fragment_margin"
+        android:layout_marginTop="@dimen/small_cards_spacing"
+        app:layout_goneMarginTop="@dimen/default_cards_spacing"
+        android:layout_marginEnd="@dimen/default_fragment_margin"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reposCountCard">
+        app:layout_constraintTop_toBottomOf="@+id/reposBar">
 
         <TextView
             style="@style/CardHeaderStyle"
@@ -185,8 +204,8 @@
                 android:textStyle="bold"
                 android:text="@string/no_repositories"/>
 
-
         </LinearLayout>
 
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,5 +7,9 @@ class ContributionsMonthWithDays(
     @Embedded
     val month: ContributionsMonthEntity,
 
-    @Relation(parentColumn = "id", entityColumn = "monthId", entity = ContributionDayEntity::class)
-    val contributionDays: List<ContributionDayEntity>)
+    @Relation(
+        parentColumn = "id",
+        entityColumn = "monthId",
+        entity = ContributionDayEntity::class
+    ) val contributionDays: List<ContributionDayEntity>
+)

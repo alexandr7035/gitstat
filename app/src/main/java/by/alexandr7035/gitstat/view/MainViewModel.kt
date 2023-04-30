@@ -19,17 +19,14 @@ class MainViewModel @Inject constructor(private val dataSyncRepository: DataSync
         return dataSyncRepository.checkIfCacheExists()
     }
 
-    fun clearCache() {
+    fun logOut() {
         viewModelScope.launch(Dispatchers.IO) {
             dataSyncRepository.clearCache()
+            dataSyncRepository.clearToken()
         }
     }
 
     fun getCacheSyncDate(): String {
         return dataSyncRepository.getLastCacheSyncDateText()
-    }
-
-    fun clearToken() {
-        dataSyncRepository.clearToken()
     }
 }

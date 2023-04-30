@@ -1,4 +1,4 @@
-package by.alexandr7035.gitstat.core
+package by.alexandr7035.gitstat.core.helpers
 
 import by.alexandr7035.gitstat.core.extensions.getStringDateFromLong
 import by.alexandr7035.gitstat.core.extensions.getUnixDateFromStringFormat
@@ -14,17 +14,17 @@ class TimeHelper {
     }
 
     fun getUnixDateFromISO8601(iso8601Date: String): Long {
-        return iso8601Date.getUnixDateFromStringFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", "GMT")
+        return iso8601Date.getUnixDateFromStringFormat(TimeString.ISO_8601.value, "GMT")
     }
 
     // Example input date: "2016-01-01"
     // Used in github contributions
     fun getUnixDateFrom_yyyyMMdd(stringDate: String): Long {
-        return stringDate.getUnixDateFromStringFormat("yyyy-MM-dd", "GMT")
+        return stringDate.getUnixDateFromStringFormat(TimeString.YEARS_MONTHS_DAYS.value, "GMT")
     }
 
     fun getYearFromUnixDate(timestamp: Long): Int {
-        return timestamp.getStringDateFromLong("yyyy", "GMT").toInt()
+        return timestamp.getStringDateFromLong(TimeString.YEAR_ONLY.value, "GMT").toInt()
     }
 
     fun getFullFromUnixDate(timestamp: Long): String {
@@ -37,13 +37,13 @@ class TimeHelper {
     }
 
     fun getBeginningOfDayForUnixDate_currentTz(currentDate: Long): Long {
-        val beginningStr = currentDate.getStringDateFromLong("yyyy-MM-dd")
+        val beginningStr = currentDate.getStringDateFromLong(TimeString.YEARS_MONTHS_DAYS.value)
         return getUnixDateFrom_yyyyMMdd(beginningStr)
     }
 
     // TODO remove (duplicate)
     fun getCurrentYearForUnixDate(currentDate: Long): Int {
-        val format = SimpleDateFormat("yyyy", Locale.US)
+        val format = SimpleDateFormat(TimeString.YEAR_ONLY.value, Locale.US)
         format.timeZone = TimeZone.getTimeZone("GMT")
         val yearStr = format.format(currentDate)
 

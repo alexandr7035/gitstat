@@ -7,6 +7,7 @@
     <androidx.appcompat.widget.Toolbar
         style="@style/ToolbarStyle"
         android:id="@+id/toolbar"
+        app:menu="@menu/menu_toolbar_repos_list"
         app:title="@string/repos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -2,12 +2,12 @@ package by.alexandr7035.gitstat.data.remote.mappers
 
 import by.alexandr7035.gitstat.apollo.ProfileQuery
 import by.alexandr7035.gitstat.core.Mapper
-import by.alexandr7035.gitstat.core.TimeHelper
+import by.alexandr7035.gitstat.core.helpers.TimeHelper
 import by.alexandr7035.gitstat.data.local.model.UserEntity
 import javax.inject.Inject
 
 class UserRemoteToCacheMapper @Inject constructor(private val timeHelper: TimeHelper): Mapper<ProfileQuery.Data, UserEntity> {
-    override fun transform(data: ProfileQuery.Data): UserEntity {
+    override fun map(data: ProfileQuery.Data): UserEntity {
 
         // FIXME research later
         val id = data.viewer.databaseId!!

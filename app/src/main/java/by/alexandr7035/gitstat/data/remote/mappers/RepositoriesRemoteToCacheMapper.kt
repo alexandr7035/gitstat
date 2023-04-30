@@ -1,25 +1,24 @@
 package by.alexandr7035.gitstat.data.remote.mappers
 
 import by.alexandr7035.gitstat.apollo.RepositoriesQuery
-import by.alexandr7035.gitstat.core.Mapper
-import by.alexandr7035.gitstat.core.TimeHelper
+import by.alexandr7035.gitstat.core.helpers.TimeHelper
 import by.alexandr7035.gitstat.data.local.model.RepoLanguage
 import by.alexandr7035.gitstat.data.local.model.RepositoryEntity
 import by.alexandr7035.gitstat.core.extensions.debug
 import timber.log.Timber
 import javax.inject.Inject
 
-class RepositoriesRemoteToCacheMapper @Inject constructor(private val timeHelper: TimeHelper): Mapper<RepositoriesQuery.Data, List<RepositoryEntity>> {
+class RepositoriesRemoteToCacheMapper @Inject constructor(private val timeHelper: TimeHelper) {
 
-    override fun transform(data: RepositoriesQuery.Data): List<RepositoryEntity> {
+    fun map(repositories: RepositoriesQuery.Data, pinnedItems: List<Int>): List<RepositoryEntity> {
 
-        if (data.viewer.repositories.nodes == null) {
+        if (repositories.viewer.repositories.nodes == null) {
             return emptyList()
         }
         else {
             val cachedList = ArrayList<RepositoryEntity>()
 
-            for (repo in data.viewer.repositories.nodes) {
+            for (repo in repositories.viewer.repositories.nodes) {
 
                 if (repo != null) {
 
@@ -98,6 +97,7 @@ class RepositoriesRemoteToCacheMapper @Inject constructor(private val timeHelper
                         isPrivate = repo.isPrivate,
                         isArchived = repo.isArchived,
                         isFork = repo.isFork,
+                        isPinned = pinnedItems.contains(repo.databaseId),
 
                         stars = repo.stargazerCount,
 

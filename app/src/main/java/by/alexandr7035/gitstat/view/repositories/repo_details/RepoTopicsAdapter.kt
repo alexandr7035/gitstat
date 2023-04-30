@@ -1,4 +1,4 @@
-package by.alexandr7035.gitstat.view.repositories
+package by.alexandr7035.gitstat.view.repositories.repo_details
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater

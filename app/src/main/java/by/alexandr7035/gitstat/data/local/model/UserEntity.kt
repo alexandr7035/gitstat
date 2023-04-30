@@ -6,19 +6,19 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "user")
 class UserEntity(
     @PrimaryKey
-    var id: Int,
-    var login: String,
-    var avatar_url: String,
-    var name: String,
-    var location: String,
+    val id: Int,
+    val login: String,
+    val avatar_url: String,
+    val name: String,
+    val location: String,
 
-    var public_repos_count: Int,
-    var private_repos_count: Int,
-    var total_repos_count: Int,
+    val public_repos_count: Int,
+    val private_repos_count: Int,
+    val total_repos_count: Int,
 
-    var followers: Int,
-    var following: Int,
+    val followers: Int,
+    val following: Int,
 
-    var created_at: Long,
-    var updated_at: Long
+    val created_at: Long,
+    val updated_at: Long
 )

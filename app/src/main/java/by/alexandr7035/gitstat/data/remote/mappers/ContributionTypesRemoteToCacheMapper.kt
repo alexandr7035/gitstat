@@ -1,7 +1,7 @@
 package by.alexandr7035.gitstat.data.remote.mappers
 
 import by.alexandr7035.gitstat.apollo.ContributionTypesQuery
-import by.alexandr7035.gitstat.core.TimeHelper
+import by.alexandr7035.gitstat.core.helpers.TimeHelper
 import by.alexandr7035.gitstat.data.local.model.ContributionTypesEntity
 import javax.inject.Inject
 

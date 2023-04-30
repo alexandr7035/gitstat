@@ -1,5 +1,6 @@
 package by.alexandr7035.gitstat.data.local
 
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
@@ -8,13 +9,20 @@ import by.alexandr7035.gitstat.data.local.dao.RepositoriesDao
 import by.alexandr7035.gitstat.data.local.dao.UserDao
 import by.alexandr7035.gitstat.data.local.model.*
 
-@Database(entities = [UserEntity::class,
-    RepositoryEntity::class,
-    ContributionDayEntity::class,
-    ContributionRateEntity::class,
-    ContributionsYearEntity::class,
-    ContributionTypesEntity::class,
-    ContributionsMonthEntity::class], version = 21)
+@Database(
+    entities = [UserEntity::class,
+        RepositoryEntity::class,
+        ContributionDayEntity::class,
+        ContributionRateEntity::class,
+        ContributionsYearEntity::class,
+        ContributionTypesEntity::class,
+        ContributionsMonthEntity::class],
+    version = 22,
+    exportSchema = true,
+    autoMigrations = [
+        AutoMigration(from = 21, to = 22)
+    ],
+)
 
 @TypeConverters(RoomTypeConverters::class)
 abstract class CacheDB : RoomDatabase() {
