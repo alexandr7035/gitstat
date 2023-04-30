@@ -7,6 +7,8 @@
     <dimen name="profile_card_label_margin">8dp</dimen>
     <dimen name="profile_fields_vertical_spacing">4dp</dimen>
 
+    <dimen name="primary_card_corner">16dp</dimen>
+
     <dimen name="default_element_elevation">4dp</dimen>
     <dimen name="default_fragment_margin">16dp</dimen>
     <dimen name="default_cards_spacing">20dp</dimen>

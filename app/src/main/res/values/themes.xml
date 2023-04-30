@@ -195,4 +195,10 @@
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/gray_500</item>
     </style>
+
+    <style name="HighlightCard">
+        <item name="android:elevation">@dimen/default_element_elevation</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:background">@drawable/bg_highlight_card</item>
+    </style>
 </resources>

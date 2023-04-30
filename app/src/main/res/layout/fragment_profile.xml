@@ -8,6 +8,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="false"
+    android:clipChildren="false"
     android:paddingBottom="20dp"
     tools:context="by.alexandr7035.gitstat.view.profile.ProfileFragment">
 
@@ -183,6 +184,23 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/highlightRecycler"
+        android:layout_marginStart="@dimen/default_fragment_margin"
+        android:layout_marginEnd="@dimen/default_fragment_margin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:clipToPadding="false"
+        android:clipChildren="false"
+        android:overScrollMode="never"
+        android:layout_marginTop="@dimen/small_cards_spacing"
+        android:orientation="horizontal"
+        tools:listitem="@layout/view_highlight"
+        tools:itemCount="1"
+        app:layout_constraintTop_toBottomOf="@id/headerCard"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/profileSummaryCard"
         style="@style/PrimaryCardStyle"
@@ -190,11 +208,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_fragment_margin"
-        android:layout_marginTop="@dimen/default_cards_spacing"
+        android:layout_marginTop="@dimen/small_cards_spacing"
         android:layout_marginEnd="@dimen/default_fragment_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/headerCard">
+        app:layout_constraintTop_toBottomOf="@id/highlightRecycler">
 
         <androidx.constraintlayout.widget.Barrier
             android:id="@+id/barrier"
