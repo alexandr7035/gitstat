@@ -8,6 +8,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="false"
+    android:clipChildren="false"
     android:paddingBottom="20dp"
     tools:context="by.alexandr7035.gitstat.view.profile.ProfileFragment">
 
@@ -74,12 +75,12 @@
 
 
         <ImageView
-            style="@style/ProfileFieldIconsStyle"
             android:id="@+id/publicReposIcon"
-            app:srcCompat="@drawable/ic_cloud_filled"
+            style="@style/ProfileFieldIconsStyle"
             app:layout_constraintBottom_toBottomOf="@+id/publicReposLabel"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/publicReposLabel"/>
+            app:layout_constraintTop_toTopOf="@+id/publicReposLabel"
+            app:srcCompat="@drawable/ic_cloud_filled" />
 
         <TextView
             android:id="@+id/publicReposLabel"
@@ -98,8 +99,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/profile_card_field_margin"
             app:layout_constraintBottom_toBottomOf="@+id/publicReposLabel"
-            app:layout_constraintTop_toTopOf="@+id/publicReposLabel"
             app:layout_constraintStart_toEndOf="@id/reposBarrier"
+            app:layout_constraintTop_toTopOf="@+id/publicReposLabel"
             tools:text="10" />
 
 
@@ -373,5 +374,17 @@
         android:text="@string/profile"
         app:layout_constraintStart_toEndOf="@id/drawerBtn"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <include
+        android:id="@+id/recentMonthContributions"
+        layout="@layout/view_month_contributions_grid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reposSummaryCard" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

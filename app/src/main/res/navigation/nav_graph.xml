@@ -28,6 +28,9 @@
         <action
             android:id="@+id/action_profileFragment_to_reposOverviewFragment"
             app:destination="@id/reposOverviewFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_contributionDayDialogFragment"
+            app:destination="@id/contributionDayDialogFragment" />
     </fragment>
 
     <fragment

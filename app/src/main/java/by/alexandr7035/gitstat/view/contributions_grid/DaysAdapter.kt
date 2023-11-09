@@ -12,10 +12,10 @@ import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.core.helpers.TimeHelper
 import by.alexandr7035.gitstat.data.local.model.ContributionDayEntity
 import by.alexandr7035.gitstat.databinding.ViewContributionsGridCellBinding
-import by.alexandr7035.gitstat.core.extensions.debug
-import timber.log.Timber
 
-class DaysAdapter(private val dayClickListener: DayClickListener): RecyclerView.Adapter<DaysAdapter.ViewHolder>() {
+class DaysAdapter(
+    private val onDayClick: (ContributionDayEntity) -> Unit
+): RecyclerView.Adapter<DaysAdapter.ViewHolder>() {
 
     private var items: List<ContributionDayEntity> = emptyList()
 
@@ -57,8 +57,7 @@ class DaysAdapter(private val dayClickListener: DayClickListener): RecyclerView.
 
         override fun onClick(view: View) {
             val clickedDay = items[adapterPosition]
-            Timber.debug("clicked $clickedDay")
-            dayClickListener.onDayItemClick(clickedDay)
+            onDayClick(clickedDay)
         }
     }
 

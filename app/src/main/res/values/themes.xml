@@ -129,7 +129,7 @@
     </style>
 
     <style name="MonthCardGridBackground">
-        <item name="android:elevation">5dp</item>
+        <item name="android:elevation">@dimen/default_element_elevation</item>
         <item name="android:background">@drawable/background_card</item>
     </style>
 

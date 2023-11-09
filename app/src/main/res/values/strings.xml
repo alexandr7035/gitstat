@@ -167,5 +167,6 @@
     <string name="forked_from_template"><![CDATA[<b>Forked from:</b> %1$s]]></string>
     <string name="private_repos_access">Private repos access</string>
     <string name="permission_notifications_explanation">Please, provide Notifications permission to show your activities and data sync status</string>
+    <string name="recent_month">Recent month</string>
 
 </resources>
