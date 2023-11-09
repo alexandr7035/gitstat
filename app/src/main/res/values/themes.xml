@@ -20,6 +20,8 @@
 
     <style name="BottomSheetDialogStyle" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/bottomSheetBackground</item>
+        <item name="materialButtonStyle">@style/PrimaryButton</item>
+        <item name="colorPrimary">@color/gray_400</item>
     </style>
 
     <style name="bottomSheetBackground">
