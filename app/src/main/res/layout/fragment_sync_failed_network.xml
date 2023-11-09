@@ -28,8 +28,7 @@
         android:text="@string/error_cant_get_data_remote"
         tools:text="@string/error_cant_get_data_remote" />
 
-    <TextView
-        style="@style/PrimaryButton"
+    <Button
         android:id="@+id/retryBtn"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"

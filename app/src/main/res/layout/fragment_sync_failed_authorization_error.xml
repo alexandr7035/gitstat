@@ -27,8 +27,7 @@
         android:textSize="16sp"
         android:text="@string/error_sync_authorization" />
 
-    <TextView
-        style="@style/PrimaryButton"
+    <Button
         android:id="@+id/logOutBtn"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"

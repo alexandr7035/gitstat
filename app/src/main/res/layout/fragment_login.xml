@@ -43,9 +43,7 @@
             android:textColor="@color/gray_400"
             android:textSize="16sp" />
 
-        <TextView
-            style="@style/PrimaryButton"
-            android:textSize="16sp"
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/signInBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -28,19 +28,18 @@
         android:text="@string/log_out_message" />
 
 
-    <TextView
-        style="@style/PrimaryButton"
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/logOutBtn"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/log_out"/>
 
-    <TextView
-        style="@style/PrimaryButton"
+    <com.google.android.material.button.MaterialButton
+        style="@style/TextButton"
         android:id="@+id/cancelBtn"
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/cancel"/>
 

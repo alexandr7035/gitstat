@@ -67,7 +67,7 @@
 
         <TextView
             android:textStyle="bold"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:layout_marginBottom="10dp"
             android:textColor="@color/gray_500"
             android:layout_width="wrap_content"
@@ -75,14 +75,13 @@
             android:text="@string/error"/>
 
         <TextView
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:layout_marginBottom="10dp"
             android:text="@string/failed_load_page"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-        <TextView
-            style="@style/PrimaryButton"
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/reloadButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
