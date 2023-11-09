@@ -1,9 +1,12 @@
 package by.alexandr7035.gitstat.data
 
+import android.Manifest
 import android.app.Notification
 import android.app.PendingIntent
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
+import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.LifecycleService
@@ -48,10 +51,10 @@ class SyncForegroundService: LifecycleService() {
             stopSelf()
         }
 
-        statusLiveData.observeNullSafe(this) { synsStatus ->
-            Timber.debug("Service: sync status changed $synsStatus")
+        statusLiveData.observeNullSafe(this) { syncStatus ->
+            Timber.debug("Service: sync status changed $syncStatus")
 
-            val notificationText = when (synsStatus) {
+            val notificationText = when (syncStatus) {
                 DataSyncStatus.PENDING_PROFILE -> getString(R.string.stage_profile)
                 DataSyncStatus.PENDING_REPOSITORIES -> getString(R.string.stage_repositories)
                 DataSyncStatus.PENDING_CONTRIBUTIONS -> getString(R.string.stage_contributions)
@@ -66,7 +69,9 @@ class SyncForegroundService: LifecycleService() {
                 notificationText
             )
 
-            NotificationManagerCompat.from(this).notify(notificationId, notification)
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+                NotificationManagerCompat.from(this).notify(notificationId, notification)
+            }
         }
 
         // Do not restart if terminated
@@ -91,7 +96,7 @@ class SyncForegroundService: LifecycleService() {
             .setContentText(message)
             .setSmallIcon(R.drawable.ic_app_rounded)
             .setContentIntent(pendingIntent)
-                // Make not dismisable
+                // Make not dismissible
             .setOngoing(true)
                 // Show notification immediately (prevent 10 sec delay)
             .setForegroundServiceBehavior(NotificationCompat.FOREGROUND_SERVICE_IMMEDIATE)
