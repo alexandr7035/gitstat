@@ -134,6 +134,9 @@ dependencies {
 
     // View binding delegate
     implementation 'com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.5.9'
+
+    // Permissions lib
+    implementation 'com.guolindev.permissionx:permissionx:1.7.1'
 }
 
 // Allow references to generated code
