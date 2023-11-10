@@ -19,7 +19,7 @@
         app:layout_constraintVertical_bias="0.3">
 
         <TextView
-            android:id="@+id/version"
+            android:id="@+id/appName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="GitStat v1"
@@ -37,6 +37,7 @@
 
         <TextView
             android:layout_width="wrap_content"
+            android:layout_gravity="center"
             android:layout_height="wrap_content"
             android:text="@string/auth_explanation"
             android:textAlignment="center"

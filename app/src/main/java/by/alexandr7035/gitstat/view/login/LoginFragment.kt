@@ -78,7 +78,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             highlightColor = Color.TRANSPARENT
         }
 
-        binding.version.text = getString(R.string.app_name_with_version, BuildConfig.VERSION_NAME)
+//        binding.appName.text = getString(R.string.app_name_with_version, BuildConfig.VERSION_NAME)
+        binding.appName.text = getString(R.string.app_name)
     }
 
     private fun showPrivacyPolicy() {

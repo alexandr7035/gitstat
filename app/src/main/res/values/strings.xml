@@ -138,7 +138,7 @@
     <string name="updating_data_cache">Updating data cache…</string>
     <string name="year_cr">Year CR</string>
 
-    <string name="auth_explanation">Please, press the button bellow to sign in. Your will be redirected to the browser.</string>
+    <string name="auth_explanation">Please, login with your GitHub in browser</string>
     <string name="oauth_error_generic">Authorization error. Check your Internet connection and try again. Also make sure you don\'t close the browser until authorization is complete.</string>
     <string name="go_to_login_screen">Go to login screen</string>
 
