@@ -50,8 +50,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
             manifestPlaceholders = [
-                    appIcon: "@drawable/ic_app",
-                    roundIcon: "@drawable/ic_app_rounded"
+                    icon: "@mipmap/ic_launcher",
             ]
         }
 
@@ -62,8 +61,7 @@ android {
             versionNameSuffix ".debug"
 
             manifestPlaceholders = [
-                    appIcon: "@drawable/ic_app_debug",
-                    roundIcon: "@drawable/ic_app_rounded_debug"
+                    icon: "@mipmap/ic_launcher_debug",
             ]
         }
 
