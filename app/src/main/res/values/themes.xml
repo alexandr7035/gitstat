@@ -18,6 +18,17 @@
         <item name="materialButtonStyle">@style/PrimaryButton</item>
     </style>
 
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <!-- Set the splash screen background, animated icon, and animation
+        duration. -->
+        <item name="windowSplashScreenBackground">@color/primaryBackground</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_splash</item>
+
+        <!-- Set the theme of the Activity that directly follows your splash
+        screen. This is required. -->
+        <item name="postSplashScreenTheme">@style/Theme.GitStat</item>
+    </style>
+
     <style name="BottomSheetDialogStyle" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/bottomSheetBackground</item>
         <item name="materialButtonStyle">@style/PrimaryButton</item>

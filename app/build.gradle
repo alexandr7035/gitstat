@@ -137,6 +137,8 @@ dependencies {
 
     // Permissions lib
     implementation 'com.guolindev.permissionx:permissionx:1.7.1'
+
+    implementation "androidx.core:core-splashscreen:1.0.1"
 }
 
 // Allow references to generated code
