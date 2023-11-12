@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="10dp"
-    android:orientation="vertical"
-    tools:context=".view.datasync.SyncFailedNetworkFragment">
+    android:orientation="vertical">
 
     <TextView
         android:layout_gravity="center"

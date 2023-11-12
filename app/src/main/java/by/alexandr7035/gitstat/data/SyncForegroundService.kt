@@ -13,6 +13,7 @@ import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.MutableLiveData
 import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.core.DataSyncStatus
+import by.alexandr7035.gitstat.core.ErrorType
 import by.alexandr7035.gitstat.core.extensions.debug
 import by.alexandr7035.gitstat.core.extensions.observeNullSafe
 import by.alexandr7035.gitstat.view.MainActivity
@@ -55,12 +56,20 @@ class SyncForegroundService: LifecycleService() {
             Timber.debug("Service: sync status changed $syncStatus")
 
             val notificationText = when (syncStatus) {
-                DataSyncStatus.PENDING_PROFILE -> getString(R.string.stage_profile)
-                DataSyncStatus.PENDING_REPOSITORIES -> getString(R.string.stage_repositories)
-                DataSyncStatus.PENDING_CONTRIBUTIONS -> getString(R.string.stage_contributions)
-                DataSyncStatus.SUCCESS -> getString(R.string.sync_success)
-                DataSyncStatus.FAILED_NETWORK -> getString(R.string.error_cant_get_data_remote)
-                DataSyncStatus.AUTHORIZATION_ERROR -> getString(R.string.error_sync_authorization)
+                is DataSyncStatus.PendingContributions -> getString(R.string.stage_contributions)
+                is DataSyncStatus.PendingProfile -> getString(R.string.stage_profile)
+                is DataSyncStatus.PendingRepos -> getString(R.string.stage_repositories)
+                is DataSyncStatus.Failure -> {
+                    when (syncStatus.error) {
+                        ErrorType.FAILED_AUTHORIZATION -> {
+                            getString(R.string.error_sync_authorization)
+                        }
+                        else -> {
+                            getString(R.string.error_cant_get_data_remote)
+                        }
+                    }
+                }
+                is DataSyncStatus.Success -> getString(R.string.sync_success)
             }
 
             // Update notification on status changed

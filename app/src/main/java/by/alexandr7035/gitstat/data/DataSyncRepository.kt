@@ -1,20 +1,35 @@
 package by.alexandr7035.gitstat.data
 
 import androidx.lifecycle.MutableLiveData
-import by.alexandr7035.gitstat.apollo.*
-import by.alexandr7035.gitstat.core.*
-import by.alexandr7035.gitstat.data.local.CacheDB
-import by.alexandr7035.gitstat.data.local.model.*
-import by.alexandr7035.gitstat.data.remote.mappers.*
+import by.alexandr7035.gitstat.apollo.ContributionTypesQuery
+import by.alexandr7035.gitstat.apollo.ContributionsQuery
+import by.alexandr7035.gitstat.apollo.PinnedRepositoriesQuery
+import by.alexandr7035.gitstat.apollo.ProfileCreationDateQuery
+import by.alexandr7035.gitstat.apollo.ProfileQuery
+import by.alexandr7035.gitstat.apollo.RepositoriesQuery
+import by.alexandr7035.gitstat.core.AppError
+import by.alexandr7035.gitstat.core.DataSyncStatus
 import by.alexandr7035.gitstat.core.extensions.performRequestWithDataResult
 import by.alexandr7035.gitstat.core.helpers.TimeHelper
+import by.alexandr7035.gitstat.data.local.CacheDB
+import by.alexandr7035.gitstat.data.local.model.ContributionDayEntity
+import by.alexandr7035.gitstat.data.local.model.ContributionRateEntity
+import by.alexandr7035.gitstat.data.local.model.ContributionTypesEntity
+import by.alexandr7035.gitstat.data.local.model.ContributionsMonthEntity
+import by.alexandr7035.gitstat.data.local.model.ContributionsYearEntity
+import by.alexandr7035.gitstat.data.local.model.RepositoryEntity
+import by.alexandr7035.gitstat.data.local.model.UserEntity
 import by.alexandr7035.gitstat.data.local.preferences.AppPreferences
+import by.alexandr7035.gitstat.data.remote.mappers.ContributionDaysToRatesMapper
+import by.alexandr7035.gitstat.data.remote.mappers.ContributionTypesRemoteToCacheMapper
+import by.alexandr7035.gitstat.data.remote.mappers.ContributionsDaysListRemoteToCacheMapper
+import by.alexandr7035.gitstat.data.remote.mappers.RepositoriesRemoteToCacheMapper
+import by.alexandr7035.gitstat.data.remote.mappers.UserRemoteToCacheMapper
 import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.api.Optional
 import timber.log.Timber
-import java.util.*
+import java.util.TreeMap
 import javax.inject.Inject
-import kotlin.collections.ArrayList
 
 class DataSyncRepository @Inject constructor(
     private val apolloClient: ApolloClient,
@@ -34,6 +49,7 @@ class DataSyncRepository @Inject constructor(
     suspend fun syncData(syncStatusLiveData: MutableLiveData<DataSyncStatus>? = null) {
 
         try {
+            syncStatusLiveData?.postValue(DataSyncStatus.PendingProfile)
 
             // Get creation and current years
             val profileCreationDate = apolloClient.performRequestWithDataResult(ProfileCreationDateQuery()).viewer.createdAt as String
@@ -41,13 +57,12 @@ class DataSyncRepository @Inject constructor(
             val accountCreationYear = timeHelper.getYearFromUnixDate(unixCreationDate)
             val currentYear = timeHelper.getYearFromUnixDate(System.currentTimeMillis())
 
-            syncStatusLiveData?.postValue(DataSyncStatus.PENDING_PROFILE)
             val profile = fetchProfile()
 
-            syncStatusLiveData?.postValue(DataSyncStatus.PENDING_REPOSITORIES)
+            syncStatusLiveData?.postValue(DataSyncStatus.PendingRepos)
             val repositories = fetchRepositories()
 
-            syncStatusLiveData?.postValue(DataSyncStatus.PENDING_CONTRIBUTIONS)
+            syncStatusLiveData?.postValue(DataSyncStatus.PendingContributions)
             val contributionDays = fetchContributionDays(accountCreationYear, currentYear)
             val contributionTypes = fetchContributionTypes(accountCreationYear, currentYear, contributionDays)
             val contributionRates = fetchContributionRates(contributionDays)
@@ -78,29 +93,13 @@ class DataSyncRepository @Inject constructor(
                 insertContributionYearsCache(contributionYears)
             }
 
-            syncStatusLiveData?.postValue(DataSyncStatus.SUCCESS)
+            syncStatusLiveData?.postValue(DataSyncStatus.Success)
         }
 
         catch (e: AppError) {
-
             Timber.tag("DEBUG_SYNC").e("Catch exception during data sync ${e.type.name}")
-
-            when (e.type) {
-                ErrorType.FAILED_CONNECTION -> {
-                    syncStatusLiveData?.postValue(DataSyncStatus.FAILED_NETWORK)
-                }
-
-                ErrorType.FAILED_AUTHORIZATION -> {
-                    syncStatusLiveData?.postValue(DataSyncStatus.AUTHORIZATION_ERROR)
-                }
-
-                ErrorType.UNKNOWN_ERROR -> {
-                    // TODO new status
-                    syncStatusLiveData?.postValue(DataSyncStatus.FAILED_NETWORK)
-                }
-            }
+            syncStatusLiveData?.postValue(DataSyncStatus.Failure(e.type))
         }
-
     }
 
     private suspend fun fetchProfile(): UserEntity {

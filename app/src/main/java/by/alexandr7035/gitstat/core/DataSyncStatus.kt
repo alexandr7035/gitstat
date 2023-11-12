@@ -1,10 +1,9 @@
 package by.alexandr7035.gitstat.core
 
-enum class DataSyncStatus {
-    PENDING_PROFILE,
-    PENDING_REPOSITORIES,
-    PENDING_CONTRIBUTIONS,
-    SUCCESS,
-    FAILED_NETWORK,
-    AUTHORIZATION_ERROR
+sealed class DataSyncStatus {
+    object PendingProfile: DataSyncStatus()
+    object PendingRepos: DataSyncStatus()
+    object PendingContributions: DataSyncStatus()
+    data class Failure(val error: ErrorType): DataSyncStatus()
+    object Success: DataSyncStatus()
 }

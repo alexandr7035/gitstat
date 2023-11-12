@@ -191,8 +191,7 @@
     <fragment
         android:id="@+id/syncHostFragment"
         android:name="by.alexandr7035.gitstat.view.datasync.SyncHostFragment"
-        android:label="fragment_sync_host"
-        tools:layout="@layout/fragment_sync_pending" >
+        android:label="fragment_sync_host">
 
         <action
             app:popUpTo="@id/syncHostFragment"

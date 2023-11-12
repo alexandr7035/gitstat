@@ -168,5 +168,9 @@
     <string name="private_repos_access">Private repos access</string>
     <string name="permission_notifications_explanation">Please, provide Notifications permission to show your activities and data sync status</string>
     <string name="recent_month">Recent month</string>
+    <string name="try_again">Try again</string>
+    <string name="unknown_error_try_login">An unknown error happened on data sync. Try login again</string>
+    <string name="got_it">Got it</string>
+    <string name="an_error_happened">An error happened...</string>
 
 </resources>
