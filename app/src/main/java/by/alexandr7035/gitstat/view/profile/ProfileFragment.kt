@@ -94,14 +94,14 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             )
         })
 
-        viewModel.loadRecentYearContributions().observeNullSafe(viewLifecycleOwner) { it ->
-            val recentYear = it.last().contributionMonths
+        viewModel.loadRecentYearContributions().observeNullSafe(viewLifecycleOwner) {
+            val recentYear = it.lastOrNull()?.contributionMonths
 
             // Get current month number
             val monthFormat = SimpleDateFormat("MM", Locale.US)
             val currentMonth = monthFormat.format(System.currentTimeMillis()).toInt()
 
-            val recentMonth = recentYear.getOrNull(currentMonth-1)
+            val recentMonth = recentYear?.getOrNull(currentMonth-1)
 
             if (recentMonth != null) {
                 binding.recentMonthContributions.root.isVisible = true
