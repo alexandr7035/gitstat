@@ -1,21 +1,28 @@
 package by.alexandr7035.gitstat.data
 
+import android.Manifest
 import android.app.Notification
 import android.app.PendingIntent
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
+import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.MutableLiveData
 import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.core.DataSyncStatus
+import by.alexandr7035.gitstat.core.ErrorType
 import by.alexandr7035.gitstat.core.extensions.debug
 import by.alexandr7035.gitstat.core.extensions.observeNullSafe
 import by.alexandr7035.gitstat.view.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -24,16 +31,12 @@ class SyncForegroundService: LifecycleService() {
 
     @Inject lateinit var syncRepository: DataSyncRepository
     private var job: Job? = null
-    private var statusLiveData: MutableLiveData<DataSyncStatus>? = null
-
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         super.onStartCommand(intent, flags, startId)
 
         // Init livedata for statuses update
-        statusLiveData = MutableLiveData()
-
-        Timber.tag("DEBUG_SERVICE").d("123")
+        val statusLiveData = MutableLiveData<DataSyncStatus>()
 
         val notificationId = System.currentTimeMillis().toInt()
         startForeground(notificationId, getNotification(
@@ -49,16 +52,24 @@ class SyncForegroundService: LifecycleService() {
             stopSelf()
         }
 
-        statusLiveData?.observeNullSafe(this, {
-            Timber.debug("Service: sync status changed $it")
+        statusLiveData.observeNullSafe(this) { syncStatus ->
+            Timber.debug("Service: sync status changed $syncStatus")
 
-            val notificationText = when (it) {
-                DataSyncStatus.PENDING_PROFILE -> getString(R.string.stage_profile)
-                DataSyncStatus.PENDING_REPOSITORIES -> getString(R.string.stage_repositories)
-                DataSyncStatus.PENDING_CONTRIBUTIONS -> getString(R.string.stage_contributions)
-                DataSyncStatus.SUCCESS -> getString(R.string.sync_success)
-                DataSyncStatus.FAILED_NETWORK -> getString(R.string.error_cant_get_data_remote)
-                DataSyncStatus.AUTHORIZATION_ERROR -> getString(R.string.error_sync_authorization)
+            val notificationText = when (syncStatus) {
+                is DataSyncStatus.PendingContributions -> getString(R.string.stage_contributions)
+                is DataSyncStatus.PendingProfile -> getString(R.string.stage_profile)
+                is DataSyncStatus.PendingRepos -> getString(R.string.stage_repositories)
+                is DataSyncStatus.Failure -> {
+                    when (syncStatus.error) {
+                        ErrorType.FAILED_AUTHORIZATION -> {
+                            getString(R.string.error_sync_authorization)
+                        }
+                        else -> {
+                            getString(R.string.error_cant_get_data_remote)
+                        }
+                    }
+                }
+                is DataSyncStatus.Success -> getString(R.string.sync_success)
             }
 
             // Update notification on status changed
@@ -67,9 +78,12 @@ class SyncForegroundService: LifecycleService() {
                 notificationText
             )
 
-            NotificationManagerCompat.from(this).notify(notificationId, notification)
-        })
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+                NotificationManagerCompat.from(this).notify(notificationId, notification)
+            }
+        }
 
+        // Do not restart if terminated
         return START_NOT_STICKY
     }
 
@@ -91,6 +105,10 @@ class SyncForegroundService: LifecycleService() {
             .setContentText(message)
             .setSmallIcon(R.drawable.ic_app_rounded)
             .setContentIntent(pendingIntent)
+                // Make not dismissible
+            .setOngoing(true)
+                // Show notification immediately (prevent 10 sec delay)
+            .setForegroundServiceBehavior(NotificationCompat.FOREGROUND_SERVICE_IMMEDIATE)
             .build()
     }
 
@@ -100,7 +118,6 @@ class SyncForegroundService: LifecycleService() {
 
         job?.cancel()
         job = null
-        statusLiveData = null
         super.onDestroy()
     }
 

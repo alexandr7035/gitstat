@@ -14,7 +14,7 @@ def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
-    compileSdkVersion 33
+    compileSdkVersion 34
     buildToolsVersion "30.0.3"
 
     signingConfigs {
@@ -29,9 +29,9 @@ android {
     defaultConfig {
         applicationId 'by.alexandr7035.gitstat'
         minSdkVersion 21
-        targetSdkVersion 33
-        versionCode 2400
-        versionName "5.6"
+        targetSdkVersion 34
+        versionCode 2500
+        versionName "5.7"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -50,8 +50,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
             manifestPlaceholders = [
-                    appIcon: "@drawable/ic_app",
-                    roundIcon: "@drawable/ic_app_rounded"
+                    icon: "@mipmap/ic_launcher",
             ]
         }
 
@@ -62,8 +61,7 @@ android {
             versionNameSuffix ".debug"
 
             manifestPlaceholders = [
-                    appIcon: "@drawable/ic_app_debug",
-                    roundIcon: "@drawable/ic_app_rounded_debug"
+                    icon: "@mipmap/ic_launcher_debug",
             ]
         }
 
@@ -128,12 +126,17 @@ dependencies {
 
     // Firebase dependencies
     implementation platform('com.google.firebase:firebase-bom:31.5.0')
-    implementation 'com.google.firebase:firebase-analytics-ktx:21.2.2'
-    implementation 'com.google.firebase:firebase-auth-ktx:21.3.0'
-    implementation 'com.google.firebase:firebase-crashlytics-ktx:18.3.6'
+    implementation 'com.google.firebase:firebase-analytics-ktx:21.5.0'
+    implementation 'com.google.firebase:firebase-auth-ktx:22.2.0'
+    implementation 'com.google.firebase:firebase-crashlytics-ktx:18.5.1'
 
     // View binding delegate
     implementation 'com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.5.9'
+
+    // Permissions lib
+    implementation 'com.guolindev.permissionx:permissionx:1.7.1'
+
+    implementation "androidx.core:core-splashscreen:1.0.1"
 }
 
 // Allow references to generated code

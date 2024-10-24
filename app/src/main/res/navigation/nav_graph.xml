@@ -28,6 +28,9 @@
         <action
             android:id="@+id/action_profileFragment_to_reposOverviewFragment"
             app:destination="@id/reposOverviewFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_contributionDayDialogFragment"
+            app:destination="@id/contributionDayDialogFragment" />
     </fragment>
 
     <fragment
@@ -188,8 +191,7 @@
     <fragment
         android:id="@+id/syncHostFragment"
         android:name="by.alexandr7035.gitstat.view.datasync.SyncHostFragment"
-        android:label="fragment_sync_host"
-        tools:layout="@layout/fragment_sync_pending" >
+        android:label="fragment_sync_host">
 
         <action
             app:popUpTo="@id/syncHostFragment"

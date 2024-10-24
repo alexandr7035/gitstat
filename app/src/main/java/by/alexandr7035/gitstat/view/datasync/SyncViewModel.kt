@@ -1,5 +1,6 @@
 package by.alexandr7035.gitstat.view.datasync
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,7 +15,7 @@ import javax.inject.Inject
 class SyncViewModel @Inject constructor(private val repository: DataSyncRepository): ViewModel() {
     private val syncStatusLiveData = MutableLiveData<DataSyncStatus>()
 
-    fun getSyncStatusLiveData(): MutableLiveData<DataSyncStatus> {
+    fun getSyncStatusLiveData(): LiveData<DataSyncStatus> {
         return syncStatusLiveData
     }
 

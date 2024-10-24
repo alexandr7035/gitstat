@@ -13,7 +13,9 @@ import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 
-class MonthsAdapter(private val fragmentDayClickListener: DayClickListener): RecyclerView.Adapter<MonthsAdapter.ViewHolder>(), DayClickListener {
+class MonthsAdapter(
+    private val onDayClick: (ContributionDayEntity) -> Unit
+) : RecyclerView.Adapter<MonthsAdapter.ViewHolder>() {
 
     // FIXME
     private var items: List<ContributionsMonthWithDays> = emptyList()
@@ -54,19 +56,14 @@ class MonthsAdapter(private val fragmentDayClickListener: DayClickListener): Rec
             .sumOf { it.count }
             .toString()
 
-        val adapter = DaysAdapter(this)
+        val adapter = DaysAdapter(onDayClick = onDayClick)
+
         holder.binding.cellsRecycler.adapter = adapter
-//        holder.binding.cellsRecycler.layoutManager = FlexboxLayoutManager(holder.binding.root.context)
         holder.binding.cellsRecycler.layoutManager = GridLayoutManager(holder.binding.root.context, 7)
 
         // Set days of the month to cells
         adapter.setItems(items[position].contributionDays)
     }
 
-    class ViewHolder(val binding: ViewMonthContributionsGridBinding): RecyclerView.ViewHolder(binding.root)
-
-
-    override fun onDayItemClick(contributionDay: ContributionDayEntity) {
-        fragmentDayClickListener.onDayItemClick(contributionDay)
-    }
+    class ViewHolder(val binding: ViewMonthContributionsGridBinding) : RecyclerView.ViewHolder(binding.root)
 }

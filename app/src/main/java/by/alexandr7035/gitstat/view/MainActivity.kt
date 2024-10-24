@@ -1,12 +1,16 @@
 package by.alexandr7035.gitstat.view
 
+import android.Manifest
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
@@ -15,14 +19,17 @@ import androidx.navigation.ui.setupWithNavController
 import by.alexandr7035.gitstat.BuildConfig
 import by.alexandr7035.gitstat.NavGraphDirections
 import by.alexandr7035.gitstat.R
-import by.alexandr7035.gitstat.data.SyncForegroundService
-import by.alexandr7035.gitstat.databinding.ActivityMainBinding
+import by.alexandr7035.gitstat.core.extensions.doWithPermissions
 import by.alexandr7035.gitstat.core.extensions.navigateSafe
 import by.alexandr7035.gitstat.core.extensions.observeNullSafe
+import by.alexandr7035.gitstat.core.extensions.showToast
+import by.alexandr7035.gitstat.data.SyncForegroundService
+import by.alexandr7035.gitstat.databinding.ActivityMainBinding
 import by.alexandr7035.gitstat.view.datasync.SyncHostFragmentDirections
 import by.alexandr7035.gitstat.view.login.LoginFragmentDirections
 import by.alexandr7035.gitstat.view.profile.ProfileViewModel
 import com.google.firebase.auth.FirebaseAuth
+import com.permissionx.guolindev.PermissionX
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import de.hdodenhof.circleimageview.CircleImageView
@@ -43,6 +50,7 @@ class MainActivity : AppCompatActivity() {
     private val profileViewModel by viewModels<ProfileViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        installSplashScreen()
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
@@ -83,6 +91,7 @@ class MainActivity : AppCompatActivity() {
 
         if (viewModel.checkIfTokenSaved()) {
             if (viewModel.checkIfCacheExists()) {
+                // FIXME conditional navigation
                 navController.navigateSafe(LoginFragmentDirections.actionLoginFragmentToProfileFragment())
             } else {
                 startSyncData()
@@ -90,14 +99,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Drawer settings
-        val drawerPictureView = binding.drawerNavigationView.getHeaderView(0).findViewById<CircleImageView>(R.id.drawerProfileImage)
-        val drawerLoginView = binding.drawerNavigationView.getHeaderView(0).findViewById<TextView>(R.id.drawerLoginView)
-        val drawerNameView = binding.drawerNavigationView.getHeaderView(0).findViewById<TextView>(R.id.drawerNameView)
-        val syncDateView = binding.drawerNavigationView.getHeaderView(0).findViewById<TextView>(R.id.syncDate)
-        val resyncBtn = binding.drawerNavigationView.getHeaderView(0).findViewById<ImageView>(R.id.resyncBtn)
+        val header =  binding.drawerNavigationView.getHeaderView(0)
+        val drawerPictureView = header.findViewById<CircleImageView>(R.id.drawerProfileImage)
+        val drawerLoginView = header.findViewById<TextView>(R.id.drawerLoginView)
+        val drawerNameView = header.findViewById<TextView>(R.id.drawerNameView)
+        val syncDateView = header.findViewById<TextView>(R.id.syncDate)
+        val resyncBtn = header.findViewById<ImageView>(R.id.resyncBtn)
 
-        profileViewModel.getUserLiveData().observeNullSafe(this, {
-
+        profileViewModel.getUserLiveData().observeNullSafe(this) {
             Picasso.get().load(it.avatar_url).into(drawerPictureView)
 
             // This field can be empty
@@ -113,7 +122,7 @@ class MainActivity : AppCompatActivity() {
             // We can also update sync date in drawer
             // As livedata triggering means cache may have been updated
             syncDateView.text = viewModel.getCacheSyncDate().replace(" ", "\n")
-        })
+        }
 
         binding.drawerNavigationView.setNavigationItemSelectedListener { menuItem ->
 
@@ -147,10 +156,30 @@ class MainActivity : AppCompatActivity() {
         resyncBtn.setOnClickListener {
             // Sync data in foreground service
             val intent = Intent(this, SyncForegroundService::class.java)
-            startService(intent)
+
+            // Require notification permission
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                this.doWithPermissions(
+                    Manifest.permission.POST_NOTIFICATIONS,
+                    explanation = getString(R.string.permission_notifications_explanation),
+                    onAllGranted = {
+                        startService(intent)
+                    },
+                    onSomeDenied = {
+                        // No notification but user can see FS in task manager
+                        Toast.makeText(this, "Sync started",Toast.LENGTH_SHORT).show()
+                        startService(intent)
+                    }
+                )
+            }
+            else {
+                startService(intent)
+            }
 
             closeDrawerMenu()
         }
+
+        checkForPermissionsOnStart()
     }
 
 
@@ -180,8 +209,37 @@ class MainActivity : AppCompatActivity() {
         binding.drawerLayout.openDrawer(GravityCompat.START)
     }
 
-    fun closeDrawerMenu() {
+    private fun closeDrawerMenu() {
         binding.drawerLayout.closeDrawer(GravityCompat.START)
     }
 
+    private fun checkForPermissionsOnStart() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            PermissionX.init(this)
+                .permissions(Manifest.permission.POST_NOTIFICATIONS)
+                .onExplainRequestReason { scope, deniedList ->
+                    scope.showRequestReasonDialog(
+                        deniedList,
+                        getString(R.string.permission_notifications_explanation),
+                        getString(R.string.ok),
+                        getString(R.string.cancel)
+                    )
+                }
+                .onForwardToSettings { scope, deniedList ->
+                    scope.showForwardToSettingsDialog(
+                        deniedList,
+                        getString(R.string.permission_notifications_explanation),
+                        getString(R.string.ok),
+                        getString(R.string.cancel)
+                    )
+                }
+                .request { allGranted, grantedList, deniedList ->
+                    if (allGranted) {
+                        // Do nothing
+                    } else {
+                        showToast("Notification permission denied")
+                    }
+                }
+        }
+    }
 }

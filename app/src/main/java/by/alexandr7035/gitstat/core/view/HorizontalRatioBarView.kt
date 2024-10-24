@@ -91,5 +91,7 @@ class HorizontalRatioBarView(context: Context, private val attrs: AttributeSet) 
 
         this.values = values
         this.colors = colors
+
+        invalidate()
     }
 }

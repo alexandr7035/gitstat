@@ -120,7 +120,6 @@ class ContributionsFragment : Fragment() {
             }
 
             binding?.typesRatioView?.setValues(values, colors)
-            binding?.typesRatioView?.invalidate()
         })
 
         binding?.drawerBtn?.setOnClickListener {
