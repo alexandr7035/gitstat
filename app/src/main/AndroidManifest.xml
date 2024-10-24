@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC"/>
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
@@ -26,8 +27,11 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".data.SyncForegroundService" android:exported="false" android:enabled="true">
-        </service>
+        <service
+            android:name=".data.SyncForegroundService"
+            android:foregroundServiceType="dataSync"
+            android:exported="false"
+            android:enabled="true" />
 
     </application>
 
