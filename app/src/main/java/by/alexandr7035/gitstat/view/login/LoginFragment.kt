@@ -9,7 +9,6 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import by.alexandr7035.gitstat.BuildConfig
 import by.alexandr7035.gitstat.NavGraphDirections
 import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.core.GithubAccessScopes
@@ -18,11 +17,11 @@ import by.alexandr7035.gitstat.core.extensions.navigateSafe
 import by.alexandr7035.gitstat.databinding.FragmentLoginBinding
 import by.alexandr7035.gitstat.view.MainActivity
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.google.firebase.Firebase
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.OAuthCredential
 import com.google.firebase.auth.OAuthProvider
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.auth.auth
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
