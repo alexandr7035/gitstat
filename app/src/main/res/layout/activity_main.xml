@@ -9,6 +9,7 @@
     android:layout_height="match_parent">
 
 <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/mainContentLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -54,7 +55,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:fitsSystemWindows="true"
+        android:fitsSystemWindows="false"
         app:menu="@menu/menu_drawer"
         app:itemIconTint="@color/gray_300"
         app:headerLayout="@layout/drawer_header"/>

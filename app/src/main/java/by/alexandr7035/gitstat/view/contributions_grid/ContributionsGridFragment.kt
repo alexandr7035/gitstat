@@ -7,6 +7,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.core.extensions.navigateSafe
 import by.alexandr7035.gitstat.core.extensions.observeNullSafe
@@ -27,6 +30,14 @@ class ContributionsGridFragment : Fragment(R.layout.fragment_contributions_grid)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Edge-to-edge: add bottom "tail" space to the grid so the last cells aren't covered.
+        ViewCompat.setOnApplyWindowInsetsListener(binding.monthRecycler) { v, windowInsets ->
+            val bars = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.updatePadding(bottom = bars.bottom)
+            windowInsets
+        }
+        ViewCompat.requestApplyInsets(binding.monthRecycler)
 
         binding.toolbar.title = getString(R.string.year_toolbar_title, safeArgs.contributionYear)
         binding.toolbar.setNavigationOnClickListener {
