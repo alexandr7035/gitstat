@@ -15,12 +15,21 @@ if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
 
+def debugKeystoreFile = rootProject.file("debug.keystore")
+
 android {
     compileSdkVersion 36
     buildToolsVersion "30.0.3"
 
     signingConfigs {
-        config {
+        debugConfig {
+            keyAlias 'android'
+            keyPassword 'android'
+            storeFile debugKeystoreFile
+            storePassword 'android'
+        }
+
+        releaseConfig {
             if (keystorePropertiesFile.exists()) {
                 keyAlias keystoreProperties['keyAlias']
                 keyPassword keystoreProperties['keyPassword']
@@ -50,6 +59,9 @@ android {
     buildTypes {
 
         release {
+            if (keystorePropertiesFile.exists()) {
+                signingConfig signingConfigs.releaseConfig
+            }
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
@@ -59,9 +71,7 @@ android {
         }
 
         debug {
-            if (keystorePropertiesFile.exists()) {
-                signingConfig signingConfigs.config
-            }
+            signingConfig signingConfigs.debugConfig
             applicationIdSuffix ".debug"
             debuggable true
             versionNameSuffix ".debug"
