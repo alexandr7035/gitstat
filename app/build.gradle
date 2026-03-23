@@ -19,6 +19,7 @@ def debugKeystoreFile = rootProject.file("debug.keystore")
 
 android {
     compileSdkVersion 36
+    // FIXME old version is ignored
     buildToolsVersion "30.0.3"
 
     signingConfigs {
@@ -43,8 +44,8 @@ android {
         applicationId 'by.alexandr7035.gitstat'
         minSdkVersion 23
         targetSdkVersion 36
-        versionCode 2600
-        versionName "5.7.1"
+        versionCode 2700
+        versionName "5.7.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
