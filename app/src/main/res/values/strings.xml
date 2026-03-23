@@ -50,7 +50,8 @@
     <string name="login_string">\@%s</string>
     <string name="profile_date_format">dd.MM.yyyy HH:mm</string>
 
-    <string name="sign_in">Sign in</string>
+    <string name="sign_in">Sign in with GitHub</string>
+    <string name="login_label">Analyze your GitHub activity with clarity</string>
 
     <string name="repos">Repositories</string>
 

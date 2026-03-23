@@ -4,6 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -36,6 +39,20 @@ class ArchivedRepositoriesFragment : Fragment(), RepoClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Edge-to-edge: add bottom "tail" space to the list so the last item isn't covered.
+        ViewCompat.setOnApplyWindowInsetsListener(binding!!.recycler) { v, windowInsets ->
+            val bars = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.updatePadding(bottom = bars.bottom)
+            windowInsets
+        }
+        ViewCompat.setOnApplyWindowInsetsListener(binding!!.noReposStub) { v, windowInsets ->
+            val bars = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.updatePadding(bottom = bars.bottom)
+            windowInsets
+        }
+        ViewCompat.requestApplyInsets(binding!!.recycler)
+        ViewCompat.requestApplyInsets(binding!!.noReposStub)
 
         // Setup adapter
         adapter = RepositoriesListAdapter(this)

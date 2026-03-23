@@ -6,6 +6,9 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.animation.LinearInterpolator
 import androidx.core.view.isVisible
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import by.alexandr7035.gitstat.BuildConfig
@@ -27,6 +30,14 @@ class SyncHostFragment : Fragment(R.layout.fragment_sync_host) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Edge-to-edge: keep bottom content above the system navigation/gesture bar
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, windowInsets ->
+            val bars = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.updatePadding(bottom = bars.bottom)
+            windowInsets
+        }
+        ViewCompat.requestApplyInsets(binding.root)
 
         val animation= AnimationUtils.loadAnimation(requireContext(), R.anim.anim_rotation)
         animation.interpolator = LinearInterpolator()
