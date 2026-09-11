@@ -5,6 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.text.HtmlCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -23,6 +26,15 @@ class InfoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding?.scrollView?.let { scroll ->
+            ViewCompat.setOnApplyWindowInsetsListener(scroll) { v, windowInsets ->
+                val bars = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+                v.updatePadding(bottom = bars.bottom)
+                windowInsets
+            }
+            ViewCompat.requestApplyInsets(scroll)
+        }
 
         binding?.toolbar?.setNavigationOnClickListener {
             findNavController().navigateUp()
