@@ -38,6 +38,11 @@ class SyncForegroundService: LifecycleService() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         super.onStartCommand(intent, flags, startId)
 
+        if (syncRepository.isSyncInProgress()) {
+            Timber.tag(TAG).d("Sync already in progress, ignoring start")
+            return START_NOT_STICKY
+        }
+
         // Init livedata for statuses update
         val statusLiveData = MutableLiveData<DataSyncStatus>()
 

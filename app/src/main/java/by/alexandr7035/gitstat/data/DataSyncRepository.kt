@@ -29,7 +29,10 @@ import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.api.Optional
 import timber.log.Timber
 import java.util.TreeMap
+import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.hours
 
 class DataSyncRepository @Inject constructor(
     private val apolloClient: ApolloClient,
@@ -44,9 +47,23 @@ class DataSyncRepository @Inject constructor(
     private val daysToRatesMapper: ContributionDaysToRatesMapper,
 ) {
 
+    private val syncInProgress = AtomicBoolean(false)
+
+    fun isSyncInProgress(): Boolean = syncInProgress.get()
+
+    fun isCacheStale(threshold: Duration = STALE_SYNC_THRESHOLD): Boolean {
+        val lastSync = appPreferences.getLastCacheSyncDate()
+        return lastSync != 0L && System.currentTimeMillis() - lastSync >= threshold.inWholeMilliseconds
+    }
+
     // Set livedata to non-null when need to observe sync status on UI
     // Null by default
     suspend fun syncData(syncStatusLiveData: MutableLiveData<DataSyncStatus>? = null) {
+
+        if (!syncInProgress.compareAndSet(false, true)) {
+            Timber.tag(TAG).d("syncData() already in progress, skipping re-entrant call")
+            return
+        }
 
         try {
             syncStatusLiveData?.postValue(DataSyncStatus.PendingProfile)
@@ -77,7 +94,7 @@ class DataSyncRepository @Inject constructor(
             // (the milliseconds when livedata is written and triggered but the date is not updated)
             appPreferences.saveLastCacheSyncDate(System.currentTimeMillis())
 
-            Timber.tag("DEBUG_TAG").d("profile $profile")
+            Timber.tag(TAG).d("profile $profile")
             db.getUserDao().insertUser(profile)
             db.getRepositoriesDao().insertRepositories(repositories)
 
@@ -97,8 +114,11 @@ class DataSyncRepository @Inject constructor(
         }
 
         catch (e: AppError) {
-            Timber.tag("DEBUG_SYNC").e("Catch exception during data sync ${e.type.name}")
+            Timber.tag(TAG).e("Catch exception during data sync ${e.type.name}")
             syncStatusLiveData?.postValue(DataSyncStatus.Failure(e.type))
+        }
+        finally {
+            syncInProgress.set(false)
         }
     }
 
@@ -271,4 +291,8 @@ class DataSyncRepository @Inject constructor(
         return timeHelper.getFullFromUnixDate(appPreferences.getLastCacheSyncDate())
     }
 
+    private companion object {
+        val TAG = DataSyncRepository::class.simpleName.toString()
+        val STALE_SYNC_THRESHOLD = 24.hours
+    }
 }

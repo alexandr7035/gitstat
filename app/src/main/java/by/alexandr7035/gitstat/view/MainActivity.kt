@@ -116,6 +116,10 @@ class MainActivity : AppCompatActivity() {
             if (viewModel.checkIfCacheExists()) {
                 // FIXME conditional navigation
                 navController.navigateSafe(LoginFragmentDirections.actionLoginFragmentToProfileFragment())
+
+                if (viewModel.shouldAutoSync()) {
+                    startSyncService()
+                }
             } else {
                 startSyncData()
             }
@@ -177,26 +181,23 @@ class MainActivity : AppCompatActivity() {
         syncDateView.text = viewModel.getCacheSyncDate().replace(" ", "\n")
 
         resyncBtn.setOnClickListener {
-            // Sync data in foreground service
-            val intent = Intent(this, SyncForegroundService::class.java)
-
             // Require notification permission
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 this.doWithPermissions(
                     Manifest.permission.POST_NOTIFICATIONS,
                     explanation = getString(R.string.permission_notifications_explanation),
                     onAllGranted = {
-                        startService(intent)
+                        startSyncService()
                     },
                     onSomeDenied = {
                         // No notification but user can see FS in task manager
                         Toast.makeText(this, "Sync started",Toast.LENGTH_SHORT).show()
-                        startService(intent)
+                        startSyncService()
                     }
                 )
             }
             else {
-                startService(intent)
+                startSyncService()
             }
 
             closeDrawerMenu()
@@ -210,6 +211,10 @@ class MainActivity : AppCompatActivity() {
     // than public method accessible from fragments
     fun startSyncData() {
         navController.navigateSafe(NavGraphDirections.actionGlobalSyncHostFragment())
+    }
+
+    private fun startSyncService() {
+        startService(Intent(this, SyncForegroundService::class.java))
     }
 
     // FIXME find better solution
