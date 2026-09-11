@@ -2,11 +2,11 @@ package by.alexandr7035.gitstat.data.remote
 
 import by.alexandr7035.gitstat.core.AppError
 import by.alexandr7035.gitstat.core.ErrorType
-import com.apollographql.apollo3.api.http.HttpRequest
-import com.apollographql.apollo3.api.http.HttpResponse
-import com.apollographql.apollo3.exception.ApolloException
-import com.apollographql.apollo3.network.http.HttpInterceptor
-import com.apollographql.apollo3.network.http.HttpInterceptorChain
+import com.apollographql.apollo.api.http.HttpRequest
+import com.apollographql.apollo.api.http.HttpResponse
+import com.apollographql.apollo.exception.ApolloException
+import com.apollographql.apollo.network.http.HttpInterceptor
+import com.apollographql.apollo.network.http.HttpInterceptorChain
 
 class ErrorInterceptor: HttpInterceptor {
     override suspend fun intercept(request: HttpRequest, chain: HttpInterceptorChain): HttpResponse {

@@ -25,8 +25,8 @@ import by.alexandr7035.gitstat.data.remote.mappers.ContributionTypesRemoteToCach
 import by.alexandr7035.gitstat.data.remote.mappers.ContributionsDaysListRemoteToCacheMapper
 import by.alexandr7035.gitstat.data.remote.mappers.RepositoriesRemoteToCacheMapper
 import by.alexandr7035.gitstat.data.remote.mappers.UserRemoteToCacheMapper
-import com.apollographql.apollo3.ApolloClient
-import com.apollographql.apollo3.api.Optional
+import com.apollographql.apollo.ApolloClient
+import com.apollographql.apollo.api.Optional
 import timber.log.Timber
 import java.util.TreeMap
 import java.util.concurrent.atomic.AtomicBoolean

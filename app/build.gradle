@@ -3,7 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'com.google.devtools.ksp'
     id("dagger.hilt.android.plugin")
-    id("com.apollographql.apollo3")
+    id("com.apollographql.apollo")
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
     id("androidx.navigation.safeargs")
@@ -18,9 +18,7 @@ if (keystorePropertiesFile.exists()) {
 def debugKeystoreFile = rootProject.file("debug.keystore")
 
 android {
-    compileSdkVersion 36
-    // FIXME old version is ignored
-    buildToolsVersion "30.0.3"
+    compileSdkVersion 37
 
     signingConfigs {
         debugConfig {
@@ -43,7 +41,7 @@ android {
     defaultConfig {
         applicationId 'by.alexandr7035.gitstat'
         minSdkVersion 23
-        targetSdkVersion 36
+        targetSdkVersion 37
         versionCode 2700
         versionName "5.7.2"
 
@@ -86,6 +84,7 @@ android {
 
     buildFeatures {
         viewBinding true
+        buildConfig true
     }
     namespace 'by.alexandr7035.gitstat'
 }
@@ -137,8 +136,8 @@ dependencies {
     ksp("com.google.dagger:hilt-android-compiler:$hilt")
 
     // Apollo
-    def apollo_version = "3.8.6"
-    implementation("com.apollographql.apollo3:apollo-runtime:$apollo_version")
+    def apollo_version = "5.0.0"
+    implementation("com.apollographql.apollo:apollo-runtime:$apollo_version")
 
     // Timber
     implementation 'com.jakewharton.timber:timber:5.0.1'
@@ -164,6 +163,7 @@ ksp {
 
 // Apollo GraphQL
 apollo {
-    packageName.set("by.alexandr7035.gitstat.apollo")
-    generateKotlinModels.set(true)
+    service("service") {
+        packageName.set("by.alexandr7035.gitstat.apollo")
+    }
 }
