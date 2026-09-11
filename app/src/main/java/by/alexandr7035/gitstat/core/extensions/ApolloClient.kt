@@ -2,8 +2,8 @@ package by.alexandr7035.gitstat.core.extensions
 
 import by.alexandr7035.gitstat.core.AppError
 import by.alexandr7035.gitstat.core.ErrorType
-import com.apollographql.apollo3.ApolloClient
-import com.apollographql.apollo3.api.Query
+import com.apollographql.apollo.ApolloClient
+import com.apollographql.apollo.api.Query
 
 
 // Takes Apollo Query as parameter

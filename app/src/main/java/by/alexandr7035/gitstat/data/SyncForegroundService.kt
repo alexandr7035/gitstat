@@ -5,16 +5,16 @@ import android.app.Notification
 import android.app.PendingIntent
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Build
+import android.content.pm.ServiceInfo
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.app.ServiceCompat
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.MutableLiveData
 import by.alexandr7035.gitstat.R
 import by.alexandr7035.gitstat.core.DataSyncStatus
 import by.alexandr7035.gitstat.core.ErrorType
-import by.alexandr7035.gitstat.core.extensions.debug
 import by.alexandr7035.gitstat.core.extensions.observeNullSafe
 import by.alexandr7035.gitstat.view.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,35 +25,48 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.seconds
 
 @AndroidEntryPoint
 class SyncForegroundService: LifecycleService() {
-
-    @Inject lateinit var syncRepository: DataSyncRepository
+    @Inject
+    lateinit var syncRepository: DataSyncRepository
     private var job: Job? = null
 
+    // ServiceCompat ignores the type argument on pre-Q platforms.
+    @Suppress("InlinedApi")
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         super.onStartCommand(intent, flags, startId)
+
+        if (syncRepository.isSyncInProgress()) {
+            Timber.tag(TAG).d("Sync already in progress, ignoring start")
+            return START_NOT_STICKY
+        }
 
         // Init livedata for statuses update
         val statusLiveData = MutableLiveData<DataSyncStatus>()
 
         val notificationId = System.currentTimeMillis().toInt()
-        startForeground(notificationId, getNotification(
-            getString(R.string.sync_notification_title),
-            // Text for start sync stage here
-            getString(R.string.stage_profile)
-        ))
+
+        ServiceCompat.startForeground(
+            this,
+            notificationId,
+            getNotification(
+                getString(R.string.sync_notification_title),
+                getString(R.string.stage_profile)
+            ),
+            ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
+        )
 
         job = CoroutineScope(Dispatchers.IO).launch {
             syncRepository.syncData(statusLiveData)
             // A delay to prevent showing a success message in a separate notification
-            delay(3000)
+            delay(3.seconds)
             stopSelf()
         }
 
         statusLiveData.observeNullSafe(this) { syncStatus ->
-            Timber.debug("Service: sync status changed $syncStatus")
+            Timber.tag(TAG).d("Service: sync status changed $syncStatus")
 
             val notificationText = when (syncStatus) {
                 is DataSyncStatus.PendingContributions -> getString(R.string.stage_contributions)
@@ -87,18 +100,22 @@ class SyncForegroundService: LifecycleService() {
         return START_NOT_STICKY
     }
 
+    // Called on Android 15+ when a dataSync foreground service hits its runtime limit.
+    // The process is force-crashed if the service is still running shortly after, so stop cleanly.
+    override fun onTimeout(startId: Int, fgsType: Int) {
+        Timber.tag(TAG).d("service onTimeout()")
+        job?.cancel()
+        job = null
+        stopSelf()
+    }
+
     private fun getNotification(title: String, message: String): Notification {
 
         val notificationIntent = Intent(this, MainActivity::class.java)
 
-        val mutabilityFlag = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            PendingIntent.FLAG_IMMUTABLE
-        }
-        else {
-            PendingIntent.FLAG_UPDATE_CURRENT
-        }
-
-        val pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, mutabilityFlag)
+        val pendingIntent = PendingIntent.getActivity(
+            this, 0, notificationIntent, PendingIntent.FLAG_IMMUTABLE
+        )
 
         return NotificationCompat.Builder(this, getString(R.string.NOTIFICATION_CHANNEL_ID))
             .setContentTitle(title)
@@ -114,11 +131,13 @@ class SyncForegroundService: LifecycleService() {
 
 
     override fun onDestroy() {
-        Timber.tag("DEBUG_SERVICE").d("service onDestroy()")
-
+        Timber.tag(TAG).d("service onDestroy()")
         job?.cancel()
         job = null
         super.onDestroy()
     }
 
+    private companion object {
+        val TAG = SyncForegroundService::class.simpleName.toString()
+    }
 }

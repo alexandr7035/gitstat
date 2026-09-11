@@ -19,6 +19,12 @@ class MainViewModel @Inject constructor(private val dataSyncRepository: DataSync
         return dataSyncRepository.checkIfCacheExists()
     }
 
+    fun shouldAutoSync(): Boolean {
+        return dataSyncRepository.checkIfCacheExists() &&
+            !dataSyncRepository.isSyncInProgress() &&
+            dataSyncRepository.isCacheStale()
+    }
+
     fun logOut() {
         viewModelScope.launch(Dispatchers.IO) {
             dataSyncRepository.clearCache()

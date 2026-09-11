@@ -20,7 +20,7 @@ import by.alexandr7035.gitstat.data.local.preferences.AppPreferencesImpl
 import by.alexandr7035.gitstat.data.remote.AuthInterceptor
 import by.alexandr7035.gitstat.data.remote.ErrorInterceptor
 import by.alexandr7035.gitstat.data.remote.mappers.*
-import com.apollographql.apollo3.ApolloClient
+import com.apollographql.apollo.ApolloClient
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
