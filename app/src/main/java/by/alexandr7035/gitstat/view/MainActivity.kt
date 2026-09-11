@@ -32,9 +32,9 @@ import by.alexandr7035.gitstat.databinding.ActivityMainBinding
 import by.alexandr7035.gitstat.view.datasync.SyncHostFragmentDirections
 import by.alexandr7035.gitstat.view.login.LoginFragmentDirections
 import by.alexandr7035.gitstat.view.profile.ProfileViewModel
+import coil3.load
 import com.google.firebase.auth.FirebaseAuth
 import com.permissionx.guolindev.PermissionX
-import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import de.hdodenhof.circleimageview.CircleImageView
 
@@ -130,7 +130,7 @@ class MainActivity : AppCompatActivity() {
         val resyncBtn = header.findViewById<ImageView>(R.id.resyncBtn)
 
         profileViewModel.getUserLiveData().observeNullSafe(this) {
-            Picasso.get().load(it.avatar_url).into(drawerPictureView)
+            drawerPictureView.load(it.avatar_url)
 
             // This field can be empty
             if (it.name.isEmpty()) {

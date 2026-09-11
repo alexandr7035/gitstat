@@ -16,7 +16,7 @@ import by.alexandr7035.gitstat.databinding.FragmentProfileBinding
 import by.alexandr7035.gitstat.view.MainActivity
 import by.alexandr7035.gitstat.view.contributions_grid.DaysAdapter
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.squareup.picasso.Picasso
+import coil3.load
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -33,7 +33,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         // Update profile data
         viewModel.getUserLiveData().observeNullSafe(viewLifecycleOwner) {
 
-            Picasso.get().load(it.avatar_url).into(binding.profileImageView)
+            binding.profileImageView.load(it.avatar_url)
 
             // This field can be empty
             if (it.name.isEmpty()) {
